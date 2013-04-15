@@ -1,0 +1,12 @@
+; $Id: skeletome_config.info $
+
+name = SKELETOME Configuration
+description = SKELETOME Master configuration.
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = skeletome_config.install
+files[] = skeletome_config.module
+
+configure = admin/config/system/skeletome_configuration

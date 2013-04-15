@@ -1,0 +1,10 @@
+; $Id: views_duplicate.info $
+
+name = Views duplicate eliminator
+description = Views duplicate eliminator.
+package = SKELETOME Utilities
+
+core = 7.x
+dependencies[] = views
+
+files[] = views_duplicate.module

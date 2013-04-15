@@ -1,0 +1,8 @@
+; $Id: skeletome_search.info $
+
+name = SKELETOME Search filters
+package = SKELETOME Backend
+
+core = 7.x
+
+files[] = skeletome_search.module

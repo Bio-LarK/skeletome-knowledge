@@ -1,0 +1,168 @@
+<?php
+// $Id: x_ray.install $
+
+function x_ray_install() {
+  $t = get_t();
+
+  $x_ray = array(
+    'type' => 'x_ray',
+    'name' => $t('X-Ray'),
+    'base' => 'node_content',
+    'description' => $t('The X-Ray content type.'),
+    'title_label' => $t('Title'),
+  );
+
+  $content_type = node_type_set_defaults($x_ray);
+  node_type_save($content_type);
+
+  foreach (_x_ray_installed_fields() as $field) {
+    field_create_field($field);
+  }
+
+  foreach (_x_ray_installed_instances() as $instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = $x_ray['type'];
+    field_create_instance($instance);
+  }
+
+  variable_set('comment_x_ray', COMMENT_NODE_CLOSED);
+  variable_set('node_options_x_ray', array('status'));
+  variable_set('node_preview_x_ray', DRUPAL_DISABLED);
+  variable_set('node_submitted_x_ray', FALSE);
+}
+
+function _x_ray_installed_fields() {
+  $t = get_t();
+  return array(
+    'field_xray_xraycollection' => array(
+      'field_name'	=> 'field_xray_xraycollection',
+      'label'		=> $t('X-Ray Collection'),
+      'cardinality'	=> 1,
+      'type'		=> 'entityreference',
+      'settings'	=> array(
+	'referenceable_types' => array(
+	  'media_gallery' => 'media_gallery'
+	)
+      )
+    ),
+    'field_xray_description' => array(
+      'field_name'	=> 'field_xray_description',
+      'label'		=> $t('Description'),
+      'cardinality'	=> 1,
+      'type'		=> 'text_long',
+    ),
+    'field_xray_media' => array(
+      'field_name'	=> 'field_xray_media',
+      'label'		=> $t('X-Ray File'),
+      'cardinality'	=> 1,
+      'type'		=> 'media',
+    ),
+  );
+}
+
+function _x_ray_installed_instances() {
+  $t = get_t();
+  return array(
+    'field_xray_xraycollection' => array(
+      'field_name'	=> 'field_xray_xraycollection',
+      'label'		=> $t('X-Ray Collection'),
+      'cardinality'	=> 1,
+      'widget'		=> array(
+        'type'    => 'entityreference_autocomplete',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type'  => 'hidden',
+	  'label' => 'hidden',
+	),
+        'full' => array(
+          'type' => 'hidden',
+          'label' => 'hidden',
+        ),
+        'teaser' => array(
+          'type' => 'hidden',
+          'label' => 'hidden',
+        ),
+      )
+    ),
+    'field_xray_description' => array(
+      'field_name' => 'field_xray_description',
+      'label'       => $t('Description'),
+      'cardinality' => 1,
+      'widget'      => array(
+        'type'    => 'text_textarea',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type'  => 'hidden',
+	  'label' => 'hidden',
+	),
+        'full' => array(
+          'type' => 'hidden',
+          'label' => 'hidden',
+        ),
+        'teaser' => array(
+          'type' => 'hidden',
+          'label' => 'hidden',
+        ),
+      )
+    ),
+    'field_xray_media' => array(
+      'field_name'	=> 'field_xray_media',
+      'label'		=> $t('X-Ray File'),
+      'cardinality'	=> 1,
+      'widget' => array(
+        'type' => 'media_generic',
+        'settings' => array(
+          // Eventually other media types will be allowed.
+          'allowed_types' => array('image' => 'image'),
+          'allowed_schemes' => array('public' => 'public', 'private' => 'private'),
+        ),
+      ),
+      'display' => array(
+        'default' => array(
+          'type' => 'media_gallery',
+          'settings' => array('file_view_mode' => 'media_gallery_thumbnail'),
+          'label' => 'hidden',
+          'weight' => 2,
+        ),
+        'full' => array(
+          'type' => 'media_gallery',
+          'settings' => array('file_view_mode' => 'media_gallery_thumbnail'),
+          'label' => 'hidden',
+          'weight' => 2,
+        ),
+        'teaser' => array(
+          'type' => 'media_gallery',
+          'settings' => array('file_view_mode' => 'media_gallery_thumbnail'),
+          'label' => 'hidden',
+          'weight' => 2,
+        ),
+      ),
+    ),
+  );
+}
+
+function x_ray_uninstall() {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'x_ray'));
+  $nids = array();
+  foreach ($result as $row) {
+    $nids[] = $row->nid;
+  }
+
+  node_delete_multiple($nids);
+
+  foreach (array_keys(_x_ray_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  $instances = field_info_instances('node', 'x_ray');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+
+  node_type_delete('x_ray');
+
+  field_purge_batch(1000);
+}

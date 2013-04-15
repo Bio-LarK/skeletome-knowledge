@@ -1,0 +1,126 @@
+<?php
+// $Id: statement.install $
+
+function statement_install()
+{
+    $t = get_t();
+
+    $statement = array(
+        'type' => 'statement',
+        'name' => $t('Statement'),
+        'base' => 'node_content',
+        'description' => $t('The Statement content type.'),
+        'body_label' => $t('Statement')
+    );
+
+    $content_type = node_type_set_defaults($statement);
+    node_add_body_field($content_type);
+    node_type_save($content_type);
+
+    $body_instance = field_info_instance('node', 'body', 'statement');
+    $body_instance['type'] = 'text_long';
+    $body_instance['label'] = 'Statement';
+
+    field_update_instance($body_instance);
+
+    foreach (_statement_installed_fields() as $field) {
+        field_create_field($field);
+    }
+
+    foreach (_statement_installed_instances() as $instance) {
+        $instance['entity_type'] = 'node';
+        $instance['bundle'] = $statement['type'];
+        field_create_instance($instance);
+    }
+
+    variable_set('comment_statement', COMMENT_NODE_OPEN);
+    variable_set('node_options_statement', array('status'));
+    variable_set('node_preview_statement', DRUPAL_DISABLED);
+    variable_set('node_submitted_statement', TRUE);
+}
+
+function _statement_installed_fields()
+{
+    $t = get_t();
+    return array(
+        'field_statement_attachment' => array(
+            'field_name' => 'field_statement_attachment',
+            'label' => $t('Attachment'),
+            'cardinality' => -1,
+            'type' => 'file',
+            'settings' => array(
+                'display_field' => '1',
+                'uri_scheme' => 'private'
+            )
+        ),
+
+        'field_statement_node' => array(
+            'field_name' => 'field_statement_node',
+            'label' => $t('Bone Dysplasia'),
+            'cardinality' => 1,
+            'type' => 'entityreference'
+        )
+    );
+}
+
+function _statement_installed_instances()
+{
+    $t = get_t();
+    return array(
+        'field_statement_attachment' => array(
+            'field_name' => 'field_statement_attachment',
+            'label' => $t('Attachment'),
+            'cardinality' => -1,
+            'widget' => array(
+                'type' => 'file_generic',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'field_file_display'
+                )
+            ),
+            'settings' => array(
+                'file_extensions' => 'pdf doc docx ppt pptx txt',
+                'file_directory' => 'statement_attachments'
+            )
+        ),
+        'field_statement_node' => array(
+            'field_name' => 'field_statement_node',
+            'label' => $t('Content'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'entityreference_autocomplete',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'entityreference_default'
+                )
+            )
+        )
+    );
+}
+
+function statement_uninstall()
+{
+    $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => 'statement'));
+    $nids = array();
+    foreach ($result as $row) {
+        $nids[] = $row->nid;
+    }
+
+    node_delete_multiple($nids);
+
+    foreach (array_keys(_statement_installed_fields()) as $field) {
+        field_delete_field($field);
+    }
+
+    $instances = field_info_instances('node', 'statement');
+    foreach ($instances as $instance_name => $instance) {
+        field_delete_instance($instance);
+    }
+
+    node_type_delete('statement');
+
+    field_purge_batch(1000);
+}

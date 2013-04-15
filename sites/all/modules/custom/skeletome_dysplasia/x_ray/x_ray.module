@@ -1,0 +1,30 @@
+<?php
+// $Id: x_ray.module $
+
+function x_ray_form_x_ray_node_form_alter(&$form, &$form_state, $form_id) {
+if (isset($form['type']) && isset($form['#node'])) {
+    if ('x_ray_node_form' == $form_id) {
+      $form['field_xray_xraycollection']['#access'] = FALSE;
+    }
+  }
+}
+
+function x_ray_node_view($node, $view_mode) {
+  if ($node->type == 'x_ray' && $view_mode == 'full' && node_is_page($node)) {
+
+//      3974
+//      $node->field_xray_xraycollection[LANGUAGE_NONE] = array(
+//          array(
+//              'target_id' => 3974
+//          )
+//      );
+//      node_save($node);
+
+
+      drupal_goto('media-gallery/detail/' . $node->field_xray_xraycollection['und'][0]['target_id'] . '/'. $node->field_xray_media['und'][0]['fid']);
+
+//    drupal_goto('media-gallery/detail/' . $node->field_xray_xraycollection['und'][0]['nid'] . '/'. $node->field_xray_media['und'][0]['fid']);
+  }  
+
+  return $node;
+}

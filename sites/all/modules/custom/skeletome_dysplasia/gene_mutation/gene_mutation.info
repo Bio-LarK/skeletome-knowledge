@@ -1,0 +1,11 @@
+; $Id: gene_mutation.info $
+
+name = Gene Mutation content type
+description = Provides the implementation for the Gene Mutation content type.
+package = SKELETOME Dysplasia
+
+core = 7.x
+dependencies[] = entityreference
+
+files[] = gene_mutation.module
+files[] = gene_mutation.install

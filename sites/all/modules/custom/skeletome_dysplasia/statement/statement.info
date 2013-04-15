@@ -1,0 +1,11 @@
+; $Id: statement.info $
+
+name = Statement content type
+description = Provides the implementation for the Statement content type.
+package = SKELETOME Dysplasia
+
+core = 7.x
+dependencies[] = entityreference
+
+files[] = statement.module
+files[] = statement.install

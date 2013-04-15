@@ -1,0 +1,11 @@
+; $Id: gene.info $
+
+name = Gene content type
+description = Provides the implementation for the Gene content type.
+package = SKELETOME Dysplasia
+
+core = 7.x
+dependencies[] = entityreference
+
+files[] = gene.module
+files[] = gene.install

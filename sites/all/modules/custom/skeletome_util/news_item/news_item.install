@@ -1,0 +1,73 @@
+<?php
+// $Id: news_item.install $
+
+function news_item_install() {
+  $t = get_t();
+
+  $news_item = array(
+    'type' => 'news_item',
+    'name' => $t('News item'),
+    'base' => 'node_content',
+    'description' => $t('The News item content type.'),
+    'body_label' => $t('Body')
+  );
+
+  $content_type = node_type_set_defaults($news_item);
+  node_add_body_field($content_type);
+  node_type_save($content_type);
+
+  $body_instance = field_info_instance('node', 'body', 'news_item');
+  $body_instance['type'] = 'text_long';
+  $body_instance['label'] = 'Body';
+
+  field_update_instance($body_instance);
+
+  foreach (_news_item_installed_fields() as $field) {
+    field_create_field($field);
+  }
+
+  foreach (_news_item_installed_instances() as $instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = $news_item['type'];
+    field_create_instance($instance);
+  }
+
+  variable_set('comment_news_item', COMMENT_NODE_CLOSED);
+  variable_set('node_options_bone_dysplasia_fact', array('status'));
+  variable_set('node_preview_news_item', DRUPAL_DISABLED);
+//  variable_set('node_submitted_bone_dysplasia_fact', FALSE);
+}
+
+function _news_item_installed_fields() {
+  $t = get_t();
+  return array();
+}
+
+function _news_item_installed_instances() {
+  $t = get_t();
+  return array();
+}
+
+function news_item_uninstall() {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'news_item'));
+  $nids = array();
+  foreach ($result as $row) {
+    $nids[] = $row->nid;
+  }
+
+  node_delete_multiple($nids);
+
+  foreach (array_keys(_news_item_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  $instances = field_info_instances('node', 'news_item');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+
+  node_type_delete('news_item');
+
+  field_purge_batch(1000);
+}

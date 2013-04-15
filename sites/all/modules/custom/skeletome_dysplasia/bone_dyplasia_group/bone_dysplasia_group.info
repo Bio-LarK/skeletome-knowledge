@@ -1,0 +1,11 @@
+; $Id: bone_dysplasia_group.info $
+
+name = Bone Dysplasia group content type
+description = Provides the implementation for the Bone Dysplasia group content type.
+package = SKELETOME Dysplasia
+
+core = 7.x
+dependencies[] = entityreference
+
+files[] = bone_dysplasia_group.module
+files[] = bone_dysplasia_group.install

@@ -1,0 +1,600 @@
+<?php
+// $Id: skeletome_config.module $
+
+define('_IMPORT_VIEWS_', 'edit-configuration-import-views');
+define('_IMPORT_CONTENT_', 'edit-configuration-import-content');
+define('_IMPORT_TEXT_', 'edit-configuration-import-text');
+define('_DELETE_CONTENT_', 'edit-configuration-delete-content');
+
+function skeletome_config_init()
+{
+    module_load_include('inc', 'skeletome_config', 'includes/import_views');
+    module_load_include('inc', 'skeletome_config', 'includes/import_content');
+    module_load_include('inc', 'skeletome_config', 'includes/import_desc');
+    module_load_include('inc', 'skeletome_config', 'includes/delete_content');
+}
+
+function skeletome_config_menu()
+{
+    $items['admin/config/system/skeletome_configuration'] = array(
+        'title' => 'SKELETOME Configuration',
+        'description' => 'Configuration of the SKELETOME content.',
+        'page callback' => 'skeletome_config_page',
+        'access arguments' => array('administer content'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    return $items;
+}
+
+function skeletome_config_page()
+{
+    return drupal_get_form('skeletome_config_form');
+}
+
+function skeletome_config_form()
+{
+    $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+    $form['configuration'] = array(
+        '#type' => 'vertical_tabs',
+        '#title' => t('Configuration'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+    );
+
+    $form['configuration']['import_views'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Import views'),
+        '#weight' => 1,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => import_views_form(),
+    );
+
+    $form['configuration']['import_content'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Import content'),
+        '#weight' => 2,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => import_content_form(),
+    );
+
+    $form['configuration']['import_text'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Import descriptions'),
+        '#weight' => 3,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => import_descriptions_form(),
+    );
+
+    $form['configuration']['delete_content'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Clear content'),
+        '#weight' => 4,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => delete_content_form(),
+    );
+
+    $form['configuration']['extra_groups'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Add additional groups'),
+        '#weight' => 4,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => add_additional_groups_form(),
+    );
+
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+    );
+
+    return $form;
+}
+
+function import_views_form()
+{
+    $views_location_form = array();
+    $views_location_form['#attributes'] = array('enctype' => "multipart/form-data");
+
+    $views_location_form['view_file'] = array(
+        '#type' => 'textfield',
+        '#title' => t('View file'),
+        '#description' => t('Input the view file to be imported.'),
+    );
+
+    $options = array();
+    $options['-1'] = '- Select -';
+    $options['sidebar_first'] = 'Sidebar';
+    $options['content'] = 'Main content';
+
+    $views_location_form['region'] = array(
+        '#type' => 'select',
+        '#title' => t('Region'),
+        '#description' => t("Choose the region where the view's block will be placed."),
+        '#options' => $options,
+    );
+
+    $options = array();
+    $options['-1'] = '- Select -';
+    $sql = 'SELECT type, name FROM {node_type}';
+    $result = db_query($sql, array());
+    foreach ($result as $row) {
+        $options[$row->type] = $row->name;
+    }
+
+    $views_location_form['content_type'] = array(
+        '#type' => 'select',
+        '#title' => t('Content type'),
+        '#description' => t('Choose the content type to which the presence of the block will be restricted.'),
+        '#options' => $options,
+    );
+
+    $options = array();
+    $options['-1'] = '- Select -';
+    $options['0'] = 'Authenticated users';
+
+    $views_location_form['user_restriction'] = array(
+        '#type' => 'select',
+        '#title' => t('Users'),
+        '#description' => t('Choose the user restrictions to be applied on the block.'),
+        '#options' => $options,
+    );
+
+    return $views_location_form;
+}
+
+function add_additional_groups_form() {
+    $content_form = array();
+    $content_form['#attributes'] = array('enctype' => "multipart/form-data");
+
+    $content_form['content_file_group'] = array(
+        '#type' => 'textfield',
+        '#title' => t('JSON Group Data'),
+        '#description' => t('Bone Dysplasias and Groups.'),
+    );
+
+    $content_form['content_file_mapping'] = array(
+        '#type' => 'textfield',
+        '#title' => t('JSON Mapping to BDO Data'),
+        '#description' => t('Bone Dysplasias and Groups.'),
+    );
+
+    $sources = data_get_all_sources();
+
+    $source_options = array(
+        '-1' => '- Select -'
+    );
+    foreach($sources as $source) {
+        $source_options[$source->tid] = $source->name;
+    }
+
+    $content_form['existing_source'] = array(
+        '#type' => 'select',
+        '#title' => t('Existing Source'),
+        '#description' => t("Choose either an existing source, or a new source."),
+        '#options' => $source_options,
+    );
+
+    $releases = array();
+    foreach($sources as $source) {
+        $releases += data_get_releases_for_source($source);
+    }
+
+    $release_options = array(
+        '-1' => '- Select -'
+    );
+    foreach($releases as $release) {
+        $release_options[$release->tid] = $release->name;
+    }
+
+    $content_form['source_name'] = array(
+        '#type' => 'textfield',
+        '#title' => t('New Source Name'),
+        '#description' => t('Input the name of the source.'),
+    );
+
+    $content_form['source_description'] = array(
+        '#type' => 'textfield',
+        '#title' => t('New Source Description'),
+        '#description' => t('Input the description of the source.'),
+    );
+
+    $content_form['existing_release'] = array(
+        '#type' => 'select',
+        '#title' => t('Existing Release'),
+        '#description' => t("Choose either an release, or a new source."),
+        '#options' => $release_options,
+    );
+
+    $content_form['source_release'] = array(
+        '#type' => 'textfield',
+        '#title' => t('New Source Release'),
+        '#description' => t('Timestamp for hte release of the source (only the year really matters, mostly legacy).'),
+    );
+
+    return $content_form;
+}
+function import_content_form()
+{
+    $content_form = array();
+    $content_form['#attributes'] = array('enctype' => "multipart/form-data");
+
+    $content_form['content_file'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Ontology file'),
+        '#description' => t('Input the ontology file to be used for content import.'),
+    );
+
+    $options = array();
+    $options['-1'] = '- Select -';
+    $options['0'] = 'Gene mutation types';
+    $options['1'] = 'Genes and gene mutations';
+    $options['2'] = 'Bone Dysplasias';
+
+    $content_form['content_import'] = array(
+        '#type' => 'select',
+        '#title' => t('Content type'),
+        '#description' => t("Choose the type of content to be imported."),
+        '#options' => $options,
+    );
+
+
+    // Extra stuff for a groups
+//    $group_source_term
+//    $group_source_release_taxonomy
+
+
+
+    return $content_form;
+}
+
+function import_descriptions_form()
+{
+    $desc_form = array();
+
+    $desc_form['desc_folder'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Descriptions folder'),
+        '#description' => t('Input the descriptions folder to be used for import.'),
+    );
+
+    return $desc_form;
+}
+
+function delete_content_form()
+{
+    $delete_form = array();
+
+    $options = array();
+    $options['-1'] = '- Select -';
+    $options['0'] = 'Bone Dysplasias';
+    $options['1'] = 'Genes and gene mutations';
+    $options['2'] = 'Gene mutation types';
+    $options['3'] = 'Everything';
+    $options['4'] = 'Mode of inheritance vocabulary';
+    $options['5'] = 'SKELETOME vocabulary';
+
+    $delete_form['to_delete'] = array(
+        '#type' => 'select',
+        '#title' => t('Clear ...'),
+        '#description' => t('Choose the type of data to be cleared.'),
+        '#options' => $options,
+    );
+
+    return $delete_form;
+}
+
+function skeletome_config_form_submit($form, &$form_state)
+{
+    $active_tab = $form_state['input']['configuration']['configuration__active_tab'];
+
+    if($active_tab === "edit-configuration-extra-groups") {
+        // get out the values from the form
+
+        $group_file = $form_state['values']['configuration']['extra_groups']['value']['content_file_group'];
+
+        $group_url = file_create_url($group_file);
+
+        $groups_disorders = json_decode(file_get_contents($group_url));
+
+        $mapping_file = $form_state['values']['configuration']['extra_groups']['value']['content_file_mapping'];
+
+        $mapping_url = file_create_url($mapping_file);
+
+        $mappings = json_decode(file_get_contents($mapping_url));
+        $groups = $groups_disorders->groups;
+        $disorders = $groups_disorders->disorders;
+
+//        echo "<h1>mapping</h1><pre>";
+//        print_r($mappings);
+//        echo "</pre>";
+//
+//        echo "<h1>groups</h1><pre>";
+//        print_r($groups);
+//        echo "</pre>";
+//
+//        echo "<h1>disorders</h1><pre>";
+//        print_r($disorders);
+//        echo "</pre>";
+//
+//        die();
+
+        $existing_source = $form_state['values']['configuration']['extra_groups']['value']['existing_source'];
+
+        $new_source_name = $form_state['values']['configuration']['extra_groups']['value']['source_name'];
+        $new_source_description = $form_state['values']['configuration']['extra_groups']['value']['source_description'];
+
+        $existing_release = $form_state['values']['configuration']['extra_groups']['value']['existing_release'];
+        $source_release = $form_state['values']['configuration']['extra_groups']['value']['source_release'];
+
+
+        if ($existing_source == -1) {
+            // making a new source
+
+            /* Create a Source */
+            $group_source_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_source');
+            $group_source_term = array(
+                'vid'               => $group_source_taxonomy->vid, // Vocabulary ID
+                'name'              => $new_source_name,
+                'description'       => $new_source_description,
+            );
+            $group_source_term = (object)$group_source_term;
+            taxonomy_term_save($group_source_term);
+        } else {
+            $group_source_term = taxonomy_term_load($existing_source);
+        }
+
+
+        /* Create a Source Release */
+        if($existing_release == -1) {
+            $timestamp = $source_release;
+            $group_source_release_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_source_release');
+            $group_source_release_term = array(
+                'vid'               => $group_source_release_taxonomy->vid, // Vocabulary ID
+                'name'              => $group_source_term->name . " " . date("Y", $timestamp),
+                'description'       => "",
+                'sk_gsr_field_timestamp' => array(
+                    'und' => array(
+                        array('value' => $timestamp . "")
+                    )
+                ),
+                'sk_gsr_field_group_source' => array(
+                    'und' => array(
+                        array('tid' => $group_source_term->tid)
+                    )
+                )
+            );
+            $group_source_release_term = (object)$group_source_release_term;
+            taxonomy_term_save($group_source_release_term);
+        } else {
+            $sql = "SELECT *
+                    FROM {field_data_sk_gt_field_group_source_release} r
+                    WHERE r.sk_gt_field_group_source_release_tid = $existing_release";
+            $results = db_query($sql);
+            $tag_ids = array();
+            foreach($results as $result) {
+                $tag_ids[] = $result->entity_id;
+            }
+
+            if(count($tag_ids)) {
+                // find all the bone dysplasias with the tags
+                $sql = "SELECT *
+                        FROM {field_data_sk_bd_tags} t
+                        WHERE t.sk_bd_tags_tid IN (" . implode(",", $tag_ids) . ")";
+                $results = db_query($sql);
+                $bone_dysplasia_ids = array();
+                foreach($results as $result) {
+                    $bone_dysplasia_ids[] = $result->entity_id;
+                }
+
+                // remove these tags from the bone dysplasias
+                foreach($bone_dysplasia_ids as $bone_dysplasia_id) {
+                    $bone_dysplasia = node_load($bone_dysplasia_id);
+
+                    if(isset($bone_dysplasia->sk_bd_tags[LANGUAGE_NONE][0])) {
+                        foreach($bone_dysplasia->sk_bd_tags[LANGUAGE_NONE] as $sk_bd_tag) {
+                            if(in_array($sk_bd_tag['value'], $tag_ids)) {
+                                unset($sk_bd_tag);
+                            }
+                        }
+                        node_save($bone_dysplasia);
+                    }
+                }
+            }
+
+
+            foreach($tag_ids as $tag_id) {
+                taxonomy_term_delete($tag_id);
+            }
+
+            $group_source_release_term = taxonomy_term_load($existing_release);
+        }
+
+
+        // Go make the groups
+        foreach($groups as $group) {
+            /* Create group names if they dont already exist */
+            $group_name_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_name');
+            $sql = "SELECT tid
+                FROM {taxonomy_term_data}
+                WHERE vid = :vid
+                AND name = :name
+                LIMIT 10";
+
+            $group_name_tid = db_query($sql, array(
+                'vid'       => $group_name_taxonomy->vid,
+                'name'      => $group->name
+            ))->fetchField();
+
+            // Group doesn't exist, so create a new one
+            if(!$group_name_tid) {
+                $term = array(
+                    'vid' => $group_name_taxonomy->vid, // Vocabulary ID
+                    'name' => $group->name, // Term Name
+                    'description' => "",
+                );
+                $term = (object)$term;
+                taxonomy_term_save($term);
+                $group_name_tid = $term->tid;
+            }
+
+            $group_tags_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_tag');
+            $group_tags_term = array(
+                'vid'               => $group_tags_taxonomy->vid, // Vocabulary ID
+                'name'              => $group->name . ' ' . $group_source_release_term->name, // Term Name
+                'description'       => "",
+                'sk_gt_field_uri'   => array(
+                    'und' => array(
+                        array('value' => $group->uri)
+                    )
+                ),
+                'sk_gt_field_group_source_release' => array(
+                    'und' => array(
+                        array('tid' =>  $group_source_release_term->tid)
+                    )
+                ),
+                'sk_gt_field_group_name' => array(
+                    'und' => array(
+                        array('tid' =>  $group_name_tid)
+                    )
+                )
+            );
+            $group_tags_term = (object)$group_tags_term;
+            taxonomy_term_save($group_tags_term);
+
+            // Add it to a bone dysplasia
+            foreach($group->list as $orpha_id) {
+//                $bd_node->sk_bd_tags[LANGUAGE_NONE][]['tid'] = $bd_group_nid;
+
+                $bone_dysplasia = null;
+
+                // see if it has a mapping
+                $found_mapping = false;
+                foreach($mappings->orphaToBDO as $mapping) {
+                    if($mapping->orphaID == $orpha_id) {
+                        // we found the mapping
+                        $found_mapping = true;
+                        $bdoUri =  $mapping->bdoURI;
+
+                        $sql = "SELECT n.*
+                            FROM {node} n
+                            INNER JOIN {field_data_field_bd_uri} u
+                            ON u.entity_id = n.nid
+                            WHERE u.field_bd_uri_value = '$bdoUri'";
+
+                        $results = db_query($sql);
+                        $bone_dysplasia_id = null;
+                        foreach($results as $result) {
+                            $bone_dysplasia_id = $result->nid;
+                        }
+
+                        $bone_dysplasia = node_load($bone_dysplasia_id);
+
+                        break;
+                    }
+                }
+
+
+
+                if(!$found_mapping) {
+                    // we didnt find a mapping
+                    // lets make the bone dysplasia
+                    // and set the uri to be the orpha id
+
+                    // find the bone dysplasia
+                    foreach($disorders as $disorder) {
+                        if($disorder->uri == $orpha_id) {
+                            // we have found the bone dysplasia that matches
+                            $bone_dysplasia = data_create_new_bone_dysplasia($disorder->name, $disorder->uri);
+
+                            // add this to the mapping
+                            $mapping_object = array(
+                                'orphaID'   => $disorder->uri,
+                                'bdoURI'    => $disorder->uri
+                            );
+
+                            $mappings->orphaToBDO[] = (object)$mapping_object;
+                            break;
+                        }
+                    }
+                }
+
+                // add the tag to the bone dysplasia
+                if(!isset($bone_dysplasia->sk_bd_tags[LANGUAGE_NONE][0])) {
+                    // no existing tags
+                    $bone_dysplasia->sk_bd_tags[LANGUAGE_NONE] = array();
+                }
+                $bone_dysplasia->sk_bd_tags[LANGUAGE_NONE][]['tid'] = $group_tags_term->tid;
+                node_save($bone_dysplasia);
+            }
+
+
+        }
+
+    }
+
+    if ($active_tab === _IMPORT_VIEWS_) {
+        $view_file = $form_state['values']['configuration']['import_views']['value']['view_file'];
+        if ($view_file !== '') {
+            $region = $form_state['values']['configuration']['import_views']['value']['region'];
+            $content_restriction = $form_state['values']['configuration']['import_views']['value']['content_type'];
+            $user_restriction = $form_state['values']['configuration']['import_views']['value']['user_restriction'];
+
+            if ($content_restriction === '-1') {
+                $content_restriction = NULL;
+            }
+            if ($user_restriction === '-1') {
+                $user_restriction = NULL;
+            } else {
+                $user_restriction = 2;
+            }
+            import_view($view_file, $region, $content_restriction, $user_restriction);
+        } else {
+            drupal_set_message('Please enter a valid view file.', 'error');
+        }
+    }
+    if ($active_tab === _IMPORT_CONTENT_) {
+        $ontology_file = $form_state['values']['configuration']['import_content']['value']['content_file'];
+
+        if ($ontology_file !== '') {
+            $content_type = $form_state['values']['configuration']['import_content']['value']['content_import'];
+            if ($content_type !== '-1') {
+                import_content($ontology_file, $content_type);
+            } else {
+                drupal_set_message('Please select a valid content type.', 'error');
+            }
+        } else {
+            drupal_set_message('Please enter a valid ontology location.', 'error');
+        }
+    }
+    if ($active_tab === _IMPORT_TEXT_) {
+        $desc_folder = $form_state['values']['configuration']['import_text']['value']['desc_folder'];
+        if ($desc_folder !== '') {
+            import_descriptions($desc_folder);
+        } else {
+            drupal_set_message('Please enter a valid folder location.', 'error');
+        }
+    }
+    if ($active_tab === _DELETE_CONTENT_) {
+        $to_delete = $form_state['values']['configuration']['delete_content']['value']['to_delete'];
+        if ($to_delete !== '-1') {
+            delete_content($to_delete);
+        } else {
+            drupal_set_message('Please select a valid content type to be deleted.', 'error');
+        }
+    }
+
+    return $form;
+}

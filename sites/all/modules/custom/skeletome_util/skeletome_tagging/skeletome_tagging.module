@@ -1,0 +1,7 @@
+<?php
+// $Id: skeletome_tagging.module $
+
+function skeletome_tagging_init() {
+  drupal_add_css(drupal_get_path('module', 'skeletome_tagging') .'/skeletome_tagging.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+  drupal_add_js(drupal_get_path('module', 'skeletome_tagging') .'/skeletome_tagging.js', array('group' => JS_DEFAULT, 'every_page' => TRUE));
+}

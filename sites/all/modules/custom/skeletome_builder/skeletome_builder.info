@@ -1,0 +1,31 @@
+name = Skeletome Builder
+description = Module that helps build the pages with AngularJS
+package = Skeletome Groups
+core = 7.x
+
+dependencies[] = entityreference
+dependencies[] = link
+dependencies[] = taxonomy
+dependencies[] = active_tags
+dependencies[] = sk_group_tag
+
+scripts[] = bootstrap.js
+scripts[] = angular.js
+scripts[] = ui-bootstrap-tpls-0.2.0.js
+scripts[] = controllers.js
+scripts[] = directives.js
+scripts[] = filters.js
+
+; Include dropzone
+scripts[] = lib/dropzone/dropzone.js
+stylesheets[all][] = lib/dropzone/dropzone.css
+
+; Include fancybox
+scripts[] = lib/fancybox/jquery.fancybox.pack.js
+stylesheets[all][] = lib/fancybox/jquery.fancybox.css
+
+
+
+; scripts[] = jquery-ui-1.10.2.custom.js
+ stylesheets[all][] = css/ui-lightness/jquery-ui-1.10.2.custom.css
+

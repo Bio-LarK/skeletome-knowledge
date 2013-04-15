@@ -1,0 +1,10 @@
+; $Id: vocabulary_type.info $
+
+name = Vocabulary type content type
+description = Provides the implementation for the Vocabulary type content type.
+package = SKELETOME Vocabulary
+
+core = 7.x
+
+files[] = vocabulary_type.module
+files[] = vocabulary_type.install

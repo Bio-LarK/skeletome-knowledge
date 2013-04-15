@@ -1,0 +1,10 @@
+; $Id: news_item.info $
+
+name = News item content type
+description = Provides the implementation for the News item content type.
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = news_item.module
+files[] = news_item.install

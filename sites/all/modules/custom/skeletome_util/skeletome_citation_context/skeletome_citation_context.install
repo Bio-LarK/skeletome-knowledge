@@ -1,0 +1,161 @@
+<?php
+// $Id: skeletome_citation_context.install $
+
+function skeletome_citation_context_install() {
+  $t = get_t();
+
+  $scc = array(
+    'type' => 'skeletome_citation_context',
+    'name' => $t('SKELETOME Citation context'),
+    'base' => 'node_content',
+    'description' => $t('The SKELETOME Citation context content type.'),
+  );
+
+  $content_type = node_type_set_defaults($scc);
+  node_type_save($content_type);
+
+  foreach (_scc_installed_fields() as $field) {
+    field_create_field($field);
+  }
+
+  foreach (_scc_installed_instances() as $instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = $scc['type'];
+    field_create_instance($instance);
+  }
+
+  variable_set('comment_statement', COMMENT_NODE_CLOSED);
+  variable_set('node_options_statement', array('status'));
+  variable_set('node_preview_statement', DRUPAL_DISABLED);
+  variable_set('node_submitted_statement', FALSE);
+}
+
+function _scc_installed_fields() {
+  $t = get_t();
+  return array(
+    'field_ssc_bonedysplasia' => array(
+      'field_name'	=> 'field_ssc_bonedysplasia',
+      'label'		=> $t('Bone Dysplasia'),
+      'cardinality'	=> 1,
+      'type'		=> 'entityreference',
+      'settings'	=> array(
+	'referenceable_types' => array(
+	  'bone_dysplasia' => 'bone_dysplasia'
+	)
+      )
+    ),
+    'field_ssc_genemutation' => array(
+      'field_name'	=> 'field_ssc_genemutation',
+      'label'		=> $t('Gene Mutation'),
+      'cardinality'	=> 1,
+      'type'		=> 'entityreference',
+      'settings'	=> array(
+	'referenceable_types' => array(
+	  'gene_mutation' => 'gene_mutation'
+	)
+      )
+    ),
+    'field_ssc_biblio' => array(
+      'field_name'	=> 'field_ssc_biblio',
+      'label'		=> $t('Biblio item'),
+      'cardinality'	=> -1,
+      'type'		=> 'entityreference',
+      'settings'	=> array(
+	'referenceable_types' => array(
+	  'biblio' => 'biblio'
+	)
+      )
+    ),
+    'field_ssc_phenoterm' => array(
+      'field_name'	=> 'field_ssc_phenoterm',
+      'label'		=> $t('Pheno term'),
+      'cardinality'	=> 1,
+      'type'		=> 'taxonomy_term_reference',
+      'settings'	=> array(
+        'allowed_values' => array(
+          array(
+            'vocabulary' => 'skeletome_vocabulary',
+            'parent' => '0',
+          ),
+	)
+      )
+    ),
+  );
+}
+
+function _scc_installed_instances() {
+  $t = get_t();
+  return array(
+    'field_ssc_bonedysplasia' => array(
+      'field_name'	=> 'field_ssc_bonedysplasia',
+      'label'		=> $t('Bone Dysplasia'),
+      'cardinality'	=> 1,
+      'widget'		=> array(
+        'type'    => 'entityreference_autocomplete',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type' => 'entityreference_default'
+	)
+      )
+    ),
+    'field_ssc_genemutation' => array(
+      'field_name'	=> 'field_ssc_genemutation',
+      'label'		=> $t('Gene Mutation'),
+      'cardinality'	=> 1,
+      'widget'		=> array(
+        'type'    => 'entityreference_autocomplete',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type' => 'entityreference_default'
+	)
+      )
+    ),
+    'field_ssc_biblio' => array(
+      'field_name'	=> 'field_ssc_biblio',
+      'label'		=> $t('Biblio item'),
+      'cardinality'	=> -1,
+      'widget'		=> array(
+        'type'    => 'entityreference_autocomplete',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type' => 'entityreference_default'
+	)
+      )
+    ),
+    'field_ssc_phenoterm' => array(
+      'field_name' => 'field_ssc_phenoterm',
+      'label'       => $t('Pheno term'),
+      'cardinality' => 1,
+      'widget'      => array(
+        'type'    => 'taxonomy_autocomplete',
+      ),
+    ),
+  );
+}
+
+function skeletome_citation_context_uninstall() {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'skeletome_citation_context'));
+  $nids = array();
+  foreach ($result as $row) {
+    $nids[] = $row->nid;
+  }
+
+  node_delete_multiple($nids);
+
+  foreach (array_keys(_scc_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  $instances = field_info_instances('node', 'skeletome_citation_context');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+
+  node_type_delete('statement');
+
+  field_purge_batch(1000);
+}

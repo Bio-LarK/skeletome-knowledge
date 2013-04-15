@@ -1,0 +1,384 @@
+<?php
+// $Id: bone_dysplasia.module $
+
+function bone_dysplasia_menu()
+{
+    $items = array();
+
+    $items['node/%node/xrays/%'] = array(
+        'title' => 'View collection',
+        'page callback' => 'bone_dysplasia_view_collection',
+        'page arguments' => array(3),
+        'access callback' => 'is_node_of_type',
+        'access arguments' => array(1, 'bone_dysplasia'),
+        'type' => MENU_CALLBACK,
+    );
+
+    $items['node/%node/xrays'] = array(
+        'title' => 'X-Ray collection',
+        'page callback' => 'bd_xrays_callback',
+        'page arguments' => array(1),
+        'type' => MENU_LOCAL_TASK,
+        'file' => 'bd_xrays.inc',
+        'access callback' => 'is_node_of_type',
+        'access arguments' => array(1, 'bone_dysplasia'),
+        'weight' => 2,
+    );
+
+    $items['node/%node/phenotype'] = array(
+        'title' => 'Phenotype',
+        'page callback' => 'bd_phenotype_callback',
+        'page arguments' => array(1),
+        'type' => MENU_LOCAL_TASK,
+        'file' => 'bd_phenotype.inc',
+        'access callback' => 'is_node_of_type',
+        'access arguments' => array(1, 'bone_dysplasia'),
+        'weight' => 3,
+    );
+
+    $items['node/%node/phenotype/add/%'] = array(
+        'title' => 'Add phenotype',
+        'page callback' => 'add_phenotype_callback',
+        'page arguments' => array(1, 4),
+        'type' => MENU_CALLBACK,
+        'file' => 'bd_phenotype.inc',
+        'access callback' => TRUE,
+    );
+
+    $items['node/%node/phenotype/delete/%'] = array(
+        'title' => 'Delete phenotype',
+        'page callback' => 'delete_phenotype_callback',
+        'page arguments' => array(1, 4),
+        'type' => MENU_CALLBACK,
+        'file' => 'bd_phenotype.inc',
+        'access callback' => TRUE,
+    );
+
+    $items['node/%node/phenotype/citation/add'] = array(
+        'title' => 'Add citation',
+        'page callback' => 'add_citation_callback',
+        'page arguments' => array(1),
+        'type' => MENU_CALLBACK,
+        'file' => 'bd_phenotype.inc',
+        'access callback' => 'is_node_of_type',
+        'access arguments' => array(1, 'bone_dysplasia'),
+    );
+
+    $items['node/%node/phenotype/citation/delete/%/%/%/%'] = array(
+        'title' => 'Delete citation',
+        'page callback' => 'delete_citation_callback',
+        'page arguments' => array(5, 6, 7, 8),
+        'type' => MENU_CALLBACK,
+        'file' => 'bd_phenotype.inc',
+        'access callback' => 'is_node_of_type',
+        'access arguments' => array(1, 'bone_dysplasia'),
+    );
+
+    $items['node/%node/genemutations'] = array(
+        'title' => 'Gene Mutations',
+        'page callback' => 'bd_gm_callback',
+        'page arguments' => array(1),
+        'type' => MENU_LOCAL_TASK,
+        'file' => 'bd_genemutations.inc',
+        'access callback' => 'is_valid_gm_callback',
+        'access arguments' => array(1, 'node'),
+        'weight' => 4,
+    );
+
+    return $items;
+}
+
+function bone_dysplasia_view_collection($param)
+{
+    drupal_goto('node/' . $param);
+}
+
+function is_valid_gm_callback($node)
+{
+    if ($node->type === 'bone_dysplasia') {
+        if (array_key_exists('und', $node->field_bd_gm)) {
+            if (!empty($node->field_bd_gm['und'])) {
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+function bone_dysplasia_form_bone_dysplasia_node_form_alter(&$form, &$form_state, $form_id)
+{
+    if (isset($form['type']) && isset($form['#node'])) {
+        if ('bone_dysplasia_node_form' == $form_id) {
+//            if ((arg(3) != NULL) && (arg(4) != NULL)) {
+//                $form['#node']->title = arg(3);
+//                $form['title']['#default_value'] = arg(3);
+//            }
+//
+//
+//            $form['title']['#access'] = FALSE;
+//            $form['field_bd_statement']['#access'] = FALSE;
+//            $form['field_bd_uri']['#access'] = FALSE;
+//            $form['field_bd_diagnosis']['#access'] = FALSE;
+//            $form['field_bd_pub']['#access'] = FALSE;
+//            $form['field_bd_subbd']['#access'] = FALSE;
+//            $form['field_bd_superbd']['#access'] = FALSE;
+//            $form['field_bd_xrays']['#access'] = FALSE;
+//
+//            $form['field_bd_group']['#access'] = FALSE;
+//            $form['field_bd_gm']['#access'] = FALSE;
+//            $form['field_bd_sameas']['#access'] = FALSE;
+//
+//            $form['field_bd_moi']['#access'] = FALSE;
+//            $form['field_bd_seealso']['#access'] = FALSE;
+//            $form['field_skeletome_tags']['#access'] = FALSE;
+//
+//            $form['field_bd_omim']['#access'] = FALSE;
+//            $form['field_bd_mesh']['#access'] = FALSE;
+//            $form['field_bd_synonym']['#access'] = FALSE;
+//            $form['field_bd_er']['#access'] = FALSE;
+//            $form['field_bd_citationcontext']['#access'] = FALSE;
+        }
+    }
+}
+
+function bone_dysplasia_node_view($node, $view_mode)
+{
+    if ($node->type == 'bone_dysplasia' && $view_mode == 'full' && node_is_page($node)) {
+        if (array_key_exists('und', $node->body)) {
+            if (!empty($node->body['und'])) {
+                $content = $node->content['body'];
+                $content['#suffix'] = '<hr style="border:dashed #CCCCCC; border-width:1px 0 0; height:0;" />';
+                $node->content['body'] = $content;
+            }
+        }
+    }
+
+    return $node;
+}
+
+function bone_dysplasia_node_insert($node)
+{
+//    if ($node->type == 'bone_dysplasia') {
+//        if (arg(4) != NULL) {
+//            $bd_group_node = node_load(arg(4));
+//
+//            if ($bd_group_node->type == 'bone_dysplasia_group') {
+//                if (empty($bd_group_node->field_bdgroup_bonedysplasia['und'])) {
+//                    $bd = array(
+//                        '0' => array(
+//                            'target_id' => $node->nid,
+//                        ),
+//                    );
+//                    $bd_group_node->field_bdgroup_bonedysplasia = array(
+//                        'und' => $bd,
+//                    );
+//                } else {
+//                    $bds = $bd_group_node->field_bdgroup_bonedysplasia['und'];
+//                    $new_bd = array(
+//                        'target_id' => $node->nid,
+//                    );
+//                    array_push($bds, $new_bd);
+//                    $bd_group_node->field_bdgroup_bonedysplasia['und'] = $bds;
+//                }
+//                node_save($bd_group_node);
+//            }
+//        }
+//    }
+}
+
+function bone_dysplasia_node_presave($node)
+{
+//    if (property_exists($node, 'type')) {
+//        if ($node->type == 'bone_dysplasia') {
+//            if (arg(3) != NULL && arg(4) != NULL) {
+//                if (!is_numeric(arg(3))) {
+//                    if ((arg(3) !== 'delete') && (arg(3) !== 'add') && (arg(3) !== 'citation') && (arg(3) !== 'pheno_citation') && (arg(3) !== 'gm_citation')) {
+//                        $node->title = arg(3);
+//                        if (property_exists($node, 'field_bd_group')) {
+//                            $node->field_bd_group['und'][0]['target_id'] = arg(4);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+}
+
+function bone_dysplasia_node_delete($node)
+{
+//    if ($node->type == 'bone_dysplasia') {
+//        //Super type
+//        if (array_key_exists('und', $node->field_bd_superbd)) {
+//            if (!empty($node->field_bd_superbd['und'])) {
+//                $super_bd = $node->field_bd_superbd['und'][0]['target_id'];
+//                $super_bd_node = node_load($super_bd);
+//
+//                $count = 0;
+//                $subbd_idx = -1;
+//                $subbds = $super_bd_node->field_bd_subbd['und'];
+//                foreach ($subbds as $subbd) {
+//                    if ($subbd['target_id'] == $node->nid) {
+//                        $subbd_idx = $count;
+//                        break;
+//                    }
+//                    $count++;
+//                }
+//                if ($subbd_idx != -1) {
+//                    array_splice($subbds, $subbd_idx, 1);
+//                    $super_bd_node->field_bd_subbd['und'] = $subbds;
+//                    node_save($super_bd_node);
+//                }
+//            }
+//        }
+//
+//        //Sub-types
+//        if (array_key_exists('und', $node->field_bd_subbd)) {
+//            if (!empty($node->field_bd_subbd['und'])) {
+//                $sub_bds = $node->field_bd_subbd['und'];
+//                foreach ($sub_bds as $sub_bd) {
+//                    $sub_bd_node = node_load($sub_bd['target_id']);
+//                    $sub_bd_node->field_bd_superbd['und'] = array();
+//                    node_save($sub_bd_node);
+//                }
+//            }
+//        }
+//
+//        //Equiv
+//        if (array_key_exists('und', $node->field_bd_sameas)) {
+//            if (!empty($node->field_bd_sameas['und'])) {
+//                $equiv_bds = $node->field_bd_sameas['und'];
+//                foreach ($equiv_bds as $equiv_bd) {
+//                    $equiv_bd_node = node_load($equiv_bd['target_id']);
+//
+//                    $count = 0;
+//                    $equivbd_idx = -1;
+//                    $equivbds = $equiv_bd_node->field_bd_sameas['und'];
+//                    foreach ($equivbds as $equivbd) {
+//                        if ($equivbd['target_id'] == $node->nid) {
+//                            $equivbd_idx = $count;
+//                            break;
+//                        }
+//                        $count++;
+//                    }
+//                    if ($equivbd_idx != -1) {
+//                        array_splice($equivbds, $equivbd_idx, 1);
+//                        $equiv_bd_node->field_bd_sameas['und'] = $equivbds;
+//                        node_save($equiv_bd_node);
+//                    }
+//                }
+//            }
+//        }
+//
+//        //Groups
+//        if (array_key_exists('und', $node->field_bd_group)) {
+//            if (!empty($node->field_bd_group['und'])) {
+//                $bd_groups = $node->field_bd_group['und'];
+//                foreach ($bd_groups as $bd_group) {
+//                    $bd_group_node = node_load($bd_group['target_id']);
+//
+//                    $count = 0;
+//                    $bd_idx = -1;
+//                    $bds = $bd_group_node->field_bdgroup_bonedysplasia['und'];
+//                    foreach ($bds as $bd) {
+//                        if ($bd['target_id'] == $node->nid) {
+//                            $bd_idx = $count;
+//                            break;
+//                        }
+//                        $count++;
+//                    }
+//                    if ($bd_idx != -1) {
+//                        array_splice($bds, $bd_idx, 1);
+//                        $bd_group_node->field_bdgroup_bonedysplasia['und'] = $bds;
+//                        node_save($bd_group_node);
+//                    }
+//                }
+//            }
+//        }
+//
+//        // See also: Bone Dysplasias
+//
+//        $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+//        $result = db_query($sql, array(':type' => 'bone_dysplasia'));
+//        foreach ($result as $row) {
+//            $bd_node = node_load($row->nid);
+//            if (array_key_exists('und', $bd_node->field_bd_seealso)) {
+//                if (!empty($bd_node->field_bd_seealso['und'])) {
+//                    $count = 0;
+//                    $bdg_idx = -1;
+//                    $see_alsos = $bd_node->field_bd_seealso['und'];
+//                    foreach ($see_alsos as $see_also) {
+//                        if ($see_also['target_id'] == $node->nid) {
+//                            $bdg_idx = $count;
+//                            break;
+//                        }
+//                        $count++;
+//                    }
+//                    if ($bdg_idx != -1) {
+//                        array_splice($see_alsos, $bdg_idx, 1);
+//                        $bd_node->field_bd_seealso['und'] = $see_alsos;
+//                        node_save($bd_node);
+//                    }
+//                }
+//            }
+//        }
+//
+//        // See also: Bone Dysplasia Groups
+//
+//        $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+//        $result = db_query($sql, array(':type' => 'bone_dysplasia_group'));
+//        foreach ($result as $row) {
+//            $bdg_node = node_load($row->nid);
+//            if (array_key_exists('und', $bdg_node->field_bdgroup_seealso)) {
+//                if (!empty($bdg_node->field_bdgroup_seealso['und'])) {
+//                    $count = 0;
+//                    $bdg_idx = -1;
+//                    $see_alsos = $bdg_node->field_bdgroup_seealso['und'];
+//                    foreach ($see_alsos as $see_also) {
+//                        if ($see_also['target_id'] == $node->nid) {
+//                            $bdg_idx = $count;
+//                            break;
+//                        }
+//                        $count++;
+//                    }
+//                    if ($bdg_idx != -1) {
+//                        array_splice($see_alsos, $bdg_idx, 1);
+//                        $bdg_node->field_bdgroup_seealso['und'] = $see_alsos;
+//                        node_save($bdg_node);
+//                    }
+//                }
+//            }
+//        }
+//
+//        //Gene mutations
+//        if (array_key_exists('und', $node->field_bd_gm)) {
+//            if (!empty($node->field_bd_gm['und'])) {
+//                $gms = $node->field_bd_gm['und'];
+//                foreach ($gms as $gm) {
+//                    $gm_node = node_load($gm['target_id']);
+//                    $gm_node->field_gene_mutation_bd['und'] = array();
+//                    node_save($gm_node);
+//                }
+//            }
+//        }
+//
+//        //Statements
+//        if (array_key_exists('und', $node->field_bd_statement)) {
+//            if (!empty($node->field_bd_statement['und'])) {
+//                $statements = $node->field_bd_statement['und'];
+//                foreach ($statements as $statements) {
+//                    node_delete($statements['target_id']);
+//                }
+//            }
+//        }
+//
+//        //XRay collection
+//        if (array_key_exists('und', $node->field_bd_xrays)) {
+//            if (!empty($node->field_bd_xrays['und'])) {
+//                $xray_nid = $node->field_bd_xrays['und'][0]['target_id'];
+//                node_delete($xray_nid);
+//            }
+//        }
+
+//    }
+}

@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Implements hook_taxonomy_term_delete
+ */
+function sk_group_tag_taxonomy_term_delete($term) {
+    $group_tags_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_tag');
+    if($term->vid == $group_tags_taxonomy->vid) {
+
+        $term_id = $term->tid;
+        // find all bone dysplasias that have this term
+        $sql = "SELECT *
+                FROM {field_data_sk_bd_tags} t
+                WHERE t.sk_bd_tags_tid = $term_id";
+        $results = db_query($sql);
+        $bone_dysplasia_ids = array();
+        foreach($results as $result) {
+            $bone_dysplasia_ids[] = $result->entity_id;
+        }
+
+        // remove these tags from the bone dysplasias
+        foreach($bone_dysplasia_ids as $bone_dysplasia_id) {
+            $bone_dysplasia = node_load($bone_dysplasia_id);
+
+            if(isset($bone_dysplasia->sk_bd_tags[LANGUAGE_NONE][0])) {
+                foreach($bone_dysplasia->sk_bd_tags[LANGUAGE_NONE] as $sk_bd_tag) {
+                    if($sk_bd_tag['value'] == $term_id) {
+                        unset($sk_bd_tag);
+                    }
+                }
+                node_save($bone_dysplasia);
+            }
+        }
+    }
+}

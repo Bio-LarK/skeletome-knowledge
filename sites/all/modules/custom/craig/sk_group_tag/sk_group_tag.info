@@ -1,0 +1,11 @@
+name = Group Tag
+description = Tags for Skeletome Groups
+package = Skeletome Groups
+core = 7.x
+
+dependencies[] = entityreference
+dependencies[] = link
+dependencies[] = taxonomy
+dependencies[] = active_tags
+dependencies[] = sk_group_name
+dependencies[] = sk_group_source_release

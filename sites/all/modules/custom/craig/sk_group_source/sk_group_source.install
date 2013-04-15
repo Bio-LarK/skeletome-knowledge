@@ -1,0 +1,143 @@
+<?php
+/**
+ * @file
+ * Group Source Install e.g. ISDS
+ */
+
+/**
+ * Implements hook_install().
+ */
+function sk_group_source_install() {
+    // Set default variables.
+//    variable_set('windfarms_gmap', 1);
+//    variable_set('windfarms_default_center_lat', 42.91455);
+//    variable_set('windfarms_default_center_long', -75.569851);
+//    variable_set('windfarms_default_gmap_zoom', 8);
+
+    // Get localization function for installation as t() may be unavailable.
+    $t = get_t();
+
+    // Give user feedback.
+//    drupal_set_message($t('Wind Farms variables created.'));
+
+    // Load the taxonomy module
+    drupal_load('module', 'taxonomy.module');
+
+    // Define the vocab
+    $vocab = (object) array(
+        'name' => 'Group Sources', // The name of our vocabulary
+        'machine_name' => 'sk_group_source',
+        'description' => t('A vocabulary of sources for groups e.g. ISDS.'), // A description of the vocabulary
+        'hierarchy' => 0, // allows hierarchy of terms
+        'module' => 'sk_group_source',
+        'weight' => 0, // the weight of the vocabulary in the list
+    );
+
+    // Save the vocabulary
+    taxonomy_vocabulary_save($vocab);
+
+    foreach (_sk_group_source_installed_fields() as $field) {
+        field_create_field($field);
+    }
+
+    foreach (_sk_group_source_installed_instances() as $instance) {
+        $instance['entity_type'] = 'taxonomy_term';
+        $instance['bundle'] = 'sk_group_source';
+        field_create_instance($instance);
+    }
+
+    drupal_set_message($t('Group Source created.'));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function sk_group_source_uninstall() {
+    $t = get_t();
+
+    // Get the Vocab ID
+    $sql = 'SELECT vid FROM {taxonomy_vocabulary} v WHERE v.machine_name = :machine_name';
+    $vid = db_query($sql, array(':machine_name' => 'sk_group_source'))->fetchField();
+
+    // Get all taxonomy terms with the vid for
+    $sql_query  = 'SELECT tid FROM {taxonomy_term_data} t WHERE t.vid = :vid';
+    $result = db_query($sql_query, array(':vid' => $vid));
+
+    // Delete all terms
+    foreach ($result as $row) {
+        taxonomy_term_delete($row->tid);
+    }
+    drupal_set_message($t('Taxonomy Terms removed.'));
+
+    // Remove all fields and field instances.
+    foreach (field_info_instances('taxonomy_term', 'sk_group_source') as $field_name => $instance) {
+        field_delete_field($field_name);
+        field_delete_instance($instance);
+    }
+    drupal_set_message($t('Group Source field and field instances removed.'));
+
+    // Delete the Vocabulary
+    taxonomy_vocabulary_delete($vid);
+
+    drupal_set_message($t('Group Source removed.'));
+
+    // Clean up deleted fields.
+    field_purge_batch(1000);
+}
+
+
+
+
+/**
+ * Define the fields for our content type.
+ *
+ * This big array is factored into this function for readability.
+ *
+ * @return
+ *  An associative array specifying the fields we wish to add to our
+ *  new node type.
+ */
+function _sk_group_source_installed_fields() {
+    return array(
+        'sk_gs_field_uri' => array(
+            'field_name' => 'sk_gs_field_uri',
+            'cardinality' => 1,
+            'type'        => 'text',
+            'settings'    => array(
+                'max_length' => 200,
+            )
+        )
+    );
+}
+
+/**
+ * Define the field instances for our content type.
+ *
+ * The instance lets Drupal know which widget to use to allow the user to enter
+ * data and how to react in different view modes.  We are going to display a
+ * page that uses a custom "node_example_list" view mode.  We will set a
+ * cardinality of three allowing our content type to give the user three color
+ * fields.
+ *
+ * This big array is factored into this function for readability.
+ *
+ * @return
+ *  An associative array specifying the instances we wish to add to our new
+ *  node type.
+ */
+function _sk_group_source_installed_instances() {
+    return array(
+        'sk_gs_field_uri' => array(
+            'field_name' => 'sk_gs_field_uri',
+            'label'       => t('URI for the source of a group tag.'),
+            'widget'      => array(
+                'type'    => 'text_textfield',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'text'
+                ),
+            ),
+        )
+    );
+}

@@ -1,0 +1,41 @@
+<?php
+// $Id: vocabulary_type.install $
+
+function vocabulary_type_install() {
+  $t = get_t();
+
+  $vocabulary_type = array(
+    'type' => 'vocabulary_type',
+    'name' => $t('Vocabulary type'),
+    'base' => 'node_content',
+    'description' => $t('The Vocabulary type content type.'),
+  );
+
+  $content_type = node_type_set_defaults($vocabulary_type);
+  node_type_save($content_type);
+
+  variable_set('comment_vocabulary_type', COMMENT_NODE_CLOSED);
+  variable_set('node_options_vocabulary_type', array('status'));
+  variable_set('node_preview_vocabulary_type', DRUPAL_DISABLED);
+  variable_set('node_submitted_vocabulary_type', FALSE);
+}
+
+function vocabulary_type_uninstall() {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'vocabulary_type'));
+  $nids = array();
+  foreach ($result as $row) {
+    $nids[] = $row->nid;
+  }
+
+  node_delete_multiple($nids);
+
+  $instances = field_info_instances('node', 'vocabulary_type');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+
+  node_type_delete('vocabulary_type');
+
+  field_purge_batch(1000);
+}

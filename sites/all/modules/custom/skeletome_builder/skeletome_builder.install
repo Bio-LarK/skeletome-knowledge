@@ -1,0 +1,54 @@
+<?php
+
+/**
+* Implements hook_install()
+*/
+function skeletome_builder_install() {
+    create_sk_moderator_role();
+}
+
+
+function skeletome_builder_uninstall() {
+    delete_sk_moderator_role();
+}
+
+
+/**
+ * Create the SK Moderator role.
+ *
+ * The SK Moderator role has permissions to edit pages.
+ */
+function create_sk_moderator_role() {
+    // Create the SK Moderator Role
+    if(!user_role_load_by_name('sk_moderator')) {
+        $role = new stdClass();
+        $role->name = 'sk_moderator';
+        user_role_save($role);
+    }
+
+    // Role to grant the permissions to
+    $editor_role = user_role_load_by_name('sk_moderator');
+    $editor_rid = $editor_role->rid;
+    // Define our 'editor' role permissions
+    $editor_permissions = array(
+        'edit any bone_dysplasia content' => TRUE, // Grant permission
+        'edit any gene content' => TRUE, // Grant permission
+        'edit any gene_mutation content' => TRUE, // Grant permission
+        'edit any gene_mutation_type content' => TRUE, // Grant permission
+        'edit any statement content' => TRUE, // Grant permission
+        'delete any statement content' => TRUE, // Grant permission
+        'administer comments' => TRUE, // Grant permission
+//        'access dashboard' => FALSE, // Revoke permission
+    );
+
+    // Grant permissions to our 'editor' role
+    user_role_change_permissions($editor_rid, $editor_permissions);
+}
+
+/**
+ * Removes the SK Moderator role from the system.
+ */
+function delete_sk_moderator_role() {
+//    $sk_moderator = user_role_load_by_name('sk_moderator');
+//    user_role_delete($sk_moderator);
+}

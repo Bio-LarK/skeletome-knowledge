@@ -1,0 +1,10 @@
+; $Id: skeletome_citation_context.info $
+
+name = SKELETOME Citation context
+description = SKELETOME Citation context content type
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = skeletome_citation_context.install
+files[] = skeletome_citation_context.module

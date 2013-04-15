@@ -1,0 +1,11 @@
+; $Id: skeletome_tagging.info $
+
+name = SKELETOME tagging
+description = SKELETOME tagging utility
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = skeletome_tagging.module
+
+scripts[] = skeletome_tagging.js

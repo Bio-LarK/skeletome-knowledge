@@ -1,0 +1,8 @@
+<?php
+// $Id: vocabulary_import.install $
+
+function vocabulary_import_install() {
+}
+
+function vocabulary_import_uninstall() {
+}

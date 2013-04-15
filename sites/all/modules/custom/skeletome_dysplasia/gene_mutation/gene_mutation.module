@@ -1,0 +1,326 @@
+<?php
+// $Id: gene_mutation.module $
+
+function gene_mutation_init() {
+  module_load_include('inc', 'gene_mutation', 'gm_citation');
+}
+
+function gene_mutation_menu() {
+  $items['node/%node/citation/add'] = array(
+    'title' 		=> 'Add citation',
+    'page callback' 	=> 'add_gm_citation_callback',
+    'type' 		=> MENU_CALLBACK,
+    'file' 		=> 'gm_citation.inc',
+    'access callback' 	=> 'is_node_of_type',
+    'access arguments' 	=> array(1, 'gene_mutation'),
+  );
+
+  $items['node/%node/citation/delete/%/%'] = array(
+    'title' 		=> 'Delete citation',
+    'page callback' 	=> 'delete_gm_citation_callback',
+    'page arguments' 	=> array(4, 5),
+    'type' 		=> MENU_CALLBACK,
+    'file' 		=> 'gm_citation.inc',
+    'access callback' 	=> 'is_node_of_type',
+    'access arguments' 	=> array(1, 'gene_mutation'),
+  );
+
+  return $items;
+}
+
+function gene_mutation_node_view($node, $view_mode) {
+  if ($node->type == 'gene_mutation' && $view_mode == 'full' && node_is_page($node)) {
+    if (array_key_exists('und', $node->field_gene_mutation_bd)) {
+      drupal_add_library('system', 'ui.core');
+      drupal_add_library('system', 'ui.accordion');
+      drupal_add_library('system', 'ui.button');
+      drupal_add_library('system', 'ui.dialog');
+      drupal_add_library('system', 'ui.widget');
+      drupal_add_library('system', 'ui.position');
+      drupal_add_library('system', 'ui.size');
+      drupal_add_library('system', 'ui.autocomplete');
+      drupal_add_js(array('gmNid' => $node->nid), 'setting');
+      drupal_add_js(array('bdNid' => $node->field_gene_mutation_bd['und'][0]['nid']), 'setting');
+      drupal_add_css(drupal_get_path('module', 'gene_mutation') . '/gm_citation.css', array('group' => CSS_DEFAULT));
+      drupal_add_js(drupal_get_path('module', 'gene_mutation') .'/gm_citation.js', array('group' => JS_DEFAULT));
+
+      if (user_is_logged_in()) {
+	$node->content['add_ssc_citation'] = array(
+	  '#suffix' => '<div style="text-align:right;"><a id="add_gm_ssc_button" href="#">Add Citation</a></div><hr style="border:dashed #CCCCCC; border-width:1px 0 0; height:0;" />
+			<div id="add_gm_scc_dialog" title="Add citation"><form>
+			  <div class="ui-widget"><div style="float:left;"><label for="gm_pub">Publication: </label></div><div style="float:right;"><input id="gm_pub" /></div></div>
+			</form></div>',
+	);
+      }
+
+      if (array_key_exists('und', $node->field_gene_mutation_ssc)) {
+	$pub_accordion = '<div class="pub_accordion">';
+	$scc_node = node_load($node->field_gene_mutation_ssc['und'][0]['target_id']);
+	$js_biblio = array();
+	foreach ($scc_node->field_ssc_biblio['und'] as $biblio) {
+	  $js_biblio[] = $biblio['nid'];
+	  $biblio_node = node_load($biblio['nid']);
+	  $html_scc = create_html_for_scc($node->nid, $biblio_node, $scc_node->nid);
+	  $pub_accordion = $pub_accordion . $html_scc;
+ 	}
+	$pub_accordion = $pub_accordion . '</div>';
+	drupal_add_js(array('biblioItems' => $js_biblio), 'setting');
+
+	$node->content['publications'] = array(
+	  '#suffix' => '<div class="block-title"><h2 class="title">Publications</h2></div>' . $pub_accordion,
+	);
+      }
+    }
+  }
+
+  return $node;
+}
+
+function gene_mutation_form_gene_mutation_node_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['type']) && isset($form['#node'])) {
+      if ('gene_mutation_node_form' == $form_id) {
+	$form['field_gene_mutation_gene']['#access'] = FALSE;
+	$form['field_gene_mutation_bd']['#access'] = FALSE;
+	$form['field_gene_mutation_uri']['#access'] = FALSE;
+	$form['field_gene_mutation_ssc']['#access'] = FALSE;
+    }
+  }
+}
+
+function gene_mutation_node_insert($node) {
+  if ($node->type == 'gene_mutation') {
+
+    if ((arg(3) != NULL) && (arg(4) != NULL)) {
+      if (is_numeric(arg(3)) && is_numeric(arg(4))) {
+	$gene_node = node_load(arg(3));
+	if (array_key_exists('und', $gene_node->field_gene_gene_mutation)) {
+	  if (!empty($gene_node->field_gene_gene_mutation['und'])) {
+	    $count = count($gene_node->field_gene_gene_mutation['und']);
+	    $gene_node->field_gene_gene_mutation['und'][$count]['target_id'] = $node->nid;
+	  } else {
+	    $gene_node->field_gene_gene_mutation['und'][0]['target_id'] = $node->nid;
+	  }
+	} else {
+	  $gene_node->field_gene_gene_mutation['und'][0]['target_id'] = $node->nid;
+	}
+	node_save($gene_node);
+
+	$bd_node = node_load(arg(4));
+	if (array_key_exists('und', $bd_node->field_bd_gm)) {
+	  if (!empty($bd_node->field_bd_gm['und'])) {
+	    $count = count($bd_node->field_bd_gm['und']);
+	    $bd_node->field_bd_gm['und'][$count]['target_id'] = $node->nid;
+	  } else {
+	    $bd_node->field_bd_gm['und'][0]['target_id'] = $node->nid;
+	  }
+	} else {
+	  $bd_node->field_bd_gm['und'][0]['target_id'] = $node->nid;
+	}
+	node_save($bd_node);
+      }
+    }
+  }
+}
+
+
+function gene_mutation_node_presave($node) {
+  if (property_exists($node, 'type')) {
+    if ($node->type == 'gene_mutation') {
+      if (arg(3) != NULL) {
+	if (arg(4) != NULL) {
+	  if (is_numeric(arg(3)) && is_numeric(arg(4))) {
+	    $node->field_gene_mutation_gene['und'][0]['target_id'] = arg(3);
+	    $node->field_gene_mutation_bd['und'][0]['target_id'] = arg(4);
+	  }
+	}
+      } else {
+	if (property_exists($node, 'field_gm_mutation_type')) {
+	  $val = $node->field_gm_mutation_type;
+
+	  $gmt_nidss[] = array();
+	  if (!empty($val['und'])) {
+	    $gmt_nids = $node->field_gm_mutation_type['und'];
+	    foreach ($gmt_nids as $pos => $gmt_nid) {
+	      $gmt_nidss[] = $gmt_nid['target_id'];
+	      _add_gm_togmt($gmt_nid['target_id'], $node->nid);
+	    }
+	  }
+
+	  _check_gmts_for_gm($node->nid, $gmt_nidss);
+	}
+      }
+    }
+  }
+}
+
+function _add_gm_togmt($gmt_nid, $gm_nid) {
+  $gmt_node = node_load($gmt_nid);
+  if (property_exists($gmt_node, 'field_gm_type_gene_mutation')) {
+    $gms = $gmt_node->field_gm_type_gene_mutation;
+    if (empty($gms['und'])) {
+      $gmt_node->field_gm_type_gene_mutation['und'][0]['target_id'] = $gm_nid;
+    } else {
+      $vals = $gms['und'];
+      $found = 0;
+      foreach ($vals as $val) {
+	if ($val['target_id'] == $gm_nid) {
+	  $found = 1;
+	}
+      }
+      if ($found == 0) {
+	$gmt_node->field_gm_type_gene_mutation['und'][count($gms['und'])]['target_id'] = $gm_nid;
+      }
+    }
+  }
+  node_save($gmt_node);
+}
+
+function _check_gmts_for_gm($gm_nid, $gmt_nids) {
+  $gmts = array();
+  $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'gene_mutation_type'));
+  foreach ($result as $row) {
+    $gmts[] = $row->nid;
+  }
+  
+  foreach ($gmts as $gmt) {
+    if (!in_array($gmt, $gmt_nids)) {
+      $gmt_node = node_load($gmt);
+      $dirty = FALSE;
+
+      if (property_exists($gmt_node, 'field_gm_type_gene_mutation')) {
+	$gms = $gmt_node->field_gm_type_gene_mutation;
+	if (!empty($gms['und'])) {
+	  $vals = $gms['und'];
+	  $idx = -1;
+	  foreach ($vals as $pos => $val) {
+	    if ($val['target_id'] == $gm_nid) {
+	      $idx = $pos;
+	      break;
+	    }
+	  }
+	  if ($idx != -1) {
+	    unset($gmt_node->field_gm_type_gene_mutation['und'][$idx]);
+	    $dirty = TRUE;
+	  }
+	}
+      }
+
+      if ($dirty) {
+	node_save($gmt_node);
+      }
+    }
+  }
+}
+
+function gene_mutation_node_delete($node) {
+  if ($node->type == 'gene_mutation') {
+    if (property_exists($node, 'field_gm_mutation_type')) {
+      $val = $node->field_gm_mutation_type;
+
+      $gmt_nidss[] = array();
+      if (!empty($val['und'])) {
+	$gmt_nids = $node->field_gm_mutation_type['und'];
+	foreach ($gmt_nids as $pos => $gmt_nid) {
+	  $gmt_nidss[] = $gmt_nid['nid'];
+	}
+      }
+
+      _delete_gmts_for_gm($node->nid, $gmt_nidss);
+    }
+
+    if (array_key_exists('und', $node->field_gene_mutation_gene)) {
+      if (!empty($node->field_gene_mutation_gene['und'])) {
+	$gene_node = node_load($node->field_gene_mutation_gene['und'][0]['nid']);
+	$gms = $gene_node->field_gene_gene_mutation['und'];
+
+	$idx = -1;
+	foreach ($gms as $pos => $val) {
+	  if ($val['nid'] == $node->nid) {
+	    $idx = $pos;
+	    break;
+	  }
+	}
+	if ($idx != -1) {
+	  array_splice($gene_node->field_gene_gene_mutation['und'], $idx, 1);
+	  node_save($gene_node);
+	}
+      }
+    }
+
+    if (array_key_exists('und', $node->field_gene_mutation_bd)) {
+      if (!empty($node->field_gene_mutation_bd['und'])) {
+	$bd_node = node_load($node->field_gene_mutation_bd['und'][0]['nid']);
+	$gms = $bd_node->field_bd_gm['und'];
+
+	$idx = -1;
+	foreach ($gms as $pos => $val) {
+	  if ($val['nid'] == $node->nid) {
+	    $idx = $pos;
+	    break;
+	  }
+	}
+	if ($idx != -1) {
+	  array_splice($bd_node->field_bd_gm['und'], $idx, 1);
+	  node_save($bd_node);
+	}
+      }
+    }
+
+    if (array_key_exists('und', $node->field_gene_mutation_ssc)) {
+      foreach($node->field_gene_mutation_ssc['und'] as $scc) {
+	$scc_node = node_load($scc['nid']);
+
+	if (array_key_exists('und', $scc_node->field_ssc_bonedysplasia)) {
+	  $bd_node = node_load($scc_node->field_ssc_bonedysplasia['und'][0]['nid']);
+	  remove_from_array($bd_node, 'field_bd_citationcontext', 'nid', $scc_node->nid, TRUE);
+	}
+
+	if (array_key_exists('und', $scc_node->field_ssc_biblio)) {
+	  foreach($scc_node->field_ssc_biblio['und'] as $pub) {
+	    $biblio_node = node_load($pub['nid']);
+	    remove_from_array($biblio_node, 'field_biblio_ssc_field', 'nid', $scc_node->nid, TRUE);
+	  }
+	}
+
+	node_delete($scc_node->nid);
+      }
+    }
+  }
+}
+
+function _delete_gmts_for_gm($gm_nid, $gmt_nids) {
+  $gmts = array();
+  $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'gene_mutation_type'));
+  foreach ($result as $row) {
+    $gmts[] = $row->nid;
+  }
+  
+  foreach ($gmts as $gmt) {
+    $gmt_node = node_load($gmt);
+    $dirty = FALSE;
+
+    if (property_exists($gmt_node, 'field_gm_type_gene_mutation')) {
+      $gms = $gmt_node->field_gm_type_gene_mutation;
+      if (!empty($gms['und'])) {
+	$vals = $gms['und'];
+	$idx = -1;
+	foreach ($vals as $pos => $val) {
+	  if ($val['nid'] == $gm_nid) {
+	    $idx = $pos;
+	    break;
+	  }
+	}
+	if ($idx != -1) {
+	  unset($gmt_node->field_gm_type_gene_mutation['und'][$idx]);
+	  $dirty = TRUE;
+	}
+      }
+    }
+
+    if ($dirty) {
+      node_save($gmt_node);
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<?php
+// $Id: gene.module $
+
+function gene_node_view($node, $view_mode) {
+  if ($node->type == 'gene' && $view_mode == 'full' && node_is_page($node)) {
+    $view = views_embed_view('gene_bone_dysplasias', 'block_1', $node->nid);
+
+    $node->content['bds'] = array(
+      '#prefix' => '  <div class="block-title"><h2 class="title">Bone Dysplasias</h2></div>',
+      '#suffix' => $view,
+    );
+
+  }
+
+  return $node;
+}
+
+function gene_menu() {
+  $items['node/%node/gene_gm'] = array(
+    'title' => 'Gene Mutations',
+    'page callback' => 'gene_gene_mutations_callback',
+    'page arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'gene_genemutations.inc',
+    'access callback' => '_check_gene_gm_callback',
+    'access arguments' => array(1, 'node'),
+    'weight' => 2,
+  );
+
+  return $items;
+}
+
+function _check_gene_gm_callback($node) {
+  if ($node->type === 'gene') {
+    if (array_key_exists('und', $node->field_gene_gene_mutation)) {
+      if (!empty($node->field_gene_gene_mutation['und'])) {
+	return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+function gene_node_presave($node) {
+  if (property_exists($node, 'type')) {
+    if ($node->type == 'gene') {
+    }
+  }
+}
+
+function gene_node_insert($node) {
+  if ($node->type == 'gene') {
+
+  }
+}
+
+function gene_form_gene_node_form_alter(&$form, &$form_state, $form_id) {
+if (isset($form['type']) && isset($form['#node'])) {
+  if ('gene_node_form' == $form_id) {
+    if (arg(3) != NULL) {
+      $form['#node']->title = arg(3);
+      $form['title']['#default_value'] = arg(3);
+    }
+
+    $form['field_gene_gene_mutation']['#access'] = FALSE;
+    $form['field_gene_uri']['#access'] = FALSE;
+    }
+  }
+}
+
+function gene_node_delete($node) {
+  // if ($node->type == 'gene') {
+//     if (array_key_exists('und', $node->field_gene_gene_mutation)) {
+//       if (!empty($node->field_gene_gene_mutation['und'])) {
+// 	$gms = $node->field_gene_gene_mutation['und'];
+// 	foreach ($gms as $gm) {
+// 	  $gm_node = node_load($gm['target_id']);
+// 	  $gm_node->field_gene_mutation_gene['und'] = array();
+// 	  node_save($gm_node);
+// 	}
+//       }
+//     }
+//   }
+}

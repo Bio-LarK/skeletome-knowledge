@@ -1,0 +1,641 @@
+<?php
+// $Id: vocabulary_import.module $
+
+/**
+ * Implements hook_taxonomy_term_view().
+ */
+function vocabulary_import_taxonomy_term_view($term, $view_mode, $langcode)
+{
+// 	dpm($term);
+}
+
+function vocabulary_import_menu()
+{
+    $items = array();
+    $items['admin/config/content/vocabulary_import'] = array(
+        'title' => 'Vocabulary import',
+        'description' => 'Configuration for the Vocabulary import module',
+        'page callback' => 'vocabulary_import_page',
+        'access arguments' => array('access content'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    return $items;
+}
+
+function vocabulary_import_page()
+{
+    return drupal_get_form('vocabulary_import_form');
+}
+
+function vocabulary_import_form()
+{
+    $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+    $form['configuration'] = array(
+        '#type' => 'vertical_tabs',
+        '#title' => t('Configuration'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+    );
+
+    $form['configuration']['ontology_location'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Ontology location'),
+        '#weight' => 1,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => _ontology_location_form(),
+    );
+
+    $form['configuration']['ontology_concepts'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Ontology entities'),
+        '#weight' => 2,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => _ontology_entities_form(),
+    );
+
+    $form['configuration']['ontology_properties'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Ontology properties'),
+        '#weight' => 3,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => _ontology_properties_form(),
+    );
+
+    $form['configuration']['ontology_vocabulary'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Vocabulary'),
+        '#weight' => 4,
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#tree' => TRUE,
+        'value' => _ontology_vocabulary_form(),
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+    );
+
+    return $form;
+}
+
+
+function _ontology_location_form()
+{
+    $ontology_location_form = array();
+    $ontology_location_form['#attributes'] = array('enctype' => "multipart/form-data");
+
+    $ontology_location_form['ontology_url'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Ontology URL'),
+        '#description' => t('Specify the URL location of the ontology.'),
+    );
+
+    $ontology_location_form['ontology_file'] = array(
+        '#type' => 'file',
+        '#title' => t('Local ontology file'),
+        '#description' => t('Choose a local ontology file.'),
+    );
+
+    return $ontology_location_form;
+}
+
+function _ontology_entities_form()
+{
+    $ontology_entities_form = array();
+
+    $ontology_entities_form['root_class_list'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Root classes'),
+        '#description' => t('The root classes from which the vocabulary will be built. Please specify one per line.'),
+        '#required' => TRUE,
+    );
+
+    $ontology_entities_form['class_level'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Class level'),
+        '#description' => t('The level of the class to be considered when building the vocabulary. For example, choose 2 if you want the vocabulary to be built by taking into account all concepts occuring at level 2 and below (subject to the choice specified in the Level handling option).'),
+        '#required' => TRUE,
+    );
+
+    $ontology_entities_form['level_or_below'] = array(
+        '#type' => 'radios',
+        '#title' => t('Level handling'),
+        '#description' => t('The way in which the class level should be handled, i.e., consider only the provided level or all the concepts occuring from the specified level below.'),
+        '#required' => TRUE,
+        '#options' => array(
+            0 => 'Level only',
+            1 => 'Level and below'
+        ),
+    );
+
+    $ontology_entities_form['class_instance_choice'] = array(
+        '#type' => 'radios',
+        '#title' => t('Entity type'),
+        '#description' => t('The type of the entity to be used for building the vocabulary terms.'),
+        '#required' => TRUE,
+        '#options' => array(
+            0 => 'Class',
+            1 => 'Instance'
+        ),
+    );
+
+    return $ontology_entities_form;
+}
+
+function _ontology_properties_form()
+{
+    $ontology_properties_form = array();
+
+    $ontology_properties_form['property_value'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Property value for vocabulary terms'),
+        '#description' => t('The ontology property value to be used for building the vocabulary terms.'),
+        '#default_value' => 'http://www.w3.org/2000/01/rdf-schema#label',
+        '#required' => TRUE,
+    );
+
+    $ontology_properties_form['synonym_property_value'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Synonym property value for vocabulary terms'),
+        '#description' => t('The ontology property value to be used for building additional vocabulary terms as synonyms.'),
+        '#required' => FALSE,
+    );
+
+    return $ontology_properties_form;
+}
+
+function _ontology_vocabulary_form()
+{
+    $ontology_vocabulary_form = array();
+
+    $options = array();
+    foreach (taxonomy_vocabulary_get_names() as $vocab => $val) {
+        $options[$vocab] = $val->name;
+    }
+
+    $ontology_vocabulary_form['vocabulary_list'] = array(
+        '#type' => 'select',
+        '#title' => t('Vocabulary'),
+        '#description' => t('The vocabulary to be populated with terms.'),
+        '#options' => $options,
+        '#required' => TRUE,
+    );
+
+    $options = array();
+    $options['- Select -'] = '- Select -';
+    $sql = 'SELECT field_name FROM {field_config}';
+    $result = db_query($sql, array());
+    foreach ($result as $row) {
+        $options[$row->field_name] = $row->field_name;
+    }
+
+    $ontology_vocabulary_form['fields_list'] = array(
+        '#type' => 'select',
+        '#title' => t('URI field'),
+        '#description' => t('The URI field attached to the term.'),
+        '#options' => $options,
+    );
+
+    $ontology_vocabulary_form['vtype_fields_list'] = array(
+        '#type' => 'select',
+        '#title' => t('Vocabulary type field'),
+        '#description' => t('The vocabulary type field attached to the term.'),
+        '#options' => $options,
+    );
+
+    $vtype_options = array();
+    $vtype_options[-1] = '- Select -';
+    $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => 'vocabulary_type'));
+    foreach ($result as $row) {
+        $node = node_load($row->nid);
+        $vtype_options[$node->nid] = $node->title;
+    }
+
+    $ontology_vocabulary_form['vocabulary_type_value'] = array(
+        '#type' => 'select',
+        '#title' => t('Existing vocabulary type'),
+        '#description' => t('Choose the vocabulary type property to be attached to the terms.'),
+        '#options' => $vtype_options,
+        '#required' => FALSE,
+    );
+
+    $ontology_vocabulary_form['vocabulary_new_type_value'] = array(
+        '#type' => 'textfield',
+        '#title' => t('New vocabulary type'),
+        '#description' => t('Create a new vocabulary type property to be attached to the terms.'),
+        '#required' => FALSE,
+    );
+
+    return $ontology_vocabulary_form;
+}
+
+function vocabulary_import_form_validate($form, &$form_state)
+{
+    $ontology_url = $form_state['values']['configuration']['ontology_location']['value']['ontology_url'];
+    $file_name = $_FILES['files']['name']['configuration'];
+
+    if (empty($ontology_url) && empty($file_name)) {
+        drupal_set_message('Please enter a valid ontology location: URL or local file.', 'error');
+    }
+}
+
+
+function vocabulary_import_form_submit($form, &$form_state)
+{
+    $onto_file = NULL;
+    $onto_location = '';
+    $ontology_url = $form_state['values']['configuration']['ontology_location']['value']['ontology_url'];
+
+    if (!empty($ontology_url)) {
+        $onto_location = file_create_url($ontology_url);
+    } else {
+        $validators = array('file_validate_extensions' => array());
+        if ($onto_file = file_save_upload('configuration', $validators, 'public://', FILE_EXISTS_REPLACE)) {
+            $onto_file->status = FILE_STATUS_PERMANENT;
+            file_save($onto_file);
+            $onto_location = file_create_url($onto_file->uri);
+        } else {
+            drupal_set_message('Unable to process the provided ontology file. Please check that you have proper access rights to the drupal installation folder.', 'error');
+            return;
+        }
+    }
+
+    include_once DRUPAL_ROOT . '/sites/all/libraries/arc/ARC2.php';
+    $parser = ARC2::getRDFXMLParser();
+    $parser->parse($onto_location);
+    $indexed_triples = $parser->getTriples();
+
+    if (isset($onto_file)) {
+        file_delete($onto_file);
+    }
+
+    if (ini_get('max_execution_time') > 0) {
+        set_time_limit(0);
+    }
+
+    $vid = _get_vocabulary_id($form_state['values']['configuration']['ontology_vocabulary']['value']['vocabulary_list']);
+    $vocab_machine_name = $form_state['values']['configuration']['ontology_vocabulary']['value']['vocabulary_list'];
+
+    $uri_field = $form_state['values']['configuration']['ontology_vocabulary']['value']['fields_list'];
+    if ($uri_field == '- Select -') {
+        $uri_field = NULL;
+    }
+    $vtype_field = $form_state['values']['configuration']['ontology_vocabulary']['value']['vtype_fields_list'];
+    if ($vtype_field == '- Select -') {
+        $vtype_field = NULL;
+    }
+    $vtv = $form_state['values']['configuration']['ontology_vocabulary']['value']['vocabulary_type_value'];
+    $new_vtv = $form_state['values']['configuration']['ontology_vocabulary']['value']['vocabulary_new_type_value'];
+
+    $vtype_node = NULL;
+    if ($vtv != -1) {
+        $vtype_node = node_load($vtv);
+    } else {
+        if (!empty($new_vtv)) {
+            $vtype_node = _create_vocabulary_type($new_vtv);
+        }
+    }
+
+    $root_class_text = $form_state['values']['configuration']['ontology_concepts']['value']['root_class_list'];
+
+    $root_classes = array();
+    $tmp_root_classes = array();
+    $tok = strtok($root_class_text, "\n");
+
+    while ($tok !== false) {
+        $str = $tok;
+        $tmp_root_classes[] = $str;
+        $tok = strtok("\n");
+    }
+
+    foreach ($tmp_root_classes as $tmp_root_class) {
+        $root_classes[] = trim($tmp_root_class);
+    }
+
+    $level = $form_state['values']['configuration']['ontology_concepts']['value']['class_level'];
+    $level_or_below = $form_state['values']['configuration']['ontology_concepts']['value']['level_or_below'];
+    $class_or_instance = $form_state['values']['configuration']['ontology_concepts']['value']['class_instance_choice'];
+
+    $value_property = $form_state['values']['configuration']['ontology_properties']['value']['property_value'];
+    $synonym_value_property = $form_state['values']['configuration']['ontology_properties']['value']['synonym_property_value'];
+
+    $vterm_candidates = array();
+    $rt_found = array();
+    $subclasses = array();
+    $labels = array();
+    $synonyms = array();
+    $instances = array();
+
+    foreach ($indexed_triples as $indx) {
+        if ($indx['p'] == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
+            if ($indx['o'] == 'http://www.w3.org/2002/07/owl#Class') {
+                $test[] = $indx['s'];
+                if (in_array($indx['s'], $root_classes)) {
+                    $rt_found[] = $indx['s'];
+                }
+            } else {
+                $insts = NULL;
+                if (array_key_exists($indx['o'], $instances)) {
+                    $insts = $instances[$indx['o']];
+                } else {
+                    $insts = array();
+                }
+                array_push($insts, $indx['s']);
+                $instances[$indx['o']] = $insts;
+            }
+        }
+
+        if ($indx['p'] == 'http://www.w3.org/2000/01/rdf-schema#subClassOf') {
+            $subcls = NULL;
+            if (array_key_exists($indx['o'], $subclasses)) {
+                $subcls = $subclasses[$indx['o']];
+            } else {
+                $subcls = array();
+            }
+            array_push($subcls, $indx['s']);
+            $subclasses[$indx['o']] = $subcls;
+        }
+
+        if ($indx['p'] == $value_property) {
+            $labels[$indx['s']] = $indx['o'];
+        }
+
+        if (isset($synonym_value_property)) {
+            if ($indx['p'] == $synonym_value_property) {
+                $syns = NULL;
+                if (array_key_exists($indx['s'], $synonyms)) {
+                    $syns = $synonyms[$indx['s']];
+                } else {
+                    $syns = array();
+                }
+                array_push($syns, $indx['o']);
+                $synonyms[$indx['s']] = $syns;
+            }
+        }
+
+    }
+
+    $rt_found = array_unique($rt_found);
+
+    if (count($rt_found) != count($root_classes)) {
+        drupal_set_message('Root class(es) not found:', 'error');
+        $string = "";
+        foreach ($root_classes as $root_class) {
+            if (!in_array($root_class, $rt_found)) {
+                $string = $string . $root_class . "\n";
+            }
+        }
+        drupal_set_message($string, 'error');
+        return;
+    }
+
+    $parent_classes = array();
+    if ($level == 0) {
+        foreach ($root_classes as $rt_class) {
+            $parent_classes[] = $rt_class;
+        }
+    } else {
+        foreach ($root_classes as $rt_class) {
+            if (array_key_exists($rt_class, $subclasses)) {
+                $subcls = $subclasses[$rt_class];
+                $tmp = array_merge($subcls, $parent_classes);
+                $parent_classes = array();
+                $parent_classes = $tmp;
+            }
+        }
+        $level--;
+    }
+    $term_count = 0;
+
+    if ($level_or_below == 0) {
+        $temp_parents = _get_parents_for_level_X($level, $parent_classes, $subclasses);
+        $final_terms = array();
+
+        if ($class_or_instance == 0) {
+            $final_terms = _create_final_terms($temp_parents, $labels, $synonyms);
+        } else {
+            $my_instances = array();
+            foreach ($temp_parents as $vterm_candidate) {
+                if (array_key_exists($vterm_candidate, $instances)) {
+                    $insts = $instances[$vterm_candidate];
+                    foreach ($insts as $inst) {
+                        $my_instances[$inst] = $vterm_candidate;
+                    }
+                }
+            }
+            $final_terms = _create_final_terms_from_instances($my_instances, $labels, $synonyms);
+        }
+
+        foreach ($final_terms as $term_title => $term_uri) {
+            _create_term($vid, $term_title, $uri_field, $term_uri, $vtype_field, $vtype_node, $vocab_machine_name);
+            $term_count++;
+        }
+
+    } else {
+        $temp_parents = _get_parents_for_level_X($level, $parent_classes, $subclasses);
+        $all_parents = array();
+        $all_parents = $temp_parents;
+
+        foreach ($temp_parents as $temp_parent) {
+            $tmpp = _get_all_children($temp_parent, $subclasses);
+            foreach ($tmpp as $tmpp_el => $val) {
+                $all_parents[] = $tmpp_el;
+            }
+        }
+
+        $final_terms = array();
+        if ($class_or_instance == 0) {
+            $final_terms = _create_final_terms($all_parents, $labels, $synonyms);
+        } else {
+            $my_instances = array();
+            foreach ($all_parents as $vterm_candidate) {
+                if (array_key_exists($vterm_candidate, $instances)) {
+                    $insts = $instances[$vterm_candidate];
+                    foreach ($insts as $inst) {
+                        $my_instances[$inst] = $vterm_candidate;
+                    }
+                }
+            }
+
+            $final_terms = _create_final_terms_from_instances($my_instances, $labels, $synonyms);
+        }
+
+        foreach ($final_terms as $term_title => $term_uri) {
+            _create_term($vid, $term_title, $uri_field, $term_uri, $vtype_field, $vtype_node, $vocab_machine_name);
+            $term_count++;
+        }
+
+    }
+
+    drupal_set_message('Total terms imported: ' . $term_count);
+
+    return $form;
+}
+
+function _get_all_children($parent, $subclasses)
+{
+    $children = array();
+
+    if (array_key_exists($parent, $subclasses)) {
+        $childs = $subclasses[$parent];
+        foreach ($childs as $child) {
+            $children[$child] = $child;
+        }
+    }
+
+    foreach ($children as $child => $val) {
+        $tmp_children[] = _get_all_children($child, $subclasses);
+        foreach ($tmp_children as $tmp_child) {
+            if (empty($tmp_child)) {
+                unset($tmp_children);
+                $tmp_children = array();
+                break;
+            } else {
+                foreach ($tmp_child as $tmpp_child) {
+                    if (!array_key_exists($tmpp_child, $children)) {
+                        $children[$tmpp_child] = $tmpp_child;
+                    }
+                }
+            }
+        }
+    }
+
+    return $children;
+}
+
+function _get_parents_for_level_X($level, $parent_classes, $subclasses)
+{
+    $my_level = $level;
+    $my_parent_classes = $parent_classes;
+    $parents = array();
+
+    if ($level == 0) {
+        return $parent_classes;
+    }
+
+    while ($my_level != 0) {
+        if (!empty($parents)) {
+            unset($my_parent_classes);
+            $my_parent_classes = array();
+            $my_parent_classes = $parents;
+            unset($parents);
+            $parents = array();
+        }
+
+        foreach ($my_parent_classes as $parent_class) {
+            if (array_key_exists($parent_class, $subclasses)) {
+                $parents = $subclasses[$parent_class];
+            }
+        }
+        $my_level--;
+    }
+
+    return $parents;
+}
+
+//function _create_final_terms($candidates, $indexed_triples, $value_property, $synonym_value_property) {
+function _create_final_terms($candidates, $labels, $synonyms)
+{
+    $final_terms = array();
+
+    foreach ($candidates as $vterm_candidate) {
+        if (array_key_exists($vterm_candidate, $labels)) {
+            $final_terms[$labels[$vterm_candidate]] = $vterm_candidate;
+        }
+        if (array_key_exists($vterm_candidate, $synonyms)) {
+            $syns = $synonyms[$vterm_candidate];
+            foreach ($syns as $syn) {
+                $final_terms[$syn] = $vterm_candidate;
+            }
+        }
+    }
+
+    return $final_terms;
+}
+
+//function _create_final_terms_from_instances($candidates, $indexed_triples, $value_property, $synonym_value_property) {
+function _create_final_terms_from_instances($candidates, $labels, $synonyms)
+{
+    $final_terms = array();
+
+    foreach ($candidates as $vterm_candidate => $vterm_class) {
+        if (array_key_exists($vterm_candidate, $labels)) {
+            $final_terms[$labels[$vterm_candidate]] = $vterm_candidate;
+        }
+        if (array_key_exists($vterm_candidate, $synonyms)) {
+            $syns = $synonyms[$vterm_candidate];
+            foreach ($syns as $syn) {
+                $final_terms[$syn] = $vterm_candidate;
+            }
+        }
+    }
+
+    return $final_terms;
+}
+
+function _create_term($vid, $term_title, $uri_field, $term_uri, $vtype_field, $vtype_node, $vocab_machine_name)
+{
+    $new_term = (object)array(
+        'vid' => $vid,
+    );
+    $new_term->name = $term_title;
+
+    if ($uri_field != NULL) {
+        $new_term->$uri_field = array(
+            'und' => array(
+                '0' => array(
+                    'value' => $term_uri,
+                ),
+            ),
+        );
+    }
+
+    if ($vtype_node != NULL && $vtype_field != NULL) {
+        $new_term->$vtype_field = array(
+            'und' => array(
+                '0' => array(
+                    'target_id' => $vtype_node->nid,
+                ),
+            ),
+        );
+    }
+
+    taxonomy_term_save($new_term);
+}
+
+function _get_vocabulary_id($vocabulary_name)
+{
+    $sql = 'SELECT vid FROM {taxonomy_vocabulary} v WHERE v.machine_name = :machine_name';
+    $result = db_query($sql, array(':machine_name' => $vocabulary_name));
+    $vid = array();
+    foreach ($result as $row) {
+        $vid = $row->vid;
+    }
+    return $vid;
+}
+
+
+function _create_vocabulary_type($vocabulary_type_name)
+{
+    global $user;
+
+    $vtype_node = new stdClass();
+    $vtype_node->type = 'vocabulary_type';
+    $vtype_node->language = 'und';
+    $vtype_node->title = $vocabulary_type_name;
+    $vtype_node->uid = $user->uid;
+    node_save($vtype_node);
+
+    return $vtype_node;
+}

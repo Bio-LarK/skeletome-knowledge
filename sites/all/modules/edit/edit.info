@@ -1,0 +1,13 @@
+name = Edit
+description = In-place content editing.
+package = Spark
+core = 7.x
+
+dependencies[] = entity
+
+; Information added by drupal.org packaging script on 2013-01-28
+version = "7.x-1.0-alpha6"
+core = "7.x"
+project = "edit"
+datestamp = "1359406981"
+

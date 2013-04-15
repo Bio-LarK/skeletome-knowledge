@@ -1,0 +1,161 @@
+<?php
+// $Id: bone_dysplasia_group.module $
+
+function bone_dysplasia_group_node_view($node, $view_mode) {
+  if ($node->type == 'bone_dysplasia_group' && $view_mode == 'full' && node_is_page($node)) {
+    $view = views_embed_view('dysplasia_groups_list', 'block_1', $node->nid);
+
+    $node->content['bds'] = array(
+      '#prefix' => '  <div class="block-title"><h2 class="title">Bone Dysplasia members</h2></div>',
+      '#suffix' => $view,
+    );
+  }
+
+  return $node;
+}
+
+
+function bone_dysplasia_group_form_bone_dysplasia_group_node_form_alter(&$form, &$form_state, $form_id) {
+if (isset($form['type']) && isset($form['#node'])) {
+    if ('bone_dysplasia_group_node_form' == $form_id) {
+      if (arg(3) != NULL) {
+	$form['#node']->title = arg(3);
+	$form['title']['#default_value'] = arg(3);
+      }
+
+      $form['field_bdgroup_bonedysplasia']['#access'] = FALSE;
+      $form['field_bdgroup_uri']['#access'] = FALSE;
+    }
+  }
+}
+
+function bone_dysplasia_group_menu() {
+  $items['node/%node/bdg_gm'] = array(
+    'title' => 'Gene Mutations',
+    'page callback' => 'bdg_gene_mutations_callback',
+    'page arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'bdg_genemutations.inc',
+    'access callback' => '_check_bdg_gm_callback',
+    'access arguments' => array(1, 'node'),
+    'weight' => 2,
+  );
+
+  return $items;
+}
+
+function _check_bdg_gm_callback($node) {
+  if ($node->type === 'bone_dysplasia_group') {
+    foreach($node->field_bdgroup_bonedysplasia['und'] as $bd) {
+      $bd_node = node_load($bd['target_id']);
+      if (array_key_exists('und', $bd_node->field_bd_gm)) {
+	if (!empty($bd_node->field_bd_gm['und'])) {
+	  return TRUE;
+	}
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+function bone_dysplasia_group_node_presave($node) {
+  if (property_exists($node, 'type')) {
+    if ($node->type == 'bone_dysplasia_group') {
+    }
+  }
+}
+
+function bone_dysplasia_group_node_insert($node) {
+  if ($node->type == 'bone_dysplasia_group') {
+  }
+}
+
+function bone_dysplasia_group_node_delete($node) {
+  if ($node->type == 'bone_dysplasia_group') {
+
+      // TODO: make this work for sk_group_tag
+      return;
+
+    // Bone Dysplasias
+    if (array_key_exists('und', $node->field_bdgroup_bonedysplasia)) {
+      if (!empty($node->field_bdgroup_bonedysplasia['und'])) {
+	$bds = $node->field_bdgroup_bonedysplasia['und'];
+	foreach ($bds as $bd) {
+	  $bd_node = node_load($bd['nid']);
+
+	  $count = 0;
+	  $bdg_idx = -1;
+	  $bd_groups = $bd_node->field_bd_group['und'];
+	  foreach ($bd_groups as $bd_group) {
+	    if ($bd_group['nid'] == $node->nid) {
+	      $bdg_idx = $count;
+	      break;
+	    }
+	    $count++;
+	  }
+	  if ($bdg_idx != -1) {
+	    array_splice($bd_groups, $bdg_idx, 1);
+	    $bd_node->field_bd_group['und'] = $bd_groups;
+	    node_save($bd_node);
+	  }
+	}
+      }
+    }
+
+    // See also: Bone Dysplasias
+
+    $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => 'bone_dysplasia'));
+    foreach ($result as $row) {
+      $bd_node = node_load($row->nid);
+      if (array_key_exists('und', $bd_node->field_bd_seealso)) {
+	if (!empty($bd_node->field_bd_seealso['und'])) {
+	  $count = 0;
+	  $bdg_idx = -1;
+	  $see_alsos = $bd_node->field_bd_seealso['und'];
+	  foreach ($see_alsos as $see_also) {
+	    if ($see_also['nid'] == $node->nid) {
+	      $bdg_idx = $count;
+	      break;
+	    }
+	    $count++;
+	  }
+	  if ($bdg_idx != -1) {
+	    array_splice($see_alsos, $bdg_idx, 1);
+	    $bd_node->field_bd_seealso['und'] = $see_alsos;
+	    node_save($bd_node);
+	  }
+	}
+      }
+    }
+
+    // See also: Bone Dysplasia Groups
+
+    $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => 'bone_dysplasia_group'));
+    foreach ($result as $row) {
+      $bdg_node = node_load($row->nid);
+      if (array_key_exists('und', $bdg_node->field_bdgroup_seealso)) {
+	if (!empty($bdg_node->field_bdgroup_seealso['und'])) {
+	  $count = 0;
+	  $bdg_idx = -1;
+	  $see_alsos = $bdg_node->field_bdgroup_seealso['und'];
+	  foreach ($see_alsos as $see_also) {
+	    if ($see_also['target_id'] == $node->nid) {
+	      $bdg_idx = $count;
+	      break;
+	    }
+	    $count++;
+	  }
+	  if ($bdg_idx != -1) {
+	    array_splice($see_alsos, $bdg_idx, 1);
+	    $bdg_node->field_bdgroup_seealso['und'] = $see_alsos;
+	    node_save($bdg_node);
+	  }
+	}
+      }
+    }
+
+  }
+}

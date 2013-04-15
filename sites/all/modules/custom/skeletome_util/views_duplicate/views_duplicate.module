@@ -1,0 +1,95 @@
+<?php
+// $Id: views_duplicate.module $
+
+function views_duplicate_views_post_render(&$view, &$output, &$cache) {
+  if ($view->name == 'bone_dysplasia_menu') {
+    $dirty = FALSE;
+    $xray_node = node_load($view->result[0]->node_field_data_field_bd_xrays_nid);
+    if (array_key_exists('und', $xray_node->media_gallery_media)) {
+      if (empty($xray_node->media_gallery_media['und'])) {
+	$dirty = TRUE;
+      }
+    } else {
+      $dirty = TRUE;
+    }
+
+    if ($dirty) {
+      if (is_current_user_editor()) {
+	$b_pos = strrpos($output, '<div class="views-field views-field-nid-1">');
+	$e_pos = strpos($output, '</div>', $b_pos);
+	$new_output = substr($output, 0, $b_pos) . add_xray_link($view->result[0]->nid, $view->result[0]->node_field_data_field_bd_xrays_nid) . substr($output, $e_pos);
+	$output = $new_output;
+      } else {
+	$b_pos = strrpos($output, '<div class="views-field views-field-nid-1">');
+	$e_pos = strpos($output, '</div>', $b_pos);
+	$new_output = substr($output, 0, $b_pos) . substr($output, $e_pos + 6);
+	$output = $new_output;
+      }
+    } else {
+      $b_pos = strrpos($output, '<div class="views-field views-field-nid-1">');
+      $e_pos = strpos($output, '</div>', $b_pos);
+      $new_output = substr($output, 0, $b_pos) . view_xray_link($view->result[0]->nid, $view->result[0]->node_field_data_field_bd_xrays_nid) . substr($output, $e_pos);
+      $output = $new_output;
+    }
+  }
+  if ($view->name == 'bone_dysplasia_xray_collection') {
+    $idx = strpos($output, '<div class="media-gallery-item">');
+    if ($idx === false) {
+      $output = '';
+    }
+  }
+}
+
+function views_duplicate_views_pre_render(&$view) {
+  $used_nids = array();
+  if ($view->name == 'bd_groups_genes') {
+    $new_view_result = array();
+    foreach ($view->result as $row) {
+      if (!isset($used_nids[$row->node_field_data_field_gene_mutation_gene_nid])) {
+	$new_view_result[] = $row;
+	$used_nids[$row->node_field_data_field_gene_mutation_gene_nid] = $row->node_field_data_field_gene_mutation_gene_nid;
+      }
+    }
+    $view->result = $new_view_result;
+  }
+  if ($view->name == 'bd_groups_gene_mutations') {
+    $new_view_result = array();
+    foreach ($view->result as $row) {
+      if (!isset($used_nids[$row->node_field_data_field_bd_gm_nid])) {
+	$new_view_result[] = $row;
+	$used_nids[$row->node_field_data_field_bd_gm_nid] = $row->node_field_data_field_bd_gm_nid;
+      }
+    }
+    $view->result = $new_view_result;
+  }
+  if ($view->name == 'gene_bone_dysplasias') {
+    $new_view_result = array();
+    foreach ($view->result as $row) {
+      if (!isset($used_nids[$row->node_field_data_field_gene_mutation_bd_nid])) {
+	$new_view_result[] = $row;
+	$used_nids[$row->node_field_data_field_gene_mutation_bd_nid] = $row->node_field_data_field_gene_mutation_bd_nid;
+      }
+    }
+    $view->result = $new_view_result;
+  }
+  if ($view->name == 'bone_dysplasia_genes') {
+    $new_view_result = array();
+    foreach ($view->result as $row) {
+      if (!isset($used_nids[$row->node_field_data_field_gene_mutation_gene_nid])) {
+	$new_view_result[] = $row;
+	$used_nids[$row->node_field_data_field_gene_mutation_gene_nid] = $row->node_field_data_field_gene_mutation_gene_nid;
+      }
+    }
+    $view->result = $new_view_result;
+  }
+}
+
+function add_xray_link($bd_nid, $xray_nid) {
+  global $base_path;
+  return '<div class="views-field views-field-nid-1"><span class="field-content"><a href="' . $base_path . 'node/' . $bd_nid . '/xrays/' . $xray_nid . '">Add X-Rays to collection</a></span>';
+}
+
+function view_xray_link($bd_nid, $xray_nid) {
+  global $base_path;
+  return '<div class="views-field views-field-nid-1"><span class="field-content"><a href="' . $base_path . 'node/' . $bd_nid . '/xrays/' . $xray_nid . '">View X-Ray collection</a></span>';
+}

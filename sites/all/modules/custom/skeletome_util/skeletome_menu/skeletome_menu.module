@@ -1,0 +1,224 @@
+<?php
+
+function skeletome_menu_menu() {
+  variable_set('menu_secondary_links_source', 'main-menu');
+
+// DYSPLASIA
+
+  $items['skeletome-knowledge'] = array(
+    'title' => 'Knowledge base',
+    'menu_name' => 'main-menu',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_knowledge_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-knowledge/dysplasiagroups'] = array(
+    'title' => 'Bone Dysplasia groups',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_knowledge_dysplasiagroups_menu',
+  );
+
+  $items['skeletome-knowledge/dysplasias'] = array(
+    'title' => 'Bone Dysplasia list',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_knowledge_dysplasias_menu',
+  );
+
+  $items['skeletome-knowledge/genes'] = array(
+    'title' => 'Gene list',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_knowledge_gene_menu',
+  );
+
+  $items['skeletome-knowledge/admin-dysplasiagroups'] = array(
+    'title' => 'Manage Bone Dysplasia groups',
+    'access callback' => FALSE,
+//    'access callback' => 'is_current_user_editor',
+    'page callback' => 'bdg_menu_admin',
+    'file' => 'skeletome_bdg_menu_page.inc'
+  );
+
+  $items['skeletome-knowledge/admin-dysplasias'] = array(
+    'title' => 'Manage Bone Dysplasia list',
+    'access callback' => FALSE,
+//    'access callback' => 'is_current_user_editor',
+    'page callback' => 'bd_menu_admin',
+    'file' => 'skeletome_bd_menu_page.inc'
+  );
+
+  $items['skeletome-knowledge/admin-genes'] = array(
+    'title' => 'Manage Genes and Gene Mutations',
+    'access callback' => FALSE,
+//    'access callback' => 'is_current_user_editor',
+    'page callback' => 'gene_menu_admin',
+    'file' => 'skeletome_gene_menu_page.inc'
+  );
+
+// FORUM
+
+  $items['skeletome-forum'] = array(
+    'title' => 'Forum',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_forum_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-forum/forum'] = array(
+    'title' => 'View forum',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_forum_forum_menu',
+  );
+
+  $items['skeletome-forum/add-forumtopic'] = array(
+    'title' => 'Add forum topic',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_forum_add_forumtopic_menu',
+ );
+
+  $items['skeletome-forum/admin-forum'] = array(
+    'title' => 'Manage forums',
+    'access callback' => 'is_current_user_forumadmin',
+    'page callback' => '_skeletome_forum_admin_forum_menu',
+ );
+
+// BIBLIO
+
+  $items['skeletome-biblio'] = array(
+    'title' => 'Biblio',
+    'menu_name' => 'main-menu',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_biblio_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-biblio/biblio'] = array(
+    'title' => 'Browse biblio',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_biblio_biblio_menu',
+ );
+
+  $items['skeletome-biblio/add-biblio'] = array(
+    'title' => 'Add biblio item',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_biblio_add_biblio_menu',
+ );
+
+// TOOLS
+
+  $items['skeletome-tools'] = array(
+    'title' => 'Tools',
+    'menu_name' => 'main-menu',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_tools_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-tools/search'] = array(
+    'title' => 'Search',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_tools_search_menu',
+ );
+
+  $items['skeletome-tools/vocabulary-import'] = array(
+    'title' => 'Vocabulary import',
+    'access callback' => 'is_current_user_superadmin',
+    'page callback' => '_skeletome_vocabulary_import_menu',
+ );
+
+  $items['skeletome-tools/add-newsitem'] = array(
+    'title' => 'Add news item',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_tools_add_newsitem_menu',
+ );
+
+// INFO
+
+  $items['skeletome-contact'] = array(
+    'title' => 'Contact',
+    'menu_name' => 'menu-information',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_contact_menu',
+    'file' => 'skeletome_contact_menu_page.inc'
+  );
+
+  $items['skeletome-statistics'] = array(
+    'title' => 'Statistics',
+    'menu_name' => 'menu-information',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_statistics_menu',
+    'file' => 'skeletome_statistics_menu_page.inc'
+  );
+
+  return $items;
+}
+
+
+// DYSPLASIA
+
+function _skeletome_knowledge_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_knowledge_dysplasiagroups_menu() {
+  return drupal_goto('dysplasiagroups');
+}
+
+function _skeletome_knowledge_dysplasias_menu() {
+  return drupal_goto('dysplasias');
+}
+
+function _skeletome_knowledge_gene_menu() {
+  return drupal_goto('genes');
+}
+
+// FORUM
+
+function _skeletome_forum_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_forum_forum_menu() {
+  return drupal_goto('forum');
+}
+
+function _skeletome_forum_add_forumtopic_menu() {
+  return drupal_goto('node/add/forum');
+}
+
+function _skeletome_forum_admin_forum_menu() {
+  return drupal_goto('admin/structure/forum');
+}
+
+// BIBLIO
+
+function _skeletome_biblio_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_biblio_biblio_menu() {
+  return drupal_goto('biblio');
+}
+
+function _skeletome_biblio_add_biblio_menu() {
+  return drupal_goto('node/add/biblio');
+}
+
+// TOOLS
+
+function _skeletome_tools_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_tools_search_menu() {
+  return drupal_goto('search');
+}
+
+function _skeletome_vocabulary_import_menu() {
+  return drupal_goto('admin/config/content/vocabulary_import');
+}
+
+function _skeletome_tools_add_newsitem_menu() {
+  return drupal_goto('node/add/news-item');
+}

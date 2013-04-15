@@ -1,0 +1,53 @@
+<?php
+// $Id: ncboannotator_api.module $
+
+function ncboannotator_api_init() {
+  // Only load these if it is not a cached page
+  module_load_include('inc', 'ncboannotator_api', 'includes/NCBOAnnotator');
+}
+
+function ncboannotator_api_perm() {
+  return array('administer ncboannotator api');
+}
+
+function ncboannotator_api_menu() {
+  $items = array();
+  
+  $items['admin/settings/ncboannotator'] = array(
+    'title'		=> 'NCBO Annotator Configuration',
+    'description'	=> 'Configurations for the NCBO Annotator',
+    'page callback'	=> 'drupal_get_form',
+    'page arguments'	=> array('ncboannotator_settings'),
+    'access arguments'	=> array('administer ncboannotator api'),
+    'file'		=> 'ncbo_settings_page.inc'
+  );
+
+  $items['admin/settings/ncboannotator/settings'] = array(
+    'title'              => 'Settings',
+    'weight'             => -10,
+    'access arguments'   => array('administer ncboannotator api'),
+    'type'               => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/settings/ncboannotator/parameters'] = array(
+    'title'             => 'Parameters',
+    'page callback'     => 'drupal_get_form',
+    'page arguments'    => array('ncboannotator_params'),
+    'weight'            => -7,
+    'access arguments'  => array('administer ncboannotator api'),
+    'type'              => MENU_LOCAL_TASK,
+    'context'           => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'file'		=> 'ncbo_params_page.inc'
+  );
+  $items['admin/settings/ncboannotator/ontologies'] = array(
+    'title'             => 'Ontologies',
+    'page callback'     => 'drupal_get_form',
+    'page arguments'    => array('ncboannotator_onto'),
+    'weight'            => -7,
+    'access arguments'  => array('administer ncboannotator api'),
+    'type'              => MENU_LOCAL_TASK,
+    'context'           => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+    'file'		=> 'ncbo_onto_page.inc'
+  );
+
+  return $items;
+}

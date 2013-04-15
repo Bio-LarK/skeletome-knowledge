@@ -1,0 +1,40 @@
+<?php
+// $Id: skeletome_menu.install $
+
+function skeletome_menu_install() {
+  db_insert('menu_custom')->fields(array(
+      'menu_name' => 'menu-information',
+      'title' => 'Information menu',
+  ))->execute();
+}
+
+function skeletome_menu_uninstall() {
+  $skeletome_menus = array();
+  $sql = 'SELECT menu_name, router_path FROM {menu_links} ml WHERE ml.menu_name = :menu_name';
+  $result = db_query($sql, array(':menu_name' => 'main-menu'));
+  foreach ($result as $row) {
+    $pos = strpos($row->router_path, 'skeletome');
+    if ($pos !== false) {
+      $skeletome_menus[] = $row->router_path;
+    }
+  }
+
+  foreach ($skeletome_menus as $skmenu) {
+    db_delete('menu_links')->condition('router_path', $skmenu)->execute();
+  }
+
+  $skeletome_routers = array();
+  foreach ($skeletome_menus as $skmenu) {
+    $sql = 'SELECT path FROM {menu_router} mr WHERE mr.path = :path';
+    $result = db_query($sql, array(':path' => $skmenu));
+    foreach ($result as $row) {
+      $skeletome_routers[] = $row->path;
+    }
+  }
+
+  foreach ($skeletome_routers as $skrouter) {
+    db_delete('menu_router')->condition('path', $skrouter)->execute();
+  }
+
+  db_delete('menu_custom')->condition('menu_name', 'menu-information')->execute();
+}

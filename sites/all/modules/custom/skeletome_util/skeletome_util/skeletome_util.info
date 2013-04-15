@@ -1,0 +1,10 @@
+; $Id: skeletome_util.info $
+
+name = SKELETOME Utilities
+description = SKELETOME Utilities module
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = skeletome_util.install
+files[] = skeletome_util.module

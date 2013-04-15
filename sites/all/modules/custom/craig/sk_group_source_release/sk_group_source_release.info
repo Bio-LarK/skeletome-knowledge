@@ -1,0 +1,10 @@
+name = Group Source Release
+description = A vocabulary for releases from sources e.g. June 2010 for ISDS
+package = Skeletome Groups
+core = 7.x
+
+dependencies[] = entityreference
+dependencies[] = link
+dependencies[] = taxonomy
+dependencies[] = active_tags
+dependencies[] = sk_group_source

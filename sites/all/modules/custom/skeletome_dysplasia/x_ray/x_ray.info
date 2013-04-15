@@ -1,0 +1,12 @@
+; $Id: x_ray.info $
+
+name = X-Ray content type
+description = Provides the implementation for the X-Ray content type.
+package = SKELETOME Dysplasia
+
+core = 7.x
+dependencies[] = entityreference
+dependencies[] = media_gallery
+
+files[] = x_ray.module
+files[] = x_ray.install

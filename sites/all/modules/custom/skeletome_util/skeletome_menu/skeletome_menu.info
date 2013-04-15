@@ -1,0 +1,10 @@
+; $Id: skeletome_menu.info $
+
+name = SKELETOME Main menu
+description = SKELETOME Main menu.
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = skeletome_menu.install
+files[] = skeletome_menu.module

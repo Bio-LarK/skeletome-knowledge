@@ -1,0 +1,22 @@
+<?php
+
+
+/**
+ * Implements hook_taxonomy_term_delete
+ */
+function sk_group_source_taxonomy_term_delete($term) {
+    $group_tags_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_source');
+    if($term->vid == $group_tags_taxonomy->vid) {
+
+        $term_id = $term->tid;
+        // find all releases that have this source
+        $sql = "SELECT *
+                FROM {field_data_sk_gsr_field_group_source} t
+                WHERE t.sk_gsr_field_group_source_tid = $term_id";
+        $results = db_query($sql);
+
+        foreach($results as $result) {
+            taxonomy_term_delete($result->entity_id);
+        }
+    }
+}

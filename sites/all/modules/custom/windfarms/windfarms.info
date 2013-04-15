@@ -1,0 +1,5 @@
+name = Wind Farm
+description = A database of Wind Farms
+core = 7.x
+version = 7.x-0.1-dev
+configure = admin/config/windfarms/manage

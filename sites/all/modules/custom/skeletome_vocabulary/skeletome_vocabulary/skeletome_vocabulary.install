@@ -1,0 +1,143 @@
+<?php
+// $Id: skeletome_vocabulary.install $
+
+function skeletome_vocabulary_install() {
+  drupal_load('module', 'taxonomy.module');
+
+  $vocab = (object) array(
+    'name' => 'SKELETOME vocabulary', // The name of our vocabulary
+    'machine_name' => 'skeletome_vocabulary',
+    'description' => t('The SKELETOME vocabulary'), // A description of the vocabulary
+    'hierarchy' => 0, // allows hierarchy of terms
+    'module' => 'skeletome_vocabulary',
+    'weight' => 0, // the weight of the vocabulary in the list
+  );
+
+  taxonomy_vocabulary_save($vocab);
+
+  foreach (_skeletome_vocabulary_installed_fields() as $field) {
+    field_create_field($field);
+  }
+
+  foreach (_skeletome_vocabulary_installed_instances() as $instance) {
+    $instance['entity_type'] = 'taxonomy_term';
+    $instance['bundle'] = 'skeletome_vocabulary';
+    field_create_instance($instance);
+  }
+}
+
+function _skeletome_vocabulary_installed_fields() {
+  $t = get_t();
+  return array(
+    'field_term_uri' => array(
+      'field_name'	=> 'field_term_uri',
+      'label'		=> $t('Term URI'),
+      'cardinality'	=> 1,
+      'type'		=> 'text',
+      'settings'	=> array(
+        'max_length' => 500,
+      )
+    ),
+    'field_vocabulary_type' => array(
+      'field_name'	=> 'field_vocabulary_type',
+      'label'		=> $t('Vocabulary type'),
+      'cardinality'	=> 1,
+      'type'		=> 'entityreference',
+      'settings'	=> array(
+	'referenceable_types' => array(
+	  'vocabulary_type' => 'vocabulary_type'
+	)
+      )
+    ),
+    'field_term_citationcontext' => array(
+      'field_name'	=> 'field_term_citationcontext',
+      'label'		=> $t('Citation context'),
+      'cardinality'	=> -1,
+      'type'		=> 'entityreference',
+      'settings'	=> array(
+	'referenceable_types' => array(
+	  'skeletome_citation_context' => 'skeletome_citation_context'
+	)
+      )
+    )
+  );
+}
+
+function _skeletome_vocabulary_installed_instances() {
+  $t = get_t();
+  return array(
+    'field_term_uri' => array(
+      'field_name' => 'field_term_uri',
+      'label'       => $t('Term URI'),
+      'cardinality' => 1,
+      'widget'      => array(
+        'type'    => 'text_textfield',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type' => 'text'
+	)
+      )
+    ),
+    'field_vocabulary_type' => array(
+      'field_name'	=> 'field_vocabulary_type',
+      'label'		=> $t('Vocabulary type'),
+      'cardinality'	=> 1,
+      'widget'		=> array(
+        'type'    => 'entityreference_autocomplete',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type' => 'entityreference_default'
+	)
+      )
+    ),
+    'field_term_citationcontext' => array(
+      'field_name'	=> 'field_term_citationcontext',
+      'label'		=> $t('Citation context'),
+      'cardinality'	=> -1,
+      'widget'		=> array(
+        'type'    => 'entityreference_autocomplete',
+      ),
+      'display' => array(
+	'default' => array(
+	  'type' => 'entityreference_default'
+	)
+      )
+    )
+  );
+}
+
+
+function skeletome_vocabulary_uninstall() {
+  $sql = 'SELECT vid FROM {taxonomy_vocabulary} v WHERE v.machine_name = :machine_name';
+  $result = db_query($sql, array(':machine_name' => 'skeletome_vocabulary'));
+  $vid = array();
+  foreach ($result as $row) {
+    $vid = $row->vid;
+  }
+
+  $sql = 'SELECT tid FROM {taxonomy_term_data} t WHERE t.vid = :vid';
+  $result = db_query($sql, array(':vid' => $vid));
+  $tids = array();
+  foreach ($result as $row) {
+    $tids[] = $row->tid;
+  }
+
+  foreach ($tids as $tid) {
+    taxonomy_term_delete($tid);
+  }
+
+  foreach (array_keys(_skeletome_vocabulary_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  $instances = field_info_instances('taxonomy_term', 'skeletome_vocabulary');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+
+  taxonomy_vocabulary_delete($vid);
+
+  field_purge_batch(1000);
+}

@@ -1,0 +1,141 @@
+<?php
+// $Id: skeletome_search.module $
+
+function skeletome_search_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity, $env_id) {
+  if ($entity->type == 'gene') {
+    if (array_key_exists('und', $entity->field_gene_synonym)) {
+      foreach ($entity->field_gene_synonym['und'] as $synonym) {
+	$document->setMultiValue('tom_field_gene_synonym', $synonym['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_locus)) {
+      foreach ($entity->field_gene_locus['und'] as $locus) {
+	$document->setMultiValue('tom_field_gene_locus', $locus['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_omim)) {
+      foreach ($entity->field_gene_omim['und'] as $omim) {
+	$document->setMultiValue('tom_field_gene_omim', $omim['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_accession)) {
+      foreach ($entity->field_gene_accession['und'] as $accession) {
+	$document->setMultiValue('tom_field_gene_accession', $accession['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_entrezgene)) {
+      foreach ($entity->field_gene_entrezgene['und'] as $entrezgene) {
+	$document->setMultiValue('tom_field_gene_entrezgene', $entrezgene['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_uniprot)) {
+      foreach ($entity->field_gene_uniprot['und'] as $uniprot) {
+	$document->setMultiValue('tom_field_gene_uniprot', $uniprot['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_refseq)) {
+      foreach ($entity->field_gene_refseq['und'] as $refseq) {
+	$document->setMultiValue('tom_field_gene_refseq', $refseq['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_umlscui)) {
+      foreach ($entity->field_gene_umlscui['und'] as $umls) {
+	$document->setMultiValue('tom_field_gene_umlscui', $umls['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_mesh)) {
+      foreach ($entity->field_gene_mesh['und'] as $mesh) {
+	$document->setMultiValue('tom_field_gene_mesh', $mesh['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_gene_go)) {
+      foreach ($entity->field_gene_go['und'] as $go) {
+	$document->setMultiValue('tom_field_gene_go', $go['value']);
+
+      }
+    }
+  }
+
+  if ($entity->type == 'gene_mutation_type') {
+    if (array_key_exists('und', $entity->field_gene_mutation_type_umls)) {
+      foreach ($entity->field_gene_mutation_type_umls['und'] as $umls) {
+	$document->setMultiValue('tom_field_gene_mutation_type_umls', $umls['value']);
+      }
+    }
+  }
+
+  if ($entity->type == 'bone_dysplasia') {
+    if (array_key_exists('und', $entity->field_bd_synonym)) {
+      foreach ($entity->field_bd_synonym['und'] as $synonym) {
+	$document->setMultiValue('tom_field_bd_synonym', $synonym['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_bd_mesh)) {
+      foreach ($entity->field_bd_mesh['und'] as $mesh) {
+	$document->setMultiValue('tom_field_bd_mesh', $mesh['value']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_bd_omim)) {
+      foreach ($entity->field_bd_omim['und'] as $omim) {
+	$document->setMultiValue('tom_field_bd_omim', $omim['value']);
+      }
+    }
+  }
+
+  if ($entity->type == 'x_ray') {
+    if (array_key_exists('und', $entity->field_xray_media)) {
+      if (!empty($entity->field_xray_media['und'])) {
+	$document->setMultiValue('im_field_xray_media', $entity->field_xray_media['und'][0]['fid']);
+      }
+    }
+    if (array_key_exists('und', $entity->field_xray_description)) {
+      $document->setMultiValue('tos_field_xray_description', $entity->field_xray_description['und'][0]['value']);
+    }
+  }
+}
+
+function marinelli_preprocess_search_result(&$variables) {
+  $node = $variables['result']['node'];
+
+  if ($node->bundle == 'x_ray') {
+    $actual_node = node_load($node->entity_id);
+    $file = file_load($actual_node->field_xray_media['und'][0]['fid']);
+
+    $variables['x_ray_image'] = $file->uri;
+  }
+}
+
+function skeletome_search_apachesolr_query_alter($query) {
+  $query->addParam('qf', 'tom_field_gene_synonym');
+  $query->addParam('qf', 'tom_field_bd_synonym');
+  $query->addParam('qf', 'tom_field_gene_locus');
+  $query->addParam('qf', 'tom_field_gene_omim');
+  $query->addParam('qf', 'tom_field_gene_accession');
+  $query->addParam('qf', 'tom_field_gene_entrezgene');
+  $query->addParam('qf', 'tom_field_gene_uniprot');
+  $query->addParam('qf', 'tom_field_gene_refseq');
+  $query->addParam('qf', 'tom_field_gene_umlscui');
+  $query->addParam('qf', 'tom_field_gene_mesh');
+  $query->addParam('qf', 'tom_field_gene_go');
+  $query->addParam('qf', 'tom_field_gene_gm_bd');
+  $query->addParam('qf', 'tom_field_gene_mutation_type_umls');
+  $query->addParam('qf', 'tom_field_bd_omim');
+  $query->addParam('qf', 'tom_field_bd_mesh');
+  $query->addParam('qf', 'tom_field_bd_gm_gene');
+  $query->addParam('qf', 'tos_field_xray_description');
+  $query->addParam('qf', 'im_field_xray_media');
+}
+
+function skeletome_search_apachesolr_process_results(&$results, DrupalSolrQueryInterface $query) {
+}
+
+function skeletome_search_apachesolr_search_result_alter($document, &$extra, DrupalSolrQueryInterface $query) {
+/*
+  if ($document->bundle == 'x_ray') {
+    $x_ray_node = node_load($document->entity_id);
+    $x_ray_collection = node_load($x_ray_node->field_xray_xraycollection['und'][0]['nid']);
+    $bd_node = node_load($x_ray_collection->media_gallery_bd['und'][0]['nid']);
+    $document->content = 'Bone Dysplasia: ' . $bd_node->title;
+  }
+*/
+}

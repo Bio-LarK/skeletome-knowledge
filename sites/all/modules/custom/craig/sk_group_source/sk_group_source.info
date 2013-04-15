@@ -1,0 +1,9 @@
+name = Group Source
+description = The source of a group tag e.g. ISDS
+package = Skeletome Groups
+core = 7.x
+
+dependencies[] = entityreference
+dependencies[] = link
+dependencies[] = taxonomy
+dependencies[] = active_tags

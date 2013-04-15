@@ -1,0 +1,11 @@
+; $Id: ncboannotator_api.info $
+
+name = NCBO Annotator API
+description = NCBO Annotator API
+package = SKELETOME Backend
+
+core = 7.x
+
+files[] = ncboannotator_api.module
+
+configure = admin/settings/ncboannotator

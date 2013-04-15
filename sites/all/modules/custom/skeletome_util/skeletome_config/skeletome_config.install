@@ -1,0 +1,8 @@
+<?php
+// $Id: skeletome_config.install $
+
+function skeletome_config_install() {
+}
+
+function skeletome_config_uninstall() {
+}

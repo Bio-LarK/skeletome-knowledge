@@ -1,0 +1,360 @@
+<?php
+// $Id: gene_mutation.install $
+
+function gene_mutation_install()
+{
+    $t = get_t();
+
+    $gene_mutation = array(
+        'type' => 'gene_mutation',
+        'name' => $t('Gene mutation'),
+        'base' => 'node_content',
+        'description' => $t('The Gene mutation content type.'),
+        'title_label' => $t('Encoding'),
+        'body_label' => $t('Description')
+    );
+
+    $content_type = node_type_set_defaults($gene_mutation);
+    node_add_body_field($content_type);
+    node_type_save($content_type);
+
+    $body_instance = field_info_instance('node', 'body', 'gene_mutation');
+    $body_instance['type'] = 'text_long';
+    $body_instance['label'] = 'Description';
+
+    field_update_instance($body_instance);
+
+    foreach (_gene_mutation_installed_fields() as $field) {
+        field_create_field($field);
+    }
+
+    foreach (_gene_mutation_installed_instances() as $instance) {
+        $instance['entity_type'] = 'node';
+        $instance['bundle'] = $gene_mutation['type'];
+        field_create_instance($instance);
+    }
+
+    variable_set('comment_gene_mutation', COMMENT_NODE_CLOSED);
+    variable_set('node_options_gene_mutation', array('status'));
+    variable_set('node_preview_gene_mutation', DRUPAL_DISABLED);
+    variable_set('node_submitted_gene_mutation', FALSE);
+}
+
+function _gene_mutation_installed_fields()
+{
+    $t = get_t();
+    return array(
+        'field_gene_mutation_gene' => array(
+            'field_name' => 'field_gene_mutation_gene',
+            'label' => $t('Gene'),
+            'cardinality' => 1,
+            'type' => 'entityreference',
+            'settings' => array(
+                'referenceable_types' => array(
+                    'gene' => 'gene'
+                )
+            )
+        ),
+        'field_gm_mutation_type' => array(
+            'field_name' => 'field_gm_mutation_type',
+            'label' => $t('Mutation type'),
+            'cardinality' => -1,
+            'type' => 'entityreference',
+            'settings' => array(
+                'referenceable_types' => array(
+                    'gene_mutation_type' => 'gene_mutation_type'
+                )
+            )
+        ),
+        'field_gene_mutation_bd' => array(
+            'field_name' => 'field_gene_mutation_bd',
+            'label' => $t('Bone Dysplasia'),
+            'cardinality' => 1,
+            'type' => 'entityreference',
+            'settings' => array(
+                'referenceable_types' => array(
+                    'bone_dysplasia' => 'bone_dysplasia'
+                )
+            )
+        ),
+        'field_gene_mutation_ssc' => array(
+            'field_name' => 'field_gene_mutation_ssc',
+            'label' => $t('Citation context'),
+            'cardinality' => 1,
+            'type' => 'entityreference',
+            'settings' => array(
+                'referenceable_types' => array(
+                    'skeletome_citation_context' => 'skeletome_citation_context'
+                )
+            )
+        ),
+        'field_gene_mutation_uri' => array(
+            'field_name' => 'field_gene_mutation_uri',
+            'label' => t('URI'),
+            'cardinality' => 1,
+            'type' => 'text',
+            'settings' => array(
+                'max_length' => 500,
+            )
+        ),
+        'field_gm_offset' => array(
+            'field_name' => 'field_gm_offset',
+            'label' => t('Offset'),
+            'cardinality' => 1,
+            'type' => 'text',
+            'settings' => array(
+                'max_length' => 500,
+            )
+        ),
+        'field_gm_count' => array(
+            'field_name' => 'field_gm_count',
+            'label' => t('Count'),
+            'cardinality' => 1,
+            'type' => 'text',
+            'settings' => array(
+                'max_length' => 500,
+            )
+        ),
+        'field_gm_originalcontent' => array(
+            'field_name' => 'field_gm_originalcontent',
+            'label' => t('Original content'),
+            'cardinality' => 1,
+            'type' => 'text',
+            'settings' => array(
+                'max_length' => 500,
+            )
+        ),
+        'field_gm_mutatedcontent' => array(
+            'field_name' => 'field_gm_mutatedcontent',
+            'label' => t('Mutated content'),
+            'cardinality' => 1,
+            'type' => 'text',
+            'settings' => array(
+                'max_length' => 500,
+            )
+        ),
+    );
+}
+
+function _gene_mutation_installed_instances()
+{
+    $t = get_t();
+    return array(
+        'field_gm_mutation_type' => array(
+            'field_name' => 'field_gm_mutation_type',
+            'label' => $t('Mutation type'),
+            'cardinality' => -1,
+            'widget' => array(
+                'type' => 'entityreference_autocomplete',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gene_mutation_gene' => array(
+            'field_name' => 'field_gene_mutation_gene',
+            'label' => $t('Gene'),
+            'required' => TRUE,
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'entityreference_autocomplete',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gene_mutation_bd' => array(
+            'field_name' => 'field_gene_mutation_bd',
+            'label' => $t('Bone Dysplasia'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'entityreference_autocomplete',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gene_mutation_ssc' => array(
+            'field_name' => 'field_gene_mutation_ssc',
+            'label' => $t('Citaton context'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'entityreference_autocomplete',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gene_mutation_uri' => array(
+            'field_name' => 'field_gene_mutation_uri',
+            'label' => $t('URI'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'text_textfield',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                )
+            )
+        ),
+        'field_gm_offset' => array(
+            'field_name' => 'field_gm_offset',
+            'label' => $t('Offset'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'text_textfield',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gm_count' => array(
+            'field_name' => 'field_gm_count',
+            'label' => $t('Count'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'text_textfield',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gm_originalcontent' => array(
+            'field_name' => 'field_gm_originalcontent',
+            'label' => $t('Original content'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'text_textfield',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+        'field_gm_mutatedcontent' => array(
+            'field_name' => 'field_gm_mutatedcontent',
+            'label' => $t('Mutated content'),
+            'cardinality' => 1,
+            'widget' => array(
+                'type' => 'text_textfield',
+            ),
+            'display' => array(
+                'default' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'full' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+                'teaser' => array(
+                    'type' => 'hidden',
+                    'label' => 'hidden',
+                ),
+            )
+        ),
+    );
+}
+
+function gene_mutation_uninstall()
+{
+    $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => 'gene_mutation'));
+    $nids = array();
+    foreach ($result as $row) {
+        $nids[] = $row->nid;
+    }
+
+    node_delete_multiple($nids);
+
+    foreach (array_keys(_gene_mutation_installed_fields()) as $field) {
+        field_delete_field($field);
+    }
+
+    $instances = field_info_instances('node', 'gene_mutation');
+    foreach ($instances as $instance_name => $instance) {
+        field_delete_instance($instance);
+    }
+
+    node_type_delete('gene_mutation');
+
+    field_purge_batch(1000);
+}

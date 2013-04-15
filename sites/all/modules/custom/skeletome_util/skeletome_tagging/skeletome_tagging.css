@@ -1,0 +1,201 @@
+/*
+ * Copyright (C) 2009-2010  
+ * 
+ * Deutsche Forschungszentrum fur Kunstliche Intelligenz (DFKI)
+ * Institute of Communication and Computer Systems (ICCS)
+ * South-East European Research Centre (SEERC)
+ * 
+ * You may distribute under the terms of either the GNU General Public
+ * License or the BSD License, as specified in the LICENSE file.
+ *
+  background-color: #D8E1D6;
+*/
+
+.weighted_suggestions.tag {
+  background-color: #c3d9ff;
+  text-align : justify;
+  margin-right: 1em;
+}
+.weighted_tag_suggestions{
+  background-color: #c3d9ff;
+  padding: 7px;
+  text-align : justify;
+  margin-right: 1em;
+}
+.weighted_suggestions.tag.name{
+  color: #000500;
+  font-weight: bold;
+  color: #FFFFFF;
+ }
+ .weighted_suggestions.tag.name4user{
+  font-weight: bold;
+  color: #006666;
+ }
+.weighted_suggestions.tag.reason{
+  font-size : 0.95em;
+  display: none;
+}
+.weighted_suggestions.tag.reason4user{
+  font-size : 0.95em;
+  color: #000000;
+}
+.weighted_suggestions.tag.link{
+  color: #009966;
+  font-size : 0.85em;
+}
+
+.weighted_suggestions.tag.name.level0 {
+  font-size : 0.9em;
+}
+.weighted_suggestions.tag.name.level1 {
+  font-size : 1em;
+}
+.weighted_suggestions.tag.name.level2 {
+  font-size : 1.1em;
+}
+.weighted_suggestions.tag.name.level3 {
+  font-size : 1.2em;
+}
+.weighted_suggestions.tag.name.level4 {
+  font-size : 1.3em;
+}
+.weighted_suggestions.tag.name.level5 {
+  font-size : 1.4em;
+}
+
+.weighted_suggestions.node {
+  text-align : left;
+  margin-right: 1em;
+}
+.weighted_suggestions.node.name{
+  font-weight: bold;
+  color: #006666;
+}
+.weighted_suggestions.node.name4user{
+  font-weight: bold;
+  color: #006666;
+}
+.weighted_suggestions.node.reason{
+  font-size : 0.95em;
+  display:none;
+}
+.weighted_suggestions.node.reason4user{
+  color: #000000;
+  font-size : 0.95em;
+}
+.weighted_suggestions.node.score{
+  color: #000000;
+  font-size : 0.8em;
+  font-style: italic;
+}
+.weighted_suggestions.node.link{
+ text-decoration: none; 
+  color: #009966;
+  font-size : 0.85em;
+  float:left;
+}
+.weighted_suggestions.node.level0 {
+  font-size : 0.9em;
+}
+.weighted_suggestions.node.level1 {
+  font-size : 1em;
+}
+.weighted_suggestions.node.level2 {
+  font-size : 1.1em;
+}
+.weighted_suggestions.node.level3 {
+  font-size : 1.2em;
+}
+.weighted_suggestions.node.level4 {
+  font-size : 1.3em;
+}
+.weighted_suggestions.node.level5 {
+  font-size : 1.4em;
+}
+
+.weighted_suggestions.user {
+  text-align : justify;
+  margin-right: 1em;
+}
+.weighted_suggestions.user.name{
+  font-weight: bold;
+  color: #006666;
+}
+.weighted_suggestions.user.reason{
+  font-size : 0.95em;
+  display:none;
+}
+.weighted_suggestions.user.reason4user{
+  color: #000000;
+  font-size : 0.95em;
+}
+.weighted_suggestions.user.link{
+  text-decoration: none; 
+  color: #009966;
+  font-size : 0.85em;
+
+}
+.weighted_suggestions.user.level0 {
+  font-size : 0.9em;
+}
+.weighted_suggestions.user.level1 {
+  font-size : 1em;
+}
+.weighted_suggestions.user.level2 {
+  font-size : 1.1em;
+}
+.weighted_suggestions.user.level3 {
+  font-size : 1.2em;
+}
+.weighted_suggestions.user.level4 {
+  font-size : 1.3em;
+}
+.weighted_suggestions.user.level5 {
+  font-size : 1.4em;
+}
+.node_suggestion_div{
+  padding-top:5px;
+  padding-bottom:5px;
+
+ position: relative;
+ height: 40px;
+ border:1px solid #BBBBBB;
+ overflow:hidden;
+
+}
+.personalised_rec_title{
+  font-weight: bold;
+  font-size : 1.1em;
+  color: #006666;
+  letter-spacing:1px;
+  text-decoration: underline; 
+  
+  padding-top:15px;
+}
+
+.personalised_rec_div{
+ padding:7px;
+
+ position: relative;
+ border:1px solid #BBBBBB;
+ overflow:hidden;
+
+}
+.recImg{
+padding-right:5px;
+   position: absolute;
+   right: 0;
+   width: 23%;
+   text-align: right;
+}
+.recLink{
+padding-left:5px;
+   position: absolute;
+   left: 0;
+   width: 73%;
+}
+
+.more {
+ font-size: 0.85em; 
+ text-align: right;
+}

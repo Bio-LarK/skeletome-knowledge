@@ -1,0 +1,12 @@
+; $Id: skeletome_vocabulary.info $
+
+name = SKELETOME vocabulary
+description = Provides the implementation for the SKELETOME vocabulary.
+package = SKELETOME Vocabulary
+
+core = 7.x
+dependencies[] = entityreference
+dependencies[] = taxonomy
+
+files[] = skeletome_vocabulary.module
+files[] = skeletome_vocabulary.install

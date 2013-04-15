@@ -1,0 +1,14 @@
+; $Id: vocabulary_import.info $
+
+name = Vocabulary import
+description = Provides the implementation for the Vocabulary import module
+package = SKELETOME Vocabulary
+
+core = 7.x
+dependencies[] = entityreference
+dependencies[] = taxonomy
+
+files[] = vocabulary_import.module
+files[] = vocabulary_import.install
+
+configure = admin/config/content/vocabulary_import

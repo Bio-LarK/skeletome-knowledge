@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-US" ng-app="PubMed">
+    <head>
+
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <style type="text/css">
+            .full-width {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 20px !important;
+                padding-left: 10px !important;
+            }
+        </style>
+        <script type="text/javascript" src="angular.js"></script>
+        <script type="text/javascript" src="controllers.js?q=10"></script>
+        <style type="text/css">
+            .cke_button_label
+            {
+                display : inline !important;
+            }
+        </style>
+    </head>
+    <body ng-controller="ReferenceCtrl">
+
+        <p>Reference a article/book by PubMed ID</p>
+
+        <div>
+
+        </div>
+        <h4>Publications</h4>
+        <input ng-change="pubMedChanged(pubmed)" ng-model="pubmed" id="pubmedId" class="full-width" type="text"
+               placeholder="Enter a PubMed ID"/>
+
+        <div ng-show="biblios && (biblios | filter:filterPubMed).length == 0" style="text-align: center">
+            <a ng-click="searchPubMed(pubmed)" style="margin-bottom: 10px;" class="btn btn-primary"><i
+                    class="icon-search icon-white"></i> Search PubMed</a>
+
+            <p ng-show="searchOnline" class="muted">No results found on Skeletome.</p>
+        </div>
+
+        <ul class="unstyled" ng-show="pubMedOnline.pubmedId">
+            <li style="overflow: auto;">
+                <p><b>PubMed ID:</b> {{ pubMedOnline.pubmedId }}</p>
+                <a ng-click="addNewCitation(pubMedOnline.pubmedId)" href="#" style="margin-left: 20px;"
+                   class="btn btn-success pull-right"><i class="icon-plus icon-white"></i> Add Citation</a>
+
+                <div style="overflow: auto;" ng-bind-html-unsafe="pubMedOnline.markup">
+                </div>
+
+            </li>
+        </ul>
+
+
+        <ul class="unstyled">
+            <li style="overflow: auto;" ng-repeat="biblio in biblios | filter:filterPubMed">
+                <p><b>PubMed ID:</b> {{ biblio.pubmedId }}</p>
+                <a ng-click="addExistingCitation(biblio)" href style="margin-left: 20px;" class="btn btn-success pull-right"><i
+                        class="icon-plus icon-white"></i> Add Citation</a>
+
+                <div style="overflow: auto;" ng-bind-html-unsafe="biblio.markup">
+                </div>
+            </li>
+        </ul>
+    </body>
+</html>
+
+

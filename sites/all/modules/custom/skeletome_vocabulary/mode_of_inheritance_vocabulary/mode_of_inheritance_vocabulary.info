@@ -1,0 +1,12 @@
+; $Id: mode_of_inheritance_vocabulary.info $
+
+name = SKELETOME Mode of Inheritance vocabulary
+description = Provides the implementation for the SKELETOME Mode of Inheritance vocabulary.
+package = SKELETOME Vocabulary
+
+core = 7.x
+dependencies[] = entityreference
+dependencies[] = taxonomy
+
+files[] = mode_of_inheritance_vocabulary.module
+files[] = mode_of_inheritance_vocabulary.install

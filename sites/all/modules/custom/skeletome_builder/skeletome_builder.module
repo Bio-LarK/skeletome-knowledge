@@ -1,0 +1,805 @@
+<?php
+
+
+module_load_include('php', 'skeletome_builder', 'data');
+module_load_include('php', 'skeletome_builder', 'ajax');
+module_load_include('php', 'skeletome_builder', 'pages');
+
+/**
+ * @file
+ * Custom search for bone dysplasias.
+ */
+//
+//function skeletome_builder_js_alter(&$javascript) {
+//    // Swap out jQuery to use an updated version of the library.
+////    $javascript['misc/jquery.js']['data'] = drupal_get_path('module', 'skeletome_builder') . '/jquery-1.9.1.js';
+////    $javascript['misc/ui/jquery.ui.core.min.js']['data'] = drupal_get_path('module', 'skeletome_builder') . '/jquery-ui-1.10.1.custom.js';
+//}
+
+/**
+ * Implements hook_help().
+ */
+function skeletome_builder_help($path, $arg) {
+    switch ($path) {
+        case 'admin/help#sk_search':{
+            $ret_val = '<h3>' . t('Hello World') . '</h3>';
+            $ret_val .= '<p>' . t('This is testing Search Help.') . '</p>';
+            return $ret_val;
+            break;
+        }
+    }
+}
+
+/**
+ * Implements hook_js_alter
+ *
+ * @param $javascript
+ */
+function skeletome_builder_js_alter(&$javascript) {
+
+    /*if(arg(0) != "admin" && (arg(0) != "node" && arg(1) != "add")) {
+        // Swap out jQuery to use an updated version of the library. for non admin pages.
+
+
+        $javascript['misc/jquery.js']['data'] = drupal_get_path('module', 'skeletome_builder') . '/jquery-1.9.1.js';
+        if(isset($javascript['misc/ui/jquery.ui.core.min.js'])) {
+            $javascript['misc/ui/jquery.ui.core.min.js']['data'] = drupal_get_path('module', 'skeletome_builder') . '/jquery-ui-1.10.2.custom.js';
+        }
+
+    }*/
+
+}
+
+function cmp($a, $b) {
+    return $a->sk_gsr_field_timestamp['und'][0]['value'] - $b->sk_gsr_field_timestamp['und'][0]['value'];
+}
+/**
+ * Implements hook_page_build().
+ *
+ * Hooks into the page so you can add elements to other regions.
+ */
+function skeletome_builder_page_build(&$page) {
+
+    global $user;
+
+//    echo "<pre>";
+//    print_r(user_load(15));
+//    echo "</pre>";
+
+    // 'access callback' => 'user_is_logged_in'
+
+//    drupal_get_form('user_login');
+
+//    $types = node_type_get_types();
+//
+//
+//    node_add_body_field('gene_mutation', 'body');
+
+    drupal_add_library('system', 'ui');
+//
+//    drupal_add_library('system', 'ui.widget');
+//    drupal_add_library('system', 'ui.autocomplete');
+//    drupal_add_library('system', 'ui.position');
+//    drupal_add_library('system', 'ui.accordion');
+
+
+    /* List of permissions */
+    /*
+    bd, gene, gene mutation, gene mutation type, clinical feature, group!
+
+    "edit any bone_dysplasia content"
+    "edit any gene content"
+    "edit terms in 7"
+    "edit any gene_mutation content"
+    "edit any gene_mutation_type content"
+    "edit terms in 2"
+    "delete terms in 2"
+    "edit any statement content"
+    "delete any statement content"
+    "administer comments"
+
+     */
+    // Create the drupal role for sk_moderator
+
+    // check if it exists
+
+
+
+
+
+    global $base_url;
+    drupal_add_js(array(
+        'skeletome_builder' => array(
+            'base_url'       => $base_url
+    )), 'setting');
+
+
+    $bone_dysplasia = null;
+    if(arg(0) == "node" && arg(2) == "gene") {
+        // gene sub of bone dysplasia
+        $node = menu_get_object('node', 3);
+        $bone_dysplasia = menu_get_object('node', 1);
+    } else if(arg(0) == "node") {
+        // regular page
+        $node = menu_get_object('node', 1);
+    }
+
+    if(arg(0) == "node" && arg(2) == "clinical-feature") {
+        // gene sub of bone dysplasia
+        $term = menu_get_object('taxonomy_term',3);
+        $bone_dysplasia = menu_get_object('node', 1);
+
+    } else if(arg(0) == "taxonomy" && arg(1) == "term"){
+        // regular page
+        $term = menu_get_object('taxonomy_term', 2);
+    }
+
+
+    if(!isset($user->name)) {
+        $destination = drupal_get_destination();
+
+        $elements = drupal_get_form("user_login");
+        $elements['#action'] = url($_GET['q'], array('query' => array('destination' => $destination['destination'])));
+
+        $form = drupal_render($elements);
+
+        drupal_add_js(array(
+            'skeletome_builder' => array(
+                'login_form'       => $form
+            )), 'setting');
+
+    }
+
+    drupal_add_js(array(
+        'skeletome_builder' => array(
+            'user'  => $user,
+    )), 'setting');
+
+    if(count(arg()) == 1 && arg(0) == "node") {
+        /**
+         * Front Page
+         */
+
+        // Get 10 phenotypes
+        $all_clinical_features = data_all_clinical_features(20);
+
+//        $all_bone_dysplasias = data_all_bone_dysplasias(20);
+
+        $all_groups = data_all_groups(20);
+
+        $all_genes = data_all_genes(20);
+
+        // get recently updated bone dysplasias
+        $sql = "SELECT DISTINCT n1.nid, n1.title, r.timestamp
+                FROM {node} n1
+                INNER JOIN {node_revision} r
+                ON n1.nid = r.nid
+                INNER JOIN {node} n
+                ON r.nid = n.nid
+                WHERE n.type ='bone_dysplasia'
+                ORDER BY r.timestamp DESC
+                LIMIT 5";
+        $results = db_query($sql);
+
+        $bone_dysplasias = array();
+        foreach($results as $result) {
+            $bone_dysplasias[] = $result;
+        }
+
+        // Get more recently updated genes
+        $sql = "SELECT DISTINCT n1.nid, n1.title, r.timestamp
+                FROM {node} n1
+                INNER JOIN {node_revision} r
+                ON n1.nid = r.nid
+                INNER JOIN {node} n
+                ON r.nid = n.nid
+                WHERE n.type ='gene'
+                ORDER BY r.timestamp DESC
+                LIMIT 5";
+        $results = db_query($sql);
+
+        $genes = array();
+        foreach($results as $result) {
+            $genes[] = $result;
+        }
+
+
+        // Get Bone dysplasia classifications
+
+        $sources = data_get_all_sources();
+
+
+        $sql = "SELECT r.uid, u.name, COUNT(r.uid)
+            FROM node_revision r, users u
+            WHERE r.uid != 0
+            AND u.uid = r.uid
+            GROUP BY r.uid";
+
+        $result = db_query($sql);
+
+        $top_contributors = array();
+        foreach ($result as $contributor) {
+            $top_contributors[] = $contributor;
+        }
+
+        drupal_add_js(array(
+            'skeletome_builder' => array(
+                "all_clinical_features"     => $all_clinical_features,
+                'all_bone_dysplasias'       => $bone_dysplasias,
+                'all_groups'                => $all_groups,
+                'all_genes'                 => $genes,
+                'all_sources'               => $sources,
+                'top_contributors'          => $top_contributors
+        )), 'setting');
+
+    } else if(arg(0) == "search" && arg(1) == "bone-dysplasia") {
+
+        $all_bone_dysplasias = data_all_bone_dysplasias(20, true);
+        drupal_add_js(array(
+            'skeletome_builder' => array(
+                'all_bone_dysplasias'       => $all_bone_dysplasias
+        )), 'setting');
+
+    } else if (isset($term) && $term->vocabulary_machine_name == "skeletome_vocabulary") {
+        page_clinical_feature($term, $bone_dysplasia);
+
+    } else if (isset($term) && $term->vocabulary_machine_name == "sk_group_source_release") {
+        page_source_release($term);
+
+    } else if (isset($term) && $term->vocabulary_machine_name == "sk_group_source" && arg(0) != "admin") {
+        $releases = data_get_releases_for_source($term);
+        if(count($releases)) {
+            // we have some releases
+            $latest_release = $releases[0];
+            // redirect to latest release page
+            drupal_goto('taxonomy/term/' . $latest_release->tid);
+        } else {
+            // no releases, go to front page
+            drupal_goto("<front>");
+        }
+
+    } else if (isset($term) && $term->vocabulary_machine_name == "sk_group_tag") {
+
+        // Get out the tags source release
+        $source_release_tid = $term->sk_gt_field_group_source_release[LANGUAGE_NONE][0]['taxonomy_term']->tid;
+        // Just for clarity
+        $group_tag_tid = $term->tid;
+
+        drupal_goto('taxonomy/term/' . $source_release_tid, array(
+            'fragment' => $group_tag_tid
+        ));
+
+    } else if (isset($node) && $node->type == "gene" && arg(2) != "edit" && arg(2) != "delete") {
+        page_gene($node, $bone_dysplasia);
+
+    } else if (isset($node) && $node->type == "bone_dysplasia" && arg(2) != "edit" && arg(2) != "delete" && arg(2) != "revisions") {
+
+//        echo render(drupal_get_form($node->type . '_node_form', $node));
+//        echo "<pre>";
+//        print_r($node);
+//        echo "</pre>";
+        page_bone_dysplasia($node);
+    } else if (arg(0) == "user" && (arg(1)) != "logout") {
+//        drupal_goto('<front>');
+    }
+}
+
+
+/* ========================================================================
+ *      Data Functions
+ * ========================================================================
+ */
+function skeletome_builder_theme_registry_alter(&$theme_registry) {
+    $mod_path = drupal_get_path('module', 'skeletome_builder') . '/templates';
+    $theme_registry_copy = $theme_registry;       // munge on a copy
+    _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', 'pow', $mod_path);
+    $theme_registry += array_diff_key($theme_registry_copy, $theme_registry);
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function skeletome_builder_theme($existing, $type, $theme, $path) {
+
+    $themes['sb_bd_genes'] = array(
+        'variables' => array(
+        ),
+        'template'  => 'template_bd_genes'
+    );
+    $themes['sb_bd_cf'] = array(
+        'variables' => array(
+        ),
+        'template'  => 'template_bd_cf'
+    );
+    $themes['sb_search'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_builder') . '/templates',
+        'template'  => 'template_search'
+    );
+
+    $themes['sb_contact_us'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_builder') . '/templates',
+        'template'  => 'template_contact_us'
+    );
+
+    $themes['bd_add_cf'] = array(
+        'variables' => array(
+        ),
+        'template'  => 'template_bd_add_cf',
+    );
+
+    $themes['sb_search_results'] = array(
+        'variables' => array(
+            'results'   => NULL,
+            'facets'    => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_builder') . '/templates',
+        'template'  => 'template_search'
+    );
+
+    return $themes;
+}
+
+
+function ajax_get_pub_med($pubmedId) {
+    $node = null;
+    $style = biblio_get_style();
+    $base = variable_get('biblio_base', 'biblio');
+
+    // No entry yet in the database for the pubmed id
+    $Eclient = new BiblioEntrezClient;
+    try {
+        $result = $Eclient->fetch($pubmedId);
+    } catch (Exception $e) {
+        form_set_error($e->getMessage());
+    }
+
+    global $user;
+    $data = NULL;
+    if (!isset($result->PubmedArticle)) {
+        if (isset($result->PubmedBookArticle)) {
+            $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
+        }
+    } else {
+        $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
+    }
+
+    if ($data !== NULL) {
+        $node_data = $data->getBiblio();
+        $node_data['type'] = 'biblio';
+        $node_data['uid'] = $user->uid;
+        $node = (object)$node_data;
+
+        $markup = theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style));
+
+        $return = array(
+            'pubmedId'  => $pubmedId,
+            'markup'    => $markup
+        );
+
+        echo drupal_json_encode($return);
+
+    } else {
+        echo drupal_json_encode(array());
+    }
+
+
+}
+
+function ajax_get_biblio() {
+
+    $style = biblio_get_style();
+    $base = variable_get('biblio_base', 'biblio');
+
+    $sql = "SELECT *
+            FROM {node}
+            WHERE type='biblio'";
+    $results = db_query($sql);
+
+    $biblio_ids = array();
+    foreach($results as $biblio) {
+        $biblio_ids[] = $biblio->nid;
+    }
+
+    $biblios = array_values(node_load_multiple($biblio_ids));
+
+    $return = array();
+    foreach($biblios as $biblio) {
+        $return[] = array(
+            'pubmedId'  => $biblio->biblio_pubmed_id,
+            'markup'    => theme('biblio_style', array('node' => $biblio, 'base' => $base, 'style' => $style)),
+            'nid'       => $biblio->nid
+        );
+    }
+
+    echo drupal_json_encode($return);
+}
+
+/**
+ * Returns if a user can access an ajax editing URL
+ *
+ * @return bool Returns true for admin or sk_moderator
+ */
+function is_moderator() {
+    global $user;
+    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function is_authenticated() {
+    global $user;
+    if(isset($user->uid)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_builder_menu() {
+
+    $items['node/%node/gene/%node'] = array(
+        'title callback' => 'node_page_title',
+        'title arguments' => array(3),
+        // The page callback also invokes drupal_set_title() in case
+        // the menu router's title is overridden by a menu link.
+        'page callback' => 'node_page_view',
+        'page arguments' => array(3),
+        'access callback' => 'node_access',
+        'access arguments' => array('view', 1),
+    );
+
+    $items['node/%node/clinical-feature/%taxonomy_term'] = array(
+        'title' => 'Taxonomy term',
+        'title callback' => 'taxonomy_term_title',
+        'title arguments' => array(3),
+        'page callback' => 'taxonomy_term_page',
+        'page arguments' => array(3),
+        'access arguments' => array('access content'),
+        'file' => 'taxonomy.pages.inc',
+    );
+
+
+    /**
+     * Contact Us Page
+     */
+    $items['contact'] = array(
+        'title' => 'Contact Us',
+        'page callback' => 'page_contact',
+        'access arguments' => array('access content')
+    );
+
+    /**
+     * Biblios
+     */
+    // Get all biblios
+    $items['ajax/biblios'] = array(
+        'page callback'     => 'ajax_get_biblio',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+    // Save a biblio
+    $items['ajax/biblio'] = array(
+        'page callback'     => 'ajax_save_biblio',
+        'access callback' => 'is_authenticated',
+        'type'  => MENU_CALLBACK
+    );
+
+    // Get a pubmed article
+    $items['ajax/pubmed/%'] = array(
+        'page callback'     => 'ajax_get_pub_med',
+        'page arguments'    => array(2),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+
+    $items['ajax/search/gene/%'] = array(
+        'page callback' 	=> 'ajax_search_genes',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+
+
+    /**
+     * Autocomplete Global Search Bar
+     */
+    $items['ajax/autocomplete/all'] = array(
+        'page callback' 	=> 'ajax_autocomplete_all',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+    $items['ajax/autocomplete/all/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_all',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    /**
+     * Autocomplete Bone Dysplasias Groups
+     */
+    $items['ajax/autocomplete/bone-dysplasia-groups/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_bone_dysplasia_groups',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    /**
+     * Autocomplete Bone Dysplasias
+     */
+    $items['ajax/autocomplete/bone-dysplasias/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_bone_dysplasias',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+    /**
+     * Autocomplete Genes
+     */
+    $items['ajax/autocomplete/genes/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_genes',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    /**
+     * Autocomplete Clinical Features
+     */
+    $items['ajax/autocomplete/clinical-feature/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_clinical_feature',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    /**
+     * Autocomplete Groups
+     */
+    $items['ajax/autocomplete/groups/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_groups',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+
+    /* Adding Comments to Statements */
+    $items['ajax/statement/%node/comment/add'] = array(
+        'title'             => t('Add Comment to Statement.'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_add_comment_to_statement',
+        'access callback'   => 'is_authenticated',
+    );
+    $items['ajax/statement/%node/comments'] = array(
+        'title'             => t('Get Comments for Statement.'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_get_comments_for_statement',
+        'access arguments'  => array('access content')
+    );
+
+
+
+
+
+    /* Genes */
+    $items['ajax/gene/%/description'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_gene_description',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/gene/%/details'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_gene_details',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/gene/%/gene-mutation'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_create_gene_mutation_for_gene',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/gene-mutation/%/description'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_gene_mutation_description',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/gene/%/statement'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_gene_statement',
+        'access callback'   => 'is_moderator',
+    );
+
+
+    /* Edits to Bone Dysplasia */
+    $items['ajax/tag/%/bone-dysplasias/get'] = array(
+        'page callback' 	=> 'ajax_get_bone_dysplasias_for_tag',
+        'page arguments'    => array(2),
+        'access arguments' => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+
+    /* Creating bone dysplasia */
+    $items['ajax/bone-dysplasia/new'] = array(
+        'title' 		    => t('Create New Bone Dysplasia'),
+        'page callback' 	=> 'ajax_new_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+        'type'  => MENU_CALLBACK
+    );
+
+    /**
+     * XRays
+     */
+    $items['ajax/bone-dysplasia/%/xray/add'] = array(
+        'title' 		    => t('Add xray to bonedysplasia'),
+        'page callback' 	=> 'ajax_add_xray_to_bone_dysplasia',
+        'page arguments'    => array(2),
+        'access callback'   => 'is_moderator',
+        'type'              => MENU_CALLBACK
+    );
+
+
+    $items['ajax/bone-dysplasia/%node/genes'] = array(
+        'title' 		    => t('Bone Dysplasia Search'),
+        'page callback' 	=> 'ajax_bone_dysplasia_genes',
+        'page arguments'    => array(2),
+        'access callback'   => 'is_moderator',
+        'type'  => MENU_CALLBACK
+    );
+
+
+    $items['ajax/bone-dysplasia/description'] = array(
+        'title' => t('Update Description'),
+        'type'              => MENU_CALLBACK,
+        'page callback'     => 'ajax_bone_dysplasia_description',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/bone-dysplasia/%node/statement/add'] = array(
+        'title'             => t('Add Statement to Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_add_statement_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/bone-dysplasia/%/gene/add'] = array(
+        'title'             => t('Add Gene Mutation'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_add_gene_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/bone-dysplasia/%/gene/%/remove'] = array(
+        'title'             => t('Add Gene Mutation'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2, 4),
+        'page callback'     => 'ajax_remove_gene_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/bone-dysplasia/%node/gene-mutation/add'] = array(
+        'title'             => t('Add Gene Mutation'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_add_gene_mutation_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/bone-dysplasia/%node/gene-mutation/remove/%'] = array(
+        'title'             => t('Update Description'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2, 5),
+        'page callback'     => 'ajax_remove_gene_mutation_from_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+
+
+    $items['ajax/bone-dysplasia/clinical-feature/add'] = array(
+        'title'             => t('Add Clincial Feature to Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page callback'     => 'ajax_add_clinical_feature_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/bone-dysplasia/clinical-feature/remove'] = array(
+        'title'             => t('Remove Clincial Feature from Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page callback'     => 'ajax_remove_clinical_feature_from_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/bone-dysplasia/%/omim'] = array(
+        'title'             => t('Add OMIM to Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_add_omim_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/bone-dysplasia/%/moi'] = array(
+        'title'             => t('Edit Moi to Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_edit_moi_to_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/bone-dysplasia/groups/edit'] = array(
+        'title'             => t('Edit Groups for Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page callback'     => 'ajax_edit_groups_for_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/bone-dysplasia/groups/new'] = array(
+        'title'             => t('Add New Group to Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page callback'     => 'ajax_new_group_for_bone_dysplasia',
+        'access callback'   => 'is_moderator',
+    );
+
+    $items['ajax/gene/%/gene-mutations'] = array(
+        'title'             => t('Gene Mutations for Gene'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_gene_gene_mutations',
+        'access callback'   => 'is_moderator',
+    );
+
+
+    $items['ajax/release/%/tags/get'] = array(
+        'title'             => t('Get Tags for Release'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_get_tags_for_release',
+        'access arguments' => array('access content'),
+    );
+
+    return $items;
+}
+
+
+/**
+ * Ajax functions
+ */
+
+
+
+
+
+
+function get_ids($result, $type="node") {
+    $ids = array();
+    if(isset($result[$type])) {
+        foreach($result[$type] as $term) {
+            if($type == "node") {
+                $ids[] = $term->nid;
+            } else if($type == "taxonomy_term") {
+                $ids[] = $term->tid;
+            }
+        }
+    }
+    return $ids;
+}

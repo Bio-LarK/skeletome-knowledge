@@ -1,0 +1,394 @@
+<?php
+/**
+ * @file
+ * Custom search for bone dysplasias.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function sk_search_help($path, $arg) {
+    switch ($path) {
+        case 'admin/help#sk_search':{
+            $ret_val = '<h3>' . t('Hello World') . '</h3>';
+            $ret_val .= '<p>' . t('This is testing Search Help.') . '</p>';
+            return $ret_val;
+            break;
+        }
+    }
+}
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function sk_search_menu() {
+
+    $items['formtest'] = array(
+        'title' 		    => t('Bone Dysplasia Search'),
+        'page callback' 	=> 'page_sk_search',
+        'access arguments'  => array('access content'),
+    );
+    $items['node/%node/form'] = array(
+        'title' => 'Edit Description',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('sk_search_my_form'),
+        'access callback' => TRUE,
+        'description' => 'Fieldsets',
+        'type' => MENU_LOCAL_TASK,
+    );
+    $items['node/1000'] = array(
+        'title' 		    => t('Bone Dysplasia Search'),
+        'page callback' 	=> 'page_sk_search',
+        'access arguments'  => array('access content'),
+    );
+    $items['sk_search/d3_block'] = array(
+        'title'             => t('D3 Block Page'),
+        'page callback'     => 'page_d3_block',
+        'access callback'   => TRUE,
+    );
+    $items['node/%/test'] = array(
+        'title'             => t('Edit Description'),
+        'page callback'     => 'page_sk_search',
+        'access callback'   => TRUE,
+    );
+
+    $items['bone-dysplasia/phenotype-autocomplete'] = array(
+        'page callback' => 'autocomplete_phenotype',
+        'type' => MENU_CALLBACK,
+        'access arguments' => array('access content'),
+    );
+
+    return $items;
+}
+
+/**
+ * Implements hook_page_alter().
+ * Perform alterations before a page is rendered.
+ */
+function sk_search_page_alter(&$page) {
+
+}
+
+function sk_search_form_alter(&$form, &$form_state, $form_id) {
+
+}
+
+/**
+ * Implements hook_page_build().
+ *
+ * Hooks into the page so you can add elements to other regions.
+ */
+function sk_search_page_build(&$page) {
+
+    $node = menu_get_object('node', 1);
+
+    if ($node && $node->type == "bone_dysplasia") {
+
+        // Get the BD Node
+        $bone_dysplasia = node_load($node->nid);
+
+        // Get the OMIM
+        $field_bd_omim = field_get_items('node', $bone_dysplasia, 'field_bd_omim');
+        $omim_partial = $field_bd_omim[0]['value'];
+
+
+
+
+
+//        $page['content']['genes'] = array(
+//            array(
+//                '#markup'       => "<h2>Genes Test</h2>"
+//            ),
+//            array(
+//                '#theme'        => 'table',
+//                '#header'       => $header,
+//                '#rows'         => $rows,
+//            )
+//        );
+
+        module_load_include('inc', 'node', 'node.pages');
+
+
+
+        // Load up all my forms
+        $bone_dysplasia_edit_form = drupal_get_form($bone_dysplasia->type . '_node_form', $bone_dysplasia);
+        $add_phenotype_to_bone_dysplasia_form = drupal_get_form('form_add_phenotype_to_bone_dysplasia');
+        $remove_phenotype_from_bone_dysplasia_form = drupal_get_form('form_remove_phenotype_from_bone_dysplasia');
+//        $page['edit_bar'] = array(
+////            $bone_dysplasia_edit_form,
+////            $add_phenotype_to_bone_dysplasia_form
+////            $remove_phenotype_from_bone_dysplasia_form
+//        );
+    }
+}
+
+/*  ========================================================================================
+       Forms
+    ========================================================================================
+*/
+function form_remove_phenotype_from_bone_dysplasia($form, &$form_state) {
+    $bone_dysplasia = menu_get_object('node', 1);
+    if($bone_dysplasia->type != "bone_dysplasia") {
+        return null;
+    }
+
+    $form['description'] = array(
+        '#type' => 'markup',
+        '#markup' => "<h2>Detach Clinical Feature</h2><p>Select a Clinical features to remove from " . $bone_dysplasia->title . ".</p>"
+    );
+
+    // Get out all the feature terms
+    $clinical_feature_ids = array();
+
+
+    foreach($bone_dysplasia->field_skeletome_tags['und'] as $clinical_feature_id) {
+        $clinical_feature_ids[] = $clinical_feature_id['tid'];
+    }
+
+    $clinical_features = taxonomy_term_load_multiple($clinical_feature_ids);
+
+
+    $options = array();
+    foreach($clinical_features as $clinical_feature) {
+        $options[$clinical_feature->tid] = $clinical_feature->name;
+    }
+
+    // Get all the phenotypes from the database that have this bone dysplasia
+    $phenotype_taxonomy = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
+
+    $form['phenotypes'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Clinical Feature'),
+        '#options' => $options
+    );
+    return $form;
+}
+function form_add_phenotype_to_bone_dysplasia($form, &$form_state) {
+
+    $bone_dysplasia = menu_get_object('node', 1);
+    if($bone_dysplasia->type != "bone_dysplasia") {
+        return null;
+    }
+
+    $form['description'] = array(
+        '#type' => 'markup',
+        '#markup' => "<h2>Attach Clinical Feature</h2><p>Select a Clinical feature to attach to " . $bone_dysplasia->title . ".</p>"
+    );
+
+    $form['phenotype'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Clinical Feature'),
+        '#autocomplete_path' => 'bone-dysplasia/phenotype-autocomplete',
+    );
+
+    // Adds a simple submit button that refreshes the form and clears its
+    // contents. This is the default behavior for forms.
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Submit',
+    );
+    return $form;
+}
+
+function autocomplete_phenotype($feature_name = "") {
+    $matches = array();
+    if ($feature_name) {
+        $phenotype_taxonomy = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
+
+        $sql = "SELECT *
+                FROM {taxonomy_term_data}
+                WHERE vid = :vid
+                AND name LIKE :name
+                LIMIT 10";
+
+        $clinical_features = db_query($sql, array(
+            'vid'       => $phenotype_taxonomy->vid,
+            'name'      => '%' . db_like($feature_name) . '%'
+        ));
+
+
+        foreach($clinical_features as $clinical_feature) {
+            $matches[$clinical_feature->tid] = check_plain($clinical_feature->name);
+        }
+    }
+    drupal_json_output($matches);
+}
+
+function form_add_phenotype_to_bone_dysplasia_submit($form, &$form_state) {
+    // get the current bone dysplasia
+    $node = menu_get_object('node', 1);
+    if($node->type != "bone_dysplasia") {
+        return;
+    }
+
+
+    $node->field_skeletome_tags[LANGUAGE_NONE][] = array(
+        'tid' => $form_state['values']['phenotype']
+    );
+
+    $node = node_submit($node); // Prepare node for saving
+    node_save($node);
+
+    drupal_set_message(t('Clinical Feature Added'));
+}
+
+
+/**
+ * Implements hook_block_view().
+ *
+ * This hook generates the contents of the blocks themselves.
+ */
+//function sk_search_block_view($delta = '') {
+//    //The $delta parameter tells us which block is being requested.
+//    switch ($delta) {
+//        case 'example_configurable_text':
+//            // The subject is displayed at the top of the block. Note that it
+//            // should be passed through t() for translation. The title configured
+//            // for the block using Drupal UI supercedes this one.
+//            $block['subject'] = t('Title of first block (example_configurable_text)');
+//            // The content of the block is typically generated by calling a custom
+//            // function.
+//            $block['content'] = array("#markup" => "hello world");
+//            break;
+//    }
+//    return $block;
+//}
+
+//
+///**
+// * Implements hook_block_info().
+// *
+// * This hook declares what blocks are provided by the module.
+// */
+//function sk_search_block_info() {
+//    $blocks['example_configurable_text'] = array(
+//        // info: The name of the block.
+//        'info' => t('Example: configurable text string'),
+//        // Block caching options (per role, per user, etc.)
+//        'cache' => DRUPAL_CACHE_PER_ROLE, // default
+//    );
+//}
+///**
+// * Implements hook_block_configure().
+// *
+// * This hook declares configuration options for blocks provided by this module.
+// */
+//function sk_search_block_configure($delta = '') {
+//}
+///**
+// * Implements hook_block_save().
+// *
+// * This hook declares how the configured options for a block
+// * provided by this module are saved.
+// */
+//function block_example_block_save($delta = '', $edit = array()) {
+//}
+
+
+/**
+ * A module-defined block content function.
+ */
+function sk_search_contents($which_block) {
+    switch ($which_block) {
+        case 'sk_search_d3_block':
+            // Modules would typically perform some database queries to fetch the
+            // content for their blocks. Here, we'll just use the variable set in the
+            // block configuration or, if none has set, a default value.
+            // Block content can be returned in two formats: renderable arrays
+            // (as here) are preferred though a simple string will work as well.
+            // Block content created through the UI defaults to a string.
+            $result = db_query('SELECT * FROM {node} n WHERE n.type = :type', array(':type' => 'bone_dysplasia'));
+
+            $items = array();
+            foreach ($result as $row) {
+                $items[] = l($row->title, 'http://google.com');
+            }
+
+            $build['search_title'] = array(
+                '#theme'    => "item_list",
+                '#items'    => $items
+            );
+            return $build;
+    }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function sk_search_theme() {
+    return array(
+        'some_theme' => array(
+            // We use 'variables' when the item to be passed is an array whose
+            // structure must be described here.
+            'variables' => array(
+                'title'     => NULL,
+                'items'     => NULL,
+                'omim'      => NULL,
+                'moi'       => NULL
+            ),
+            'template'      => 'some-theme'
+        ),
+        'statements_theme'  => array(
+            'variables'     => array(
+                'title'     => NULL
+            ),
+            'template'      => 'statements'
+        ),
+        'bd_genes_theme'    => array(
+            'variables' => array(
+
+            ),
+            'template'  => 'template_bd_genes'
+        )
+    );
+}
+
+
+
+
+/*  ========================================================================================
+       Page Functions
+    ========================================================================================
+*/
+
+/**
+ * A simpel page to explain something about the d3 block page
+ *
+ * @return
+ *   An array as expected by drupal_render().
+ */
+function page_d3_block() {
+    $page = array(
+        '#type'     => 'markup',
+        '#markup'   => t('This block shows some d3.js graphs')
+    );
+    return $page;
+}
+
+/**
+ * Display the Bone Dysplasia Search Page
+ *
+ * @return
+ *   An array as expected by drupal_render().
+ */
+function page_sk_search() {
+    $build = array();
+    // Gather the data, an array of human-readable names keyed by machine names.
+
+    // get out all the bone dysplasias from the database.
+    $result = db_query('SELECT * FROM {node} n WHERE n.type = :type', array(':type' => 'bone_dysplasia'));
+
+    $items = array();
+    foreach ($result as $row) {
+        $items[] = l($row->title, 'http://google.com');
+    }
+
+    $build['search_title'] = array(
+        '#theme'    => "item_list",
+        '#title'    => "List of Bone Dysplasias",
+        '#items'    => $items
+    );
+    return $build;
+}
+
