@@ -56,7 +56,7 @@
     <file path="/page--taxonomy.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365031516537" ignored="false" />
     <file path="/search_api.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365135417737" ignored="false" />
     <file path="/search_api_page.pages.inc" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365136222432" ignored="false" />
-    <file path="/apachesolr_search.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366070187929" ignored="false" />
+    <file path="/apachesolr_search.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366070330575" ignored="false" />
     <file path="/search-result.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365399087813" ignored="false" />
     <file path="/search-results.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365378959861" ignored="false" />
     <file path="/search-block-form.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365375017571" ignored="false" />
@@ -156,10 +156,10 @@
       <file leaf-file-name="apachesolr_search.module" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/apachesolr/apachesolr_search.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1728" column="21" selection-start="65986" selection-end="65986" vertical-scroll-proportion="0.39781022">
+            <state line="1760" column="41" selection-start="66852" selection-end="66852" vertical-scroll-proportion="0.83576643">
               <folding>
-                <marker date="1366070193000" expanded="true" signature="66833:67253" placeholder="..." />
-                <marker date="1366070193000" expanded="true" signature="66837:67243" placeholder="..." />
+                <marker date="1366070329000" expanded="true" signature="66853:67273" placeholder="..." />
+                <marker date="1366070329000" expanded="true" signature="66857:67263" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -223,7 +223,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1516" />
+    <option name="x" value="819" />
     <option name="y" value="22" />
     <option name="width" value="1653" />
     <option name="height" value="1330" />
@@ -1709,7 +1709,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1516" y="22" width="1653" height="1330" extended-state="0" />
+    <frame x="819" y="22" width="1653" height="1330" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1894,10 +1894,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/apachesolr/apachesolr_search.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1728" column="21" selection-start="65986" selection-end="65986" vertical-scroll-proportion="0.39781022">
+        <state line="1760" column="41" selection-start="66852" selection-end="66852" vertical-scroll-proportion="0.83576643">
           <folding>
-            <marker date="1366070193000" expanded="true" signature="66833:67253" placeholder="..." />
-            <marker date="1366070193000" expanded="true" signature="66837:67243" placeholder="..." />
+            <marker date="1366070329000" expanded="true" signature="66853:67273" placeholder="..." />
+            <marker date="1366070329000" expanded="true" signature="66857:67263" placeholder="..." />
           </folding>
         </state>
       </provider>
