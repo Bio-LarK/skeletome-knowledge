@@ -317,20 +317,6 @@ function skeletome_config_form_submit($form, &$form_state)
         $groups = $groups_disorders->groups;
         $disorders = $groups_disorders->disorders;
 
-//        echo "<h1>mapping</h1><pre>";
-//        print_r($mappings);
-//        echo "</pre>";
-//
-//        echo "<h1>groups</h1><pre>";
-//        print_r($groups);
-//        echo "</pre>";
-//
-//        echo "<h1>disorders</h1><pre>";
-//        print_r($disorders);
-//        echo "</pre>";
-//
-//        die();
-
         $existing_source = $form_state['values']['configuration']['extra_groups']['value']['existing_source'];
 
         $new_source_name = $form_state['values']['configuration']['extra_groups']['value']['source_name'];

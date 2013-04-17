@@ -402,17 +402,17 @@
                 <section class="media-body" ng-class="{'section-more': xrays.length > xrayDisplayLimit}">
                     <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
                         <div class="pull-right">
-                            <a cm-popover="top" cm-popover-content="'Yet to be implemented.'" href ng-click="showEdiftXRay()" data-toggle="modal" role="button" class="btn"><i class="icon-pencil"></i> Edit</a>
+                            <a href ng-click="showEditXRays()" data-toggle="modal" role="button" class="btn"><i class="icon-pencil"></i> Edit</a>
                         </div>
                     <?php endif; ?>
 
                     <h3>X-Rays</h3>
                     <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                    <div class="dropzone" ng-model="boneDysplasia.field_image_test.und" drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add">
+                    <div class="dropzone" ng-model="xrays" drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add">
                     </div>
                     <?php endif; ?>
 
-                    <p ng-show="!boneDysplasia.field_image_test.und.length" class="muted">There are no x-rays for '{{boneDysplasia.title}}'.</p>
+                    <p ng-show="!xrays.length" class="muted">There are no x-rays for '{{boneDysplasia.title}}'.</p>
 
                     <ul class="xray-list unstyled media-body" fancy-box="xrays">
                         <li class="xray-list-image" ng-repeat="image in xrays | limitTo:xrayDisplayLimit">
@@ -422,7 +422,7 @@
                         </li>
                     </ul>
 
-                    <a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more" href>Show All X-Rays ({{ boneDysplasia.field_image_test.und.length }})</a>
+                    <a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more" href>Show All X-Rays ({{ boneDysplasia.field_bd_xray_images.und.length }})</a>
                 </section>
 
 
@@ -452,6 +452,57 @@
 
 
     <div cm-modal="showEditingPanel" ng-switch on="editingPanel" class="modal modal-dark fade hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="modal-switch" ng-switch-when="edit-xrays">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>Edit X-Rays</h3>
+            </div>
+            <!-- /Modal Header -->
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="modal-body-inner">
+                    <p>Edit the X-Rays for '{{boneDysplasia.title}}'.</p>
+
+                    <ul class="xray-list unstyled media-body">
+
+                        <li class="xray-list-image-edit" ng-repeat="xray in editedXRays" >
+                            <div ng-show="!xray.added" ng-click="readdXRay(xray)">
+                                <div class="xray-list-image-edit-image">
+                                    <img ng-src="{{ xray.thumb_url }}" alt="" />
+                                </div>
+                                <a class="btn btn-success" href >
+                                    <i class="icon-plus icon-white"></i> Add
+                                </a>
+                            </div>
+
+                            <div ng-show="xray.added" ng-click="removeXRay(xray)">
+                                <div class="xray-list-image-edit-image">
+                                    <img ng-src="{{ xray.thumb_url }}" alt="" />
+                                </div>
+                                <a  class="btn btn-danger" href >
+                                    <i class="icon-remove icon-white"></i> Remove
+                                </a>
+                            </div>
+
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- /Modal Body -->
+
+            <!-- Modal Footer -->
+            <div class="modal-footer modal-footer-bottom">
+                <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+            </div>
+            <!-- /Modal Footer -->
+        </div>
+
+
 
         <div class="modal-switch" ng-switch-when="edit-details">
             <!-- Modal Header -->

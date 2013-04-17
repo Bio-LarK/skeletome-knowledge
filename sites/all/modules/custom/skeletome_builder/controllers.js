@@ -685,8 +685,8 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.editors = Drupal.settings.skeletome_builder.editors;
 
         // Setup the xrays
-        if(angular.isDefined(Drupal.settings.skeletome_builder.bone_dysplasia.field_image_test.und)) {
-            $scope.xrays = Drupal.settings.skeletome_builder.bone_dysplasia.field_image_test.und;
+        if(angular.isDefined(Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und)) {
+            $scope.xrays = Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und;
         } else {
             $scope.xrays = [];
         }
@@ -725,6 +725,35 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
     $scope.edit = {};
 
+    $scope.showEditXRays = function() {
+        /* Set up the selected moi for the dropdown */
+
+        angular.forEach($scope.xrays, function(xray, key) {
+            xray.added = true;
+        });
+        $scope.editedXRays = angular.copy($scope.xrays);
+        $scope.openEditingPanel('edit-xrays');
+    }
+    $scope.removeXRay = function(xray) {
+        xray.added = false;
+        angular.forEach($scope.xrays, function(existingXray, index) {
+            if(existingXray.fid == xray.fid) {
+                $scope.xrays.splice(index, 1);
+            }
+        });
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
+        }).success(function(data) {
+            console.log(data);
+        });
+    }
+    $scope.readdXRay = function(xray) {
+        xray.added = true;
+        $scope.xrays.push(xray);
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/add', {
+        }).success(function(data) {
+        });
+    }
+
     $scope.showEditDetails = function() {
         $scope.mois = Drupal.settings.skeletome_builder.all_mois;
 
@@ -733,13 +762,13 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
             if(moi.tid == $scope.moi.tid) {
                $scope.edit.editedMoi = moi;
                 console.log("edit moi set to");
-
                return false;
             }
         });
 
         $scope.openEditingPanel('edit-details');
     }
+
     $scope.saveDetails = function(editedOMIM, editedMoi) {
 
         console.log(editedMoi.tid);
@@ -1187,6 +1216,8 @@ function PageCtrl($scope, $http) {
     $scope.globalSearch = function(term) {
         window.location.href = "?q=search/site/" + term;
     }
+
+    $scope.baseUrl = Drupal.settings.skeletome_builder.base_url;
 
 }
 

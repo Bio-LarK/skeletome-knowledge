@@ -19,6 +19,40 @@ function ajax_get_tags_for_release($release_id) {
     echo drupal_json_encode($tags);
 }
 
+function ajax_remove_xray_from_bone_dysplasia($bone_dysplasia_id, $xray_id) {
+    $bone_dysplasia = node_load($bone_dysplasia_id);
+
+    // get the xrays
+
+    $newXRays = array();
+    if(isset($bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE])) {
+        foreach($bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE] as $xray) {
+            if($xray['fid'] != $xray_id) {
+                $newXRays[] = $xray;
+            }
+        }
+        $bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE] = $newXRays;
+    }
+
+    $bone_dysplasia->revision = 1;
+    $bone_dysplasia->log = "XRay Removed.";
+
+    node_save($bone_dysplasia);
+    echo "xray removed";
+}
+
+function ajax_add_existing_xray_to_bone_dysplasia($bone_dysplasia_id, $xray_id) {
+    $bone_dysplasia = node_load($bone_dysplasia_id);
+
+    $bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE][] = (array)file_load($xray_id);
+
+    $bone_dysplasia->revision = 1;
+    $bone_dysplasia->log = "Added XRay.";
+    node_save($bone_dysplasia);
+
+    echo "added exsting xray";
+}
+
 function ajax_add_xray_to_bone_dysplasia($bone_dysplasia_id) {
     // Debugging info
 
@@ -56,12 +90,14 @@ function ajax_add_xray_to_bone_dysplasia($bone_dysplasia_id) {
 
         // Save Bone Dysplasia
         $bone_dysplasia = node_load($bone_dysplasia_id);
-        $bone_dysplasia->field_image_test[LANGUAGE_NONE][] = (array)$file;
+        $bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE][] = (array)$file;
         $bone_dysplasia->revision = 1;
-        $bone_dysplasia->log = "Added XRay.";
+        $bone_dysplasia->log = "Added New XRay.";
         node_save($bone_dysplasia);
 
-        $saved_file = $bone_dysplasia->field_image_test[LANGUAGE_NONE][count($bone_dysplasia->field_image_test[LANGUAGE_NONE]) - 1];
+        watchdog("skeletome builder", "my message");
+
+        $saved_file = $bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE][count($bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE]) - 1];
         $saved_file['full_url'] = file_create_url($saved_file['uri']);
         $saved_file['thumb_url'] = image_style_url('thumbnail', $saved_file['uri']);
 

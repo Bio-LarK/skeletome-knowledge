@@ -255,6 +255,220 @@ myApp.directive('dropZoneUpload', function() {
         }
     }
 })
+//
+//myApp.directive('cmMouse', function() {
+//    return function postLink(scope, iElement, iAttrs) {
+//
+//        iAttrs.$observe('cmMouseEnter', function(value) {
+//            if(value) {
+//                console.log("attaching mouse etner to value " + value);
+//                iElement.mouseenter(function() {
+//                    scope.$eval(value);
+//                });
+//            }
+//        });
+//
+//        iAttrs.$observe('cmMouseLeave', function(value) {
+//            if(value) {
+//                iElement.mouseleave(function() {
+//                    scope.$eval(value);
+//                });
+//            }
+//        });
+//
+//        iAttrs.$observe('cmMouseHover', function(value) {
+//            if(value) {
+//                iElement.hover(function() {
+//                    scope.$eval(value);
+//                });
+//            }
+//        });
+//
+//    }
+//});
+
+/**
+ * Creates a nav search bar
+ */
+myApp.directive('navSearch', function() {
+
+
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {       // create an isolate scope
+        },
+        // /drupalv2/sites/all/modules/custom/skeletome_builder/images/bone-logo.png
+        templateUrl: Drupal.settings.skeletome_builder.base_url + '/sites/all/modules/custom/skeletome_builder/partials/navsearch.php',
+        controller: function ( $scope, $http, $filter ) {
+            // Scope
+            $scope.baseUrl = Drupal.settings.skeletome_builder.base_url;
+
+            $scope.navSearch = {
+                "selectedSuggestion": "",
+                "querySuggestions": []
+            };
+            $scope.NOT_SELECTED = -2;
+            $scope.SEARCH_SELECTED = -1;
+            $scope.FIRST_SUGGESTION = 0;
+            $scope.selectedIndex = $scope.SEARCH_SELECTED;
+
+            $scope.updateSelectedSuggestionText = function(index) {
+
+                $scope.selectedIndex = index;
+
+                // Selecting something in the data or search or nothing
+                if(0 <= $scope.selectedIndex && $scope.selectedIndex < $scope.navSearch.querySuggestions.length) {
+                    var myFilter = $filter('matchcase');
+
+                    // Get out the text suggestion
+                    var newSuggestion = $scope.navSearch.querySuggestions[$scope.selectedIndex];
+                    var newSuggestionText = newSuggestion.title || newSuggestion.name;
+
+                    // Transform the suggestion to match the case of hte input (tricky stuff!)
+                    $scope.navSearch.selectedSuggestion = myFilter(newSuggestionText, $scope.navSearch.query);
+                } else {
+                    $scope.navSearch.selectedSuggestion = "";
+                }
+            }
+
+            $scope.search = function(query) {
+
+                // Filter the current displayed queries based on the input
+                var textFilter = $filter('nameOrTitleStartsWith');
+                $scope.navSearch.querySuggestions = textFilter($scope.navSearch.querySuggestions, query);
+
+                // Mark as none selected
+                if($scope.navSearch.querySuggestions.length) {
+//                    $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+                    $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+                } else {
+                    $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                }
+
+
+                $http.get('?q=ajax/autocomplete/all/' + query).success(function(data) {
+                    // add in all suggestions
+
+                    // We filter the results by what we have entered
+                    // cause we might be getting old results back from the database
+                    // from a previous query
+                    $scope.navSearch.querySuggestions = textFilter(data, $scope.navSearch.query);
+
+                    if($scope.navSearch.querySuggestions.length) {
+                        // selected suggestion
+                        $scope.updateSelectedSuggestionText($scope.selectedIndex);
+                    } else {
+                        $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                    }
+
+                });
+            }
+
+            $scope.enteredSuggestion = function(suggestion) {
+                if(!suggestion) {
+                    // they have selected somethign not in the data, it must be the first one
+                    var selectedIndex = $scope.SEARCH_SELECTED;
+                } else {
+                    var selectedIndex = $scope.navSearch.querySuggestions.indexOf(suggestion);
+                }
+                $scope.updateSelectedSuggestionText(selectedIndex);
+            }
+
+            $scope.leavedSuggestion = function(suggestion) {
+                $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+            }
+
+        },
+        link: function($scope, iElement, iAttrs) {
+
+            jQuery('.navsearch-suggestions', jQuery(iElement)).click(function(event) {
+                $scope.$apply(function() {
+                    console.log("clicked a suggestion");
+                    $scope.showSuggestions = true;
+                });
+            });
+
+            // Dom
+            jQuery('.navsearch-query', jQuery(iElement)).blur(function(event) {
+                setTimeout(function() {
+                    $scope.$apply(function() {
+                        console.log("blurring");
+                        $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                        $scope.showSuggestions = false;
+                    });
+                }, 200);
+            });
+            jQuery('.navsearch-query', jQuery(iElement)).focus(function(event) {
+                $scope.$apply(function() {
+                    $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+                    $scope.showSuggestions = true;
+                });
+            });
+
+
+            jQuery('.navsearch-query', jQuery(iElement)).keydown(function(event) {
+
+                // Down or Up pressed
+                if(event.which == 40 || event.which == 38) {
+                    $scope.$apply(function() {
+                        if(event.which == 40) {
+                            var newIndex = Math.min($scope.navSearch.querySuggestions.length, ++$scope.selectedIndex);
+                        } else {
+                            var newIndex = Math.max($scope.NOT_SELECTED, --$scope.selectedIndex);
+                        }
+
+                        $scope.updateSelectedSuggestionText(newIndex);
+                    });
+                    return false;
+
+                } else if (event.which == 13) {
+                    // enter pressed
+                    if($scope.selectedIndex < 0) {
+                        // do the search
+                        window.location.href = "?q=search/site/" + $scope.navSearch.query;
+                    } else {
+                        // selected object
+                        var selectedObject = $scope.navSearch.querySuggestions[$scope.selectedIndex];
+
+                        // update the query input to look correct
+                        $scope.$apply(function() {
+                            $scope.navSearch.query = selectedObject.title || selectedObject.name;
+                            $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                        });
+
+                        if(angular.isDefined(selectedObject.nid)) {
+                            window.location.href = "?q=node/" + selectedObject.nid;
+                        } else {
+                            window.location.href = "?q=taxonomy/term/" + selectedObject.tid;
+                        }
+                    }
+                    return false;
+
+                } else if (event.which == 9) {
+                    // tab
+                    // update the query input to look correct
+                    if($scope.selectedIndex >= 0) {
+
+                        var selectedObject = $scope.navSearch.querySuggestions[$scope.selectedIndex];
+//
+                        $scope.$apply(function() {
+                            $scope.navSearch.query = selectedObject.title || selectedObject.name;
+                            $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
+                            $scope.search($scope.navSearch.query);
+                        });
+
+                    }
+
+
+                    return false;
+                }
+            });
+        }
+    }
+});
+
+
 
 myApp.directive('autocomplete', function() {
     return {

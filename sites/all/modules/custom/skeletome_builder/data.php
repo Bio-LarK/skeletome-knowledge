@@ -23,6 +23,8 @@
 function data_autocomplete_search($term) {
     $limit = 5;
 
+    sleep(2);
+
     // Get the Nodes
     $sql = "SELECT *
             FROM {node} n
@@ -30,11 +32,12 @@ function data_autocomplete_search($term) {
             AND n.type != 'gene_mutation'
             AND n.type != 'media_gallery'
             AND n.type != 'gene_mutation_type'
+            AND n.type != 'statement'
             AND n.type != 'biblio'
             ORDER BY LENGTH(n.title) ASC
             LIMIT $limit";
     $results = db_query($sql, array(
-        'title'     => '%'. db_like($term) .'%'
+        'title'     => db_like($term) .'%'
     ));
 
     $nodes = array();
@@ -49,7 +52,7 @@ function data_autocomplete_search($term) {
             ORDER BY LENGTH(field_bd_synonym_value) ASC
             LIMIT $limit";
     $results = db_query($sql, array(
-        'title'     => '%'. db_like($term) .'%'
+        'title'     => db_like($term) .'%'
     ));
     $node_ids = array();
     $node_titles = array();
@@ -80,7 +83,7 @@ function data_autocomplete_search($term) {
             LIMIT $limit";
 
     $results = db_query($sql, array(
-        'name'      => '%' . db_like($term) . '%'
+        'name'      => db_like($term) . '%'
     ));
     $terms = array();
     foreach($results as $result) {
@@ -694,17 +697,32 @@ function data_get_groups_and_tags($bone_dysplasia) {
             // Load the tag
             $tag = $field_sk_bd_tag['taxonomy_term'];
 
-            $clean_tag = new stdClass;
+            $clean_tag = new stdClass();
             $clean_tag->name = $tag->name;
             $clean_tag->tid = $tag->tid;
 
             // Load Group name
             $clean_tag->sk_gt_field_group_name = taxonomy_term_load($tag->sk_gt_field_group_name[LANGUAGE_NONE][0]['tid']);
+
             // Get the source release
             $group_source_release = taxonomy_term_load($tag->sk_gt_field_group_source_release[LANGUAGE_NONE][0]['tid']);
-            $clean_tag->sk_gt_field_group_source_release = $group_source_release;
 
-            $clean_tag->sk_gt_field_group_source_release->sk_gsr_field_group_source = taxonomy_term_load($group_source_release->sk_gsr_field_group_source[LANGUAGE_NONE][0]['tid']);
+            // We have to manaully make copies, to avoid problems with
+            // taxonomy term load caching objects
+            // and then it causes problems when i replace reference with fully loaded objects
+            $clean_tag->sk_gt_field_group_source_release =  new stdClass();
+            $clean_tag->sk_gt_field_group_source_release->tid = $group_source_release->tid;
+            $clean_tag->sk_gt_field_group_source_release->name = $group_source_release->name;
+            $clean_tag->sk_gt_field_group_source_release->vid = $group_source_release->vid;
+            $clean_tag->sk_gt_field_group_source_release->vocabulary_machine_name = $group_source_release->vocabulary_machine_name;
+            $clean_tag->sk_gt_field_group_source_release->sk_gsr_field_timestamp = $group_source_release->sk_gsr_field_timestamp;
+            $clean_tag->sk_gt_field_group_source_release->sk_gsr_field_group_source = $group_source_release->sk_gsr_field_group_source;
+
+
+            // Load the source
+            $group_source_tid = $group_source_release->sk_gsr_field_group_source[LANGUAGE_NONE][0]['tid'];
+            $clean_tag->sk_gt_field_group_source_release->sk_gsr_field_group_source = taxonomy_term_load($group_source_tid);
+
             $tags[] = $clean_tag;
         }
     }

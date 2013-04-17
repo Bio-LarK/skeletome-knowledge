@@ -8,6 +8,107 @@
     font-style: normal;
 }
 
+.navsearch-large .navsearch {
+
+}
+/* ================================================
+    Nav Search
+*/
+.navsearch {
+    position: relative;
+    color: #333;
+    width: 500px;
+    margin: 0 auto;
+    height: 45px;
+}
+    .navsearch-inputs {
+        width: 380px;
+        position: relative;
+        height: 45px;
+        float: left;
+    }
+        input.navsearch-input {
+            width: 100% !important;
+            height: 45px;
+            box-sizing: border-box !important;
+            -moz-box-sizing: border-box !important;
+            display: block !important;
+            padding-left: 20px !important;
+            border-radius: 50px 0 0 50px !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+            input.navsearch-query {
+                background-color: transparent !important;
+            }
+            input.navsearch-selectedSuggestion {
+                cursor: not-allowed;
+                background-color: white !important;
+                color: #bebebe !important;
+            }
+
+        .navsearch-helper {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: #aaa9a9;
+            font-size: 10px;
+        }
+
+    .navsearch-searchbar-button {
+        display: block;
+        float: left;
+        padding: 0 25px 0 15px;
+        line-height: 43px;
+        height: 43px;
+        border-radius: 0 40px 40px 0;
+        font-size: 16px
+    }
+
+ul.navsearch-suggestions {
+    background-color: white;
+    text-align: left;
+    border-radius: 5px;
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    z-index: 100;
+    border: 1px solid #bbb;
+}
+    .navsearch-suggestion {
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 0px;
+    }
+        .navsearch-suggestion-link {
+            padding: 10px;
+            color: #333;
+            display: block;
+        }
+        .navsearch-suggestion-link:hover {
+            text-decoration: none;
+        }
+            .navsearch-suggestion-guide {
+                color: #9d9d9d;
+                text-align: right;
+                margin-right: 10px;
+                display: inline-block;
+                width: 70px;
+            }
+            .navsearch-suggestion-content {
+
+            }
+
+/** Selected row */
+.navsearch-suggestion-selected {
+    background-color: #0e90d2 !important;
+}
+    .navsearch-suggestion-selected .navsearch-suggestion-link {
+        color: white;
+    }
+    .navsearch-suggestion-selected .navsearch-suggestion-guide {
+        color: rgba(255, 255, 255, 0.5);
+    }
 
 
 body {
@@ -44,6 +145,43 @@ body {
 .contact-us-link:active {
     color: #717171;
 }
+
+/* ================================================
+    Front Page Banner
+*/
+.banner {
+    background-color: #2e3033;
+    color: white;
+    text-align: center;
+    padding: 21px;;
+    margin-bottom: 42px;;
+
+    -webkit-box-shadow: 0 -5px 20px -5px rgba(0, 0, 0, 1) inset;
+
+}
+
+/* ================================================
+    Front Page logo
+*/
+.logo {
+    font-size: 42px;
+    font-weight: bold;;
+    margin-bottom: 7px;;
+}
+
+/* ================================================
+    Front page slogan
+*/
+.slogan {
+    font-size: 28px;
+    width: 600px;;
+    margin: 0 auto;
+    line-height: 35px;;
+    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", Helvetica, Arial, san-serif;
+    margin-bottom: 21px;;
+    color: #888;
+}
+
 
 /* ================================================
     User Profile Image hacks
@@ -1036,12 +1174,57 @@ h1, h2, h3, h4, h5 {
     width: 70px;
     overflow: hidden;
     background-color: white;
+    position: relative;
 }
 .xray-list-image img {
     height: 100%;
     width: auto;
     margin: 0 auto;
     display: block;
+}
+.xray-edit-badge {
+    color: white;
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    line-height: 20px;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.xray-list-image-edit {
+    width: 100px;
+    float: left;
+    margin-right: 10px;
+}
+    .xray-list-image-edit-image {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        text-align: center;
+        background-color: black;
+        line-height: 100px;
+    }
+        .xray-list-image-edit-image img {
+            width: 100%;
+        }
+
+    .xray-list-image-edit .btn {
+        width: 100px;
+        padding: 4px 0;
+        display: block;
+        border-radius: 0;
+        border: none;
+    }
+.xray-edit-badge-added {
+    background-color: #00a512;
+
+}
+.xray-edit-badge-remove {
+    background-color: red;
 }
 
 /* ================================================

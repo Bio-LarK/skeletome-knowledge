@@ -226,7 +226,14 @@ function _bone_dysplasia_installed_fields()
                     ),
                 )
             )
+        ),
+        'field_bd_xray_images' => array(
+            'field_name' => 'field_bd_xray_images',
+            'label' => $t('X-Ray Images'),
+            'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+            'type' => 'image'
         )
+
     );
 }
 
@@ -593,8 +600,15 @@ function _bone_dysplasia_installed_instances()
             'widget'        => array(
                 'type'  => 'active_tags_taxonomy_autocomplete',
             ),
+        ),
+        'field_bd_xray_images' => array(
+            'field_name'    => 'field_bd_xray_images',
+            'label'         => $t('X-Ray Images'),
+            'description'   => $t('X-Rays attached to this bone dyspalsia'),
+            'widget'        => array(
+                'type'  => 'image_image',
+            ),
         )
-
     );
 }
 

@@ -71,31 +71,6 @@
 ?>
 
 <style type="text/css">
-    .banner {
-        background-color: #2e3033;
-        color: white;
-        text-align: center;
-        padding: 21px;;
-        margin-bottom: 42px;;
-
-        -webkit-box-shadow: 0 -5px 20px -5px rgba(0, 0, 0, 1) inset;
-
-    }
-
-    .logo {
-        font-size: 42px;
-        font-weight: bold;;
-        margin-bottom: 7px;;
-    }
-
-    .slogan {
-        font-size: 28px;
-        width: 600px;;
-        margin: 0 auto;
-        line-height: 35px;;
-        font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", Helvetica, Arial, san-serif;
-        margin-bottom: 21px;;
-    }
 
     .navbar-search {
         margin: 0 auto;
@@ -170,9 +145,13 @@
 
                             <h2 class="slogan">
                                 <?php print $site_slogan; ?>
+
                             </h2>
 
-                            <form class="navbar-search">
+                            <nav-search base-url="{{ baseUrl }}"></nav-search>
+
+
+                           <!--<form class="navbar-search">
                                 <div class="input-append">
                                     <input cm-focus="true" autocomplete="?q=ajax/autocomplete/all/" type="text"
                                            class="search-query"
@@ -183,7 +162,7 @@
                                     <a ng-click="globalSearch(searchTerm)" class="btn btn-success" href><i
                                             class="icon-search icon-white"></i> Search</a>
                                 </div>
-                            </form>
+                            </form>-->
 
 
 
@@ -192,6 +171,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             <div style="display: none;" navbar navbar-inverse navbar-dark navbar-static-top
             ">
             <div class="navbar-inner">

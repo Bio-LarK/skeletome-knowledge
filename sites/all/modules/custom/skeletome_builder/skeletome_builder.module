@@ -170,14 +170,13 @@ function skeletome_builder_page_build(&$page) {
         $all_genes = data_all_genes(20);
 
         // get recently updated bone dysplasias
-        $sql = "SELECT DISTINCT n1.nid, n1.title, r.timestamp
-                FROM {node} n1
-                INNER JOIN {node_revision} r
-                ON n1.nid = r.nid
+        $sql = "SELECT n.nid, n.title, MAX(r.timestamp) as `maxtime`
+                FROM {node_revision} r
                 INNER JOIN {node} n
                 ON r.nid = n.nid
                 WHERE n.type ='bone_dysplasia'
-                ORDER BY r.timestamp DESC
+                GROUP BY n.nid
+                ORDER BY maxtime DESC
                 LIMIT 5";
         $results = db_query($sql);
 
@@ -663,6 +662,22 @@ function skeletome_builder_menu() {
         'access callback'   => 'is_moderator',
         'type'              => MENU_CALLBACK
     );
+    $items['ajax/bone-dysplasia/%/xray/%/add'] = array(
+        'title' 		    => t('Add existing xray to bonedysplasia'),
+        'page callback' 	=> 'ajax_add_existing_xray_to_bone_dysplasia',
+        'page arguments'    => array(2, 4),
+        'access callback'   => 'is_moderator',
+        'type'              => MENU_CALLBACK
+    );
+
+    $items['ajax/bone-dysplasia/%/xray/%/remove'] = array(
+        'title' 		    => t('Add xray to bonedysplasia'),
+        'page callback' 	=> 'ajax_remove_xray_from_bone_dysplasia',
+        'page arguments'    => array(2, 4),
+        'access callback'   => 'is_moderator',
+        'type'              => MENU_CALLBACK
+    );
+
 
 
     $items['ajax/bone-dysplasia/%node/genes'] = array(
