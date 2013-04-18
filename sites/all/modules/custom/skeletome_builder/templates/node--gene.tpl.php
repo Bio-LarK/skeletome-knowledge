@@ -81,7 +81,7 @@
 ?>
 
 <div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl">
-    <div class="container">
+    <div class="container" ng-cloak>
         <div class="row">
             <div class="span12">
 
@@ -105,16 +105,42 @@
             <div class="span8">
 
 
-                <section class="section-large section-large-description" ng-class="{'section-more': true}">
-                    <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                    <a href ng-click="showEditDescription()" data-toggle="modal" role="button" class="btn pull-right"><i class="icon-pencil"></i> Edit</a>
+                <!-- The content -->
+                <section ng-class="{'section-more': true}"
+                         class="section-large section-large-description">
+                    <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                        <div class="pull-right">
+                            <a ng-show="!showEditDescription"
+                               href class="btn"
+                               ng-click="editDescription()">
+                                <i class="icon-pencil"></i> Edit
+                            </a>
+
+                            <a ng-show="showEditDescription"
+                               href class="btn btn-success"
+                               ng-click="saveEditedDescription(editedDescription)">
+                                <i class="icon-ok icon-white"></i> Save Description
+                            </a>
+
+                            <a ng-show="showEditDescription"
+                               href class="btn btn-primary"
+                               ng-click="cancelEditingDescription()">
+                                <i class="icon-remove icon-white"></i> Cancel
+                            </a>
+
+                        </div>
                     <?php endif; ?>
+
                     <h2>Description</h2>
 
-                    <div class="description-text">
+                    <div ng-show="showEditDescription">
+                        <textarea ck-editor ng-model="editedDescription"></textarea>
+                    </div>
 
-
-                        <p class="muted" ng-hide="master.gene.body.und[0].safe_value.length">There is currently no description of '{{ master.gene.title }}'.</p>
+                    <div ng-show="!showEditDescription" class="description-text">
+                        <p class="muted" ng-hide="master.gene.body.und[0].safe_value.length">
+                            There is currently no description of '{{ master.gene.title }}'.
+                        </p>
 
                         <div ng-show="master.gene.body.und[0].safe_value.length" >
 

@@ -6,13 +6,13 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/skeletome_builder.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366245547953" ignored="false" />
     <file path="/page.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365729472013" ignored="false" />
-    <file path="/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366254241740" ignored="false" />
-    <file path="/directives.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366239453220" ignored="false" />
+    <file path="/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366260092137" ignored="false" />
+    <file path="/directives.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366259143901" ignored="false" />
     <file path="/page--front.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366239360456" ignored="false" />
     <file path="/template_search.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365379871879" ignored="false" />
     <file path="/dummy.xml" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366244182104" ignored="false" />
-    <file path="/node--bone_dysplasia.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366249722414" ignored="false" />
-    <file path="/skeletome2.css" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366243071654" ignored="false" />
+    <file path="/node--bone_dysplasia.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366261744441" ignored="false" />
+    <file path="/skeletome2.css" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366256407485" ignored="false" />
     <file path="/skeletome_builder.info" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365638406672" ignored="false" />
     <file path="/data.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366240775172" ignored="false" />
     <file path="/ajax.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366254478385" ignored="false" />
@@ -22,7 +22,7 @@
     <file path="/filters.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366179596897" ignored="false" />
     <file path="/taxonomy-term--sk-group-tag.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365464583784" ignored="false" />
     <file path="/taxonomy-term--sk-group-source.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365732632302" ignored="false" />
-    <file path="/node--gene.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366253811801" ignored="false" />
+    <file path="/node--gene.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366261768236" ignored="false" />
     <file path="$PROJECT_DIR$/../../../Similarities/index.html" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1364190058112" ignored="false" />
     <file path="/index.html" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1364190055964" ignored="false" />
     <file path="$PROJECT_DIR$/../../../Similarities/js/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1364190091065" ignored="false" />
@@ -101,46 +101,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="node--bone_dysplasia.tpl.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="98" column="27" selection-start="4425" selection-end="4433" vertical-scroll-proportion="-12.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="node--gene.tpl.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="83" column="35" selection-start="4234" selection-end="4234" vertical-scroll-proportion="0.06550218">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="skeletome2.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="453" column="30" selection-start="9815" selection-end="9815" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ajax.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="770" column="43" selection-start="22939" selection-end="22973" vertical-scroll-proportion="-10.041667">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="509" column="30" selection-start="15399" selection-end="15420" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="page--front.tpl.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="150" column="60" selection-start="6221" selection-end="6221" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pages.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="298" column="31" selection-start="10069" selection-end="10069" vertical-scroll-proportion="0.0">
+            <state line="154" column="23" selection-start="3663" selection-end="3663" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -149,39 +131,16 @@
       <file leaf-file-name="skeletome_builder.module" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="777" column="12" selection-start="24609" selection-end="24638" vertical-scroll-proportion="-7.68">
+            <state line="777" column="12" selection-start="24609" selection-end="24638" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
+      <file leaf-file-name="directives.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="808" column="0" selection-start="27532" selection-end="27532" vertical-scroll-proportion="0.4651368">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="node--bone_dysplasia.tpl.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="193" column="16" selection-start="10279" selection-end="10314" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1366249732000" expanded="true" signature="11305:11348" placeholder="..." />
-                <marker date="1366249732000" expanded="true" signature="11950:11995" placeholder="..." />
-                <marker date="1366249732000" expanded="true" signature="12311:12359" placeholder="..." />
-                <marker date="1366249732000" expanded="true" signature="13477:13658" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="node--gene.tpl.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="41" selection-start="5598" selection-end="5598" vertical-scroll-proportion="-18.875">
+            <state line="25" column="14" selection-start="909" selection-end="909" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -191,6 +150,15 @@
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="37" column="67" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="502" column="0" selection-start="17021" selection-end="17021" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -212,16 +180,16 @@
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/filters.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/test.html" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php" />
-        <option value="$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" />
+        <option value="$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php" />
       </list>
     </option>
   </component>
@@ -280,6 +248,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1184,7 +1153,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1264,7 +1232,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23667906" sideWeight="0.80650544" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24907063" sideWeight="0.80650544" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1365,20 +1333,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="305" column="0" selection-start="8984" selection-end="8984" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="453" column="30" selection-start="9815" selection-end="9815" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="150" column="60" selection-start="6221" selection-end="6221" vertical-scroll-proportion="0.0">
@@ -1388,9 +1342,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="298" column="31" selection-start="10069" selection-end="10069" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="298" column="31" selection-start="10069" selection-end="10069" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php">
@@ -1400,21 +1352,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="509" column="30" selection-start="15399" selection-end="15420" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="193" column="16" selection-start="10279" selection-end="10314" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1366249732000" expanded="true" signature="11305:11348" placeholder="..." />
-            <marker date="1366249732000" expanded="true" signature="11950:11995" placeholder="..." />
-            <marker date="1366249732000" expanded="true" signature="12311:12359" placeholder="..." />
-            <marker date="1366249732000" expanded="true" signature="13477:13658" placeholder="..." />
-          </folding>
-        </state>
+        <state line="509" column="30" selection-start="15399" selection-end="15420" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php">
@@ -1424,30 +1362,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="41" selection-start="5598" selection-end="5598" vertical-scroll-proportion="-18.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="770" column="43" selection-start="22939" selection-end="22973" vertical-scroll-proportion="-10.041667">
-          <folding />
-        </state>
+        <state line="770" column="43" selection-start="22939" selection-end="22973" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="777" column="12" selection-start="24609" selection-end="24638" vertical-scroll-proportion="-7.68">
+        <state line="777" column="12" selection-start="24609" selection-end="24638" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="14" selection-start="909" selection-end="909" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="154" column="23" selection-start="3663" selection-end="3663" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="808" column="0" selection-start="27532" selection-end="27532" vertical-scroll-proportion="0.4651368">
+        <state line="502" column="0" selection-start="17021" selection-end="17021" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="27" selection-start="4425" selection-end="4433" vertical-scroll-proportion="-12.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="35" selection-start="4234" selection-end="4234" vertical-scroll-proportion="0.06550218">
           <folding />
         </state>
       </provider>

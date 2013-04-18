@@ -466,15 +466,27 @@ function GeneCtrl($scope, $http) {
     /**
      * Show the edit description panel
      */
-    $scope.showEditDescription = function() {
-        if(angular.isDefined($scope.master.gene.body.und)) {
-            $scope.edit.description = angular.copy($scope.master.gene.body.und[0].value || "");
-        }
+//    $scope.showEditDescription = function() {
+//        if(angular.isDefined($scope.master.gene.body.und)) {
+//            $scope.edit.description = angular.copy($scope.master.gene.body.und[0].value || "");
+//        }
+//
+//        $scope.openEditingPanel('edit-description');
+//    }
 
-        $scope.openEditingPanel('edit-description');
+    /* Add / Editing */
+    $scope.editDescription = function() {
+        $scope.editedDescription = $scope.master.gene.body.und[0].value || "";
+        $scope.showEditDescription = true;
     }
+
+    /* Save edited descrption */
+    $scope.cancelEditingDescription = function() {
+        $scope.showEditDescription = false;
+    }
+
     $scope.saveEditedDescription = function(newDescription) {
-        $scope.closeEditingPanel();
+        $scope.showEditDescription = false;
 
         $scope.master.description = "Loading..."; //$scope.edit.description;
 
@@ -824,13 +836,17 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
     /* Add / Editing */
-    $scope.showEditDescription = function() {
+    $scope.editDescription = function() {
         $scope.editedDescription = $scope.boneDysplasia.body.und[0].value;
-        $scope.openEditingPanel('edit-description');
+        $scope.showEditDescription = true;
     }
+
     /* Save edited descrption */
+    $scope.cancelEditingDescription = function() {
+        $scope.showEditDescription = false;
+    }
     $scope.saveEditedDescription = function(newDescription) {
-        $scope.closeEditingPanel();
+        $scope.showEditDescription = false;
 
         $scope.boneDysplasia.body.und[0].safe_value = "Loading...";
 
@@ -845,7 +861,6 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
             // when the response is available
         });
     }
-
 
     /* Clinical Features */
     $scope.showEditClinicalFeatures = function() {

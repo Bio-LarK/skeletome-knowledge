@@ -12,11 +12,12 @@ myApp.directive('ckEditor', function() {
                     'instanceReady' : function( evt )
                     {
                         setTimeout(function() {
-                            evt.editor.resize("100%", jQuery('.modal-body-inner').eq(0).height() - 50);
+//                            evt.editor.resize("100%", jQuery('.modal-body-inner').eq(0).height() - 50);
                         }
                         , 200);
                     }
                 },
+                height: '800px',
                 forcePasteAsPlainText : true,
                 fontSize_defaultLabel : '12px',
                 extraPlugins : 'iframedialog,pubmed',
