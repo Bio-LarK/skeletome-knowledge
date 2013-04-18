@@ -17,12 +17,12 @@
 .navsearch {
     position: relative;
     color: #333;
-    width: 500px;
+    width: 550px;
     margin: 0 auto;
     height: 45px;
 }
     .navsearch-inputs {
-        width: 380px;
+        width: 430px;
         position: relative;
         height: 45px;
         float: left;
@@ -154,9 +154,12 @@ body {
     color: white;
     text-align: center;
     padding: 21px;;
+    padding-bottom: 28px;
     margin-bottom: 42px;;
+    background-image: url(../img/dark-pattern.png);
+    background-repeat: repeat;
 
-    -webkit-box-shadow: 0 -5px 20px -5px rgba(0, 0, 0, 1) inset;
+    -webkit-box-shadow: 0 -5px 20px -10px rgba(0, 0, 0, 1) inset;
 
 }
 
@@ -408,8 +411,10 @@ textarea.full-width {
     /*background-color: #2e3033 !important;*/
     border: none;
     background-color: #2e3033;
-    /*background-color: #002040;*/
     background-image: none;
+    background-image: url(../img/dark-pattern.png);
+    /*background-color: #002040;*/
+
 }
 .navbar .nav > li > a {
     padding: 10px 12px 10px
@@ -429,7 +434,7 @@ a.btn.btn-primary {
 .navbar-search .search-query {
     padding: 5px 15px;
     width: 400px;
-    background-color: #222222 !important;
+    background-color: rgb(44, 44, 44) !important;
     /*background-color: #00132d !important;*/
     text-shadow: none;
     color: white;

@@ -14,7 +14,7 @@
         </span>
     </div>
 
-    <a class="btn btn-success navsearch-searchbar-button" href>
+    <a class="btn btn-success navsearch-searchbar-button" href="?q=search/site/{{ navSearch.query }}">
         <i class="icon-search icon-white"></i> Search
     </a>
 
@@ -23,7 +23,7 @@
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
             ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED}">
-            <a class="navsearch-suggestion-link" href="?q=site/search/{{ navSearch.query }}">
+            <a class="navsearch-suggestion-link" href="?q=search/site/{{ navSearch.query }}">
                 <span class="navsearch-suggestion-guide">
                     Search for
                 </span>

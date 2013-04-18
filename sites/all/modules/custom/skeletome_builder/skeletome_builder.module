@@ -588,12 +588,34 @@ function skeletome_builder_menu() {
         'page callback'     => 'ajax_add_comment_to_statement',
         'access callback'   => 'is_authenticated',
     );
+    $items['ajax/statement/%/comment/%/remove'] = array(
+        'title'             => t('Remove Comment from Statement.'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(4),
+        'page callback'     => 'ajax_remove_comment_from_statement',
+        'access callback'   => 'is_authenticated',
+    );
+
     $items['ajax/statement/%node/comments'] = array(
         'title'             => t('Get Comments for Statement.'),
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_get_comments_for_statement',
         'access arguments'  => array('access content')
+    );
+    $items['ajax/statement/%/remove'] = array(
+        'title'             => t('Remove Statement Bone Dysplasia'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'ajax_remove_statement',
+        'access callback'   => 'is_moderator',
+    );
+    $items['ajax/gene/%/statement/%/remove'] = array(
+        'title'             => t('Remove Statement from Gene'),
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(4),
+        'page callback'     => 'ajax_remove_statement',
+        'access callback'   => 'is_moderator',
     );
 
 
@@ -704,6 +726,8 @@ function skeletome_builder_menu() {
         'access callback'   => 'is_moderator',
     );
 
+
+
     $items['ajax/bone-dysplasia/%/gene/add'] = array(
         'title'             => t('Add Gene Mutation'),
         'type'              => MENU_CALLBACK,
@@ -748,20 +772,24 @@ function skeletome_builder_menu() {
         'access callback'   => 'is_moderator',
     );
 
-    $items['ajax/bone-dysplasia/%/omim'] = array(
-        'title'             => t('Add OMIM to Bone Dysplasia'),
+
+//    $items['ajax/bone-dysplasia/%/omim'] = array(
+
+    $items['ajax/bone-dysplasia/%/details'] = array(
+        'title'             => t('Add Details to Bone Dysplasia'),
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
-        'page callback'     => 'ajax_add_omim_to_bone_dysplasia',
+        'page callback'     => 'ajax_add_details_to_bone_dysplasia',
         'access callback'   => 'is_moderator',
     );
-    $items['ajax/bone-dysplasia/%/moi'] = array(
-        'title'             => t('Edit Moi to Bone Dysplasia'),
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(2),
-        'page callback'     => 'ajax_edit_moi_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
-    );
+//    $items['ajax/bone-dysplasia/%/moi'] = array(
+//        'title'             => t('Edit Moi to Bone Dysplasia'),
+//        'type'              => MENU_CALLBACK,
+//        'page arguments'    => array(2),
+//        'page callback'     => 'ajax_edit_moi_to_bone_dysplasia',
+//        'access callback'   => 'is_moderator',
+//    );
+
     $items['ajax/bone-dysplasia/groups/edit'] = array(
         'title'             => t('Edit Groups for Bone Dysplasia'),
         'type'              => MENU_CALLBACK,

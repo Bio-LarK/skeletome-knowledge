@@ -8,6 +8,11 @@
  */
 
 
+function ajax_remove_statement($statement_id) {
+    echo "removing $statement_id";
+    node_delete($statement_id);
+}
+
 function ajax_get_tags_for_release($release_id) {
     $tags = data_get_tags_for_release_id($release_id);
     // Add all the group names for the tags
@@ -763,45 +768,72 @@ function ajax_edit_groups_for_bone_dysplasia() {
     echo "Groups Updated to Bone Dysplasia";
 }
 
-function ajax_edit_moi_to_bone_dysplasia($bone_dysplasia_nid) {
-    // Get out Post REquest
+function ajax_add_details_to_bone_dysplasia($bone_dysplasia_nid) {
+// Get out Post REquest
     $data = file_get_contents("php://input");
     $objData = json_decode($data, true);
 
     // Get BD ID and CF Id
-    $moi_tid =  $objData['moiTid'];
-
-    print $moi_tid;
-
-    $bone_dysplasia = node_load($bone_dysplasia_nid);
-
-    $bone_dysplasia->field_bd_moi[LANGUAGE_NONE][0]['tid'] = $moi_tid;
-    $bone_dysplasia->revision = 1;
-    $bone_dysplasia->log = "Edited Moi.";
-
-    node_save($bone_dysplasia);
-
-    echo "Moi Updated to Bone Dysplasia";
-}
-
-function ajax_add_omim_to_bone_dysplasia($bone_dysplasia_nid) {
-    // Get out Post REquest
-    $data = file_get_contents("php://input");
-    $objData = json_decode($data, true);
+    $moi_tid = null;
+    if(isset($objData['moiTid'])) {
+        $moi_tid = $objData['moiTid'];
+    };
 
     // Get BD ID and CF Id
-    $omim =  $objData['omim'];
+    $omim = null;
+    if(isset($objData['omim'])) {
+        $omim =  $objData['omim'];
+    }
 
     $bone_dysplasia = node_load($bone_dysplasia_nid);
 
-    $bone_dysplasia->field_bd_omim[LANGUAGE_NONE][0]['value'] = $omim;
+    if($moi_tid) {
+        $bone_dysplasia->field_bd_moi[LANGUAGE_NONE][0]['tid'] = $moi_tid;
+    }
+    if($omim) {
+        $bone_dysplasia->field_bd_omim[LANGUAGE_NONE][0]['value'] = $omim;
+    }
 
     $bone_dysplasia->revision = 1;
-    $bone_dysplasia->log = "Edited OMIM.";
+    $bone_dysplasia->log = "Edited Details.";
+
     node_save($bone_dysplasia);
 
-    echo "OMIM Updated to Bone Dysplasia";
+    echo "Details updated";
+
 }
+
+//function ajax_edit_moi_to_bone_dysplasia($bone_dysplasia_nid) {
+//    // Get out Post REquest
+//    $data = file_get_contents("php://input");
+//    $objData = json_decode($data, true);
+//
+//    // Get BD ID and CF Id
+//    $moi_tid =  $objData['moiTid'];
+//
+//    print $moi_tid;
+//
+//
+//}
+//
+//function ajax_add_omim_to_bone_dysplasia($bone_dysplasia_nid) {
+//    // Get out Post REquest
+//    $data = file_get_contents("php://input");
+//    $objData = json_decode($data, true);
+//
+//    // Get BD ID and CF Id
+//    $omim =  $objData['omim'];
+//
+//    $bone_dysplasia = node_load($bone_dysplasia_nid);
+//
+//
+//
+//    $bone_dysplasia->revision = 1;
+//    $bone_dysplasia->log = "Edited OMIM.";
+//    node_save($bone_dysplasia);
+//
+//    echo "OMIM Updated to Bone Dysplasia";
+//}
 
 
 
@@ -846,8 +878,11 @@ function ajax_add_comment_to_statement($statement) {
     comment_save($comment);
 
     echo drupal_json_encode($comment);
-
 }
+function ajax_remove_comment_from_statement($comment_id) {
+    comment_delete($comment_id);
+}
+
 function ajax_add_statement_to_bone_dysplasia($bone_dysplasia) {
     $data = file_get_contents("php://input");
     $objData = json_decode($data, true);

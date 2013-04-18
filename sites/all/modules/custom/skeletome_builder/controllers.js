@@ -488,6 +488,8 @@ function GeneCtrl($scope, $http) {
         });
     }
 
+
+
     /**
      *
      */
@@ -605,6 +607,35 @@ function StatementCtrl($scope, $http) {
             });
         }
     }
+    $scope.deleteCommentFromStatement = function(comment, statement) {
+        statement.comments.splice(statement.comments.indexOf(comment), 1);
+
+        $http.get('?q=ajax/statement/' + statement.nid + '/comment/' + comment.cid + '/remove', {
+        }).success(function(data) {
+        });
+    }
+    $scope.showEditStatements = function() {
+        $scope.editingStatements = true;
+        angular.forEach($scope.statements, function(statement, index) {
+            if(statement.comments && statement.comments.length) {
+                statement.showComments = true;
+            }
+        });
+    }
+    $scope.hideEditStatements = function() {
+        $scope.editingStatements = false;
+        angular.forEach($scope.statements, function(statement, index) {
+            statement.showComments = false;
+        });
+    }
+    $scope.deleteStatement = function(statement) {
+        $scope.statements.splice($scope.statements.indexOf(statement), 1);
+        $http.get('?q=ajax/statement/' + statement.nid + '/remove', {
+        }).success(function(data) {
+        });
+    }
+
+
     /**
      * Adds a comment to a statement
      * @param statement
@@ -758,38 +789,29 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.mois = Drupal.settings.skeletome_builder.all_mois;
 
         /* Set up the selected moi for the dropdown */
-        angular.forEach($scope.mois, function(moi, key) {
-            if(moi.tid == $scope.moi.tid) {
-               $scope.edit.editedMoi = moi;
-                console.log("edit moi set to");
-               return false;
-            }
-        });
+        if($scope.moi) {
+            angular.forEach($scope.mois, function(moi, key) {
+                if(moi.tid == $scope.moi.tid) {
+                    $scope.edit.editedMoi = moi;
+                    console.log("edit moi set to");
+                    return false;
+                }
+            });
+        }
+
 
         $scope.openEditingPanel('edit-details');
     }
 
     $scope.saveDetails = function(editedOMIM, editedMoi) {
 
-        console.log(editedMoi.tid);
-        console.log($scope.moi.tid);
+        // if there is no moi, or its changed, save it
 
-        console.log(editedOMIM);
-        console.log($scope.omim);
-
-        if($scope.moi.tid != editedMoi.tid) {
-            $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/moi', {
-                'moiTid': editedMoi.tid
-            }).success(function(data) {
-            });
-        }
-
-        if($scope.omim != editedOMIM) {
-            $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/omim', {
-                'omim': editedOMIM
-            }).success(function(data) {
-            });
-        }
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/details', {
+            'moiTid': editedMoi.tid,
+            'omim': editedOMIM
+        }).success(function(data) {
+        });
 
         // Check if the values have changed
         $scope.moi = editedMoi
@@ -798,6 +820,8 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.closeEditingPanel();
 
     }
+
+
 
     /* Add / Editing */
     $scope.showEditDescription = function() {
@@ -1122,6 +1146,8 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
         $scope.closeEditingPanel();
     }
+
+
 
 //    /* Autocomplete for genes */
 //    $scope.autocompleteGroups = [];

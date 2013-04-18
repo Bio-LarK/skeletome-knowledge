@@ -4,25 +4,25 @@
     <list default="true" id="f6519e46-dfd9-48bd-ace6-031326e85d8a" name="Default" comment="" />
     <ignored path="drupalv2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/skeletome_builder.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366177262622" ignored="false" />
+    <file path="/skeletome_builder.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366245547953" ignored="false" />
     <file path="/page.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365729472013" ignored="false" />
-    <file path="/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366238570795" ignored="false" />
+    <file path="/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366254241740" ignored="false" />
     <file path="/directives.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366239453220" ignored="false" />
     <file path="/page--front.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366239360456" ignored="false" />
     <file path="/template_search.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365379871879" ignored="false" />
-    <file path="/dummy.xml" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366240238001" ignored="false" />
-    <file path="/node--bone_dysplasia.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366175550118" ignored="false" />
-    <file path="/skeletome2.css" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366238229905" ignored="false" />
+    <file path="/dummy.xml" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366244182104" ignored="false" />
+    <file path="/node--bone_dysplasia.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366249722414" ignored="false" />
+    <file path="/skeletome2.css" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366243071654" ignored="false" />
     <file path="/skeletome_builder.info" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365638406672" ignored="false" />
     <file path="/data.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366240775172" ignored="false" />
-    <file path="/ajax.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366175689591" ignored="false" />
+    <file path="/ajax.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366254478385" ignored="false" />
     <file path="/pages.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365981514002" ignored="false" />
     <file path="/node--statement.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1363831703298" ignored="false" />
     <file path="/node--statement.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1363847563914" ignored="false" />
     <file path="/filters.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366179596897" ignored="false" />
     <file path="/taxonomy-term--sk-group-tag.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365464583784" ignored="false" />
     <file path="/taxonomy-term--sk-group-source.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365732632302" ignored="false" />
-    <file path="/node--gene.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366068065744" ignored="false" />
+    <file path="/node--gene.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366253811801" ignored="false" />
     <file path="$PROJECT_DIR$/../../../Similarities/index.html" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1364190058112" ignored="false" />
     <file path="/index.html" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1364190055964" ignored="false" />
     <file path="$PROJECT_DIR$/../../../Similarities/js/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1364190091065" ignored="false" />
@@ -80,7 +80,8 @@
     <file path="/sk_group_source.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365995078304" ignored="false" />
     <file path="/test.html" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366238789939" ignored="false" />
     <file path="/bone_dysplasia.install" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366165196740" ignored="false" />
-    <file path="/navsearch.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366240270206" ignored="false" />
+    <file path="/navsearch.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366243295502" ignored="false" />
+    <file path="/statements.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366250283359" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,28 +104,8 @@
       <file leaf-file-name="skeletome2.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="1" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
+            <state line="453" column="30" selection-start="9815" selection-end="9815" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="directives.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="305" column="0" selection-start="8984" selection-end="8984" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navsearch.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="652" selection-end="652" vertical-scroll-proportion="-9.375">
-              <folding>
-                <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -132,16 +113,16 @@
       <file leaf-file-name="ajax.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="497" column="28" selection-start="14724" selection-end="14724" vertical-scroll-proportion="-24.375">
+            <state line="770" column="43" selection-start="22939" selection-end="22973" vertical-scroll-proportion="-10.041667">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="data.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="data.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="36" selection-start="1351" selection-end="1351" vertical-scroll-proportion="0.62114537">
+            <state line="509" column="30" selection-start="15399" selection-end="15420" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -156,10 +137,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="filters.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/filters.js">
+      <file leaf-file-name="pages.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="0" selection-start="3118" selection-end="3118" vertical-scroll-proportion="0.0">
+            <state line="298" column="31" selection-start="10069" selection-end="10069" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -168,16 +149,16 @@
       <file leaf-file-name="skeletome_builder.module" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="192" column="35" selection-start="5417" selection-end="5417" vertical-scroll-proportion="-16.25">
+            <state line="777" column="12" selection-start="24609" selection-end="24638" vertical-scroll-proportion="-7.68">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1219" column="18" selection-start="42153" selection-end="42160" vertical-scroll-proportion="0.0">
+            <state line="808" column="0" selection-start="27532" selection-end="27532" vertical-scroll-proportion="0.4651368">
               <folding />
             </state>
           </provider>
@@ -186,7 +167,30 @@
       <file leaf-file-name="node--bone_dysplasia.tpl.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="137" selection-start="6812" selection-end="6887" vertical-scroll-proportion="0.0">
+            <state line="193" column="16" selection-start="10279" selection-end="10314" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1366249732000" expanded="true" signature="11305:11348" placeholder="..." />
+                <marker date="1366249732000" expanded="true" signature="11950:11995" placeholder="..." />
+                <marker date="1366249732000" expanded="true" signature="12311:12359" placeholder="..." />
+                <marker date="1366249732000" expanded="true" signature="13477:13658" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="node--gene.tpl.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="113" column="41" selection-start="5598" selection-end="5598" vertical-scroll-proportion="-18.875">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="statements.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="67" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -202,28 +206,28 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/sites/all/modules/apachesolr/apachesolr_search.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_util/skeletome_config/skeletome_config.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ui-bootstrap-tpls-0.2.0.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_dysplasia/bone_dysplasia/bone_dysplasia.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/filters.js" />
-        <option value="$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/test.html" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php" />
+        <option value="$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="430" />
+    <option name="x" value="126" />
     <option name="y" value="22" />
     <option name="width" value="1660" />
     <option name="height" value="1330" />
@@ -276,7 +280,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1110,454 +1113,6 @@
               <option name="myItemId" value="all" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craig" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craig" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sk_group_tag" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craig" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sk_group_source_release" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="craig" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sk_group_source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr_test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="solr-conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="solr-3.x" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="solr-conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="facetapi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drush" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr_access" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apachesolr_access" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1629,6 +1184,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1643,18 +1199,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/img" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/images" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/lib/dropzone" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/lib/fancybox" />
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/lib/lightbox2" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/img" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/images" />
       <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/css" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder" />
       <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/templates" />
-      <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/css" />
     </key>
   </component>
   <component name="RunManager">
@@ -1701,20 +1257,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="430" y="22" width="1660" height="1330" extended-state="0" />
-    <editor active="false" />
+    <frame x="126" y="22" width="1660" height="1330" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2701363" sideWeight="0.80650544" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23667906" sideWeight="0.80650544" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="2020" y="80" width="539" height="804" />
+      <window_info id="Documentation" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="2020" y="80" width="539" height="804" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1787,16 +1343,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ui-bootstrap-tpls-0.2.0.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="986" column="117" selection-start="39207" selection-end="39207" vertical-scroll-proportion="0.013089005" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/templates/html.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/angular.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11872" column="38" selection-start="389985" selection-end="389990" vertical-scroll-proportion="0.0" />
@@ -1812,37 +1358,9 @@
         <state line="603" column="29" selection-start="19974" selection-end="19994" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="370" column="77" selection-start="12365" selection-end="12365" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/filters.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="94" column="0" selection-start="3118" selection-end="3118" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1219" column="18" selection-start="42153" selection-end="42160" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="137" selection-start="6812" selection-end="6887" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="60" selection-start="6221" selection-end="6221" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1854,39 +1372,82 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="192" column="35" selection-start="5417" selection-end="5417" vertical-scroll-proportion="-16.25">
+        <state line="453" column="30" selection-start="9815" selection-end="9815" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="1" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
+        <state line="150" column="60" selection-start="6221" selection-end="6221" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="298" column="31" selection-start="10069" selection-end="10069" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="652" selection-end="652" vertical-scroll-proportion="-9.375">
+        <state line="8" column="74" selection-start="440" selection-end="440" vertical-scroll-proportion="-4.875" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="509" column="30" selection-start="15399" selection-end="15420" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="193" column="16" selection-start="10279" selection-end="10314" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
+            <marker date="1366249732000" expanded="true" signature="11305:11348" placeholder="..." />
+            <marker date="1366249732000" expanded="true" signature="11950:11995" placeholder="..." />
+            <marker date="1366249732000" expanded="true" signature="12311:12359" placeholder="..." />
+            <marker date="1366249732000" expanded="true" signature="13477:13658" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="67" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="41" selection-start="5598" selection-end="5598" vertical-scroll-proportion="-18.875">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="497" column="28" selection-start="14724" selection-end="14724" vertical-scroll-proportion="-24.375">
+        <state line="770" column="43" selection-start="22939" selection-end="22973" vertical-scroll-proportion="-10.041667">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="36" selection-start="1351" selection-end="1351" vertical-scroll-proportion="0.62114537">
+        <state line="777" column="12" selection-start="24609" selection-end="24638" vertical-scroll-proportion="-7.68">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="808" column="0" selection-start="27532" selection-end="27532" vertical-scroll-proportion="0.4651368">
           <folding />
         </state>
       </provider>
