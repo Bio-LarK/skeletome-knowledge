@@ -8,9 +8,38 @@
     font-style: normal;
 }
 
-.navsearch-large .navsearch {
-
+/**
+    Smaller Nav Search not on front page
+*/
+.navsearch-small .navsearch {
+    height: 32px;
+    float: left;
+    margin-top: 4px;
 }
+.navsearch-small .navsearch input.navsearch-input {
+    height: 32px;
+}
+.navsearch-small .navsearch input.navsearch-input:focus {
+    background-color: white;
+}
+.navsearch-small .navsearch-suggestions {
+    top: 40px;
+}
+.navsearch-small .navsearch-searchbar-button {
+    padding: 0px 25px;
+    padding-left: 15px;
+    line-height: 30px;
+    height: 30px; /* 2px less for the border */
+    margin-top: 0px !important; /* overwrite boostrap styling */
+}
+.navsearch-small .navsearch-helper {
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    color: #aaa9a9;
+    font-size: 10px;
+}
+
 /* ================================================
     Nav Search
 */
@@ -41,11 +70,18 @@
         }
             input.navsearch-query {
                 background-color: transparent !important;
+                border: none;
+            }
+            input.navsearch-query:focus {
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
             }
             input.navsearch-selectedSuggestion {
                 cursor: not-allowed;
-                background-color: white !important;
+                background-color: white;
                 color: #bebebe !important;
+                border: none;
             }
 
         .navsearch-helper {
@@ -63,7 +99,6 @@
         line-height: 43px;
         height: 43px;
         border-radius: 0 40px 40px 0;
-        font-size: 16px
     }
 
 ul.navsearch-suggestions {
@@ -128,6 +163,7 @@ body {
     Page Footer
 */
 .page-footer {
+    margin-top: 14px;
     margin-bottom: 21px;
 }
 .popover-content {

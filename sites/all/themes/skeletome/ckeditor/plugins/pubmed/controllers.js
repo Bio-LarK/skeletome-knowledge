@@ -1,6 +1,23 @@
 var myApp = angular.module('PubMed', []);
 
-var baseUrl = "http://115.146.86.60/skeletome/";
+//var baseUrl = "http://115.146.86.60/skeletome/";
+
+var baseUrl = "http://knowledge.skeletome.org/drupalv2/";
+
+
+myApp.directive('cmReturn', function() {
+    return function (scope, iElement, iAttrs) {
+
+        iElement.bind('keypress', function(event){
+            if(event.which == 13) {
+                scope.$apply(function() {
+                    scope.$eval(iAttrs.cmReturn);
+                });
+                return false;
+            }
+        });
+    }
+});
 
 
 
@@ -25,21 +42,14 @@ function ReferenceCtrl($scope, $http, filterFilter) {
         console.log($scope.biblios);
     });
 
-    $scope.pubMedChanged = function(pubmed) {
-        $scope.pubMedOnline = {};
+    $scope.pubmedSearch = function(query) {
+        // Do a pubmed query search
+        $scope.isSearching = true;
+        $scope.pubmedResults = null;
 
-        var localResults = filterFilter($scope.biblios, pubmed).length;
-        if(localResults) {
-            $scope.searchOnline = false;
-        } else {
-            $scope.searchOnline =  true;
-        }
-    }
-
-    $scope.searchPubMed = function(pubmedId) {
-        $http.get(baseUrl + '?q=ajax/pubmed/' + pubmedId).success(function(pubMeds) {
-            console.log(pubMeds)
-            $scope.pubMedOnline = pubMeds;
+        $http.get(baseUrl + '?q=ajax/pubmed/search/' + query).success(function(data) {
+            $scope.pubmedResults = data.results;
+            $scope.isSearching = false;
         });
     }
 
@@ -50,9 +60,11 @@ function ReferenceCtrl($scope, $http, filterFilter) {
             $scope.sendNidToEditor(biblio.nid);
         });
     }
-    $scope.addExistingCitation = function(biblio) {
-        $scope.sendNidToEditor(biblio.nid);
+
+    $scope.addExistingCitation = function(nid) {
+        $scope.sendNidToEditor(nid);
     }
+
 
     $scope.sendNidToEditor = function(nid) {
         var dialog = window.parent.CKEDITOR.dialog.getCurrent();
@@ -62,16 +74,45 @@ function ReferenceCtrl($scope, $http, filterFilter) {
         dialog.hide();
     }
 
-    $scope.filterPubMed = function(item) {
-        // 23061930
-        if(!$scope.pubmed || $scope.pubmed == "") {
-            console.log("no pubmed");
-            return true;
-        } else {
-            console.log("has pubmed");
-            return item.pubmedId.indexOf($scope.pubmed) == 0;
-        }
-    };
+
+
+//    $scope.pubMedChanged = function(pubmed) {
+//        $scope.pubMedOnline = {};
+//
+//        var localResults = filterFilter($scope.biblios, pubmed).length;
+//        if(localResults) {
+//            $scope.searchOnline = false;
+//        } else {
+//            $scope.searchOnline =  true;
+//        }
+//    }
+
+//    $scope.searchPubMed = function(pubmedId) {
+//        $http.get(baseUrl + '?q=ajax/pubmed/' + pubmedId).success(function(pubMeds) {
+//            console.log(pubMeds)
+//            $scope.pubMedOnline = pubMeds;
+//        });
+//    }
+//
+//    $scope.addNewCitation = function(pubmedId) {
+//
+//    }
+//    $scope.addExistingCitation = function(biblio) {
+//        $scope.sendNidToEditor(biblio.nid);
+//    }
+
+
+//
+//    $scope.filterPubMed = function(item) {
+//        // 23061930
+//        if(!$scope.pubmed || $scope.pubmed == "") {
+//            console.log("no pubmed");
+//            return true;
+//        } else {
+//            console.log("has pubmed");
+//            return item.pubmedId.indexOf($scope.pubmed) == 0;
+//        }
+//    };
 
 //    $scope.filterByPubMed = function(item){
 //        console.log("filtering item");

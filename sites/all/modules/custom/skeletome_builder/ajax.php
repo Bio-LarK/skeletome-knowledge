@@ -466,36 +466,63 @@ function ajax_save_biblio() {
 
     $pubmedId = $objData['pubmedId'];
 
-    $Eclient = new BiblioEntrezClient;
-    try {
-        $result = $Eclient->fetch($pubmedId);
-    } catch (Exception $e) {
-        form_set_error($e->getMessage());
+    // Check that we dont already have this pubmed id stored in our database (it can happen)
+    $sql = "SELECT *
+            FROM {biblio_pubmed} p
+            WHERE biblio_pubmed_id = :pubmedid";
+    $results = db_query($sql, array(
+        'pubmedid'  => $pubmedId
+    ));
+
+    $biblio_ids = array();
+    foreach($results as $result) {
+        $biblio_ids[] = $result->nid;
     }
 
-    global $user;
-    $data = NULL;
-    if (!isset($result->PubmedArticle)) {
-        if (isset($result->PubmedBookArticle)) {
-            $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
-        }
-    } else {
-        $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
-    }
-
-    if ($data !== NULL) {
-        $node_data = $data->getBiblio();
-        $node_data['type'] = 'biblio';
-        $node_data['uid'] = $user->uid;
-        $node = (object) $node_data;
-        node_save($node);
-
+    if(count($biblio_ids)) {
+        // we found an existing pubmed id
+        // lets just return that
         echo drupal_json_encode(array(
-            'nid'   => $node->nid
+            'nid'   => $biblio_ids[0]
         ));
+
     } else {
-        echo drupal_json_encode(array());
+        // Doesnt exist in our system yet
+        // Off to pubmed
+        $Eclient = new BiblioEntrezClient;
+        try {
+            $result = $Eclient->fetch($pubmedId);
+        } catch (Exception $e) {
+            form_set_error($e->getMessage());
+        }
+
+        global $user;
+        $data = NULL;
+        if (!isset($result->PubmedArticle)) {
+            if (isset($result->PubmedBookArticle)) {
+                $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
+            }
+        } else {
+            $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
+        }
+
+        if ($data !== NULL) {
+            $node_data = $data->getBiblio();
+            $node_data['type'] = 'biblio';
+            $node_data['uid'] = $user->uid;
+            $node = (object) $node_data;
+            node_save($node);
+
+            echo drupal_json_encode(array(
+                'nid'   => $node->nid
+            ));
+        } else {
+            echo drupal_json_encode(array());
+        }
     }
+
+
+
 }
 
 function ajax_autocomplete_all($term = "") {

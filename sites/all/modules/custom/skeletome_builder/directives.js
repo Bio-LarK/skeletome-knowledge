@@ -5,30 +5,41 @@ myApp.directive('ckEditor', function() {
 
 //            CKEDITOR.timestamp = (new Date()).toString() ;
 
-            var ck = CKEDITOR.replace(elm[0], {
+            var config = {
+//                height: '800px',
                 on :
                 {
                     // Maximize the editor on start-up.
                     'instanceReady' : function( evt )
                     {
+                        console.log("instance is ready!");
                         setTimeout(function() {
-//                            evt.editor.resize("100%", jQuery('.modal-body-inner').eq(0).height() - 50);
-                        }
-                        , 200);
+                                console.log("looking for modal inner");
+                                if(jQuery(elm).closest('.modal-body-inner').length) {
+                                    console.log("inside a modal inner");
+                                    evt.editor.resize("100%", jQuery('.modal-body-inner').eq(0).height() - 50);
+                                }
+                            }
+                            , 200);
                     }
                 },
-                height: '800px',
+
                 forcePasteAsPlainText : true,
                 fontSize_defaultLabel : '12px',
                 extraPlugins : 'iframedialog,pubmed',
                 toolbar :
-                [
+                    [
                         { name: 'basicstyles', items : [ 'Bold','Italic' ] },
                         { name: 'paragraph', items : [ 'NumberedList','BulletedList' ] },
                         { name: 'tools', items : [ 'Pubmed' ] }
-                ]
+                    ]
 
-            });
+            };
+            if(attr.height) {
+                config.height = attr.height;
+            }
+
+            var ck = CKEDITOR.replace(elm[0], config);
 
             if (!ngModel) return;
 
@@ -347,23 +358,29 @@ myApp.directive('navSearch', function() {
                     $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
                 }
 
+                if(query && query.length >= 3) {
+                    $http.get('?q=ajax/autocomplete/all/' + query).success(function(data) {
+                        // add in all suggestions
 
-                $http.get('?q=ajax/autocomplete/all/' + query).success(function(data) {
-                    // add in all suggestions
+                        // We filter the results by what we have entered
+                        // cause we might be getting old results back from the database
+                        // from a previous query
+                        $scope.navSearch.querySuggestions = textFilter(data, $scope.navSearch.query);
 
-                    // We filter the results by what we have entered
-                    // cause we might be getting old results back from the database
-                    // from a previous query
-                    $scope.navSearch.querySuggestions = textFilter(data, $scope.navSearch.query);
+                        if($scope.navSearch.querySuggestions.length) {
+                            // selected suggestion
+                            if($scope.selectedIndex == $scope.NOT_SELECTED) {
+                                // If there isnt one selected, select the first one
+                                $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+                            } else {
+                                $scope.updateSelectedSuggestionText($scope.selectedIndex);
+                            }
+                        } else {
+                            $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                        }
 
-                    if($scope.navSearch.querySuggestions.length) {
-                        // selected suggestion
-                        $scope.updateSelectedSuggestionText($scope.selectedIndex);
-                    } else {
-                        $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
-                    }
-
-                });
+                    });
+                }
             }
 
             $scope.enteredSuggestion = function(suggestion) {

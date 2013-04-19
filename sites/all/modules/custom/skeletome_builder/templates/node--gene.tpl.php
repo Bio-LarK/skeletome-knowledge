@@ -134,7 +134,7 @@
                     <h2>Description</h2>
 
                     <div ng-show="showEditDescription">
-                        <textarea ck-editor ng-model="editedDescription"></textarea>
+                        <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
                     </div>
 
                     <div ng-show="!showEditDescription" class="description-text">

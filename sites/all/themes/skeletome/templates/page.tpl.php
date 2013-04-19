@@ -81,12 +81,16 @@
                             src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
                     <?php endif; ?>
 
-                    <form class="navbar-search pull-left">
+                    <!--<form class="navbar-search pull-left">
                         <div class="input-append">
                             <input autocomplete="?q=ajax/autocomplete/all/" type="text" class="search-query" ng-model="searchTerm" ng-init="searchTerm='<?php if(arg(0)=="search") echo arg(2); ?>'" placeholder="Search for Bone Dysplasias, Groups, Genes or Clinical Features" cm-return="globalSearch(searchTerm)">
                             <a ng-click="globalSearch(searchTerm)" class="btn btn-success" href><i class="icon-search icon-white"></i> Full Search</a>
                         </div>
-                    </form>
+                    </form>-->
+
+                    <div class="navsearch-small">
+                        <nav-search></nav-search>
+                    </div>
 
 
                     <!--<ul class="nav nav-pills">

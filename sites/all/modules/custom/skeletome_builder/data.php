@@ -23,8 +23,6 @@
 function data_autocomplete_search($term) {
     $limit = 5;
 
-    sleep(2);
-
     // Get the Nodes
     $sql = "SELECT *
             FROM {node} n

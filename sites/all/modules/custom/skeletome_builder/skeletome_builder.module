@@ -103,10 +103,6 @@ function skeletome_builder_page_build(&$page) {
 
     // check if it exists
 
-
-
-
-
     global $base_url;
     drupal_add_js(array(
         'skeletome_builder' => array(
@@ -349,20 +345,114 @@ function skeletome_builder_theme($existing, $type, $theme, $path) {
 }
 
 
-function ajax_get_pub_med($pubmedId) {
+function ajax_pubmed_query_search($query) {
+    global $user;
+
     $node = null;
     $style = biblio_get_style();
     $base = variable_get('biblio_base', 'biblio');
 
     // No entry yet in the database for the pubmed id
     $Eclient = new BiblioEntrezClient;
+
+    $Eclient->setTerm($query);
+    $pubmed_search = $Eclient->search();
+
+    $return_results = array();
+
+    foreach($pubmed_search->IdList->Id as $publicationId) {
+        if(count($return_results) == 10) {
+            break;
+        }
+
+        $result = $Eclient->fetch($publicationId . "");
+
+        $data = NULL;
+        if (!isset($result->PubmedArticle)) {
+            if (isset($result->PubmedBookArticle)) {
+                $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
+            }
+        } else {
+            $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
+        }
+
+        if ($data !== NULL) {
+            $node_data = $data->getBiblio();
+            $node_data['type'] = 'biblio';
+            $node_data['uid'] = $user->uid;
+            $node = (object)$node_data;
+
+            $return_results[] = array(
+                'pubmedId'      => intval($publicationId . ""),
+                'markup'        => theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style))
+            );
+        }
+    }
+
+    $return = array(
+        'query'     => intval($pubmed_search->QueryTranslation . ""),
+        'results'   => $return_results,
+    );
+
+    echo drupal_json_encode($return);
+}
+
+
+function ajax_get_pub_med($query) {
+
+
+
+
+    // Search for a term
+    $Eclient->setTerm($pubmedId);
+    $pubmed_search = $Eclient->search();
+
+    // Get all the ids
+    foreach($pubmed_search->IdList->Id as $pubmedId) {
+
+        echo "<pre>" . $pubmedId . "</pre>";
+
+        $pubmed = $Eclient->fetch($pubmedId);
+
+        echo "<pre>" . $pubmed . "</pre>";
+
+        die();
+//
+//        if (!isset($pubmed->PubmedArticle)) {
+//            if (isset($pubmed->PubmedBookArticle)) {
+//                $data = new BiblioEntrezPubmedBookArticle($pubmed->PubmedBookArticle);
+//            }
+//        } else {
+//            $data = new BiblioEntrezPubmedArticle($pubmed->PubmedArticle);
+//        }
+//
+//        if ($data !== NULL) {
+//            $node_data = $data->getBiblio();
+//            $node_data['type'] = 'biblio';
+//            $node_data['uid'] = $user->uid;
+//            $node = (object)$node_data;
+//
+//            $markup = theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style));
+//
+//            echo "<pre>";
+//            print_r($markup);
+//            echo "</pre>";
+//
+//        }
+
+    }
+
+
+    die();
+
+
     try {
         $result = $Eclient->fetch($pubmedId);
     } catch (Exception $e) {
         form_set_error($e->getMessage());
     }
 
-    global $user;
+
     $data = NULL;
     if (!isset($result->PubmedArticle)) {
         if (isset($result->PubmedBookArticle)) {
@@ -400,8 +490,10 @@ function ajax_get_biblio() {
     $base = variable_get('biblio_base', 'biblio');
 
     $sql = "SELECT *
-            FROM {node}
-            WHERE type='biblio'";
+            FROM {node} n
+            WHERE type='biblio'
+            ORDER BY n.nid DESC
+            LIMIT 10";
     $results = db_query($sql);
 
     $biblio_ids = array();
@@ -480,6 +572,18 @@ function skeletome_builder_menu() {
         'page callback' => 'page_contact',
         'access arguments' => array('access content')
     );
+
+
+    /**
+     * Pubmed Lookup
+     */
+    $items['ajax/pubmed/search/%'] = array(
+        'page callback'     => 'ajax_pubmed_query_search',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
 
     /**
      * Biblios

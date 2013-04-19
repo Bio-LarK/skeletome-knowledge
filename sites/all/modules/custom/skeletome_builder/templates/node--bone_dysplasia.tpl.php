@@ -159,7 +159,7 @@
     <div class="span8">
 
         <!-- The content -->
-        <section ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > descriptionLength}"
+        <section ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}"
                  class="section-large section-large-description">
             <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
                 <div class="pull-right">
@@ -187,7 +187,7 @@
             <h2>Description</h2>
 
             <div ng-show="showEditDescription">
-                <textarea ck-editor ng-model="editedDescription"></textarea>
+                <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
             </div>
 
             <div ng-show="!showEditDescription" class="description-text">
