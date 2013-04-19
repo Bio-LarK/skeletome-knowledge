@@ -2,23 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6519e46-dfd9-48bd-ace6-031326e85d8a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezPubmedBookArticle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.info" afterPath="$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.info" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/controllers.js" afterPath="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/dialog.html" afterPath="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/dialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js" afterPath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/skeletome/templates/page.tpl.php" afterPath="$PROJECT_DIR$/sites/all/themes/skeletome/templates/page.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css" afterPath="$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/themes/skeletome/templates/user-login.tpl.php" afterPath="$PROJECT_DIR$/sites/all/themes/skeletome/templates/user-login.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="drupalv2.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/skeletome_builder.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366336643361" ignored="false" />
+    <file path="/skeletome_builder.module" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366338386633" ignored="false" />
     <file path="/page.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366326253581" ignored="false" />
     <file path="/controllers.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366335668112" ignored="false" />
     <file path="/directives.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366325361091" ignored="false" />
@@ -76,7 +68,7 @@
     <file path="/search-block-form.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365375017571" ignored="false" />
     <file path="/facetapi.theme.inc" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365381223085" ignored="false" />
     <file path="/user-register-form.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365384930421" ignored="false" />
-    <file path="/a.dummy" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365736469968" ignored="false" />
+    <file path="/a.dummy" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366338785655" ignored="false" />
     <file path="/ajax.js" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365387335469" ignored="false" />
     <file path="/profile-listing.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365387947555" ignored="false" />
     <file path="/profile2.tpl.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1365388622797" ignored="false" />
@@ -96,7 +88,7 @@
     <file path="/bone_dysplasia.install" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366165196740" ignored="false" />
     <file path="/navsearch.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366243295502" ignored="false" />
     <file path="/statements.php" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366250283359" ignored="false" />
-    <file path="/Dummy.txt" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366336483417" ignored="false" />
+    <file path="/Dummy.txt" changelist="f6519e46-dfd9-48bd-ace6-031326e85d8a" time="1366338329900" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,37 +108,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="data.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="0" selection-start="3934" selection-end="3934" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="skeletome_builder.module" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="skeletome_builder.module" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="478" column="0" selection-start="14147" selection-end="14147" vertical-scroll-proportion="-5.22">
+            <state line="387" column="63" selection-start="11808" selection-end="11808" vertical-scroll-proportion="0.547153">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajax.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php">
+      <file leaf-file-name="EntrezPubmedArticle.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezPubmedArticle.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="481" column="28" selection-start="14316" selection-end="14316" vertical-scroll-proportion="-0.38">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="node--bone_dysplasia.tpl.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php">
+      <file leaf-file-name="EntrezPubmedBookArticle.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezPubmedBookArticle.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="53" selection-start="8093" selection-end="8093" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EntrezClient.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezClient.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="biblio_pm.install" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.install">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="biblio_pm.info" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.info">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="0" selection-start="392" selection-end="392" vertical-scroll-proportion="-9.375">
               <folding />
             </state>
           </provider>
@@ -155,7 +165,7 @@
       <file leaf-file-name="directives.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="197" selection-end="197" vertical-scroll-proportion="-3.4615386">
+            <state line="6" column="0" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -164,7 +174,7 @@
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="5" selection-start="1497" selection-end="1497" vertical-scroll-proportion="0.0">
+            <state line="47" column="36" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -173,31 +183,17 @@
       <file leaf-file-name="user-login.tpl.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/templates/user-login.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="6" selection-start="318" selection-end="318" vertical-scroll-proportion="-4.375">
+            <state line="13" column="6" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page.tpl.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="page.tpl.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/templates/page.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="31" selection-start="6178" selection-end="6178" vertical-scroll-proportion="0.5880783">
+            <state line="96" column="32" selection-start="4727" selection-end="4727" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dialog.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/dialog.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="61" selection-start="1940" selection-end="1940" vertical-scroll-proportion="-9.333333">
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -220,7 +216,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/test.html" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/page--front.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php" />
@@ -233,15 +228,16 @@
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--bone_dysplasia.tpl.php" />
         <option value="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/dialog.html" />
-        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js" />
         <option value="$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/controllers.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.info" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="273" />
+    <option name="x" value="283" />
     <option name="y" value="22" />
     <option name="width" value="1441" />
     <option name="height" value="1330" />
@@ -1042,11 +1038,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="skeletome_builder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="biblio" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1076,11 +1068,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="skeletome_builder" />
+              <option name="myItemId" value="biblio" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
+              <option name="myItemId" value="modules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1110,29 +1102,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="skeletome_builder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drupalv2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
+              <option name="myItemId" value="biblio" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1140,15 +1110,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="skeletome_builder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
+              <option name="myItemId" value="pubmed" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1257,25 +1219,25 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Similarities" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="149" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="939" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="943" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="939" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="145" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="141" />
     <property name="GoToClass.includeJavaFiles" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="141" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed" />
       <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/img" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/images" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates" />
       <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/lib/dropzone" />
-      <recent name="$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/lib/fancybox" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/sites/all/themes/skeletome/img" />
@@ -1329,14 +1291,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="273" y="22" width="1441" height="1330" extended-state="0" />
-    <editor active="true" />
+    <frame x="283" y="22" width="1441" height="1330" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32114697" sideWeight="0.6707921" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32616487" sideWeight="0.6707921" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1415,26 +1377,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/pages.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="298" column="31" selection-start="10069" selection-end="10069" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/partials/navsearch.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="74" selection-start="440" selection-end="440" vertical-scroll-proportion="-4.875" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/statements.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="67" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/templates/node--gene.tpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="0" selection-start="6450" selection-end="6450" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1260" column="21" selection-start="43405" selection-end="43448" vertical-scroll-proportion="16.681377" />
@@ -1443,11 +1385,6 @@
     <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/css/skeletome2.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="64" column="42" selection-start="1613" selection-end="1613" vertical-scroll-proportion="0.3426396" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezClient.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="377" column="7" selection-start="8758" selection-end="8758" vertical-scroll-proportion="1.2801725" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/data.php">
@@ -1466,54 +1403,84 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/dialog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="61" selection-start="1940" selection-end="1940" vertical-scroll-proportion="-9.333333">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="63" column="61" selection-start="1940" selection-end="1940" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/ajax.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="481" column="28" selection-start="14316" selection-end="14316" vertical-scroll-proportion="-0.38">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="478" column="0" selection-start="14147" selection-end="14147" vertical-scroll-proportion="-5.22">
+        <state line="481" column="28" selection-start="14316" selection-end="14316" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/directives.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="197" selection-end="197" vertical-scroll-proportion="-3.4615386">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="5" selection-start="1497" selection-end="1497" vertical-scroll-proportion="0.0">
+        <state line="6" column="0" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/templates/user-login.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="6" selection-start="318" selection-end="318" vertical-scroll-proportion="-4.375">
+        <state line="13" column="6" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/templates/page.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="31" selection-start="6178" selection-end="6178" vertical-scroll-proportion="0.5880783">
+        <state line="96" column="32" selection-start="4727" selection-end="4727" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/skeletome/ckeditor/plugins/pubmed/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="36" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezPubmedArticle.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezClient.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.install">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/EntrezPubmedBookArticle.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/biblio/modules/pubmed/biblio_pm.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="392" selection-end="392" vertical-scroll-proportion="-9.375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/skeletome_builder/skeletome_builder.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="387" column="63" selection-start="11808" selection-end="11808" vertical-scroll-proportion="0.547153">
           <folding />
         </state>
       </provider>

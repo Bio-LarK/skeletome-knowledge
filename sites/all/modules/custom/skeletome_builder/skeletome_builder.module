@@ -368,6 +368,8 @@ function ajax_pubmed_query_search($query) {
         $result = $Eclient->fetch($publicationId . "");
 
         $data = NULL;
+
+
         if (!isset($result->PubmedArticle)) {
             if (isset($result->PubmedBookArticle)) {
                 $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);

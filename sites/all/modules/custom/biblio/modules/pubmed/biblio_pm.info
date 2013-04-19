@@ -5,6 +5,7 @@ package = Biblio
 dependencies[] = biblio
 files[] = EntrezClient.php
 files[] = EntrezPubmedArticle.php
+files[] = EntrezPubmedBookArticle.php
 
 ; Information added by drupal.org packaging script on 2013-02-11
 version = "7.x-1.0-rc5"
