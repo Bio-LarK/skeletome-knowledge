@@ -820,10 +820,13 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
         $build['title'] = array('#markup' => $markup);
 
         $build['row1'] = array('#markup' => '<div class="row">');
+
+        $build['search_results'] = apachesolr_search_page_browse($results['apachesolr_search_browse'], $search_page['env_id']);
+
         $build['message'] = array('#markup' => '<div class="span8"><section>Select from the options on the right to launch a search.</section></div>');
 
 
-        $build['search_results'] = apachesolr_search_page_browse($results['apachesolr_search_browse'], $search_page['env_id']);
+
         $build['row2'] = array('#markup' => '</div>');
 
     } elseif ($results) {
@@ -834,7 +837,7 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
 
         $build['row'] = array('#markup' => '<div class="row">');
 
-
+        $build['filters'] = apachesolr_search_page_browse('browse', $search_page['env_id']);
 
         $build['search_results'] = array(
             '#theme' => 'search_results',
@@ -842,9 +845,6 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
             '#module' => 'apachesolr_search',
             '#search_page' => $search_page,
         );
-
-        $build['filters'] = apachesolr_search_page_browse('browse', $search_page['env_id']);
-
 
         $build['row2'] = array('#markup' => '</div>');
 

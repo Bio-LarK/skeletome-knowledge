@@ -68,9 +68,9 @@
 <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
     <section class="section-more">
         <?php print render($title_prefix); ?>
-        <h3 <?php print $title_attributes; ?>>
+        <h2 <?php print $title_attributes; ?>>
             <a href="<?php print $url; ?>"><?php print $title; ?></a>
-        </h3>
+        </h2>
         <?php print render($title_suffix); ?>
         <div>
             <?php if ($snippet): ?>
