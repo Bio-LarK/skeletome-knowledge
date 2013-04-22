@@ -648,7 +648,9 @@
         <!-- Modal Body -->
         <div class="modal-body">
             <div class="modal-body-inner">
-                <p>Edit Clinical Features to attached to '{{boneDysplasia.title}}'.</p>
+                <clinical-feature-adder></clinical-feature-adder>
+
+                <!--<p>Edit Clinical Features to attached to '{{boneDysplasia.title}}'.</p>
 
                 <form>
                     <search model="$parent.editClinicalFeatureSearch"
@@ -674,7 +676,7 @@
                                     class="icon-plus icon-white"></i> Add</a>
                         </td>
                     </tr>
-                </table>
+                </table>-->
 
                 <!-- Helpful Prompt (show when no text is entered, and no existing genes -->
                 <p class="muted info">Want to find another Clinical Feature? <br/>Try using the search bar above e.g.

@@ -94,14 +94,104 @@ myApp.directive('cmFocus', function() {
 });
 
 myApp.directive('cmPopover', function() {
-    return function (scope, iElement, iAttrs) {
+    return function link(scope, iElement, iAttrs) {
+
+
+        var isVisible = false;
+        var clickedAway = false;
 
         iElement.popover({
+            html: true,
+            trigger: 'manual',
             "animation": true,
             "html": true,
             "placement": iAttrs.cmPopover || "bottom",
             "content": scope.$eval(iAttrs.cmPopoverContent)
+        }).click(function(e) {
+            console.log("show popover");
+            iElement.popover('show');
+            isVisible = true;
+            clickedAway = false;
+            jQuery('.popover').bind('click',function() {
+                clickedAway = false
+                //alert('popover has been clicked!');
+                console.log("inside popover clicked");
+            });
+            e.preventDefault();
+
+            console.log("showing popover", isVisible, clickedAway);
         });
+
+//        iElement.parent().on('click', '.popover', function(e) {
+//
+//            e.preventDefault();
+//        });
+
+        jQuery(document).click(function(e) {
+            if(isVisible && clickedAway) {
+                iElement.popover('hide');
+                isVisible = clickedAway = false
+            } else {
+                clickedAway = true
+            }
+            console.log("document clicked hiding", isVisible, clickedAway);
+        });
+
+
+//
+//        var isVisible = false;
+//        var clickedAway = false;
+//
+//        iElement.popover({
+//            "animation": true,
+//            "html": true,
+//            "placement": iAttrs.cmPopover || "bottom",
+//            "content": scope.$eval(iAttrs.cmPopoverContent)
+//        }).click(function(e) {
+//            iElement.popover('show');
+//            e.preventDefault();
+//        });
+//
+//
+//        jQuery('.popover').on('click', function() {
+//            console.log("clicked the popover content");
+//        });
+
+
+//        iElement.click(function(e) {
+//            console.log("clicked", isVisible);
+//            if(!isVisible) {
+//                console.log("making popover");
+//
+//
+//                isVisible = true;
+//            } else {
+//                iElement.popover('destroy');
+//                console.log("destroying popover");
+//                isVisible = false;
+//            }
+//
+//            e.preventDefault();
+//        });
+
+//
+//        }).click(function(e) {
+//                if()
+//            console.log("pop over button clicked");
+//            jQuery(this).popover('show');
+//            isVisible = true;
+//            e.preventDefault();
+//        });
+
+//        jQuery(document).click(function(e) {
+//            if(isVisible & clickedAway) {
+//                jQuery(iElement).popover('hide');
+//                isVisible = clickedAway = false
+//            } else {
+//                clickedAway = true
+//            }
+//        });
+
 
     }
 });
@@ -298,6 +388,19 @@ myApp.directive('dropZoneUpload', function() {
 //
 //    }
 //});
+
+myApp.directive('clinicalFeatureAdder', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {       // create an isolate scope
+        },
+        templateUrl: Drupal.settings.skeletome_builder.base_url + '/sites/all/modules/custom/skeletome_builder/partials/clinical_feature_adder.php',
+        link: function($scope, iElement, iAttrs) {
+
+        }
+    }
+});
 
 /**
  * Creates a nav search bar
