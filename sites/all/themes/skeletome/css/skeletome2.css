@@ -293,24 +293,41 @@ textarea.full-width {
 /* ================================================
     Search page
 */
-.item-list ul.facetapi-facet-im-field-skeletome-tags li {
-    border: 1px solid #f2f2f2;
-    border-radius: 20px;
-    padding: 5px 10px;
-    display: inline-block;
-    margin: 0;
-    margin-bottom: 5px;
-    background-color: #f7f7fb;
+.block-facetapi ul {
+    list-style-type: none;
+    margin-left: -14px;
+    margin-bottom: 20px;
+}
+.badge.badge-light {
+    background-color: rgb(243, 243, 243);
+    color: rgb(131, 131, 131);
+    text-shadow: none;
+    font-weight: normal;
+}
+.facetapi-list-item {
+    overflow: auto;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+/*.item-list ul.facetapi-facet-im-field-skeletome-tags li {*/
+    /*border: 1px solid #f2f2f2;*/
+    /*border-radius: 20px;*/
+    /*padding: 5px 10px;*/
+    /*display: inline-block;*/
+    /*margin: 0;*/
+    /*margin-bottom: 5px;*/
+    /*background-color: #f7f7fb;*/
     /*background-color: green;*/
     /*border: 1px solid darkgreen;*/
-}
-.item-list ul.facetapi-facet-im-field-skeletome-tags li a.facetapi-active {
+/*}*/
+/*.item-list ul.facetapi-facet-im-field-skeletome-tags li a.facetapi-active {*/
     /*background-color: red;*/
     /*border: 1px solid darkred;*/
-}
-.item-list ul.facetapi-facet-im-field-skeletome-tags li a {
+/*}*/
+/*.item-list ul.facetapi-facet-im-field-skeletome-tags li a {*/
     /*color: white;*/
-}
+/*}*/
 .block-title {
     font-size: 21px;
 }
@@ -319,11 +336,11 @@ textarea.full-width {
 }
 .search-result h3 a {
     color: #333;
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid black;*/
 }
 .search-result h3 a:hover {
-    text-decoration: none;
-    color: grey
+    text-decoration: underline;
+    color: #212121;
 }
 
 /* ================================================

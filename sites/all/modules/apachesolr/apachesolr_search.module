@@ -1771,7 +1771,17 @@ function theme_apachesolr_search_snippets($vars)
  */
 function theme_apachesolr_search_noresults()
 {
-    return t('<section class="section-top"><ul>
+    $terms = str_replace(";", "", arg(2));
+    $markup = '
+            <div class="row">
+                <div class="span12">
+                    <div class="page-header">
+                        <h1>Search Results <small>' . $terms . '</small></h1>
+                    </div>
+                </div>
+            </div>';
+
+    return t($markup . '<section><b>No search results found</b></section><section><ul>
 <li>Check if your spelling is correct, or try removing filters.</li>
 <li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
 <li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>
