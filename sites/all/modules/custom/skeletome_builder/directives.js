@@ -363,6 +363,17 @@ myApp.directive('navSearch', function() {
                 }
             }
 
+            $scope.addToMultitermQuery = function(term) {
+                $scope.navSearch.query = $scope.selectedQueryTerms().trim() + " " + term + "; ";
+                $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
+            }
+
+            /**
+             * Get all search terms, except the last one
+             *
+             * Example: "Achondroplasia; Big Head; Dwarfism" - returns "Achondroplasia; Big Head; "
+             * @returns {*}
+             */
             $scope.selectedQueryTerms = function() {
                 if(!angular.isDefined($scope.navSearch.query)) {
                     return $scope.navSearch.query;
@@ -381,6 +392,13 @@ myApp.directive('navSearch', function() {
                     return $scope.navSearch.query;
                 }
             }
+
+            /**
+             * Get the last term of the query
+             *
+             * Example: "Achondroplasia; Big Head; Dwarfism" - returns "Dwarfism"
+             * @returns {*}
+             */
             $scope.lastQueryTerm = function() {
                 if(!angular.isDefined($scope.navSearch.query)) {
                     return $scope.navSearch.query;
@@ -394,6 +412,10 @@ myApp.directive('navSearch', function() {
                 }
             };
 
+            /**
+             * Search for results matching the query
+             * @param query
+             */
             $scope.search = function(query) {
 
                 // Work out the query
@@ -411,7 +433,7 @@ myApp.directive('navSearch', function() {
                     $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
                 }
 
-                if($scope.lastQueryTerm() && $scope.lastQueryTerm().length >= 3) {
+                if($scope.lastQueryTerm() && $scope.lastQueryTerm().length >= 2) {
                     $http.get('?q=ajax/autocomplete/all/' + $scope.lastQueryTerm()).success(function(data) {
                         // add in all suggestions
 
@@ -496,7 +518,7 @@ myApp.directive('navSearch', function() {
 
                 } else if (event.which == 13) {
                     // enter pressed
-                    if($scope.selectedIndex < 0) {
+                    if($scope.selectedIndex < 0 || $scope.isMultitermQuery()) {
                         // do the search
                         window.location.href = "?q=search/site/" + $scope.navSearch.query;
                     } else {
