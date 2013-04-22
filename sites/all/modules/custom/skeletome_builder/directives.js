@@ -458,12 +458,18 @@ myApp.directive('navSearch', function() {
                     return false;
                 }
 
-                var semicolonPosition = $scope.navSearch.query.lastIndexOf(';');
-                if(semicolonPosition > 0) {
+                if($scope.navSearch.query.trim().split(';').length > 1) {
                     return true;
                 } else {
                     return false;
                 }
+
+//                var semicolonPosition = $scope.navSearch.query.lastIndexOf(';');
+//                if(semicolonPosition > 0) {
+//                    return true;
+//                } else {
+//                    return false;
+//                }
             }
 
             $scope.addToMultitermQuery = function(term) {
@@ -508,7 +514,10 @@ myApp.directive('navSearch', function() {
                 }
 
                 var semicolonPosition = $scope.navSearch.query.lastIndexOf(';');
+
+                // check if therei s a semicolon
                 if(semicolonPosition > 0) {
+                    // really multi-words query
                     return $scope.navSearch.query.substring(semicolonPosition + 1).trim();
                 } else {
                     return $scope.navSearch.query;
@@ -522,7 +531,7 @@ myApp.directive('navSearch', function() {
             $scope.search = function(query) {
 
                 // Work out the query
-                console.log("Query Term", $scope.lastQueryTerm());
+                console.log("Query Term \"", $scope.lastQueryTerm(), "\"") ;
 
                 // Filter the current displayed queries based on the input
                 var textFilter = $filter('nameOrTitleStartsWith');
@@ -543,6 +552,7 @@ myApp.directive('navSearch', function() {
                         // We filter the results by what we have entered
                         // cause we might be getting old results back from the database
                         // from a previous query
+                        console.log("last query term", $scope.lastQueryTerm());
                         $scope.navSearch.querySuggestions = textFilter(data, $scope.lastQueryTerm());
 
                         console.log("Filtered reuslts", $scope.navSearch.querySuggestions);
@@ -605,7 +615,6 @@ myApp.directive('navSearch', function() {
 
 
             jQuery('.navsearch-query', jQuery(iElement)).keydown(function(event) {
-
                 // Down or Up pressed
                 if(event.which == 40 || event.which == 38) {
                     $scope.$apply(function() {
@@ -652,11 +661,13 @@ myApp.directive('navSearch', function() {
                         $scope.$apply(function() {
 
                             if($scope.isMultitermQuery()) {
+                                console.log("tab on multi-term query");
                                 // dont replace the whole thing
                                 var index = $scope.navSearch.query.lastIndexOf(";");
                                 $scope.navSearch.query = $scope.selectedQueryTerms().trim() + " " + (selectedObject.title || selectedObject.name);
                             } else {
                                 // replace the whole thing
+                                console.log("tab on regular query");
                                 $scope.navSearch.query = selectedObject.title || selectedObject.name;
                             }
 

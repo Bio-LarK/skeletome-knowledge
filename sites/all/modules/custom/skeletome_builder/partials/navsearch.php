@@ -8,7 +8,7 @@
                ng-change="search(navSearch.query)"
                placeholder="Search for Bone Dysplasias, Groups or Genes"/>
 
-        <span ng-show="navSearch.selectedSuggestion.length && navSearch.selectedSuggestion != navSearch.query"
+        <span ng-show="navSearch.selectedSuggestion.length && navSearch.selectedSuggestion != navSearch.query && !isMultitermQuery()"
             class="navsearch-helper">
             Press TAB to complete
         </span>
