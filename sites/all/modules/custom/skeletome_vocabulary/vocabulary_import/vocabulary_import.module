@@ -271,6 +271,7 @@ function vocabulary_import_form_submit($form, &$form_state)
         }
     }
 
+
     include_once DRUPAL_ROOT . '/sites/all/libraries/arc/ARC2.php';
     $parser = ARC2::getRDFXMLParser();
     $parser->parse($onto_location);
@@ -338,6 +339,7 @@ function vocabulary_import_form_submit($form, &$form_state)
     $instances = array();
 
     foreach ($indexed_triples as $indx) {
+
         if ($indx['p'] == 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
             if ($indx['o'] == 'http://www.w3.org/2002/07/owl#Class') {
                 $test[] = $indx['s'];
@@ -385,6 +387,7 @@ function vocabulary_import_form_submit($form, &$form_state)
         }
 
     }
+
 
     $rt_found = array_unique($rt_found);
 

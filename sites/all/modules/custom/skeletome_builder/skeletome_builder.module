@@ -63,9 +63,9 @@ function skeletome_builder_page_build(&$page) {
     global $user;
 
 //    echo "<pre>";
-//    print_r(user_load(15));
+//    print_r(taxonomy_term_load(15135));
 //    echo "</pre>";
-
+//    die();
     // 'access callback' => 'user_is_logged_in'
 
 //    drupal_get_form('user_login');

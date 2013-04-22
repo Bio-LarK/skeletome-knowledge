@@ -815,48 +815,29 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
             </div>';
 
     if (!empty($results['apachesolr_search_browse'])) {
-        // Show facet browsing blocks.
 
+
+        // Build up the search page for no reuslts
         $build['title'] = array('#markup' => $markup);
-
         $build['row1'] = array('#markup' => '<div class="row">');
-
-        $build['search_results'] = apachesolr_search_page_browse($results['apachesolr_search_browse'], $search_page['env_id']);
-
         $build['message'] = array('#markup' => '<div class="span8"><section>Select from the options on the right to launch a search.</section></div>');
-
-
-
+        $build['search_results'] = apachesolr_search_page_browse($results['apachesolr_search_browse'], $search_page['env_id']);
         $build['row2'] = array('#markup' => '</div>');
 
     } elseif ($results) {
 
-//        $build['title'] = array('#markup' => '<div class="row"><div class="span12"><div class="page-header"><h1>Search Results</h1></div></div></div>');
-
+        // Build up the search page for results
         $build['title'] = array('#markup' => $markup);
-
         $build['row'] = array('#markup' => '<div class="row">');
-
-        $build['filters'] = apachesolr_search_page_browse('browse', $search_page['env_id']);
-
+        // Get the facts
         $build['search_results'] = array(
             '#theme' => 'search_results',
             '#results' => $results,
             '#module' => 'apachesolr_search',
             '#search_page' => $search_page,
         );
-
+        $build['filters'] = apachesolr_search_page_browse('browse', $search_page['env_id']);
         $build['row2'] = array('#markup' => '</div>');
-
-
-//        $build['search_results'] = array(
-//            '#theme' => 'sb_search_results',
-//            '#results' => $results,
-//            '#facets'   => apachesolr_search_page_browse('browse', $search_page['env_id']),
-//            '#module' => 'apachesolr_search',
-//            '#search_page' => $search_page,
-//        );
-
 
     } else {
         // Give the user some custom help text.
