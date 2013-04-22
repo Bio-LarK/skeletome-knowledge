@@ -803,9 +803,21 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
         }
     }
     // Retrieve expected results from searching
+    $terms = str_replace(";", "", arg(2));
+    $markup = '
+            <div class="row">
+                <div class="span12">
+                    <div class="page-header">
+                        <h1>Search Results <small>' . $terms . '</small></h1>
+
+                    </div>
+                </div>
+            </div>';
+
     if (!empty($results['apachesolr_search_browse'])) {
         // Show facet browsing blocks.
-        $build['title'] = array('#markup' => '<div class="row"><div class="span12"><div class="page-header"><h1>Search Results</h1></div></div></div>');
+
+        $build['title'] = array('#markup' => $markup);
 
         $build['row1'] = array('#markup' => '<div class="row">');
         $build['message'] = array('#markup' => '<div class="span8"><section>Select from the options on the right to launch a search.</section></div>');
@@ -816,8 +828,9 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
 
     } elseif ($results) {
 
-        $build['title'] = array('#markup' => '<div class="row"><div class="span12"><div class="page-header"><h1>Search Results</h1></div></div></div>');
+//        $build['title'] = array('#markup' => '<div class="row"><div class="span12"><div class="page-header"><h1>Search Results</h1></div></div></div>');
 
+        $build['title'] = array('#markup' => $markup);
 
         $build['row'] = array('#markup' => '<div class="row">');
 
@@ -1758,7 +1771,7 @@ function theme_apachesolr_search_snippets($vars)
  */
 function theme_apachesolr_search_noresults()
 {
-    return t('<section class="section_top"><ul>
+    return t('<section class="section-top"><ul>
 <li>Check if your spelling is correct, or try removing filters.</li>
 <li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
 <li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>

@@ -36,7 +36,7 @@
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion(suggestion)" ng-mouseleave="leavedSuggestion(suggestion)"
             ng-class="{'navsearch-suggestion-selected': selectedIndex == $index}"
-            ng-repeat="suggestion in navSearch.querySuggestions | filter:navSearch.query">
+            ng-repeat="suggestion in navSearch.querySuggestions">
 
             <a class="navsearch-suggestion-link" ng-show="suggestion.nid" href="?q=node/{{ suggestion.nid }}" href>
                 <span class="navsearch-suggestion-guide">

@@ -338,17 +338,70 @@ myApp.directive('navSearch', function() {
                     var newSuggestionText = newSuggestion.title || newSuggestion.name;
 
                     // Transform the suggestion to match the case of hte input (tricky stuff!)
-                    $scope.navSearch.selectedSuggestion = myFilter(newSuggestionText, $scope.navSearch.query);
+                    if($scope.isMultitermQuery()) {
+                        $scope.navSearch.selectedSuggestion = $scope.selectedQueryTerms() + myFilter(newSuggestionText, $scope.lastQueryTerm());
+                    } else {
+                        $scope.navSearch.selectedSuggestion = myFilter(newSuggestionText, $scope.lastQueryTerm());
+                    }
+
+
                 } else {
                     $scope.navSearch.selectedSuggestion = "";
                 }
             }
 
+            $scope.isMultitermQuery = function() {
+                if(!angular.isDefined($scope.navSearch.query)) {
+                    return false;
+                }
+
+                var semicolonPosition = $scope.navSearch.query.lastIndexOf(';');
+                if(semicolonPosition > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            $scope.selectedQueryTerms = function() {
+                if(!angular.isDefined($scope.navSearch.query)) {
+                    return $scope.navSearch.query;
+                }
+
+                var semicolonPosition = $scope.navSearch.query.lastIndexOf(';');
+
+                if(semicolonPosition > 0) {
+                    // Add in spaces
+                    do {
+                        semicolonPosition++
+                    } while($scope.navSearch.query.charAt(semicolonPosition) === " ");
+
+                    return $scope.navSearch.query.substring(0, semicolonPosition);
+                } else {
+                    return $scope.navSearch.query;
+                }
+            }
+            $scope.lastQueryTerm = function() {
+                if(!angular.isDefined($scope.navSearch.query)) {
+                    return $scope.navSearch.query;
+                }
+
+                var semicolonPosition = $scope.navSearch.query.lastIndexOf(';');
+                if(semicolonPosition > 0) {
+                    return $scope.navSearch.query.substring(semicolonPosition + 1).trim();
+                } else {
+                    return $scope.navSearch.query;
+                }
+            };
+
             $scope.search = function(query) {
+
+                // Work out the query
+                console.log("Query Term", $scope.lastQueryTerm());
 
                 // Filter the current displayed queries based on the input
                 var textFilter = $filter('nameOrTitleStartsWith');
-                $scope.navSearch.querySuggestions = textFilter($scope.navSearch.querySuggestions, query);
+                $scope.navSearch.querySuggestions = textFilter($scope.navSearch.querySuggestions, $scope.lastQueryTerm());
 
                 // Mark as none selected
                 if($scope.navSearch.querySuggestions.length) {
@@ -358,15 +411,16 @@ myApp.directive('navSearch', function() {
                     $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
                 }
 
-                if(query && query.length >= 3) {
-                    $http.get('?q=ajax/autocomplete/all/' + query).success(function(data) {
+                if($scope.lastQueryTerm() && $scope.lastQueryTerm().length >= 3) {
+                    $http.get('?q=ajax/autocomplete/all/' + $scope.lastQueryTerm()).success(function(data) {
                         // add in all suggestions
 
                         // We filter the results by what we have entered
                         // cause we might be getting old results back from the database
                         // from a previous query
-                        $scope.navSearch.querySuggestions = textFilter(data, $scope.navSearch.query);
+                        $scope.navSearch.querySuggestions = textFilter(data, $scope.lastQueryTerm());
 
+                        console.log("Filtered reuslts", $scope.navSearch.querySuggestions);
                         if($scope.navSearch.querySuggestions.length) {
                             // selected suggestion
                             if($scope.selectedIndex == $scope.NOT_SELECTED) {
@@ -471,7 +525,17 @@ myApp.directive('navSearch', function() {
                         var selectedObject = $scope.navSearch.querySuggestions[$scope.selectedIndex];
 //
                         $scope.$apply(function() {
-                            $scope.navSearch.query = selectedObject.title || selectedObject.name;
+
+                            if($scope.isMultitermQuery()) {
+                                // dont replace the whole thing
+                                var index = $scope.navSearch.query.lastIndexOf(";");
+                                $scope.navSearch.query = $scope.selectedQueryTerms().trim() + " " + (selectedObject.title || selectedObject.name);
+                            } else {
+                                // replace the whole thing
+                                $scope.navSearch.query = selectedObject.title || selectedObject.name;
+                            }
+
+                            $scope.navSearch.query += "; ";
                             $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
                             $scope.search($scope.navSearch.query);
                         });

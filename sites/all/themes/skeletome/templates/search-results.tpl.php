@@ -25,7 +25,6 @@
 ?>
 <div class="span8">
     <?php if ($search_results): ?>
-
         <ol class="search-results unstyled <?php print $module; ?>-results">
             <?php print $search_results; ?>
         </ol>
