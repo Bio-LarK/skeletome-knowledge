@@ -265,7 +265,7 @@ function skeletome_facetapi_link_inactive($variables) {
 
 
     $link_text = ($sanitize) ? check_plain($variables['text']) : $variables['text'];
-    $link_text = '<span style="line-height: 30px;">' . $link_text . theme('facetapi_count', $variables) . '</span>';
+    $link_text = '<span class="facetapi-list-item-name">' . $link_text . theme('facetapi_count', $variables) . '</span>';
 
     // Adds count to link if one was passed.
     if (isset($variables['count'])) {
@@ -294,6 +294,7 @@ function skeletome_facetapi_link_active($variables) {
     // Sanitizes the link text if necessary.
     $sanitize = empty($variables['options']['html']);
     $link_text = ($sanitize) ? check_plain($variables['text']) : $variables['text'];
+    $link_text = '<span class="facetapi-list-item-name">' . $link_text . '</span>';
 
     // Theme function variables fro accessible markup.
     // @see http://drupal.org/node/1316580

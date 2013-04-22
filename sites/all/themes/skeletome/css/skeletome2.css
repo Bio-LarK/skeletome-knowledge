@@ -310,6 +310,9 @@ textarea.full-width {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
 }
+.facetapi-list-item-name {
+    line-height: 30px;
+}
 /*.item-list ul.facetapi-facet-im-field-skeletome-tags li {*/
     /*border: 1px solid #f2f2f2;*/
     /*border-radius: 20px;*/
