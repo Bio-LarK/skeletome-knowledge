@@ -320,10 +320,10 @@
 
                     <div ng-repeat="subType in boneDysplasia.field_bd_superbd">
                         <a class="section-segment" href="?q=node/{{ subType.nid }}">
-                            {{ subType.title }}
-
                             <i class="icon-chevron-right pull-right"></i>
                             <i class="icon-chevron-right icon-white pull-right"></i>
+
+                            {{ subType.title }}
                         </a>
                     </div>
                 </section>

@@ -631,7 +631,7 @@ function StatementCtrl($scope, $http) {
         });
     }
     $scope.showEditStatements = function() {
-        $scope.editingStatements = true;
+        $scope.isEditingStatements = true;
         angular.forEach($scope.statements, function(statement, index) {
             if(statement.comments && statement.comments.length) {
                 statement.showComments = true;
@@ -639,7 +639,7 @@ function StatementCtrl($scope, $http) {
         });
     }
     $scope.hideEditStatements = function() {
-        $scope.editingStatements = false;
+        $scope.isEditingStatements = false;
         angular.forEach($scope.statements, function(statement, index) {
             statement.showComments = false;
         });

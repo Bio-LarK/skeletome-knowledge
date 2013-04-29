@@ -46,16 +46,13 @@
         <div class="row">
             <?php if ($name): ?>
             <div class="span12">
-                <div class="page-header" >
+                <div class="page-heading" >
 
-                    <ul class="breadcrumbs" >
-                        <li>Clinical Features </li>
-                        <li ng-show="bone_dysplasia">
-                            <a href="?q=node/{{ bone_dysplasia.nid }}">{{ bone_dysplasia.title }}</a>
-                        </li>
-                    </ul>
+                    <div ng-show="bone_dysplasia" class="muted">
+                        From <a href="?q=node/{{ bone_dysplasia.nid }}">{{ bone_dysplasia.title }}</a>
+                    </div>
 
-                    <h1><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-clinical-feature.png"/> {{ clinicalFeature.name }} <small>Clinical Feature</small></h1>
+                    <h1><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-clinical-feature.png"/> {{ clinicalFeature.name }}</h1>
                 </div>
             </div>
             <?php endif; ?>
@@ -65,35 +62,23 @@
 
 
             <div class="span8">
-                <!--<section class="section-large">
-                    <h2>Description</h2>
-                    <div class="description-text">
-                        {{ clinicalFeature }}
-                        <p class="muted" ng-show="clinicalFeature.body.und[0].value.length == 0">There is currently no description of '{{ clinicalFeature.title | capitalize }}'.</p>
 
-                        <div ng-show="clinicalFeature.body.und[0].value.length > 0" >
-                            <div ng-bind-html-unsafe="clinicalFeature.body.und[0].value | truncate:descriptionLength">
-                            </div>
-                            <div class="clearfix">
-                                <a href ng-show="clinicalFeature.body.und[0].value.length > descriptionLength" class="btn btn-primary pull-right" ng-click="descriptionLength = clinicalFeature.body.und[0].value.length"><i class="icon-chevron-down icon-white"></i> Show All</a>
-                                <a href ng-show="descriptionLength == clinicalFeature.body.und[0].value.length" class="btn btn-primary pull-right" ng-click="descriptionLength=1000"><i class="icon-chevron-up icon-white"></i> Hide</a>
-                            </div>
-                        </div>
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <h2>Bone Dysplasias</h2>
                     </div>
-                </section>-->
-                <section class="section-large section-large-noborder section-more">
-                    <h2>Bone Dysplasias</h2>
-                    <p>{{ clinicalFeature.name }} occurs in {{boneDysplasias.length}} bone dysplasias. </p>
-                    <table ng-show="boneDysplasias.length > 0" class="table table-bordered table-striped table-dark">
-                        <tr>
-                            <th>Bone Dysplasia</th>
-                        </tr>
-                        <tr ng-repeat="boneDysplasia in boneDysplasias | orderBy:'title' | limitTo:boneDysplasiaDisplayLimit">
-                            <td><a href="?q=node/{{ boneDysplasia.nid }}">{{ boneDysplasia.title }}</a></td>
-                        </tr>
-                    </table>
-                    <div class="clearfix" ng-show="boneDysplasiaDisplayLimit < boneDysplasias.length" >
-                        <a href class="btn btn-more pull-right" ng-click="boneDysplasiaDisplayLimit=boneDysplasiaDisplayLimit+10"><i class="icon-chevron-down icon-white"></i> Show More</a>
+
+                    <div class="section-segment muted">
+                        {{ clinicalFeature.name }} occurs in {{boneDysplasias.length}} bone dysplasias.
+                    </div>
+
+                    <div ng-repeat="boneDysplasia in boneDysplasias | orderBy:'title'">
+                        <a class="section-segment" href="?q=node/{{ boneDysplasia.nid }}">
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+
+                            {{ boneDysplasia.title }}
+                        </a>
                     </div>
                 </section>
                 <!--<section class="section-large">
@@ -118,12 +103,18 @@
 
             </div>
 
-            <div class="span4" ng-show="boneDysplasias.length">
+            <div class="span4">
                 <section>
-                    <h3>Information Content</h3>
-                    <!--                <p>{{ clinicalFeature.name }} occurs in {{boneDysplasias.length}} disorders.</p>-->
-                    <div class="progress">
-                        <div class="bar" style="width: {{informationContent}}%"></div>
+                    <div class="section-segment section-segment-header">
+                        <h3>Information Content</h3>
+                    </div>
+                    <div class="section-segment" ng-show="boneDysplasias.length">
+                        <div class="progress">
+                            <div class="bar" style="width: {{informationContent}}%"></div>
+                        </div>
+                    </div>
+                    <div class="section-segment muted" ng-show="!boneDysplasias.length">
+                        No information content.
                     </div>
                 </section>
 

@@ -13,7 +13,7 @@
 
                 <!-- Show Add statement button -->
                 <?php if ($user->uid): ?>
-                    <a ng-show="!model.isAddingStatement" class="btn btn-success " ng-click="showAddStatement()"  href>
+                    <a ng-show="!model.isAddingStatement && !isEditingStatements" class="btn btn-success " ng-click="showAddStatement()"  href>
                         <i class="icon-plus icon-white"></i> Add Statement
                     </a>
                 <?php endif; ?>
@@ -32,13 +32,14 @@
                 <!-- Edit buttons -->
                 <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
                     <span ng-show="!model.isAddingStatement">
-                        <a ng-show="editingStatements" href
+                        <a ng-show="isEditingStatements" href
                            ng-click="hideEditStatements()"
                            data-toggle="modal" role="button"
-                           class="btn btn-primary">
+                           class="btn btn-info">
                             <i class="icon-ok icon-white"></i> Done
                         </a>
-                        <a ng-show="!editingStatements && statements.length" href
+
+                        <a ng-show="!isEditingStatements" href
                            ng-click="showEditStatements()"
                            data-toggle="modal"
                            role="button"
@@ -96,7 +97,15 @@
 
                     <!-- User info -->
                     <div class="statement-content-user">
+
+
                         <div class="statement-content-user-inner">
+                            <a ng-show="isEditingStatements"
+                               ng-click="deleteStatement(statement)"
+                               class="btn btn-danger" href>
+                                <i class="icon-remove icon-white"></i> Delete
+                            </a>
+
                             <div>
                                 <b>{{ statement.name || "Anonymous" | capitalize }}</b>
                             </div>
@@ -105,12 +114,6 @@
                                 <a ng-click="showComments(statement)" href>
                                     <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
                                 </a>
-                                <a ng-show="editingStatements"
-                                   ng-click="deleteStatement(statement)"
-                                   class="btn btn-danger pull-right" href>
-                                    <i class="icon-remove icon-white"></i> Delete
-                                </a>
-
                             </div>
                         </div>
                     </div>
@@ -128,6 +131,13 @@
                         <!-- User info -->
                         <div class="comment-content-user">
                             <div class="segment-padding comment-content-user-inner">
+
+                                <a ng-show="isEditingStatements"
+                                   ng-click="deleteStatement(statement)"
+                                   class="btn btn-danger" href>
+                                    <i class="icon-remove icon-white"></i> Delete
+                                </a>
+
                                 <b>{{ comment.name || "Anonymous" | capitalize }}</b>
                             </div>
                         </div>
@@ -200,7 +210,7 @@
                             <div class="pull-left statement-comment-profile"></div>
 
                             <div class="media-body">
-                                <a ng-show="editingStatements"
+                                <a ng-show="isEditingStatements"
                                    ng-click="deleteCommentFromStatement(comment, statement)" class="btn btn-danger pull-right" href>
                                     <i class="icon-remove icon-white"></i> Delete
                                 </a>
