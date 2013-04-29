@@ -81,10 +81,10 @@
 ?>
 
 <div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl">
-    <div class="container" ng-cloak>
+    <div class="container-fluid" ng-cloak>
 
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12">
 
                 <div class="page-heading" >
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
 
             <div class="span8">
 

@@ -80,8 +80,7 @@
             }
             input.navsearch-selectedSuggestion {
                 cursor: not-allowed;
-                background-color: transparent; /* 1 */
-                /*background-color: white;*/
+                background-color: white;
                 color: #bebebe !important;
                 border: none;
             }
@@ -153,6 +152,27 @@ body {
     line-height: 21px;
     font-size: 14px;
     background-color: #eee;
+    position: relative;
+}
+body:before {
+    /*content: "";*/
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+
+    /*top: 0px;*/
+    /*left: -20%;*/
+    /*z-index: -1;*/
+    /*background-size: cover;*/
+
+    /*opacity: 0.05;*/
+    /*background-repeat:no-repeat;*/
+    /*background-image: url(../img/logo-clinical-feature.svg);*/
+    /*-webkit-transform: rotate(-15deg);*/
+    /*-moz-transform: rotate(30deg);*/
+    /*-ms-transform: rotate(30deg);*/
+    /*-o-transform: rotate(30deg);*/
+    /*transform: rotate(-30deg);*/
 }
 body p {
     /*text-align: justify;*/
@@ -971,7 +991,7 @@ modal-dark .modal-footer {
 .progress .bar {
     background-image: none;
     -webkit-box-shadow: none;
-    border-color: #1576b4;
+    /*border-color: #1576b4;*/
 }
 
 /**
@@ -1190,6 +1210,25 @@ table.table-dark {
 .btn.btn-clear .down {
     display: none;
 }
+
+.type-logo {
+    background-color: #333;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+    top: 6px;
+}
+    .type-logo path {
+        fill: white;
+    }
+.type-logo-light {
+    background-color: transparent;
+}
+    .type-logo-light path {
+        fill: #333;
+    }
 /* ================================================
     Headings
 */
@@ -1423,9 +1462,10 @@ section, div.section {
     .section-segment h4 img {
         height: 18px;
     }
-    .section-segment .icon-chevron-right.icon-white {
+    .section-segment .icon-chevron-right.icon-white, .section-segment .icon-chevron-left.icon-white, .section-segment .icon-globe.icon-white {
         display: none;
     }
+
 
 a.section-segment {
     color: #333;
@@ -1446,7 +1486,7 @@ a.section-segment {
         -moz-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
         -webkit-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05)
     }
-    a.section-segment:hover .icon-chevron-right, a.section-segment:hover .icon-globe {
+    a.section-segment:hover .icon-chevron-right, a.section-segment:hover .icon-chevron-left, a.section-segment:hover .icon-globe {
         display: none;
     }
     a.section-segment:hover .icon-white {
@@ -1455,11 +1495,12 @@ a.section-segment {
     }
 
 /**
-User to add padding
+Used to add padding
 */
 .section-segment-inner {
     padding: 14px 21px;
     border-bottom: 1px solid #e7e7e7;
+    display: block;
 }
 
 /**
@@ -1475,26 +1516,31 @@ User to add padding
 .section-segment-editor {
     padding: 0px;
 }
-.section-segment-border {
+.segment-border {
     border-bottom: 1px solid #e7e7e7;
 }
 
 /** Tab in block
 */
-.section-segment-inner-tabbed::before {
-    display: block;
-    content: '';
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100%;
-    width: 50px;
-    background-color: #eee;
-}
 .section-segment-inner-tabbed {
     position: relative;
     padding-left: 74px;
 }
+.section-segment-inner-tabbed::before {
+     display: block;
+     content: '';
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     height: 100%;
+     width: 50px;
+     background-color: #eee;
+     border-bottom: 2px solid #eee;
+}
+.section-segment-inner-tabbed:last-child::before {
+    border-bottom: 1px solid #eee;
+}
+
 
 .section-segment.alert {
     border-radius: 0;

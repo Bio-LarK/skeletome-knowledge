@@ -66,22 +66,30 @@
 ?>
 
 <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
-    <section class="section-more">
-        <?php print render($title_prefix); ?>
-        <h3 <?php print $title_attributes; ?>>
-            <a href="<?php print $url; ?>"><?php print $title; ?></a>
-        </h3>
-        <?php print render($title_suffix); ?>
-        <div>
+    <section>
+        <div class="section-segment section-segment-header">
+            <?php print render($title_prefix); ?>
+            <h3 <?php print $title_attributes; ?>>
+                <a href="<?php print $url; ?>"><?php print $title; ?></a>
+            </h3>
+            <?php print render($title_suffix); ?>
+        </div>
+
+        <div class="section-segment">
             <?php if ($snippet): ?>
-                <p class="search-snippet"<?php print $content_attributes; ?>><?php print $snippet; ?></p>
+                <?php
+                if($snippet == "...")
+                    print "No description.";
+                else
+                    print $snippet; ?>
+
+                <p class="search-snippet"<?php print $content_attributes; ?>>
+                </p>
             <?php endif; ?>
             <?php if ($info): ?>
                 <!--<p class="search-info"><?php print $info; ?></p>-->
             <?php endif; ?>
         </div>
-
-        <a class="btn btn-more" href="<?php print $url; ?>"> Read More</a>
     </section>
 
 </li>

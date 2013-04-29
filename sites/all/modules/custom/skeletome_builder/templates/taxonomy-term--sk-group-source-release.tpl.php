@@ -50,8 +50,8 @@
     <div class="container">
         <div class="row">
             <div class="span12">
-                <div class="page-header" >
-                    <h1 ><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia-group.png"/> <?php print $name; ?> <small>Bone Dysplasia Classification</small></h1>
+                <div class="page-heading" >
+                    <h1 ><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia-group.png"/> <?php print $name; ?></h1>
                 </div>
             </div>
         </div>
@@ -59,44 +59,52 @@
         <div class="row">
             <div class="span7">
                 <section>
-                    <h3>{{ release.name }}</h3>
-                    <search placeholder="Find a Group" model="findGroup">
-                    </search>
-                    <div>
-                        <ul class="unstyled">
-                            <li class="release-tag" ng-repeat="tag in release.tags | filter:findGroup">
-
-                                <a class="release-tag-link" ng-class="{'release-tag-link-open': tag.showBoneDysplasias}" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href>
-                                    <i ng-show="!tag.showBoneDysplasias" class="icon-chevron-down"></i>
-                                    <i ng-show="tag.showBoneDysplasias" class="icon-chevron-up"></i>
-                                    {{ tag.sk_gt_field_group_name.name }}
-                                </a>
-
-                                <ul class="release-tag-bonedysplasias" ng-show="tag.showBoneDysplasias">
-                                    <li ng-show="!tag.boneDysplasias">
-                                        <i class="icon-refresh icon-refreshing"></i>
-                                    </li>
-                                    <li ng-repeat="boneDysplasia in tag.boneDysplasias">
-                                        <a href="?q=node/{{ boneDysplasia.nid }}">
-                                            {{ boneDysplasia.title }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                    <div class="section-segment">
+                        <h3>{{ release.name }}</h3>
                     </div>
 
+                    <div class="section-segment">
+                        <search placeholder="Find a Group" model="findGroup">
+                        </search>
+                    </div>
+
+                    <div ng-repeat="tag in release.tags | filter:findGroup">
+
+                        <a class="section-segment" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href>
+
+                            <i ng-show="!tag.showBoneDysplasias" class="icon-chevron-down"></i>
+                            <i ng-show="tag.showBoneDysplasias" class="icon-chevron-up"></i>
+                            {{ tag.sk_gt_field_group_name.name }}
+                        </a>
+
+                        <div ng-show="tag.showBoneDysplasias">
+                            <div class="section-segment section-segment-inner-tabbed" ng-show="!tag.boneDysplasias">
+                                <i class="icon-refresh icon-refreshing"></i>
+                            </div>
+                            <div ng-repeat="boneDysplasia in tag.boneDysplasias | filter:findGroup">
+                                <a class="section-segment section-segment-inner-tabbed" href="?q=node/{{ boneDysplasia.nid }}">
+                                    {{ boneDysplasia.title }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
 
             <div class="span5">
                 <section>
-                    <h3>Releases</h3>
-                    <ul>
-                        <li ng-repeat="release in releases">
-                            <a href ng-click="toggleShowRelease(release)">{{ release.name }}</a>
-                        </li>
-                    </ul>
+                    <div class="section-segment section-segment-header">
+                        <h3>Releases</h3>
+                    </div>
+
+                    <div ng-repeat="release in releases">
+
+                        <a class="section-segment" href ng-click="toggleShowRelease(release)">
+                            <i class="icon-chevron-left"></i>
+                            <i class="icon-chevron-left icon-white"></i>
+                            {{ release.name }}
+                        </a>
+                    </div>
                 </section>
             </div>
 

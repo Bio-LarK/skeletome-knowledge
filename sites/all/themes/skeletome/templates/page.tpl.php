@@ -72,29 +72,29 @@
 
 <div id="page" style="position:relative;" ng-controller="PageCtrl">
 
-    <header id="header" role="banner">
-        <div class="navbar navbar-inverse navbar-dark navbar-static-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <?php if ($logo): ?>
+<header id="header" role="banner">
+    <div class="navbar navbar-inverse navbar-dark navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <?php if ($logo): ?>
                     <a class="brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><img
                             src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
-                    <?php endif; ?>
+                <?php endif; ?>
 
-                    <!--<form class="navbar-search pull-left">
+                <!--<form class="navbar-search pull-left">
                         <div class="input-append">
                             <input autocomplete="?q=ajax/autocomplete/all/" type="text" class="search-query" ng-model="searchTerm" ng-init="searchTerm='<?php if(arg(0)=="search") echo arg(2); ?>'" placeholder="Search for Bone Dysplasias, Groups, Genes or Clinical Features" cm-return="globalSearch(searchTerm)">
                             <a ng-click="globalSearch(searchTerm)" class="btn btn-success" href><i class="icon-search icon-white"></i> Full Search</a>
                         </div>
                     </form>-->
 
-                    <div class="navsearch-small">
-                        <nav-search></nav-search>
-                    </div>
+                <div class="navsearch-small">
+                    <nav-search></nav-search>
+                </div>
 
 
 
-                    <!--<ul class="nav nav-pills">
+                <!--<ul class="nav nav-pills">
                         <?php foreach($main_menu as $item) : ?>
                             <?php $url = "";
                             if($item['href'] == "<front>") {
@@ -113,7 +113,7 @@
 
                     </ul>-->
 
-                    <div class="btn-group pull-right">
+                <!--<div class="btn-group pull-right">
                         <?php global $user; ?>
                         <?php if(isset($user->name)):?>
                             <a class="btn btn-primary" href>
@@ -124,153 +124,153 @@
                             <a class="btn btn-primary" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
                             <a class="btn btn-primary" href="?q=user/register">Register</a>
                         <?php endif; ?>
-                    </div>
+                    </div>-->
 
-                </div>
             </div>
         </div>
+    </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="span12">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
 
-                    <!-- Site Logo -->
+                <!-- Site Logo -->
 
-                    <!-- /#logo -->
+                <!-- /#logo -->
 
-                    <!-- Navigation -->
-                    <div id="main_menu" class="group">
-                        <?php //print render($page['main_menu']); ?>
-                    </div>
-                    <!-- /navigation -->
+                <!-- Navigation -->
+                <div id="main_menu" class="group">
+                    <?php //print render($page['main_menu']); ?>
+                </div>
+                <!-- /navigation -->
 
-                    <!-- Global Search -->
-                    <!--<div id="global_search">
+                <!-- Global Search -->
+                <!--<div id="global_search">
                         <?php // print render($page['global_search']); ?>
                     </div>-->
-                    <!-- /Global Search -->
+                <!-- /Global Search -->
 
-                    <!-- User Login -->
-                    <div id="current_user">
-                        <?php
-                        // Display login in if not logged in
-                        if($user->uid) :
-                            ?>
-<!--                            <a href="#" class="nav_button">-->
-<!--                                --><?php //echo $user->name; ?>
-<!--                            </a>-->
-                            <?php else:
-                            // Not logged in ?>
-<!--                            <div class="group">-->
-<!--                                <a href="#" class="nav_button">-->
-<!--                                    Login-->
-<!--                                </a>-->
-<!--                            </div>-->
-                            <?php endif; ?>
-
-                        <div class="current_user_menu">
-                            <?php //print render($page['user_login']); ?>
-                            <?php //print render($page['user_menu']); ?>
-                        </div>
-
-                    </div>
-                    <!-- /User Login -->
-
-                    <!-- Add the rest of the header content -->
-                    <?php //print render($page['header']); ?>
-
-                </div>
-            </div>
-
-        </div>
-    </header>
-
-    <div id="main">
-
-        <div id="content" class="column container" role="main">
-
-            <div class="row">
-                <div class="span12">
-                    <?php print $messages; ?>
-                </div>
-
-
-                    <div>
-                        <?php //print render($tabs); ?>
-                    </div>
-
-
-
-                    <?php if ($action_links): ?>
-                        <ul class="action-links"><?php //print render($action_links); ?></ul>
+                <!-- User Login -->
+                <div id="current_user">
+                    <?php
+                    // Display login in if not logged in
+                    if($user->uid) :
+                        ?>
+                        <!--                            <a href="#" class="nav_button">-->
+                        <!--                                --><?php //echo $user->name; ?>
+                        <!--                            </a>-->
+                    <?php else:
+                        // Not logged in ?>
+                        <!--                            <div class="group">-->
+                        <!--                                <a href="#" class="nav_button">-->
+                        <!--                                    Login-->
+                        <!--                                </a>-->
+                        <!--                            </div>-->
                     <?php endif; ?>
 
-                <?php print render($page['help']); ?>
+                    <div class="current_user_menu">
+                        <?php //print render($page['user_login']); ?>
+                        <?php //print render($page['user_menu']); ?>
+                    </div>
 
-
-                <?php print $feed_icons; ?>
-            </div>
-
-            <div class="row">
-                <?php print render($title_prefix); ?>
-
-                <div class="span12">
-                    <?php print $breadcrumb; ?>
                 </div>
+                <!-- /User Login -->
 
-
-
-                <?php print render($title_suffix); ?>
-
-
+                <!-- Add the rest of the header content -->
+                <?php //print render($page['header']); ?>
 
             </div>
-
-            <div class="clear"></div>
         </div>
-        <div class="container">
-            <!-- class="container" -->
-            <a id="main-content"></a>
+
+    </div>
+</header>
+
+<div id="main">
+
+    <div id="content" class="column container" role="main">
+
+        <div class="row">
+            <div class="span12">
+                <?php print $messages; ?>
+            </div>
+
+
             <div>
-                <?php print render($page['content']); ?>
+                <?php //print render($tabs); ?>
             </div>
+
+
+
+            <?php if ($action_links): ?>
+                <ul class="action-links"><?php //print render($action_links); ?></ul>
+            <?php endif; ?>
+
+            <?php print render($page['help']); ?>
+
+
+            <?php print $feed_icons; ?>
+        </div>
+
+        <div class="row">
+            <?php print render($title_prefix); ?>
+
+            <div class="span12">
+                <?php print $breadcrumb; ?>
+            </div>
+
+
+
+            <?php print render($title_suffix); ?>
+
+
 
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="span12">
-                    <?php print render($page['highlighted']); ?>
-                </div>
-            </div>
+        <div class="clear"></div>
+    </div>
+    <div class="container">
+        <!-- class="container" -->
+        <a id="main-content"></a>
+        <div>
+            <?php print render($page['content']); ?>
         </div>
-        <!-- /#content -->
 
     </div>
-    <!-- /#main -->
 
-    <!-- #Footer -->
-    <div class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="span12 ">
-                    <!-- Site Logo -->
-
-                    <?php if ($logo): ?>
-                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><img style="width: 100px"
-                                src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/img/logo-dark.png" alt="<?php print t('Home'); ?>"/></a>
-                    <?php endif; ?>
-                    <!-- /#logo -->
-                    <a class="pull-right contact-us-link" href="?q=contact">Contact</a>
-
-                    <?php //print render($page['footer']); ?>
-
-                    <?php // print $feed_icons; ?>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <?php print render($page['highlighted']); ?>
             </div>
         </div>
     </div>
+    <!-- /#content -->
 
-    <!-- /#Footer-->
+</div>
+<!-- /#main -->
+
+<!-- #Footer -->
+<div class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="span12 ">
+                <!-- Site Logo -->
+
+                <?php if ($logo): ?>
+                    <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><img style="width: 100px"
+                                                                                                                      src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/img/logo-dark.png" alt="<?php print t('Home'); ?>"/></a>
+                <?php endif; ?>
+                <!-- /#logo -->
+                <a class="pull-right contact-us-link" href="?q=contact">Contact</a>
+
+                <?php //print render($page['footer']); ?>
+
+                <?php // print $feed_icons; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /#Footer-->
 
 </div><!-- /#page -->
