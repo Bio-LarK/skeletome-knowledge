@@ -1,127 +1,222 @@
-<section class="section-large" ng-class="{'section-more': statementDisplayLimit < statements.length}" ng-controller="StatementCtrl">
-    <div class="pull-right">
-        <?php if ($user->uid): ?>
-            <a ng-show="!editingStatements" class="btn btn-success " ng-click="showAddStatement()"  href><i class="icon-plus icon-white"></i> Add Statement</a>
-        <?php else: ?>
-            <a href class="btn btn-success" cm-popover="top" cm-popover-content="'<b>Log in</b> to Skeletome to add a statement.'"><i class="icon-plus icon-white"></i> Add Statement</a>
-        <?php endif; ?>
-        <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-            <a ng-show="editingStatements" href
-               ng-click="hideEditStatements()"
-               data-toggle="modal" role="button"
-               class="btn btn-primary">
-                <i class="icon-ok icon-white"></i> Done
-            </a>
-            <a ng-show="!editingStatements && statements.length" href
-               ng-click="showEditStatements()"
-               data-toggle="modal"
-               role="button"
-               class="btn">
-                <i class="icon-pencil"></i> Edit
-            </a>
-        <?php endif; ?>
+<div ng-controller="StatementCtrl">
+    <?php if ($user->uid): ?>
+
+    <?php endif; ?>
+
+    <!-- The statements sections -->
+    <section class="statements">
+        <a name="statements"></a>
+
+        <div class="section-segment section-segment-header">
+            <!-- BUTTONS! -->
+            <div class="pull-right section-segment-header-buttons">
+
+                <!-- Show Add statement button -->
+                <?php if ($user->uid): ?>
+                    <a ng-show="!model.isAddingStatement" class="btn btn-success " ng-click="showAddStatement()"  href>
+                        <i class="icon-plus icon-white"></i> Add Statement
+                    </a>
+                <?php endif; ?>
+
+                <!-- Add statement buttons -->
+                <span ng-show="model.isAddingStatement">
+                    <button ng-disabled="!model.newStatement.length" ng-click="saveStatement(model.newStatement)" class="btn btn-success">
+                        <i class="icon-ok icon-white"></i> Save Statement
+                    </button>
+                    <button ng-click="cancelStatement(model.newStatement)" class="btn">
+                        <i class="icon-remove"></i> Cancel
+                    </button>
+                </span>
 
 
-    </div>
+                <!-- Edit buttons -->
+                <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                    <span ng-show="!model.isAddingStatement">
+                        <a ng-show="editingStatements" href
+                           ng-click="hideEditStatements()"
+                           data-toggle="modal" role="button"
+                           class="btn btn-primary">
+                            <i class="icon-ok icon-white"></i> Done
+                        </a>
+                        <a ng-show="!editingStatements && statements.length" href
+                           ng-click="showEditStatements()"
+                           data-toggle="modal"
+                           role="button"
+                           class="btn">
+                            <i class="icon-pencil"></i> Edit
+                        </a>
+                    </span>
 
-    <h2>Statements</h2>
-    <p class="muted" style="margin-bottom: 20px">
-        Statements let you contribute your knowledge and experiences to Skeletome.
-    </p>
+                <?php endif; ?>
 
-    <p ng-cloak class="muted" ng-hide="statements.length">
-        There are currently 0 statements.
-    </p>
-
-
-
-    <div ng-cloak ng-show="statements.length > 0" class="statements">
-
-        <div class="statement" ng-repeat="statement in statements | limitTo: statementDisplayLimit" style="margin-bottom: 21px" >
-
-            <div class="pull-left statement-profile" style="margin-right: 14px;">
             </div>
-            <div class="media-body">
 
-                <a ng-show="editingStatements"
-                   ng-click="deleteStatement(statement)"
-                   class="btn btn-danger pull-right" href>
-                    <i class="icon-remove icon-white"></i> Delete
-                </a>
+            <!-- HEADING -->
+            <h2>Statements</h2>
+        </div>
 
-                <div class="statement-user">
-                    <b>{{ statement.name || "Anonymous" | capitalize }}</b>
+        <div ng-show="model.isAddingStatement" class="section-segment section-segment-editor statement-new">
+            <div ng-model="model.newStatement" ck-editor></div>
+        </div>
+
+        <?php if (!$user->uid): ?>
+            <div class="alert alert-info" style="border-radius: 0; text-align: center; margin-bottom: 0">
+                <div>
+                    Statements let you <b>contribute your knowledge</b> about '{{ boneDysplasia.title || gene.title }}'.
                 </div>
-                <div class="statement-content">
-                    <div ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'"></div>
+                <div style="margin-top: 7px">
+                    <a class="btn btn-info" cm-popover cm-popover-content="loginForm">Login In</a>
+                    <a class="btn btn-info" href="?q=user/register">Register</a>
                 </div>
+            </div>
+        <?php else: ?>
+            <div ng-show="!model.isAddingStatement" class="section-segment muted">
+                <i class="icon-info-sign"></i> Statements let you <b>contribute your knowledge</b> about '{{ boneDysplasia.title || gene.title }}'.
+            </div>
+        <?php endif; ?>
 
-                <div class="statement-buttons">
-                    <!-- Add Comment -->
-                    <?php if ($user->uid): ?>
-                        <a ng-show="!statement.showAddComment && !editingStatements" ng-click="showAddComments(statement)" href><i class="icon-plus"></i> Add Comment</a>
-                        <a ng-show="statement.showAddComment" ng-click="statement.showComments = false; statement.showAddComment = false;" href><i class="icon-plus"></i> Hide Add Comment</a>
-                    <?php endif; ?>
-
-
-                    <!-- Show / Hide Comments -->
-                    <!-- Displayed when no comments -->
-                    <span ng-hide="statement.comment_count"> Comments (0)</span>
-                    <!-- Displayed when there are comments -->
-                                    <span ng-show="statement.comment_count">
-                                        <a ng-hide="statement.showComments" ng-click="showComments(statement)" href> Show Comments ({{ statement.comments.length || statement.comment_count }})</a>
-                                        <a ng-show="statement.showComments" ng-click="statement.showComments = false; statement.showAddComment = false;" href> Hide Comments ({{ statement.comments.length || statement.comment_count }})</a>
-                                    </span>
-                </div>
-
-                <div ng-show="statement.showComments || statement.showAddComment" class="statement-comments">
-                    <!-- New Comment -->
-                    <div ng-show="statement.showAddComment" class="statement-comment statement-comment-add" >
-                        <div class="pull-left statement-comment-profile"></div>
-
-                        <div class="media-body">
-
-                            <div>
-                                <b>{{ user.name | capitalize }}</b>
-                            </div>
-
-                            <div class="statement-comments-new">
-                                <textarea cm-focus="statement.showAddComment" cm-return="addComment(statement, statement.newComment)" ng-model="statement.newComment" placeholder="Write a comment about this statement." class="full-width"></textarea>
-                                <div class="clearfix">
-                                    <!--<a ng-click="addComment(statement, statement.newComment)" href class="btn btn-success pull-right"><i class="icon-plus icon-white"></i> Add Comment</a>-->
-                                </div>
-                                <div class="media-body">
-                                    <a ng-click="addComment(statement, statement.newComment)" class="btn btn-success pull-right" href>Add Comment</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /New Comment -->
-
-                    <div ng-show="statement.showComments" ng-repeat="comment in statement.comments" class="statement-comment" >
-                        <div class="pull-left statement-comment-profile"></div>
-
-                        <div class="media-body">
-                            <a ng-show="editingStatements"
-                               ng-click="deleteCommentFromStatement(comment, statement)" class="btn btn-danger pull-right" href>
-                                <i class="icon-remove icon-white"></i> Delete
-                            </a>
-
-
-                            <div>
-                                <b>{{ comment.name || "Anonymous" | capitalize }}</b>
-                            </div>
-                            <div ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
-                        </div>
-                    </div>
-                </div>
-
+        <div ng-show="model.isloadingNewStatement" class="section-segment">
+            <div class="refreshing-box">
+                <i class="icon-refresh icon-refreshing"></i>
             </div>
         </div>
-    </div>
 
-    <div class="clearfix" style="text-align: center">
-        <a ng-show="statementDisplayLimit < statements.length" ng-click="statementDisplayLimit = statements.length" href class="btn btn-more"><i class="icon-chevron-down icon-black"></i> Show All ({{statements.length - statementDisplayLimit}})</a>
-        <a ng-show="statementDisplayLimit == statements.length" ng-click="statementDisplayLimit = 2" href class="btn btn-more"><i class="icon-chevron-up icon-black"></i> Show Less</a>
-    </div>
-</section>
+        <div ng-cloak ng-hide="statements.length" class="section-segment muted">
+            No statements.
+        </div>
+
+
+
+        <!-- Actual list of statements statements -->
+        <div ng-cloak>
+            <div class="section-segment section-segment-nopadding" ng-repeat="statement in statements" >
+
+                <!-- Statement text -->
+                <div name="statement-{{ statement.nid }}" class="statement-content">
+
+                    <!-- User info -->
+                    <div class="statement-content-user">
+                        <div class="statement-content-user-inner">
+                            <div>
+                                <b>{{ statement.name || "Anonymous" | capitalize }}</b>
+                            </div>
+
+                            <div class="statement-buttons">
+                                <a ng-click="showComments(statement)" href>
+                                    <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
+                                </a>
+                                <a ng-show="editingStatements"
+                                   ng-click="deleteStatement(statement)"
+                                   class="btn btn-danger pull-right" href>
+                                    <i class="icon-remove icon-white"></i> Delete
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text -->
+                    <div class="statement-content-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                    </div>
+                </div>
+
+                <!-- List of comments -->
+                <div ng-show="statement.isShowingComments" class="comments">
+
+                    <div class="comment-content" ng-repeat="comment in statement.comments">
+
+                        <!-- User info -->
+                        <div class="comment-content-user">
+                            <div class="segment-padding comment-content-user-inner">
+                                <b>{{ comment.name || "Anonymous" | capitalize }}</b>
+                            </div>
+                        </div>
+
+                        <div class="segment-padding comment-content-text" ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
+                    </div>
+
+
+                    <div class="comment-content segment-padding" ng-show="statement.isLoadingComments">
+                        <div class="refreshing-box">
+                            <i class="icon-refresh icon-refreshing"></i>
+                        </div>
+                    </div>
+
+                    <!-- New Comment -->
+                    <?php if ($user->uid): ?>
+                        <div class="comment-content segment-padding comment-new">
+                            <textarea cm-focus="statement.showAddComment"
+                                      cm-return="addComment(statement, statement.newComment)"
+                                      ng-model="statement.newComment"
+                                      placeholder="Write a comment about this statement."
+                                      class="full-width">
+                              </textarea>
+                            <div class="pull-right">
+                                <button ng-disabled="!statement.newComment.length" ng-click="addComment(statement, statement.newComment)" class="btn btn-success">
+                                    <i class="icon-ok icon-white"></i> Post
+                                </button>
+                                <button class="btn" ng-click="cancelComment(statement)">
+                                    <i class="icon-remove"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
+
+            <div class="statement"  >
+
+                <div class="media-body">
+
+
+
+                    <div class="statement-user">
+
+                    </div>
+                    <div class="statement-content">
+
+                    </div>
+
+
+
+                    <div ng-show="statement.showComments || statement.showAddComment" class="statement-comments">
+                        <!-- New Comment -->
+                        <div ng-show="statement.showAddComment" class="statement-comment statement-comment-add" >
+
+                            <div class="media-body">
+
+                                <!--<div>
+                                    <b>{{ user.name | capitalize }}</b>
+                                </div>-->
+
+                            </div>
+                        </div>
+                        <!-- /New Comment -->
+
+                        <div ng-show="statement.showComments" ng-repeat="comment in statement.comments" class="statement-comment" >
+                            <div class="pull-left statement-comment-profile"></div>
+
+                            <div class="media-body">
+                                <a ng-show="editingStatements"
+                                   ng-click="deleteCommentFromStatement(comment, statement)" class="btn btn-danger pull-right" href>
+                                    <i class="icon-remove icon-white"></i> Delete
+                                </a>
+
+
+                                <div>
+                                    <b>{{ comment.name || "Anonymous" | capitalize }}</b>
+                                </div>
+                                <div ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

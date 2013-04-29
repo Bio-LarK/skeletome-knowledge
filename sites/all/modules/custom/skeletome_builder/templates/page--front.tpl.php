@@ -148,7 +148,6 @@
 
                             </h2>
 
-                            <nav-search base-url="{{ baseUrl }}"></nav-search>
 
 
                            <!--<form class="navbar-search">
@@ -243,6 +242,8 @@
     </header>
 
 
+    <!--<clinical-feature-adder></clinical-feature-adder>-->
+
     <div class="container">
         <div class="row">
             <div class="span12">
@@ -253,10 +254,63 @@
 
     <div class="container">
         <div class="row">
-            <div class="span8">
-                <section class="">
+            <div class="span12">
+                    <section>
+
+                        <div class="section-segment section-segment-header">
+                            <h3 style="float: left">Search</h3>
+                            <nav-search base-url="{{ baseUrl }}"></nav-search>
+                        </div>
+                    </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <h3>Browse</h3>
+                    </div>
+                    <div class="section-segment">
+                        <div class="muted">Browse an existing disease classification.</div>
+                    </div>
+
+                    <div ng-repeat="source in allSources">
+                        <a class="section-segment" href="?q=taxonomy/term/{{ source.tid }}">
+
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+
+                            {{ source.name }} 2012 Nosology
+                        </a>
+                    </div>
+                </section>
+            </div>
+            <div class="span6">
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <h3>Explore</h3>
+                    </div>
+                    <div class="section-segment">
+                        <div class="muted">Try our visualization tools.</div>
+                    </div>
+                    <a class="section-segment" href="#">
+                        <i class="icon-chevron-right pull-right"></i>
+                        <i class="icon-chevron-right icon-white pull-right"></i>
+
+                        Clustering
+                    </a>
+                </section>
+            </div>
+        </div>
+
+        <div style="display: none">
+            <div class="row">
+                <section class="span12">
+                    <div class="section-segment section-segment-header">
+                        <h3>Recently Updated</h3>
+                    </div>
+
                     <!-- Active Pages -->
-                    <h3>Recently Updated</h3>
                     <div class="row">
                         <div class="span5">
                             <h4><img style="position: relative; top:-2px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-small-bone-dysplasia.png" alt=""/> Bone Dysplasias</h4>
@@ -275,25 +329,27 @@
                     </div>
                 </section>
             </div>
-            <div class="span4">
-                <section class="">
-                    <h4>Bone Dysplasia Classifications</h4>
-                    <ul>
-                        <li ng-repeat="source in allSources">
-                            <a href="?q=taxonomy/term/{{ source.tid }}">{{ source.name }}</a>
-                        </li>
-                    </ul>
-                </section>
-            </div>
-            <div class="span4">
-                <section>
-                    <h4>Top Contributors</h4>
-                    <ul>
-                        <li ng-repeat="user in topContributors">
-                            {{ user.name | capitalize }}
-                        </li>
-                    </ul>
-                </section>
+            <div class="row">
+                <div class="span4">
+                    <section class="">
+                        <h4>Bone Dysplasia Classifications</h4>
+                        <ul>
+                            <li ng-repeat="source in allSources">
+                                <a href="?q=taxonomy/term/{{ source.tid }}">{{ source.name }}</a>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="span4">
+                    <section>
+                        <h4>Top Contributors</h4>
+                        <ul>
+                            <li ng-repeat="user in topContributors">
+                                {{ user.name | capitalize }}
+                            </li>
+                        </ul>
+                    </section>
+                </div>
             </div>
         </div>
     </div>

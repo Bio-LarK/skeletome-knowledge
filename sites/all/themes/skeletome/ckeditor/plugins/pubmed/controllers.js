@@ -2,7 +2,9 @@ var myApp = angular.module('PubMed', []);
 
 //var baseUrl = "http://115.146.86.60/skeletome/";
 
-var baseUrl = "http://knowledge.skeletome.org/";
+//var baseUrl = "http://knowledge.skeletome.org/";
+
+var baseUrl = "http://localhost:8888/drupalv2/";
 
 
 myApp.directive('cmReturn', function() {

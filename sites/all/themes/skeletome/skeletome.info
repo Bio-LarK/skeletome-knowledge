@@ -69,6 +69,7 @@ stylesheets[all][] = system.menus.css
 ;stylesheets[all][] 		= css/sections.css
 
 stylesheets[all][] 		= css/bootstrap.css
+stylesheets[all][] 		= css/bootstrap-responsive.css
 stylesheets[all][] 		= css/skeletome2.css
 
 

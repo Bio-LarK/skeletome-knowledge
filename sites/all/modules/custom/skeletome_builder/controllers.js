@@ -396,6 +396,7 @@ function GeneCtrl($scope, $http) {
     $scope.master = {};
     $scope.edit = {};
     $scope.view = {};
+    $scope.model = {};
 
     $scope.view.defaultDescriptionLength = 500;
     $scope.view.descriptionLength = $scope.view.defaultDescriptionLength;
@@ -466,27 +467,21 @@ function GeneCtrl($scope, $http) {
     /**
      * Show the edit description panel
      */
-//    $scope.showEditDescription = function() {
-//        if(angular.isDefined($scope.master.gene.body.und)) {
-//            $scope.edit.description = angular.copy($scope.master.gene.body.und[0].value || "");
-//        }
-//
-//        $scope.openEditingPanel('edit-description');
-//    }
+
 
     /* Add / Editing */
     $scope.editDescription = function() {
         $scope.editedDescription = $scope.master.gene.body.und[0].value || "";
-        $scope.showEditDescription = true;
+        $scope.isEditingDescription = true;
     }
 
     /* Save edited descrption */
     $scope.cancelEditingDescription = function() {
-        $scope.showEditDescription = false;
+        $scope.isEditingDescription = false;
     }
 
     $scope.saveEditedDescription = function(newDescription) {
-        $scope.showEditDescription = false;
+        $scope.isEditingDescription = false;
 
         $scope.master.description = "Loading..."; //$scope.edit.description;
 
@@ -563,15 +558,17 @@ function GeneCtrl($scope, $http) {
     /**
      * Show the Add Statement panel
      */
-//    $scope.showAddStatement = function() {
-//        $scope.openEditingPanel('add-statement');
-//    }\
+    $scope.saveStatement = function(statementText) {
+        $scope.model.isAddingStatement = false;
+        $scope.model.isloadingNewStatement = true;
 
-    $scope.addStatement = function(statement, gene) {
-        console.log(gene);
-        $http.post('?q=ajax/gene/' + gene.nid + '/statement', {
-            'statement': statement
+        var newStatementText = angular.copy(statementText);
+        $scope.model.newStatement = "";
+
+        $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/statement', {
+            'statement': newStatementText
         }).success(function(data) {
+            $scope.model.isloadingNewStatement = false;
             $scope.statements.unshift(data);
         });
         $scope.closeEditingPanel();
@@ -594,9 +591,20 @@ function GroupCtrl($scope) {
 function StatementCtrl($scope, $http) {
     $scope.statementDisplayLimit = 2;
 
+    /**
+     * Show the area for statement creation
+     */
     $scope.showAddStatement = function() {
-        console.log("showing add statement");
-        $scope.openEditingPanel('add-statement');
+        $scope.model.isAddingStatement = true;
+    }
+
+    /**
+     * Hide the area for statement creation
+     * @param newStatement      The statement object to clear
+     */
+    $scope.cancelStatement = function(newStatement) {
+        $scope.model.isAddingStatement = false;
+        newStatement = "";
     }
 
     /**
@@ -604,21 +612,17 @@ function StatementCtrl($scope, $http) {
      * @param statement
      */
     $scope.showComments = function(statement) {
-        statement.showComments = true;
-        $scope.loadComments(statement);
-    }
-    $scope.showAddComments = function(statement) {
-        statement.showAddComment = true;
-        statement.showComments = true;
-        $scope.loadComments(statement);
-    }
-    $scope.loadComments = function(statement) {
+        statement.isShowingComments = !statement.isShowingComments;
+
         if(angular.isUndefined(statement.comments)) {
+            statement.isLoadingComments = true;
             $http.get('?q=ajax/statement/' + statement.nid + '/comments').success(function(data){
+                statement.isLoadingComments = false;
                 statement.comments = data;
             });
         }
     }
+
     $scope.deleteCommentFromStatement = function(comment, statement) {
         statement.comments.splice(statement.comments.indexOf(comment), 1);
 
@@ -655,24 +659,27 @@ function StatementCtrl($scope, $http) {
      */
     $scope.addComment = function(statement, comment) {
 
-        $http.post('?q=ajax/statement/' + statement.nid + '/comment/add', {
-            comment_text: comment
-        }).success(function(data) {
-            statement.newComment = "";
-            statement.showAddComment = false;
-            statement.showComments = true;
+        statement.isLoadingComments = true;
 
-            if(angular.isUndefined(statement.comments)) {
-                statement.comments = [];
-            }
-            statement.comments.unshift(data);
+        // Clear the text box
+        var commentText = angular.copy(comment);
+        statement.newComment = "";
+
+        $http.post('?q=ajax/statement/' + statement.nid + '/comment/add', {
+            comment_text: commentText
+        }).success(function(data) {
+            statement.isLoadingComments = false;
+            statement.comments.push(data);
         });
+    }
+    $scope.cancelComment = function(statement) {
+        statement.newComment = "";
     }
 
 }
 function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
-
+    $scope.model = {};
     $scope.showEditingPanel = false;
     $scope.editingPanel = "";
 
@@ -838,23 +845,26 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     /* Add / Editing */
     $scope.editDescription = function() {
         $scope.editedDescription = $scope.boneDysplasia.body.und[0].value;
-        $scope.showEditDescription = true;
+        $scope.isEditingDescription = true;
     }
 
     /* Save edited descrption */
     $scope.cancelEditingDescription = function() {
-        $scope.showEditDescription = false;
+        $scope.isEditingDescription = false;
     }
     $scope.saveEditedDescription = function(newDescription) {
-        $scope.showEditDescription = false;
+        $scope.isEditingDescription = false;
 
         $scope.boneDysplasia.body.und[0].safe_value = "Loading...";
+        $scope.boneDysplasia.body.und[0].isLoading = true;
+
 
         // Save the description
         $http.post('?q=ajax/bone-dysplasia/description', {
             'id':$scope.boneDysplasia.nid,
             'description': newDescription
         }).success(function(data) {
+            $scope.boneDysplasia.body.und[0].isLoading = false;
             $scope.boneDysplasia.body['und'][0]['safe_value'] = data.safe_value;
                 $scope.boneDysplasia.body['und'][0]['value'] = data.value;
             // this callback will be called asynchronously
@@ -1017,7 +1027,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.showAddNewGeneForm = false;
 
         $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/add', {
-            'geneName': geneName,
+            'geneName': geneName
         }).success(function(gene) {
 
             $scope.editingGenes = [
@@ -1144,25 +1154,25 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
 
-    $scope.addStatement = function(statement) {
-        console.log(statement);
+    $scope.saveStatement = function(newStatement) {
+        // Set it as loading the statement
+        $scope.model.isAddingStatement = false;
+        $scope.model.isloadingNewStatement = true;
+
+        // Make a copy of the text and clear out the input
+        var newStatementText = angular.copy(newStatement);
+        $scope.model.newStatement = "";
 
         $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/statement/add', {
-            'statement': statement
+            'statement': newStatementText
         }).success(function(data) {
-                // this callback will be called asynchronously
-                // when the response is available
+            $scope.model.isloadingNewStatement = false;
 
-                console.log("got back statement");
-                console.log(data);
-
-                $scope.statements.unshift(data);
-            });
-
-        $scope.closeEditingPanel();
+            // this callback will be called asynchronously
+            // when the response is available
+            $scope.statements.unshift(data);
+        });
     }
-
-
 
 //    /* Autocomplete for genes */
 //    $scope.autocompleteGroups = [];

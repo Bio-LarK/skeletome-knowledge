@@ -92,311 +92,394 @@
 
 <?php if ($page): ?>
 
-    <div ng-controller="BoneDysplasiaCtrl" ng-init="init()" class="node_page" xmlns="http://www.w3.org/1999/html"
+<div ng-controller="BoneDysplasiaCtrl" ng-init="init()" class="node_page" xmlns="http://www.w3.org/1999/html"
          xmlns="http://www.w3.org/1999/html">
 
-
     <div class="container" ng-cloak>
-    <div class="row">
-        <div class="span12">
-            <div class="page-header">
+        <div class="row">
+            <div class="span12">
+
+                <div class="page-heading">
+                    <h1 ng-show="!synString.length"><img
+                            src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia.png"/> <?php print $title; ?>
+                    </h1>
+                    <h1 ng-cloak ng-show="synString.length" cm-tooltip="top"
+                        cm-tooltip-content="Also known as {{ synString }}"><img
+                            src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia.png"/> <?php print $title; ?>
+                    </h1>
+                </div>
 
                 <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                    <a href="#new-bone-dysplasia" role="button" class="btn pull-right" data-toggle="modal"><i
-                            class="icon-plus"></i> Add New Disorder</a>
+                    <!--<a href="#new-bone-dysplasia" role="button" class="btn pull-right" data-toggle="modal"><i
+                            class="icon-plus"></i> Add New Disorder</a>-->
                 <?php endif; ?>
-
-                <ul ng-cloak class="breadcrumbs" ng-repeat="tag in tags">
-                    <li>
-                        <a href="?q=search/site/&f[0]=bundle%3Abone_dysplasia">Bone Dysplasias</a>
-                    </li>
-
-                    <li>
-                        <a href="?q=taxonomy/term/{{ tag.sk_gt_field_group_source_release.sk_gsr_field_group_source.tid }}">{{
-                            tag.sk_gt_field_group_source_release.sk_gsr_field_group_source.name }}</a>
-                    </li>
-                    <li>
-                        <a href="?q=taxonomy/term/{{ tag.tid }}">{{ tag.sk_gt_field_group_name.name }}</a>
-                    </li>
-                    <li ng-show="boneDysplasia.field_bd_superbd.length">
-                        <a href="?q=node/{{ boneDysplasia.field_bd_superbd[0].nid }}">{{
-                            boneDysplasia.field_bd_superbd[0].title }}</a>
-                    </li>
-                </ul>
-
-                <!-- <ul class="breadcrumbs" ng-repeat="tag in tags">
-                     <li>
-                         <a href="?q=search/site/&f[0]=bundle%3Abone_dysplasia">Bone Dysplasias</a>
-                     </li>
-
-                     <li>
-                         <a href="?q=taxonomy/term/{{ tag.sk_gt_field_group_source_release.sk_gsr_field_group_source.tid }}">{{ tag.sk_gt_field_group_source_release.sk_gsr_field_group_source.name }}</a>
-                     </li>
-                     <li>
-                         <a href="?q=taxonomy/term/{{ tag.tid }}">{{ tag.sk_gt_field_group_name.name }}</a>
-                     </li>
-                     <li ng-show="boneDysplasia.field_bd_superbd.length">
-                         <a href="?q=node/{{ boneDysplasia.field_bd_superbd[0].nid }}">{{ boneDysplasia.field_bd_superbd[0].title }}</a>
-                     </li>
-                 </ul>-->
-
-
-                <h1 ng-show="!synString.length"><img
-                        src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia.png"/> <?php print $title; ?>
-                    <small>Bone Dysplasia</small>
-                </h1>
-                <h1 ng-cloak ng-show="synString.length" cm-tooltip="top"
-                    cm-tooltip-content="Also known as {{ synString }}"><img
-                        src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia.png"/> <?php print $title; ?>
-                    <small>Bone Dysplasia</small>
-                </h1>
             </div>
         </div>
-    </div>
+
+        <div class="row">
+            <div class="span8">
+                <!-- The content -->
+                <!-- ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}" -->
+                <section style="margin-bottom: 14px">
+
+                    <div class="section-segment section-segment-header">
+                        <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                            <div class="section-segment-header-buttons pull-right">
+
+                                <!-- is Editing Description -->
+                                <span ng-show="!isEditingDescription">
+                                    <a ng-show="!showEditDescription"
+                                       href class="btn"
+                                       ng-click="editDescription()">
+                                        <i class="icon-pencil"></i> Edit
+                                    </a>
+                                </span>
+
+                                <!-- Not Editing Description -->
+                                <span ng-show="isEditingDescription">
+                                    <a href class="btn btn-success"
+                                        ng-click="saveEditedDescription(editedDescription)">
+                                        <i class="icon-ok icon-white"></i> Save Description
+                                    </a>
+
+                                    <a ng-show="isEditingDescription"
+                                       href class="btn"
+                                       ng-click="cancelEditingDescription()">
+                                        <i class="icon-remove"></i> Cancel
+                                    </a>
+                                </span>
 
 
-    <div class="row">
-    <div class="span8">
-
-        <!-- The content -->
-        <section ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}"
-                 class="section-large section-large-description">
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                <div class="pull-right">
-                    <a ng-show="!showEditDescription"
-                       href class="btn"
-                       ng-click="editDescription()">
-                        <i class="icon-pencil"></i> Edit
-                    </a>
-
-                    <a ng-show="showEditDescription"
-                       href class="btn btn-success"
-                       ng-click="saveEditedDescription(editedDescription)">
-                        <i class="icon-ok icon-white"></i> Save Description
-                    </a>
-
-                    <a ng-show="showEditDescription"
-                       href class="btn btn-primary"
-                       ng-click="cancelEditingDescription()">
-                        <i class="icon-remove icon-white"></i> Cancel
-                    </a>
-
-                </div>
-            <?php endif; ?>
-
-            <h2>Description</h2>
-
-            <div ng-show="showEditDescription">
-                <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
-            </div>
-
-            <div ng-show="!showEditDescription" class="description-text">
-                <p class="muted" ng-show="!boneDysplasia.body.und[0].safe_value.length">There is currently no
-                    description of '{{ boneDysplasia.title }}'.</p>
-
-                <div ng-show="boneDysplasia.body.und[0].safe_value.length">
-                    <div ng-bind-html-unsafe="boneDysplasia.body.und[0].safe_value | truncate:descriptionLength">
-                    </div>
-
-                    <div class="clearfix" style="text-align: center">
-                        <a href ng-show="boneDysplasia.body.und[0].safe_value.length > descriptionLength"
-                           class="btn btn-more"
-                           ng-click="descriptionLength=boneDysplasia.body.und[0].safe_value.length"><i
-                                class="icon-chevron-down icon-black"></i> Show All</a>
-                        <a href ng-show="descriptionLength == boneDysplasia.body.und[0].safe_value.length"
-                           class="btn btn-more" ng-click="descriptionLength=1000"><i
-                                class="icon-chevron-up icon-black"></i> Hide</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <?php include('statements.php'); ?>
-
-        <!-- Clinical Features -->
-        <section class="section-large section-large-noborder"
-                 ng-class="{'section-more': clinicalFeatures.length > clinicalFeatureDisplayLimit}"
-                 id="clinical_features" class="block">
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                <div class="pull-right">
-                    <a href ng-click="showEditClinicalFeatures()" data-toggle="modal" role="button" class="btn"><i
-                            class="icon-pencil"></i> Edit</a>
-                </div>
-            <?php endif ?>
-
-            <h2>Clinical Features</h2>
-
-            <p ng-class="{muted: !clinicalFeatures.length}">
-                '{{boneDysplasia.title}}' has {{clinicalFeatures.length}} clinical features.
-            </p>
-
-            <div ng-cloak ng-show="clinicalFeatures.length > 0">
-                <form>
-                    <search model="clinicalFeatureFilter" placeholder="Search for a Clinical Feature"></search>
-                </form>
-
-                <table class="table table-striped table-bordered table-dark">
-                    <tr>
-                        <th>Clinical Feature</th>
-                        <th>Information Content</th>
-                    </tr>
-                    <tr ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content' | limitTo:clinicalFeatureDisplayLimit">
-                        <td>
-                            <a href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}"
-                               title="{{clinicalFeature.name}}">
-                                {{clinicalFeature.name | truncate:40 | capitalize}}
-                            </a>
-                        </td>
-                        <td>
-                            <div class="progress">
-                                <div class="bar" style="width:{{ clinicalFeature.information_content }}%"></div>
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                        <?php endif; ?>
 
-                <div class="clearfix" ng-show="clinicalFeatures.length > clinicalFeatureDisplayLimit"
-                     style="text-align: center">
-                    <a ng-show="(clinicalFeatures | filter:clinicalFeatureFilter).length > clinicalFeatureDisplayLimit"
-                       href class="btn btn-more" ng-click="clinicalFeatureDisplayLimit = clinicalFeatures.length"><i
-                            class="icon-chevron-down icon-black"></i> Show All</a>
-                    <a ng-show="(clinicalFeatures | filter:clinicalFeatureFilter).length == clinicalFeatureDisplayLimit"
-                       href class="btn btn-more" ng-click="clinicalFeatureDisplayLimit = 10"><i
-                            class="icon-chevron-up icon-black"></i> Show Less</a>
-                </div>
+                        <div>
+                            <b>Contributors</b>
+                            <span ng-repeat="editor in editors">
+                                {{ editor.name | capitalize }},
+                            </span>
+                            <span>Gene Reviews</span>
+                        </div>
+                    </div>
 
+                    <div class="section-segment alert alert-info" ng-show="!isEditingDescription">
+                        <div style="margin-bottom: 7px;">
+                            <i class="icon-info-sign"></i> <b>This is a stub sourced from GeneReviews</b>.
+                        </div>
+                        <div style="font-size: 12px">
+                            Francomano, CA, (Updated January 9, 2006). Achondroplasia. In: Pagon RA, Bird TD, Dolan CR, et al. editors GeneReviews [Internet]. Copyright, University of Washington, Seattle. 1997-2011. Available at http://www.ncbi.nlm.nih.gov/pubmed/20301295
+                        </div>
+
+                    </div>
+                    <div class="section-segment" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
+
+                        <!-- is Editing Description -->
+                        <div ng-show="isEditingDescription">
+                            <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
+                        </div>
+
+
+                        <!-- Not Editing Description -->
+                        <div ng-show="!isEditingDescription" class="description-text">
+                            <!-- is Loading -->
+                            <div ng-show="boneDysplasia.body.und[0].isLoading" class="refreshing-box">
+                                <i class="icon-refresh icon-refreshing"></i>
+                            </div>
+
+                            <p class="muted" ng-show="!boneDysplasia.body.und[0].safe_value.length">There is currently no
+                                description of '{{ boneDysplasia.title }}'.</p>
+
+                            <!--  | truncate:descriptionLength -->
+                            <div ng-show="boneDysplasia.body.und[0].safe_value.length && !boneDysplasia.body.und[0].isLoading">
+                                <div ng-bind-html-unsafe="boneDysplasia.body.und[0].safe_value">
+                                    <?php echo render($content); ?>
+                                </div>
+
+                                <!--<div class="clearfix" style="text-align: center">
+                                    <a href ng-show="boneDysplasia.body.und[0].safe_value.length > descriptionLength"
+                                       class="btn btn-more"
+                                       ng-click="descriptionLength=boneDysplasia.body.und[0].safe_value.length"><i
+                                            class="icon-chevron-down icon-black"></i> Show All</a>
+                                    <a href ng-show="descriptionLength == boneDysplasia.body.und[0].safe_value.length"
+                                       class="btn btn-more" ng-click="descriptionLength=1000"><i
+                                            class="icon-chevron-up icon-black"></i> Hide</a>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {{ isAddingStatement }}
+                <?php include('statements.php'); ?>
+
+                <section class="media-body" ng-class="{'section-more': xrays.length > xrayDisplayLimit}">
+                    <div class="section-segment section-segment-header">
+                        <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                            <div class="pull-right section-segment-header-buttons">
+                                <a href ng-click="showEditXRays()" data-toggle="modal" role="button" class="btn"><i
+                                        class="icon-pencil"></i> Edit</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <h3>X-Rays</h3>
+                    </div>
+
+                    <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                        <div class="section-segment">
+                            <div class="dropzone" ng-model="xrays"
+                                 drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add">
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- No x-rays -->
+                    <div ng-show="!xrays.length" class="section-segment muted">
+                        There are no x-rays for '{{boneDysplasia.title}}'.
+                    </div>
+
+                    <!-- has x-rays -->
+                    <div ng-show="xrays.length" fancy-box="xrays" class="section-segment media-body">
+                        <div ng-repeat="image in xrays" class="xray-list-image">
+                            <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
+                                <img ng-src="{{ image.thumb_url }}" alt=""/>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!--<a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more"
+                       href>Show All X-Rays ({{ boneDysplasia.field_bd_xray_images.und.length }})</a>-->
+                </section>
+
+
+                <!-- Clinical Features -->
+                <section ng-class="{'section-more': clinicalFeatures.length > clinicalFeatureDisplayLimit}"
+                         id="clinical_features" class="block">
+
+
+                    <div class="section-segment section-segment-header">
+                        <div class="section-segment-header-buttons">
+                            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                                <div class="pull-right">
+                                    <a href ng-click="showEditClinicalFeatures()" data-toggle="modal" role="button" class="btn"><i
+                                            class="icon-pencil"></i> Edit</a>
+                                </div>
+                            <?php endif ?>
+                        </div>
+                        <h2>Clinical Features</h2>
+                    </div>
+
+                    <div class="section-segment">
+                        <p ng-class="{muted: !clinicalFeatures.length}">
+                            '{{boneDysplasia.title}}' has {{clinicalFeatures.length}} clinical features.
+                        </p>
+                        <form>
+                            <search model="clinicalFeatureFilter" placeholder="Search for a Clinical Feature"></search>
+                        </form>
+
+                        <div ng-cloak ng-show="clinicalFeatures.length > 0">
+                            <table class="table table-striped table-bordered table-dark">
+                                <tr>
+                                    <th>Clinical Feature</th>
+                                    <th>Information Content</th>
+                                </tr>
+                                <tr ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content' | limitTo:clinicalFeatureDisplayLimit">
+                                    <td>
+                                        <a href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}"
+                                           title="{{clinicalFeature.name}}">
+                                            {{clinicalFeature.name | truncate:40 | capitalize}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="bar" style="width:{{ clinicalFeature.information_content }}%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="clearfix" ng-show="clinicalFeatures.length > clinicalFeatureDisplayLimit"
+                                 style="text-align: center">
+                                <a ng-show="(clinicalFeatures | filter:clinicalFeatureFilter).length > clinicalFeatureDisplayLimit"
+                                   href class="btn btn-more" ng-click="clinicalFeatureDisplayLimit = clinicalFeatures.length"><i
+                                        class="icon-chevron-down icon-black"></i> Show All</a>
+                                <a ng-show="(clinicalFeatures | filter:clinicalFeatureFilter).length == clinicalFeatureDisplayLimit"
+                                   href class="btn btn-more" ng-click="clinicalFeatureDisplayLimit = 10"><i
+                                        class="icon-chevron-up icon-black"></i> Show Less</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
             </div>
 
-        </section>
-    </div>
+            <div class="span4">
+                <section ng-show="boneDysplasia.field_bd_superbd.length">
+                    <div class="section-segment section-segment-header">
+                        <h3>Parent </h3>
+                    </div>
 
-    <div class="span4">
+                    <div ng-repeat="subType in boneDysplasia.field_bd_superbd">
+                        <a class="section-segment" href="?q=node/{{ subType.nid }}">
+                            {{ subType.title }}
 
-        <section>
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                <div class="pull-right">
-                    <a ng-click="showEditDetails()" href data-toggle="modal" role="button" class="btn"><i
-                            class="icon-pencil"></i> Edit</a>
-                    <!--<a href="#edit-omim" data-toggle="modal" role="button"  class="btn" ><i class="icon-edit"></i> Edit</a>-->
-                </div>
-            <?php endif; ?>
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+                        </a>
+                    </div>
+                </section>
 
-            <h3>Details</h3>
-            <dl class="dl-horizontal dl-horizontal-squished" ng-show="omim.length">
-                <dt>OMIM</dt>
-                <dd ng-show="omim"><a ng-href="http://www.omim.org/entry/{{omim}}" target="_blank">{{omim}}</a></dd>
-                <dd class="muted" ng-show="!omim">Not Recorded</dd>
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <h3>Classifications</h3>
+                    </div>
 
-                <dl class="dl-horizontal dl-horizontal-squished" ng-show="moi.name.length">
-                    <dt>Mode of Inheritance</dt>
-                    <dd ng-show="moi"><a ng-href="{{moi.field_moi_term_uri.und[0].value}}"
-                                         target="_blank">{{moi.name}}</a></dd>
-                    <dd class="muted" ng-show="!moi">Not Recorded</dd>
-                </dl>
-        </section>
+                    <div ng-cloak ng-repeat="tag in tags">
 
-        <section>
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                <div class="pull-right">
-                    <a href ng-click="showEditGenes()" data-toggle="modal" role="button" class="btn"><i
-                            class="icon-pencil"></i> Edit</a>
-                </div>
-            <?php endif; ?>
+                        <a class="section-segment" href="?q=taxonomy/term/{{ tag.tid }}">
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
 
-            <h3>Genes</h3>
+                            <b>{{ tag.sk_gt_field_group_source_release.name }}</b> &#187; {{ tag.sk_gt_field_group_name.name }}
+                        </a>
+                    </div>
+                </section>
 
-            <p ng-show="!genes.length" class="muted">'{{ boneDysplasia.title }}' is associated with {{ genes.length }}
-                gene.</p>
-            <ul>
-                <li ng-repeat="gene in genes"><a ng-href="?q=node/{{boneDysplasia.nid}}/gene/{{gene.nid}}">{{ gene.title
-                        }}</a></li>
-            </ul>
-        </section>
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                            <div class="pull-right section-segment-header-buttons">
+                                <a ng-click="showEditDetails()" href data-toggle="modal" role="button" class="btn"><i
+                                        class="icon-pencil"></i> Edit</a>
+                                <!--<a href="#edit-omim" data-toggle="modal" role="button"  class="btn" ><i class="icon-edit"></i> Edit</a>-->
+                            </div>
+                        <?php endif; ?>
 
-        <section ng-show="boneDysplasia.field_bd_subbd.length">
-            <h3>Sub-types</h3>
-            <ul>
-                <li ng-repeat="subType in boneDysplasia.field_bd_subbd">
-                    <a href="?q=node/{{ subType.nid }}">{{ subType.title }}</a></li>
-            </ul>
-        </section>
+                        <h3>Details</h3>
+                    </div>
 
-        <section ng-show="boneDysplasia.field_bd_sameas.length">
-            <h3>Same As</h3>
-            <ul>
-                <li ng-repeat="subType in boneDysplasia.field_bd_sameas">
-                    <a href="?q=node/{{ subType.nid }}">{{ subType.title }}</a></li>
-            </ul>
-        </section>
+                    <a ng-show="omim" class="section-segment" ng-href="http://www.omim.org/entry/{{omim}}" target="_blank">
+                        <i class="icon-globe pull-right"></i>
+                        <i class="icon-globe icon-white pull-right"></i>
 
-        <section ng-show="boneDysplasia.field_bd_superbd.length">
-            <h3>Parent Type</h3>
-            <ul>
-                <li ng-repeat="subType in boneDysplasia.field_bd_superbd">
-                    <a href="?q=node/{{ subType.nid }}">{{ subType.title }}</a></li>
-            </ul>
-        </section>
-
-        <section ng-show="boneDysplasia.field_bd_seealso.length">
-            <h3>See Also</h3>
-            <ul>
-                <li ng-repeat="subType in boneDysplasia.field_bd_seealso">
-                    <a href="?q=node/{{ subType.nid }}">{{ subType.title }}</a></li>
-            </ul>
-        </section>
-
-        <section class="media-body" ng-class="{'section-more': xrays.length > xrayDisplayLimit}">
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                <div class="pull-right">
-                    <a href ng-click="showEditXRays()" data-toggle="modal" role="button" class="btn"><i
-                            class="icon-pencil"></i> Edit</a>
-                </div>
-            <?php endif; ?>
-
-            <h3>X-Rays</h3>
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                <div class="dropzone" ng-model="xrays"
-                     drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add">
-                </div>
-            <?php endif; ?>
-
-            <p ng-show="!xrays.length" class="muted">There are no x-rays for '{{boneDysplasia.title}}'.</p>
-
-            <ul class="xray-list unstyled media-body" fancy-box="xrays">
-                <li class="xray-list-image" ng-repeat="image in xrays | limitTo:xrayDisplayLimit">
-                    <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
-                        <img ng-src="{{ image.thumb_url }}" alt=""/>
+                        <span><b>OMIM</b></span>
+                        <span ng-show="omim">{{omim}}</span>
+                        <span ng-show="!omim" class="muted">Not Recorded</span>
                     </a>
-                </li>
-            </ul>
 
-            <a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more"
-               href>Show All X-Rays ({{ boneDysplasia.field_bd_xray_images.und.length }})</a>
-        </section>
+                    <span ng-show="!omim" class="section-segment">
+                        <span><b>OMIM</b></span>
+                        <span class="muted">Not Recorded</span>
+                    </span>
 
+                    <div ng-show="moi" class="section-segment" target="_blank">
 
-        <section ng-show="similar.length">
-            <h3>Similar</h3>
-            <ul>
-                <li ng-repeat="object in similar">
-                    <a href="{{object.url}}">{{ object.label }}</a>
-                </li>
-            </ul>
-        </section>
+                        <span><b>Mode of Inheritance</b></span>
+                        <span>{{ moi.name }}</span>
+                    </div>
 
-        <section>
-            <h3>Editors</h3>
-            <ul class="unstyled">
-                <li ng-repeat="editor in editors">
-                    <i class="icon-user"></i> {{ editor.name | capitalize }}
-                </li>
-            </ul>
-        </section>
+                    <span ng-show="!moi" class="section-segment">
+                        <span><b>Mode of Inheritance</b></span>
+                        <span  class="muted">Not Recorded</span>
+                    </span>
 
 
-    </div>
-    </div>
-    </div>
+                </section>
+
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                            <div class="pull-right section-segment-header-buttons">
+                                <a href ng-click="showEditGenes()" data-toggle="modal" role="button" class="btn"><i
+                                        class="icon-pencil"></i> Edit</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <h3>Genes</h3>
+                    </div>
+
+
+                    <a ng-href="?q=node/{{boneDysplasia.nid}}/gene/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
+                        {{ gene.title }}
+                        <i class="icon-chevron-right pull-right"></i>
+                        <i class="icon-chevron-right icon-white pull-right"></i>
+                    </a>
+
+                    <div class="section-segment muted" ng-show="!genes.length">
+                        '{{ boneDysplasia.title }}' is associated with {{ genes.length }} genes.
+                    </div>
+
+                </section>
+
+                <section ng-show="boneDysplasia.field_bd_subbd.length">
+                    <div class="section-segment section-segment-header">
+                        <h3>Sub-types</h3>
+                    </div>
+                    <div ng-repeat="subType in boneDysplasia.field_bd_subbd">
+                        <a class="section-segment" href="?q=node/{{ subType.nid }}">
+                            {{ subType.title }}
+
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+                        </a>
+                    </div>
+
+                </section>
+
+                <section ng-show="boneDysplasia.field_bd_sameas.length">
+                    <div class="section-segment section-segment-header">
+                        <h3>Same As</h3>
+                    </div>
+                    <div ng-repeat="subType in boneDysplasia.field_bd_sameas">
+                        <a class="section-segment" href="?q=node/{{ subType.nid }}">
+                            {{ subType.title }}
+
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+                        </a>
+                    </div>
+                </section>
+
+
+
+                <section ng-show="boneDysplasia.field_bd_seealso.length">
+                    <div class="section-segment section-segment-header">
+                        <h3>See Also</h3>
+                    </div>
+                    <div ng-repeat="subType in boneDysplasia.field_bd_seealso">
+                        <a class="section-segment" href="?q=node/{{ subType.nid }}">
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+
+                            {{ subType.title }}
+                        </a>
+                    </div>
+                </section>
+
+
+                <section ng-show="similar.length">
+                    <div class="section-segment section-segment-header">
+                        <h3>Similar</h3>
+                    </div>
+                    <div ng-repeat="object in similar">
+                        <a class="section-segment" href="{{object.url}}">
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
+
+                            {{ object.label }}
+                        </a>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <h3>Editors</h3>
+                    </div>
+
+                    <div class="section-segment" ng-repeat="editor in editors">
+                        <i class="icon-user"></i> {{ editor.name | capitalize }}
+                    </div>
+                </section>
+            </div>
 
 
     <div cm-modal="showEditingPanel" ng-switch on="editingPanel" class="modal modal-dark fade hide" tabindex="-1"
@@ -535,7 +618,7 @@
         <!-- Modal Footer -->
         <div class="modal-footer modal-footer-bottom">
             <a href class="btn btn-success" ng-click="saveEditedDescription(editedDescription)"><i
-                    class="icon-ok icon-white"></i> Save Description</a>
+                    class="icon-ok icon-info"></i> Save DescriptionDescription</a>
         </div>
         <!-- /Modal Footer -->
     </div>

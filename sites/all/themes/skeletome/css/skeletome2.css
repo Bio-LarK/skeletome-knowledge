@@ -20,7 +20,7 @@
     height: 32px;
 }
 .navsearch-small .navsearch input.navsearch-input:focus {
-    background-color: white;
+    background-color: black;
 }
 .navsearch-small .navsearch-suggestions {
     top: 40px;
@@ -66,6 +66,8 @@
             position: absolute;
             top: 0;
             left: 0;
+
+            border: none;
         }
             input.navsearch-query {
                 background-color: transparent !important;
@@ -78,7 +80,8 @@
             }
             input.navsearch-selectedSuggestion {
                 cursor: not-allowed;
-                background-color: white;
+                background-color: transparent; /* 1 */
+                /*background-color: white;*/
                 color: #bebebe !important;
                 border: none;
             }
@@ -147,9 +150,12 @@ ul.navsearch-suggestions {
 
 
 body {
-    line-height: 28px;
+    line-height: 21px;
     font-size: 14px;
     background-color: #eee;
+}
+body p {
+    /*text-align: justify;*/
 }
 
 /* ================================================
@@ -396,34 +402,7 @@ textarea.full-width {
     margin-bottom: 21px;
 }
 
-/* ================================================
-    Page Header
 
-    Adds in ability to have media image on left of text
-*/
-.page-header {
-    /*margin-top: 21px;*/
-    margin-bottom: 21px;
-    position: relative;
-    padding: 14px 28px 21px 28px;
-    background-color: white;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
-}
-.page-header h1 {
-    overflow: hidden;
-    padding-bottom: 0px;
-    /*margin: 5px 0;*/
-}
-.page-header img {
-    position: relative;
-    top: -2px;
-    margin-right: 0px;
-}
-
-.page-header-search h1 {
-    margin-bottom: 20px;
-    font-size: 30px;
-}
 
 .search_heading {
     margin: 0px;
@@ -475,9 +454,7 @@ textarea.full-width {
 .navbar .nav > li > a {
     padding: 10px 12px 10px
 }
-a.btn.btn-primary {
-    /*background-color: #002449;*/
-}
+
 /* ================================================
     Nav Bar Search Input
 */
@@ -646,6 +623,23 @@ input[type=text] {
     display: none;
 }
 
+/* ================================================
+    Refreshing Icon (spins the refresh icon)
+*/
+.refreshing-box {
+    text-align: center !important;
+}
+.icon-refreshing {
+    -webkit-animation-name: rotateThis;
+    -webkit-animation-duration:0.3s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-timing-function:linear;
+}
+@-webkit-keyframes rotateThis {
+    from {-webkit-transform:scale(1.0) rotate(0deg);}
+    to {-webkit-transform:scale(1.0) rotate(360deg);}
+}
+
 
 /* ================================================
     Knowledge Base
@@ -666,7 +660,84 @@ li {
 /* ================================================
     Statements
 */
+.statements {
+}
 
+.statement-new {
+    border-bottom: 4px solid #eee !important;
+}
+
+.statement-content {
+    overflow: auto;
+    position: relative;
+    border-bottom: 1px solid #eeeeee;
+}
+    .statement-content-user {
+        float: right;
+        width: 150px;
+    }
+        .statement-content-user-inner {
+            padding: 14px 21px;
+        }
+    .statement-content-text {
+        margin-right: 142px;
+        border-right: 1px solid #eee;
+        padding: 14px 21px;
+        min-height: 45px;
+    }
+
+/* The add comment, show comment buttons */
+.statement-buttons a {
+    color: #808080;
+}
+    .statement-buttons a:hover {
+        text-decoration: none;
+    }
+
+/* Some styling to fix up the references */
+.statements .references-container h3 {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: Helvetica, Arial, san-serif;
+    font-style: italic;
+}
+
+/** Comment section */
+.comments {
+    -webkit-box-shadow: 0 5px 12px -6px rgba(0, 0, 0, 0.2) inset;
+}
+.comment-content {
+    border-left: 40px solid #eee;
+    border-bottom: 1px solid #eee;
+    overflow: auto;
+}
+    .comment-content-user {
+        float: right;
+        width: 150px;
+    }
+    .comment-content-text {
+        margin-right: 142px;
+        border-right: 1px solid #eee;
+        min-height: 25px;
+    }
+
+/* New comment section */
+.comment-new {
+    overflow: auto;
+}
+.comment-new textarea {
+    height: 80px;
+}
+.comment-new textarea:focus {
+    height: 80px;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+
+
+/*
 .statement {
     margin-bottom: 21px;
 }
@@ -675,9 +746,6 @@ li {
 }
 .statement p:last-of-type {
     margin-bottom: 0px;
-}
-.statement-user {
-    /*margin-bottom: 3px;*/
 }
 .statement-profile {
     margin-right: 7px;
@@ -754,6 +822,7 @@ li {
 .statement .references-container ol {
     margin-left: 18px;
 }
+*/
 
 /* ================================================
     Extra span
@@ -1006,8 +1075,13 @@ table.table-dark {
     border: none;
     position: relative;
     /*border-radius: 20px;*/
-    border: 1px solid rgb(233, 233, 233);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(233, 233, 233);
     /*box-shadow: 0px 2px 0px rgb(233, 233, 233);*/
+}
+.btn.btn-info {
+    border-color: #2f96b4;
 }
 .btn.btn-new {
     position: absolute;
@@ -1140,52 +1214,7 @@ h1, h2, h3, h4, h5 {
 
 
 
-/* ================================================
-    Breadcrumbs
-*/
-.page-header .breadcrumbs {
-    margin-top: 10px;
-}
-.breadcrumbs {
-    overflow: auto;
-    list-style-type: none;
-    margin-bottom: 0px;
-    margin-left: 0px;
-}
-.breadcrumbs li {
-    float: left;
-    margin-right: 10px;
-    color: #a9a9a9;
-    margin-bottom: 0;
-}
-.breadcrumbs li:after {
-    content: '>';
-    color: #a9a9a9;
-}
-.breadcrumbs li a {
-    color: #a9a9a9;
-}
-.breadcrumb {
-    display: none;
-    margin: 0;
-    margin-top: 14px;
-    padding: 0px;
-    /*margin-top: 21px;*/
-    overflow: auto;
-    /*border: 1px solid red;*/
-    background-color: transparent;
-    /*padding: 7px;*/
-    border-radius: 0;
-}
-.breadcrumb ol {
-    list-style-type: none;
-    margin: 0;
-}
-.breadcrumb li a, .breadcrumb li {
-    color: #a3a3a3;
-    float:left;
-    margin-right: 10px;
-}
+
 
 /* ================================================
     DL Horizontal
@@ -1205,6 +1234,8 @@ h1, h2, h3, h4, h5 {
     margin-top: 10px;
     margin-bottom: 20px;
     border: 1px dashed rgba(0, 0, 0, 0.2);
+    min-height: 100px;
+    text-align: center;
 }
 .dropzone .preview, .dropzone-previews .preview {
     margin: 5px;
@@ -1289,19 +1320,215 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ================================================
-    Section
+    Page Header
+
+    Adds in ability to have media image on left of text
 */
-.search-form {
-    display: none;
-}
-section {
+.page-header {
+    /*margin-top: 21px;*/
     margin-bottom: 21px;
-    padding: 21px 28px 28px 28px;
+    position: relative;
+    padding: 21px;
     background-color: white;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
 }
+.page-header h1 {
+    overflow: hidden;
+    padding-bottom: 0px;
+    /*margin: 5px 0;*/
+}
+.page-header img {
+    position: relative;
+    top: -2px;
+    margin-right: 0px;
+}
+
+.page-header-search h1 {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+/* ================================================
+    Breadcrumbs
+*/
+.breadcrumbs {
+    margin-top: 10px;
+    float: left;
+}
+.breadcrumbs {
+    overflow: auto;
+    list-style-type: none;
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
+.breadcrumbs li {
+    float: left;
+    margin-bottom: 0;
+}
+.breadcrumbs li:after {
+    color: #a9a9a9;
+}
+.breadcrumbs li a {
+    color: #333;
+    /*background-color: black;*/
+    display: block;
+    padding: 14px;
+    margin-right: 1px;
+    border-right: 1px solid white;
+    border-radius: 40px;
+}
+.breadcrumb {
+    display: none;
+    margin: 0;
+    margin-top: 14px;
+    padding: 0px;
+    /*margin-top: 21px;*/
+    overflow: auto;
+    /*border: 1px solid red;*/
+    background-color: transparent;
+    /*padding: 7px;*/
+    border-radius: 0;
+}
+
+.search-form {
+    display: none;
+}
+
+.page-heading {
+    padding-top: 14px;
+    padding-left: 14px;
+}
+/* ================================================
+    Section
+*/
+
+section, div.section {
+    margin-top: 21px;
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    overflow: visible;
+    border-bottom: 1px solid #cccccc;
+}
+
+.section-segment {
+    padding: 14px 21px;
+    border-bottom: 1px solid #e7e7e7;
+    display: block;
+}
+    .section-segment h1 img {
+        height: 35px;
+        position: relative;
+        top: -2px;
+    }
+    .section-segment h4 img {
+        height: 18px;
+    }
+    .section-segment .icon-chevron-right.icon-white {
+        display: none;
+    }
+
+a.section-segment {
+    color: #333;
+    /*text-decoration: underline;*/
+}
+    a.section-segment:hover {
+        text-decoration: none !important;
+        text-decoration: underline;
+        color: white;
+        background-color: #0e90d2;
+        border-bottom: 1px solid #0c689b;
+    }
+    a.section-segment:hover span {
+        color: white;
+    }
+    a.section-segment:active {
+        box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+        -moz-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+        -webkit-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05)
+    }
+    a.section-segment:hover .icon-chevron-right, a.section-segment:hover .icon-globe {
+        display: none;
+    }
+    a.section-segment:hover .icon-white {
+        display: inline-block;
+        opacity: 1;
+    }
+
+/**
+User to add padding
+*/
+.section-segment-inner {
+    padding: 14px 21px;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+/**
+   Used to remove padding
+*/
+.section-segment-nopadding {
+    padding: 0px;
+    border-bottom: none;
+}
+.segment-padding {
+    padding: 14px 21px;
+}
+.section-segment-editor {
+    padding: 0px;
+}
+.section-segment-border {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+/** Tab in block
+*/
+.section-segment-inner-tabbed::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 50px;
+    background-color: #eee;
+}
+.section-segment-inner-tabbed {
+    position: relative;
+    padding-left: 74px;
+}
+
+.section-segment.alert {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+
+.section-segment-header {
+    padding: 0px;
+    min-height: 60px;
+    padding: 0px 21px;
+    line-height: 60px;
+}
+.section-segment-header h1, .section-segment-header h2, .section-segment-header h3, .section-segment-header h4 {
+    line-height: 60px;
+}
+    .section-segment h2 {
+        font-size: 28px;
+    }
+
+    .section-segment-header-buttons {
+    }
+.section-segment i {
+    opacity: 0.7;
+}
+.section-segment h1, .section-segment h2, .section-segment h3, .section-segment h4 {
+    margin: 0 !important;
+}
+
+
+
 section h1, section h2, section h3 {
     /*margin: 0px !important;*/
+    margin-top: 0px;
 }
 section.section-even {
     padding: 21px 28px;

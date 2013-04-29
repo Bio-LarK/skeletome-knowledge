@@ -82,19 +82,20 @@
 
 <div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl">
     <div class="container" ng-cloak>
+
+
         <div class="row">
             <div class="span12">
 
-                <div class="page-header section-even" >
-                    <ul class="breadcrumbs">
-                        <li>
-                            <a href="http://localhost:8888/?q=search/site/&f[0]=bundle%gene">Genes</a>
-                        </li>
-                        <li ng-show="boneDysplasia">
-                            <a href="?q=node/{{ boneDysplasia.nid }}">{{ boneDysplasia.title }}</a>
-                        </li>
-                    </ul>
-                    <h1><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-gene.png"/> <?php print $title; ?> <small>Gene</small></h1>
+                <div class="page-heading" >
+                    <div>
+                        From <a href="?q=node/{{ boneDysplasia.nid }}">{{ boneDysplasia.title }}</a>
+                    </div>
+
+                    <h1>
+                        <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-gene.png"/>
+                        <?php print $title; ?>
+                    </h1>
 
                 </div>
             </div>
@@ -104,52 +105,57 @@
 
             <div class="span8">
 
-
                 <!-- The content -->
-                <section ng-class="{'section-more': true}"
-                         class="section-large section-large-description">
-                    <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                        <div class="pull-right">
-                            <a ng-show="!showEditDescription"
-                               href class="btn"
-                               ng-click="editDescription()">
-                                <i class="icon-pencil"></i> Edit
-                            </a>
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <div class="section-segment-header-buttons">
+                            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                                <div class="pull-right">
+                                    <a ng-show="!isEditingDescription"
+                                       href class="btn"
+                                       ng-click="editDescription()">
+                                        <i class="icon-pencil"></i> Edit
+                                    </a>
 
-                            <a ng-show="showEditDescription"
-                               href class="btn btn-success"
-                               ng-click="saveEditedDescription(editedDescription)">
-                                <i class="icon-ok icon-white"></i> Save Description
-                            </a>
+                                    <a ng-show="isEditingDescription"
+                                       href class="btn btn-success"
+                                       ng-click="saveEditedDescription(editedDescription)">
+                                        <i class="icon-ok icon-white"></i> Save Description
+                                    </a>
 
-                            <a ng-show="showEditDescription"
-                               href class="btn btn-primary"
-                               ng-click="cancelEditingDescription()">
-                                <i class="icon-remove icon-white"></i> Cancel
-                            </a>
-
+                                    <a ng-show="isEditingDescription"
+                                       href class="btn"
+                                       ng-click="cancelEditingDescription()">
+                                        <i class="icon-remove"></i> Cancel
+                                    </a>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
 
-                    <h2>Description</h2>
+                        <div>
+                            <b>Contributors</b>
+                            <span ng-repeat="editor in editors">
+                                {{ editor.name | capitalize }}
+                            </span>
+                        </div>
 
-                    <div ng-show="showEditDescription">
+                    </div>
+
+                    <div class="section-segment" ng-show="isEditingDescription" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
                         <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
                     </div>
 
-                    <div ng-show="!showEditDescription" class="description-text">
-                        <p class="muted" ng-hide="master.gene.body.und[0].safe_value.length">
-                            There is currently no description of '{{ master.gene.title }}'.
-                        </p>
+                    <div class="section-segment">
+                        <div ng-show="!isEditingDescription" class="description-text">
+                            <p class="muted" ng-hide="master.gene.body.und[0].safe_value.length">
+                                There is currently no description of '{{ master.gene.title }}'.
+                            </p>
 
-                        <div ng-show="master.gene.body.und[0].safe_value.length" >
+                            <div ng-show="master.gene.body.und[0].safe_value.length" >
 
-                            <div ng-bind-html-unsafe="master.gene.body.und[0].safe_value || '' | truncate:view.descriptionLength">
-                            </div>
+                                <div ng-bind-html-unsafe="master.gene.body.und[0].safe_value || '' | truncate:view.descriptionLength">
+                                </div>
 
-                            <div class="clearfix">
-                                <a href ng-show="master.gene.body.und[0].safe_value.length > view.descriptionLength" class="btn btn-more pull-right" ng-click="view.descriptionLength = master.gene.body.und[0].safe_value.length"><i class="icon-chevron-down icon-black"></i> Show All</a>
-                                <a href ng-show="view.descriptionLength == master.gene.body.und[0].safe_value.length" class="btn btn-more pull-right" ng-click="view.descriptionLength = view.defaultDescriptionLength"><i class="icon-chevron-up icon-black"></i> Hide</a>
                             </div>
                         </div>
                     </div>
@@ -208,66 +214,93 @@
 
             <div class="span4">
                 <section>
-                    <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                    <a href ng-click="showEditDetails()" data-toggle="modal" role="button" class="btn pull-right"><i class="icon-pencil"></i> Edit</a>
-                    <?php endif; ?>
-                    <h3>Details</h3>
-                    <dl ng-show="master.gene.field_gene_go.und[0].value" class="dl-horizontal dl-horizontal-squished">
-                        <dt>Gene Ontology ID</dt>
-                        <dd>{{ master.gene.field_gene_go.und[0].value }}</dd>
-                    </dl>
+                    <div class="section-segment section-segment-header">
+                        <div class="section-segment-header-buttons pull-right">
 
-                    <dl ng-show="master.gene.field_gene_locus.und[0].value" class="dl-horizontal dl-horizontal-squished" >
-                        <dt>Locus</dt>
-                        <dd>{{ master.gene.field_gene_locus.und[0].value }}</dd>
-                    </dl>
+                            <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                                <a href ng-click="showEditDetails()" data-toggle="modal" role="button" class="btn"><i class="icon-pencil"></i> Edit</a>
+                            <?php endif; ?>
+                        </div>
+                        <h3>Details</h3>
+                    </div>
 
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_mesh.und[0].value ">
-                        <dt>MeSH Term</dt>
-                        <dd>{{ master.gene.field_gene_mesh.und[0].value }}</dd>
-                    </dl>
+                    <div ng-show="master.gene.field_gene_go.und[0].value" class="section-segment">
+                        <b>Gene Ontology ID</b> {{ master.gene.field_gene_go.und[0].value }}
+                    </div>
 
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_omim.und[0].value">
-                        <dt>OMIM</dt>
-                        <dd><a ng-href="http://www.omim.org/entry/{{master.gene.field_gene_omim.und[0].value}}" target="_blank">{{ master.gene.field_gene_omim.und[0].value }}</a></dd>
-                    </dl>
+                    <div ng-show="master.gene.field_gene_locus.und[0].value" class="section-segment" >
+                        <b>Locus</b> {{ master.gene.field_gene_locus.und[0].value }}
+                    </div>
 
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_umlscui.und[0].value">
-                        <dt>UMLS CUI</dt>
-                        <dd>{{ master.gene.field_gene_umlscui.und[0].value }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_uniprot.und[0].value">
-                        <dt>Uniprot ID</dt>
-                        <dd><a target="_blank" ng-href="http://www.uniprot.org/uniprot/{{ master.gene.field_gene_uniprot.und[0].value }}">{{ master.gene.field_gene_uniprot.und[0].value }}</a></dd>
-                    </dl>
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_accession.und[0].value">
-                        <dt>Accesion Number</dt>
-                        <dd>{{ master.gene.field_gene_accession.und[0].value }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_entrezgene.und[0].value">
-                        <dt>Entrez Gene ID</dt>
-                        <dd>{{ master.gene.field_gene_entrezgene.und[0].value }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal dl-horizontal-squished" ng-show="master.gene.field_gene_refseq.und[0].value">
-                        <dt>RefSeq</dt>
-                        <dd><a target="_blank" ng-href="http://www.ncbi.nlm.nih.gov/nuccore/{{ master.gene.field_gene_refseq.und[0].value }}">{{ master.gene.field_gene_refseq.und[0].value }}</a></dd>
-                    </dl>
+                    <div class="section-segment" ng-show="master.gene.field_gene_mesh.und[0].value ">
+                        <b>MeSH Term</b>
+                        {{ master.gene.field_gene_mesh.und[0].value }}
+                    </div>
+
+                    <a ng-href="http://www.omim.org/entry/{{master.gene.field_gene_omim.und[0].value}}" target="_blank" class="section-segment" ng-show="master.gene.field_gene_omim.und[0].value">
+                        <i class="icon-globe pull-right"></i>
+                        <i class="icon-globe icon-white pull-right"></i>
+
+                        <b>OMIM</b>
+                        {{ master.gene.field_gene_omim.und[0].value }}
+                    </a>
+
+                    <div class="section-segment" ng-show="master.gene.field_gene_umlscui.und[0].value">
+                        <b>UMLS CUI</b>
+                        {{ master.gene.field_gene_umlscui.und[0].value }}
+                    </div>
+                    <a target="_blank" ng-href="http://www.uniprot.org/uniprot/{{ master.gene.field_gene_uniprot.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_uniprot.und[0].value">
+                        <i class="icon-globe pull-right"></i>
+                        <i class="icon-globe icon-white pull-right"></i>
+
+                        <b>Uniprot ID</b>
+                        {{ master.gene.field_gene_uniprot.und[0].value }}
+                    </a>
+                    <div class="section-segment" ng-show="master.gene.field_gene_accession.und[0].value">
+                        <b>Accesion Number</b>
+                        {{ master.gene.field_gene_accession.und[0].value }}
+                    </div>
+                    <div class="section-segment" ng-show="master.gene.field_gene_entrezgene.und[0].value">
+                        <b>Entrez Gene ID</b>
+                        {{ master.gene.field_gene_entrezgene.und[0].value }}
+                    </div>
+                    <a target="_blank" ng-href="http://www.ncbi.nlm.nih.gov/nuccore/{{ master.gene.field_gene_refseq.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_refseq.und[0].value">
+                        <i class="icon-globe pull-right"></i>
+                        <i class="icon-globe icon-white pull-right"></i>
+
+                        <b>RefSeq</b>
+                        {{ master.gene.field_gene_refseq.und[0].value }}
+                    </a>
                 </section>
 
                 <section>
-                    <h3>Bone Dysplasias</h3>
-                    <ul>
-                        <li ng-repeat="boneDysplasia in boneDysplasias"><a href="?q=node/{{ boneDysplasia.nid }}">{{ boneDysplasia.title }}</a></li>
-                    </ul>
+                    <div class="section-segment section-segment-header">
+                        <h3>Bone Dysplasias</h3>
+                    </div>
+
+
+                        <div ng-repeat="boneDysplasia in boneDysplasias">
+
+                            <a class="section-segment" href="?q=node/{{ boneDysplasia.nid }}">
+                                <i class="icon-chevron-right pull-right"></i>
+                                <i class="icon-chevron-right icon-white pull-right"></i>
+
+                                {{ boneDysplasia.title }}
+                            </a>
+                        </div>
+
                 </section>
 
                 <section>
-                    <h3>Editors</h3>
-                    <ul class="unstyled">
-                        <li ng-repeat="editor in editors">
-                            <i class="icon-user"></i> {{ editor.name | capitalize }}
-                        </li>
-                    </ul>
+                    <div class="section-segment section-segment-header">
+                        <h3>Editors</h3>
+                    </div>
+
+
+                    <div ng-repeat="editor in editors" class="section-segment">
+                        <i class="icon-user"></i> {{ editor.name | capitalize }}
+                    </div>
+
                 </section>
 
 

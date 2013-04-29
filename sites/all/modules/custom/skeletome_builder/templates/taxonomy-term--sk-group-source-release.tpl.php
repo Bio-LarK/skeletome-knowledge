@@ -73,7 +73,9 @@
                                 </a>
 
                                 <ul class="release-tag-bonedysplasias" ng-show="tag.showBoneDysplasias">
-                                    <li ng-show="!tag.boneDysplasias">Loading...</li>
+                                    <li ng-show="!tag.boneDysplasias">
+                                        <i class="icon-refresh icon-refreshing"></i>
+                                    </li>
                                     <li ng-repeat="boneDysplasia in tag.boneDysplasias">
                                         <a href="?q=node/{{ boneDysplasia.nid }}">
                                             {{ boneDysplasia.title }}
