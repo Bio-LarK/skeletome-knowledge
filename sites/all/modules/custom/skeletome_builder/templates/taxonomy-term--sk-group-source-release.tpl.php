@@ -85,6 +85,11 @@
                             </div>
                             <div ng-repeat="boneDysplasia in tag.boneDysplasias | filter:findGroup">
                                 <a class="section-segment section-segment-inner-tabbed" href="?q=node/{{ boneDysplasia.nid }}">
+
+                                    <i class="icon-chevron-right pull-right"></i>
+                                    <i class="icon-chevron-right pull-right icon-white"></i>
+
+
                                     {{ boneDysplasia.title }}
                                 </a>
                             </div>

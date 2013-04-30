@@ -1,5 +1,7 @@
 <div class="navsearch">
     <div class="navsearch-inputs">
+
+
         <input disabled class="navsearch-input navsearch-selectedSuggestion" ng-model="navSearch.selectedSuggestion" type="text"/>
         <input class="navsearch-input navsearch-query"
                ng-model="navSearch.query"
@@ -7,9 +9,11 @@
                ng-change="search(navSearch.query)"
                placeholder="Search for Bone Dysplasias, Groups or Genes"/>
 
+        <i class="icon-search navsearch-icon"></i>
+
         <span ng-show="navSearch.selectedSuggestion.length && navSearch.selectedSuggestion != navSearch.query && !isMultitermQuery()"
             class="navsearch-helper">
-            Press TAB to complete
+            Press TAB to add another term
         </span>
     </div>
 

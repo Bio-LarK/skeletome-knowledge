@@ -40,6 +40,11 @@
  * @ingroup themeable
  */
 ?>
+<style>
+    .pager {
+        display: none;
+    }
+</style>
 <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>" ng-controller="ClinicalFeatureCtrl">
 
     <div class="container-fluid">
