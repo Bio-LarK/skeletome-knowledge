@@ -80,7 +80,7 @@
  */
 ?>
 
-<div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl">
+<div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl" ng-init="init()">
     <div class="container-fluid" ng-cloak>
 
 
@@ -105,61 +105,7 @@
 
             <div class="span8">
 
-                <!-- The content -->
-                <section>
-                    <div class="section-segment section-segment-header">
-                        <div class="section-segment-header-buttons">
-                            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
-                                <div class="pull-right">
-                                    <a ng-show="!isEditingDescription"
-                                       href class="btn"
-                                       ng-click="editDescription()">
-                                        <i class="icon-pencil"></i> Edit
-                                    </a>
-
-                                    <a ng-show="isEditingDescription"
-                                       href class="btn btn-success"
-                                       ng-click="saveEditedDescription(editedDescription)">
-                                        <i class="icon-ok icon-white"></i> Save Description
-                                    </a>
-
-                                    <a ng-show="isEditingDescription"
-                                       href class="btn"
-                                       ng-click="cancelEditingDescription()">
-                                        <i class="icon-remove"></i> Cancel
-                                    </a>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
-                        <div>
-                            <b>Contributors</b>
-                            <span ng-repeat="editor in editors">
-                                {{ editor.name | capitalize }}
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <div class="section-segment" ng-show="isEditingDescription" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
-                        <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
-                    </div>
-
-                    <div class="section-segment">
-                        <div ng-show="!isEditingDescription" class="description-text">
-                            <p class="muted" ng-hide="master.gene.body.und[0].safe_value.length">
-                                There is currently no description of '{{ master.gene.title }}'.
-                            </p>
-
-                            <div ng-show="master.gene.body.und[0].safe_value.length" >
-
-                                <div ng-bind-html-unsafe="master.gene.body.und[0].safe_value || '' | truncate:view.descriptionLength">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <?php include('description.php'); ?>
 
                 <?php include('statements.php'); ?>
 

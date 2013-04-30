@@ -686,6 +686,24 @@ input[type=text] {
     -webkit-animation-duration:0.3s;
     -webkit-animation-iteration-count:infinite;
     -webkit-animation-timing-function:linear;
+
+    -moz-animation-name: rotateThis;
+    -moz-animation-duration:0.3s;
+    -moz-animation-iteration-count:infinite;
+    -moz-animation-timing-function:linear;
+
+    animation-name: rotateThis;
+    animation-duration:0.3s;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+}
+@keyframes rotateThis {
+    from {transform:scale(1.0) rotate(0deg);}
+    to {transform:scale(1.0) rotate(360deg);}
+}
+@-moz-keyframes rotateThis {
+    from {-moz-transform:scale(1.0) rotate(0deg);}
+    to {-moz-transform:scale(1.0) rotate(360deg);}
 }
 @-webkit-keyframes rotateThis {
     from {-webkit-transform:scale(1.0) rotate(0deg);}
@@ -723,19 +741,38 @@ ul.list-items li {
     overflow: auto;
     position: relative;
     border-bottom: 1px solid #eeeeee;
+    padding: 14px 21px;
 }
+
+
+
     .statement-content-user {
-        float: right;
-        width: 150px;
+        /*float: right;*/
+        /*width: 150px;*/
+        opacity: 0.2;
+        /*float: right;*/
+        color: #808080;
+        margin-top: 5px;
+        display: none;
     }
+    .statement-content-user a {
+        color: #808080;
+    }
+.statement-content:hover .statement-content-user {
+    opacity: 0.7;
+    /*display: block;*/
+}
         .statement-content-user-inner {
-            padding: 14px 21px;
+            /*padding: 14px 21px;*/
         }
     .statement-content-text {
-        margin-right: 142px;
-        border-right: 1px solid #eee;
-        padding: 14px 21px;
-        min-height: 45px;
+        margin-right: 21px;
+    }
+    .statement-content-text p:last-of-type{
+        margin-bottom: 0px;
+        /*margin-right: 142px;*/
+        /*border-right: 1px solid #eee;*/
+        /*min-height: 45px;*/
     }
 
 /* The add comment, show comment buttons */
@@ -775,7 +812,7 @@ ul.list-items li {
 
 /* New comment section */
 .comment-new {
-    overflow: auto;
+    overflow: hidden;
 }
 .comment-new textarea {
     height: 80px;
@@ -1234,6 +1271,10 @@ table.table-dark {
     border: 1px solid #00a512;
     /*box-shadow: 0px 2px 0px #00a512;*/
 }
+.btn[disabled].btn-success {
+    border: 1px solid #008c0f;
+}
+
 .btn-danger {
     border: 1px solid #a50800;
 }
@@ -1552,6 +1593,30 @@ a.section-segment {
         opacity: 1;
     }
 
+.section-segment-statement {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+    .section-segment-statement-icons {
+        position: absolute;
+        top: 50%;
+        right: 21px;
+        margin-top: -7px;
+    }
+    .section-segment-statement-text {
+        margin-right: 30px;
+    }
+    .section-segment-statement-text p:last-of-type {
+        margin-bottom: 0;
+    }
+    .section-segment-statement-interaction {
+        margin-top: 7px;
+    }
+        .section-segment-statement-interaction-username {
+            padding-right: 7px;
+            font-weight: bold;
+        }
 /**
 Used to add padding
 */
@@ -1559,6 +1624,20 @@ Used to add padding
     padding: 14px 21px;
     border-bottom: 1px solid #e7e7e7;
     display: block;
+}
+
+/** The down arrow */
+.icon-chevron-right.icon-chevron-turn-down {
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+}
+
+.section-segment:hover .icon-chevron-right.icon-chevron-turn-down {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    /* for ie */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
 /**
@@ -1582,7 +1661,8 @@ Used to add padding
 */
 .section-segment-inner-tabbed {
     position: relative;
-    padding-left: 74px;
+    padding: 10px 7px 10px 64px !important;
+
 }
 .section-segment-inner-tabbed::before {
      display: block;
@@ -1592,11 +1672,11 @@ Used to add padding
      left: 0px;
      height: 100%;
      width: 50px;
-     background-color: #eee;
-     border-bottom: 2px solid #eee;
+     background-color: #dddddd;
+     border-bottom: 2px solid #dddddd;
 }
 .section-segment-inner-tabbed:last-child::before {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #dddddd;
 }
 
 

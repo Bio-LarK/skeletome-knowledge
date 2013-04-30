@@ -13,6 +13,9 @@ scripts[] = bootstrap.js
 scripts[] = angular.js
 scripts[] = ui-bootstrap-tpls-0.2.0.js
 scripts[] = controllers.js
+scripts[] = js/controllers/bone_dysplasia.js
+scripts[] = js/controllers/gene.js
+scripts[] = js/controllers/description.js
 scripts[] = directives.js
 scripts[] = filters.js
 

@@ -94,45 +94,76 @@
 
         <!-- Actual list of statements statements -->
         <div ng-cloak>
-            <div class="section-segment section-segment-nopadding" ng-repeat="statement in statements" >
+            <div ng-repeat="statement in statements">
 
-                <!-- Statement text -->
-                <div name="statement-{{ statement.nid }}" class="statement-content">
+                <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
 
-                    <!-- User info -->
-                    <div class="statement-content-user">
+                    <div class="section-segment-statement-icons">
+                        <span ng-show="!statement.isShowingComments">
+                            <i class="icon-chevron-right icon-chevron-turn-down"></i>
+                            <i class="icon-chevron-right icon-white icon-chevron-turn-down"></i>
+                        </span>
 
+                        <span ng-show="statement.isShowingComments">
+                            <i class="icon-chevron-up"></i>
+                            <i class="icon-chevron-up icon-white "></i>
+                        </span>
+                    </div>
 
-                        <div class="statement-content-user-inner">
+                    <div class="section-segment-statement-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                    </div>
+
+                    <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments || isEditingStatements">
+                        <span class="section-segment-statement-interaction-username">{{ statement.name || "Anonymous" | capitalize }}</span>
+
+                        <span class="statement-buttons">
+                            <a href>
+                                <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
+                            </a>
+
                             <a ng-show="isEditingStatements"
                                ng-click="deleteStatement(statement)"
-                               class="btn btn-danger" href>
+                               class="btn btn-danger pull-left" href style="color: white; margin-right: 14px;">
                                 <i class="icon-remove icon-white"></i> Delete
                             </a>
 
-                            <div>
-                                <b>{{ statement.name || "Anonymous" | capitalize }}</b>
-                            </div>
+                        </span>
+                    </div>
+                </div>
 
-                            <div class="statement-buttons">
-                                <a ng-click="showComments(statement)" href>
-                                    <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
+
+
+                <!-- List of comments -->
+                <div ng-show="statement.isShowingComments">
+
+
+
+                    <div ng-repeat="comment in statement.comments">
+                        <div class="section-segment section-segment-inner-tabbed">
+                            <div ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
+
+                            <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments">
+                                <a ng-show="isEditingStatements"
+                                   ng-click="deleteStatement(statement)"
+                                   class="btn btn-danger" href style="color: white; margin-right: 14px;">
+                                    <i class="icon-remove icon-white"></i> Delete
                                 </a>
+
+                                <span class="section-segment-statement-interaction-username">{{ comment.name || "Anonymous" | capitalize }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Text -->
-                    <div class="statement-content-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                    <div class="section-segment section-segment-inner-tabbed" ng-show="statement.isLoadingComments">
+                        <div class="refreshing-box">
+                            <i class="icon-refresh icon-refreshing"></i>
+                        </div>
                     </div>
-                </div>
 
-                <!-- List of comments -->
-                <div ng-show="statement.isShowingComments" class="comments">
 
-                    <div class="comment-content" ng-repeat="comment in statement.comments">
+                    <!--<div class="comment-content" ng-repeat="comment in statement.comments">
 
-                        <!-- User info -->
+
                         <div class="comment-content-user">
                             <div class="segment-padding comment-content-user-inner">
 
@@ -142,7 +173,7 @@
                                     <i class="icon-remove icon-white"></i> Delete
                                 </a>
 
-                                <b>{{ comment.name || "Anonymous" | capitalize }}</b>
+                                {{ comment.name || "Anonymous" | capitalize }}
                             </div>
                         </div>
 
@@ -154,17 +185,17 @@
                         <div class="refreshing-box">
                             <i class="icon-refresh icon-refreshing"></i>
                         </div>
-                    </div>
+                    </div>-->
 
                     <!-- New Comment -->
                     <?php if ($user->uid): ?>
-                        <div class="comment-content segment-padding comment-new">
+                        <div ng-show="!isEditingStatements" class="section-segment section-segment-inner-tabbed comment-new">
                             <textarea cm-focus="statement.showAddComment"
                                       cm-return="addComment(statement, statement.newComment)"
                                       ng-model="statement.newComment"
                                       placeholder="Write a comment about this statement."
                                       class="full-width">
-                              </textarea>
+                            </textarea>
                             <div class="pull-right">
                                 <button ng-disabled="!statement.newComment.length" ng-click="addComment(statement, statement.newComment)" class="btn btn-success">
                                     <i class="icon-ok icon-white"></i> Post
@@ -178,59 +209,45 @@
 
                 </div>
 
-            </div>
+
+                    <!-- Statement text -->
+                    <!--<div name="statement-{{ statement.nid }}" class="statement-content">-->
+
+                        <!-- User info -->
+                        <!--<div class="statement-content-user">
 
 
-            <div class="statement"  >
-
-                <div class="media-body">
-
-
-
-                    <div class="statement-user">
-
-                    </div>
-                    <div class="statement-content">
-
-                    </div>
-
-
-
-                    <div ng-show="statement.showComments || statement.showAddComment" class="statement-comments">
-                        <!-- New Comment -->
-                        <div ng-show="statement.showAddComment" class="statement-comment statement-comment-add" >
-
-                            <div class="media-body">
-
-                                <!--<div>
-                                    <b>{{ user.name | capitalize }}</b>
-                                </div>-->
-
-                            </div>
-                        </div>
-                        <!-- /New Comment -->
-
-                        <div ng-show="statement.showComments" ng-repeat="comment in statement.comments" class="statement-comment" >
-                            <div class="pull-left statement-comment-profile"></div>
-
-                            <div class="media-body">
+                            <div class="statement-content-user-inner">
                                 <a ng-show="isEditingStatements"
-                                   ng-click="deleteCommentFromStatement(comment, statement)" class="btn btn-danger pull-right" href>
+                                   ng-click="deleteStatement(statement)"
+                                   class="btn btn-danger" href>
                                     <i class="icon-remove icon-white"></i> Delete
                                 </a>
 
 
-                                <div>
-                                    <b>{{ comment.name || "Anonymous" | capitalize }}</b>
-                                </div>
-                                <div ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
                             </div>
-                        </div>
-                    </div>
+                        </div>-->
 
-                </div>
+                        <!-- Text -->
+
+
+
+
+
+                        <!--<div class="statement-content-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                        </div>-->
+
+                        <!--<div class="statement-content-user">
+                            {{ statement.name || "Anonymous" | capitalize }}
+                            <a ng-click="showComments(statement)" href>
+                                <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
+                            </a>
+                        </div>-->
+
+                    <!--</div>-->
+
+                    <!-- List of comments -->
             </div>
         </div>
-
     </section>
 </div>
