@@ -73,7 +73,9 @@
                         <a class="section-segment" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href>
 
                             <i ng-show="!tag.showBoneDysplasias" class="icon-chevron-down"></i>
+                            <i ng-show="!tag.showBoneDysplasias" class="icon-chevron-down icon-white"></i>
                             <i ng-show="tag.showBoneDysplasias" class="icon-chevron-up"></i>
+                            <i ng-show="tag.showBoneDysplasias" class="icon-chevron-up icon-white"></i>
                             {{ tag.sk_gt_field_group_name.name }}
                         </a>
 

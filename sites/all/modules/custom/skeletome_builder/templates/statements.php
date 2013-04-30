@@ -82,6 +82,10 @@
             </div>
         </div>
 
+        <div class="section-segment alert alert-success" cm-alert="model.isloadingNewStatement">
+            New statement saved.
+        </div>
+
         <div ng-cloak ng-hide="statements.length" class="section-segment muted">
             No statements.
         </div>

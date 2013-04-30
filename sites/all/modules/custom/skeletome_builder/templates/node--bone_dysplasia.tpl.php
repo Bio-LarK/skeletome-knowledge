@@ -171,6 +171,10 @@
         </div>
 
     </div>
+    <div class="section-segment alert alert-success" cm-alert="boneDysplasia.body.und[0].isLoading">
+        Description saved.
+    </div>
+
     <div class="section-segment" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
 
         <!-- is Editing Description -->
@@ -275,7 +279,7 @@
             </div>
 
             <div class="section-segment">
-                <table class="table ">
+                <table class="table">
                     <tr>
                         <th>Clinical Feature</th>
                         <th cm-tooltip="top" cm-tooltip-content="What is information content?">Information Content</th>

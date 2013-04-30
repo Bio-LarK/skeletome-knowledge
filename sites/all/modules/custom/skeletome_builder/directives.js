@@ -73,18 +73,16 @@ myApp.directive('cmAlert', function() {
         require: '?ngModel',
         link: function(scope, elm, attr, ngModel) {
 
-            scope.$watch('cmAlert', function(value) {
-                if(value) {
-                    elm.fadeIn('fast');
+            scope.$watch('cmAlert', function(newValue, oldValue) {
+                console.log("old", oldValue, "new", newValue);
+                if(oldValue == true && newValue == false) {
+                    elm.slideDown('fast');
                     setTimeout(function() {
-                        if(scope.cmAlert) {
-                            elm.fadeOut('fast', function() {
-                                scope.$apply(function() {
-                                    scope.cmAlert = false;
-                                });
+                        elm.slideUp('fast', function() {
+                            scope.$apply(function() {
                             });
-                        }
-                    }, 2000)
+                        });
+                    }, 3000)
                 } else {
                     elm.css('display', 'none');
                 }

@@ -33,7 +33,7 @@
     background-color: black;
 }
 .navsearch-small .navsearch-suggestions {
-    top: 40px;
+    top: 45px;
 }
 .navsearch-small .navsearch-searchbar-button {
     padding: 0px 25px;
@@ -45,7 +45,7 @@
 .navsearch-small .navsearch-helper {
     position: absolute;
     right: 10px;
-    top: 2px;
+    top: 6px;
     font-size: 10px;
 }
 
@@ -1025,6 +1025,9 @@ modal-dark .modal-footer {
     -webkit-box-shadow: none;
     /*border-color: #1576b4;*/
 }
+.bar.bar-warning {
+    border: 1px solid #d67200;
+}
 
 /**
  * CK EDITOR
@@ -1106,6 +1109,21 @@ table.table-dark {
     -webkit-box-shadow: none;
     border-color: #1576b4;
 }
+
+/* ================================================
+    Animating added
+*/
+.just-added {
+    background: yellow;
+    -webkit-transition:background 1s;
+    -moz-transition:background 1s;
+    -o-transition:background 1s;
+    transition:background 1s
+}
+.just-added.done {
+    background-color: white;
+}
+
 
 
 /* ================================================
@@ -1193,24 +1211,24 @@ table.table-dark {
     border: none;
     background-color: #0e90d2;
     border: 1px solid #0f7dc0;
-    background-color: #2e3033;
-    border-color: black;
+    /*background-color: #2e3033;*/
+    /*border-color: black;*/
     /*box-shadow: 0px 2px 0px black;*/
 }
 .btn-primary:hover {
     background-color: #197bbd;
-    background-color: #1f2022;
+    /*background-color: #1f2022;*/
 }
 .btn-primary:active {
     background-color: #1c64a1;
-    background-color: #1f2022;
+    /*background-color: #1f2022;*/
 }
 .btn-primary:focus {
     background-color: #1c64a1;
-    background-color: #1f2022;
+    /*background-color: #1f2022;*/
 }
 .btn-group.open .btn-primary.dropdown-toggle {
-    background-color: #1c64a1;
+    /*background-color: #1c64a1;*/
 }
 .btn-success {
     border: 1px solid #00a512;
@@ -1494,7 +1512,11 @@ section, div.section {
     .section-segment h4 img {
         height: 18px;
     }
-    .section-segment .icon-chevron-right.icon-white, .section-segment .icon-chevron-left.icon-white, .section-segment .icon-globe.icon-white {
+    .section-segment .icon-chevron-right.icon-white,
+    .section-segment .icon-chevron-left.icon-white,
+    .section-segment .icon-chevron-down.icon-white,
+    .section-segment .icon-chevron-up.icon-white,
+    .section-segment .icon-globe.icon-white {
         display: none;
     }
 
@@ -1518,7 +1540,11 @@ a.section-segment {
         -moz-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
         -webkit-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05)
     }
-    a.section-segment:hover .icon-chevron-right, a.section-segment:hover .icon-chevron-left, a.section-segment:hover .icon-globe {
+    a.section-segment:hover .icon-chevron-right,
+    a.section-segment:hover .icon-chevron-left,
+    a.section-segment:hover .icon-chevron-up,
+    a.section-segment:hover .icon-chevron-down,
+    a.section-segment:hover .icon-globe {
         display: none;
     }
     a.section-segment:hover .icon-white {
