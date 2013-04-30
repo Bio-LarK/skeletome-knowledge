@@ -47,8 +47,8 @@
     <?php endif; ?>
 
 
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row-fluid">
             <div class="span12">
                 <div class="page-heading" >
                     <h1 ><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia-group.png"/> <?php print $name; ?></h1>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="span7">
                 <section>
                     <div class="section-segment">

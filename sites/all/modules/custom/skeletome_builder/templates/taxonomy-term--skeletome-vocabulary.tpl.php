@@ -42,8 +42,8 @@
 ?>
 <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>" ng-controller="ClinicalFeatureCtrl">
 
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row-fluid">
             <?php if ($name): ?>
             <div class="span12">
                 <div class="page-heading" >
@@ -51,11 +51,6 @@
                     <div ng-show="bone_dysplasia" class="muted">
                         From <a href="?q=node/{{ bone_dysplasia.nid }}">{{ bone_dysplasia.title }}</a>
                     </div>
-
-
-
-
-
 
                     <h1>
                         <svg class="type-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -68,7 +63,7 @@
             <?php endif; ?>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
 
 
             <div class="span8">

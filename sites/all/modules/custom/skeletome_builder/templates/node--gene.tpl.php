@@ -88,7 +88,7 @@
             <div class="span12">
 
                 <div class="page-heading" >
-                    <div>
+                    <div ng-show="boneDysplasia">
                         From <a href="?q=node/{{ boneDysplasia.nid }}">{{ boneDysplasia.title }}</a>
                     </div>
 

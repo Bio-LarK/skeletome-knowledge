@@ -1,5 +1,4 @@
 <div class="navsearch">
-
     <div class="navsearch-inputs">
         <input disabled class="navsearch-input navsearch-selectedSuggestion" ng-model="navSearch.selectedSuggestion" type="text"/>
         <input class="navsearch-input navsearch-query"
@@ -14,9 +13,9 @@
         </span>
     </div>
 
-    <a class="btn btn-success navsearch-searchbar-button" href="?q=search/site/{{ navSearch.query }}">
+    <!--<a class="btn btn-success navsearch-searchbar-button" href="?q=search/site/{{ navSearch.query }}">
         <i class="icon-search icon-white"></i> Search
-    </a>
+    </a>-->
 
 
     <ul ng-show="navSearch.query.length && showSuggestions" class="navsearch-suggestions unstyled">

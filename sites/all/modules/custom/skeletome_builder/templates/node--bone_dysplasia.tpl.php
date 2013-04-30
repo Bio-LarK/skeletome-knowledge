@@ -278,9 +278,9 @@
                 <table class="table ">
                     <tr>
                         <th>Clinical Feature</th>
-                        <th>Information Content</th>
+                        <th cm-tooltip="top" cm-tooltip-content="What is information content?">Information Content</th>
                     </tr>
-                    <tr ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content' | limitTo:clinicalFeatureDisplayLimit">
+                    <tr ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content'">
                         <td>
                             <a href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}"
                                title="{{clinicalFeature.name}}">

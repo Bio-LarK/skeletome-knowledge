@@ -8,13 +8,23 @@
     font-style: normal;
 }
 
+/* ================================================
+    Front Page logo
+*/
+#logo {
+    margin-top: 7px;;
+    float: left;
+}
+
 /**
     Smaller Nav Search not on front page
 */
 .navsearch-small .navsearch {
     height: 32px;
-    float: left;
+    /*float: left;*/
     margin-top: 4px;
+    margin-left: 160px;
+    margin-right: 165px;
 }
 .navsearch-small .navsearch input.navsearch-input {
     height: 32px;
@@ -45,15 +55,13 @@
 .navsearch {
     position: relative;
     color: #333;
-    width: 550px;
+    /*width: 100%;*/
     margin: 0 auto;
     height: 45px;
 }
     .navsearch-inputs {
-        width: 430px;
         position: relative;
         height: 45px;
-        float: left;
     }
         input.navsearch-input {
             width: 100% !important;
@@ -62,7 +70,7 @@
             -moz-box-sizing: border-box !important;
             display: block !important;
             padding-left: 20px !important;
-            border-radius: 50px 0 0 50px !important;
+            border-radius: 50px !important;
             position: absolute;
             top: 0;
             left: 0;
@@ -148,6 +156,37 @@ ul.navsearch-suggestions {
     }
 
 
+@media (max-width: 767px) {
+    .navbar {
+        text-align: center;
+    }
+    #logo {
+        float: none;
+        display: block;
+        margin: 7px auto;
+        width: 141px;
+
+    }
+    .navbar .btn-group {
+        float: none;
+        margin-bottom: 14px;
+        width: 100%;
+    }
+    .navbar .btn-group .btn {
+        width: 40%;
+    }
+    .navsearch-small .navsearch {
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 14px;
+    }
+    #sidebar ul li a {
+        padding-left: 21px;
+        background: url(../images/email.png) left center no-repeat;
+    }
+}
+
+
 body {
     line-height: 21px;
     font-size: 14px;
@@ -225,14 +264,7 @@ body p {
 
 }
 
-/* ================================================
-    Front Page logo
-*/
-.logo {
-    font-size: 42px;
-    font-weight: bold;;
-    margin-bottom: 7px;;
-}
+
 
 /* ================================================
     Front page slogan
@@ -456,11 +488,11 @@ textarea.full-width {
     Navbar
 */
 .navbar-dark {
-    height: 60px;
+    min-height: 60px;
 }
 .navbar-dark .navbar-inner {
     border-radius: 0px;
-    height: 50px;
+    min-height: 50px;
     padding-top: 10px;
     vertical-align: middle;
     /*background-color: #2e3033 !important;*/
@@ -478,7 +510,7 @@ textarea.full-width {
 /* ================================================
     Nav Bar Search Input
 */
-.navbar-search input {
+/*.navbar-search input {
     border: none;
 }
 .navbar-search .input-append a.btn {
@@ -488,7 +520,7 @@ textarea.full-width {
     padding: 5px 15px;
     width: 400px;
     background-color: rgb(44, 44, 44) !important;
-    /*background-color: #00132d !important;*/
+    background-color: #00132d !important;
     text-shadow: none;
     color: white;
     border-radius: 20px 0 0 20px;
@@ -502,7 +534,7 @@ textarea.full-width {
 }
 input::-webkit-input-placeholder {
     color: #787878 !important;
-}
+}*/
 /*input:-moz-placeholder {*/
     /*color: red !important;*/
 /*}*/
@@ -672,7 +704,7 @@ input[type=text] {
 /* ================================================
     List Items
 */
-li {
+ul.list-items li {
     line-height: 21px;
     margin-bottom:  7px;
 }
