@@ -29,9 +29,6 @@ function theme_facetapi_facet_missing($variables) {
  * @ingroup themeable
  */
 function theme_facetapi_title($variables) {
-    if($variables['title'] == "Skeletome Tags") {
-        $variables['title'] = "Clinical Features";
-    }
   return t('Filter by @title:', array('@title' => $variables['title']));
 }
 

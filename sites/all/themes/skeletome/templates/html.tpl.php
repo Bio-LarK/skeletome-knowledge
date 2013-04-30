@@ -106,6 +106,47 @@
         <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css">
         <link href="http://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
 
+        <style type="text/css">
+            .feedback-tab {
+                display: block;
+                background-color: #333;
+                position: fixed;
+                top: 50%;
+                left: 0px;
+                color: white;
+                padding: 8px 21px;
+                border-width: 0px 2px 2px 2px;
+                border-color: white;
+                border-style: solid;
+                -webkit-transform-origin: 0% 0%;
+
+                /* Safari */
+                -webkit-transform: rotate(-90deg);
+
+                /* Firefox */
+                -moz-transform: rotate(-90deg);
+
+                /* IE */
+                -ms-transform: rotate(-90deg);
+
+                /* Opera */
+                -o-transform: rotate(-90deg);
+
+                /* Internet Explorer */
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+                box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+            }
+            .feedback-tab:hover {
+                padding-top: 10px;
+                color: white;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .feedback-tab:active {
+                padding-top: 8px;
+            }
+        </style>
     </head>
     <body class="<?php print $classes; ?>" <?php print $attributes; ?> >
 
@@ -119,5 +160,9 @@
         <?php print $page; ?>
         <?php print $page_bottom; ?>
 
+
+        <a class="feedback-tab" href="{{ 'mailto' + ':' + 'admin@knowledge.skeletome.org' }}">
+            Feedback
+        </a>
     </body>
 </html>

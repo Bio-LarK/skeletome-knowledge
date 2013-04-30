@@ -807,7 +807,7 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
     $markup = '
             <div class="row">
                 <div class="span12">
-                    <div class="page-header">
+                    <div class="page-heading">
                         <h1>Search Results <small>' . $terms . '</small></h1>
 
                     </div>
@@ -820,7 +820,7 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
         // Build up the search page for no reuslts
         $build['title'] = array('#markup' => $markup);
         $build['row1'] = array('#markup' => '<div class="row">');
-        $build['message'] = array('#markup' => '<div class="span8"><section>Select from the options on the right to launch a search.</section></div>');
+        $build['message'] = array('#markup' => '<div class="span8"><section><div class="section-segment">Select from the options on the right to launch a search.</div></section></div>');
         $build['search_results'] = apachesolr_search_page_browse($results['apachesolr_search_browse'], $search_page['env_id']);
         $build['row2'] = array('#markup' => '</div>');
 

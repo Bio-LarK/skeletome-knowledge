@@ -358,10 +358,19 @@ textarea.full-width {
 /* ================================================
     Search page
 */
+.block-facetapi {
+
+}
+.block-facetapi h2 {
+    padding: 14px 21px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
+}
 .block-facetapi ul {
     list-style-type: none;
-    margin-left: -14px;
-    margin-bottom: 20px;
+}
+.block-facetapi ul .leaf {
+    margin: 0;
 }
 .badge.badge-light {
     background-color: rgb(243, 243, 243);
@@ -1280,6 +1289,18 @@ table.table-dark {
 }
 .btn[disabled].btn-success {
     border: 1px solid #008c0f;
+}
+
+/* Dark button for the nav bar */
+.btn-dark-navbar {
+    background-color: #333;
+    color: white;
+    border: 1px solid black;
+}
+.btn-dark-navbar:hover, .btn-dark-navbar:active {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
 }
 
 .btn-danger {

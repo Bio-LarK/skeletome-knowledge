@@ -9,10 +9,13 @@
 ?>
 
 <div class="container" style="margin-top: 40px;">
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
             <section>
-                <div class="yourtheme-user-login-form-wrapper">
+                <div class="section-segment section-segment-header">
+                    <h2>Register</h2>
+                </div>
+                <div class="section-segment">
                     <?php print drupal_render_children($form) ?>
                 </div>
             </section>

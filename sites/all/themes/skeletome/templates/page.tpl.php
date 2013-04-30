@@ -89,13 +89,13 @@
                 <div class="btn-group pull-right">
                     <?php global $user; ?>
                     <?php if(isset($user->name)):?>
-                        <a class="btn btn-primary" href>
+                        <a class="btn btn-dark-navbar" href>
                             <?php echo $user->name; ?>
                         </a>
-                        <a class="btn btn-primary" href="?q=user/logout">Logout</a>
+                        <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
                     <?php else: ?>
-                        <a class="btn btn-primary" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                        <a class="btn btn-primary" href="?q=user/register">Register</a>
+                        <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
+                        <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
                     <?php endif; ?>
                 </div>
 

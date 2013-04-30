@@ -241,6 +241,30 @@ function skeletome_preprocess_page(&$variables) {
     }
 }
 
+
+/**
+ * Overrides Apache Solr Search Facet Api Holder
+ * @param $vars
+ * @return string
+ */
+function skeletome_apachesolr_search_browse_blocks($vars)
+{
+
+    if ($vars['content']['#children']) {
+        $html = '<div class="span4">
+                    <section>
+                        <div class="section-segment section-segment-header"><h3>Filters</h3></div>';
+
+        $html .= $vars['content']['#children'];
+
+        $html .= '</section></div>';
+    }
+
+    return $html;
+}
+
+
+
 /**
  * Overrides faceapi display for counts
  * @param $variables
@@ -286,8 +310,16 @@ function skeletome_facetapi_link_inactive($variables) {
 
 
 
-    return "<div class='facetapi-list-item'>" . theme_link($variables) . $link_text . "</div>";
+    return "<div class='section-segment'>" . theme_link($variables) . $link_text . "</div>";
 }
+
+function skeletome_facetapi_title($variables) {
+    if($variables['title'] == "Skeletome Tags") {
+        $variables['title'] = "Clinical Features";
+    }
+    return t('Filter by @title:', array('@title' => $variables['title']));
+}
+
 
 function skeletome_facetapi_link_active($variables) {
 
@@ -318,7 +350,7 @@ function skeletome_facetapi_link_active($variables) {
 
 
 
-    return "<div class='facetapi-list-item'>" . theme_link($variables) . $link_text . "</div>";
+    return "<div class='section-segment'>" . theme_link($variables) . $link_text . "</div>";
 }
 
 
