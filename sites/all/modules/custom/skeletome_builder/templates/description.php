@@ -32,7 +32,7 @@
             <?php endif; ?>
 
             <div>
-                <b>Contributors</b>
+                <b><i class="icon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
                     {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}</span>
             </div>
@@ -40,7 +40,7 @@
 
         <div class="section-segment alert alert-info" ng-show="provider && !isEditingDescription">
             <div style="margin-bottom: 7px;">
-                <i class="icon-info-sign"></i> <b>This is a stub sourced from {{ provider }}</b>.
+                <i class="icon-info-sign"></i> <b>This stub is sourced from {{ provider }}</b>.
             </div>
             <div style="font-size: 12px" ng-bind-html-unsafe="reference">
             </div>

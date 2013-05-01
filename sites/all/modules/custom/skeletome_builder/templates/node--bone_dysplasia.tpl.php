@@ -195,7 +195,7 @@
                     <div style="width: 60%; display: inline-block">
                         <b>Feature</b>
                     </div>
-                    <div style="width: 35%; display: inline-block">
+                    <div style="width: 35%; display: inline-block" cm-tooltip="top" cm-tooltip-content="What is information content?">
                         <i class="icon-list-alt"></i> <b>Information Content</b>
                     </div>
                 </div>
@@ -731,7 +731,7 @@
             </table>
 
             <!-- Helpful Prompt (show when no text is entered, and no existing genes -->
-            <p class="muted info">Want to find another Clinical Feature? <br/>Try using the search bar above e.g.
+            <p ng-show="$parent.editClinicalFeatureSearch.length" class="muted info">Want to find another Clinical Feature? <br/>Try using the search bar above e.g.
                 '<a href
                     ng-click="$parent.editClinicalFeatureSearch = 'Frontal Bossing'; searchForClinicalFeatures(editClinicalFeatureSearch)">Frontal
                     Bossing</a>'</p>

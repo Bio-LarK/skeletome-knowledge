@@ -106,9 +106,8 @@
         <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css">
         <link href="http://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
 
-        <style type="text/css">
+        <script src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/js/modernizr.custom.js"></script>
 
-        </style>
     </head>
     <body class="<?php print $classes; ?>" <?php print $attributes; ?> >
 

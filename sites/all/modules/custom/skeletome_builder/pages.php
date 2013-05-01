@@ -425,8 +425,8 @@ function page_bone_dysplasia($node) {
             // Clear the description
             $node->body[LANGUAGE_NONE][0]['safe_value'] = str_replace($reference_string, "", $description);
             // References
-            $reference_string = str_replace("<p>[", "", $reference_string);
-            $reference_string = str_replace("]</p>", "", $reference_string);
+            $reference_string = str_replace("[", "", $reference_string);
+            $reference_string = str_replace("]", "", $reference_string);
 //            $reference_string = substr($reference_string, 1, strlen($reference_string) - 2);
 
             // Time to get out the 'available at' string
