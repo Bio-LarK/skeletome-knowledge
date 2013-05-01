@@ -3,7 +3,7 @@ myApp.directive('ckEditor', function() {
         require: '?ngModel',
         link: function(scope, elm, attr, ngModel) {
 
-//            CKEDITOR.timestamp = (new Date()).toString() ;
+            CKEDITOR.timestamp = (new Date()).toString() ;
 
             var config = {
 //                height: '800px',
@@ -20,6 +20,8 @@ myApp.directive('ckEditor', function() {
                                     console.log("inside a modal inner");
                                     evt.editor.resize("100%", jQuery('.modal-body-inner').eq(0).height() - 50);
                                 }
+
+                                console.log(evt.editor);
                             }
                         , 200);
                     }

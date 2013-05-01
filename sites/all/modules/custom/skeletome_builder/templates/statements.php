@@ -61,7 +61,7 @@
         </div>
 
         <?php if (!$user->uid): ?>
-            <div class="alert alert-info" style="border-radius: 0; text-align: center; margin-bottom: 0">
+            <div class="section-segment alert alert-info" style="border-radius: 0; margin-bottom: 0">
                 <div>
                     Statements let you <b>contribute your knowledge</b> about '{{ master.gene.title || boneDysplasia.title }}'.
                 </div>
