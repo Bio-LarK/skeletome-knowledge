@@ -1071,20 +1071,8 @@ modal-dark .modal-footer {
     border: none;
     margin-bottom: 0;
 }
-/* ================================================
-    Progress Bar
-*/
-.progress {
-    margin-bottom: 0;
-}
-.progress .bar {
-    background-image: none;
-    -webkit-box-shadow: none;
-    /*border-color: #1576b4;*/
-}
-.bar.bar-warning {
-    border: 1px solid #d67200;
-}
+
+
 
 /**
  * CK EDITOR
@@ -1617,12 +1605,12 @@ a.section-segment {
     }
     a.section-segment:hover span {
         color: white;
-    }/*
+    }
     a.section-segment:active {
         box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
         -moz-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
         -webkit-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05)
-    }*/
+    }
 
     a.section-segment:hover .icon-chevron-right,
     a.section-segment:hover .icon-chevron-left,
@@ -1635,6 +1623,30 @@ a.section-segment {
     a.section-segment:hover .icon-white {
         display: inline-block;
         opacity: 1;
+    }
+
+/* ================================================
+Progress Bar
+*/
+a.section-segment:hover .progress {
+    background-color: rgb(0, 79, 119);
+    background-image: none;
+}
+a.section-segment:hover .progress .bar {
+    background-color: white;
+    border: 1px solid white;
+}
+.progress {
+    margin-bottom: 0;
+}
+    .progress .bar {
+        background-image: none;
+        -webkit-box-shadow: none;
+        /*border-color: #1576b4;*/
+        margin: 0;
+    }
+    .bar.bar-warning {
+        border: 1px solid #d67200;
     }
 
 .section-segment-statement {
@@ -1818,4 +1830,51 @@ section.section-large-description p {
 }
 .group_tag a.group_tag_name {
     padding-left: 10px;
+}
+
+/* ================================================
+    Feedback Tab
+*/
+.feedback-tab {
+    display: block;
+    background-color: #333;
+    position: fixed;
+    top: 50%;
+    left: 0px;
+    color: white;
+    padding: 8px 21px;
+    border-width: 0px 2px 2px 2px;
+    border-color: white;
+    border-style: solid;
+
+    -webkit-transform-origin: 0% 0%;
+    -moz-transform-origin: 0% 0%;
+    -ms-transform-origin: 0% 0%;
+    -o-transform-origin: 0% 0%;
+
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+
+    /* IE */
+    -ms-transform: rotate(-90deg);
+
+    /* Opera */
+    -o-transform: rotate(-90deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+}
+.feedback-tab:hover {
+    padding-top: 10px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.feedback-tab:active {
+    padding-top: 8px;
 }
