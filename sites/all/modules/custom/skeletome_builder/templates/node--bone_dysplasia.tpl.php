@@ -180,17 +180,17 @@
                 </div>
                 <h2>Clinical Features</h2>
             </div>
-
             <div class="section-segment">
-                <p ng-class="{muted: !clinicalFeatures.length}">
+                <p class="muted" ">
                     '{{boneDysplasia.title}}' has {{clinicalFeatures.length}} clinical features.
                 </p>
-                <form style="margin-bottom: 0">
+
+                <form ng-show="clinicalFeatures.length" style="margin-bottom: 0">
                     <search model="clinicalFeatureFilter" placeholder="Search for a Clinical Feature"></search>
                 </form>
             </div>
 
-            <div class="section-segment">
+            <div class="section-segment" ng-show="clinicalFeatures.length">
                 <table class="table">
                     <tr>
                         <th>Clinical Feature</th>
