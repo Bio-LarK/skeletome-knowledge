@@ -8,6 +8,15 @@
     font-style: normal;
 }
 
+body {
+    line-height: 21px;
+    font-size: 14px;
+    background-color: #ebebeb;
+    background-repeat: repeat;
+    position: relative;
+}
+
+
 /* ================================================
     Front Page logo
 */
@@ -213,36 +222,8 @@ ul.navsearch-suggestions {
     }
 }
 
-body {
-    line-height: 21px;
-    font-size: 14px;
-    background-color: #eee;
-    background-repeat: repeat;
-    position: relative;
-}
-body:before {
-    /*content: "";*/
-    /*position: absolute;*/
-    /*height: 100%;*/
-    /*width: 100%;*/
 
-    /*top: 0px;*/
-    /*left: -20%;*/
-    /*z-index: -1;*/
-    /*background-size: cover;*/
 
-    /*opacity: 0.05;*/
-    /*background-repeat:no-repeat;*/
-    /*background-image: url(../img/logo-clinical-feature.svg);*/
-    /*-webkit-transform: rotate(-15deg);*/
-    /*-moz-transform: rotate(30deg);*/
-    /*-ms-transform: rotate(30deg);*/
-    /*-o-transform: rotate(30deg);*/
-    /*transform: rotate(-30deg);*/
-}
-body p {
-    /*text-align: justify;*/
-}
 
 /* ================================================
     NG-Clock styling

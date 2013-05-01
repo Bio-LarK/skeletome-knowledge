@@ -34,8 +34,7 @@
             <div>
                 <b>Contributors</b>
                 <span ng-repeat="editor in editors">
-                    {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span>
-                </span>
+                    {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}</span>
             </div>
         </div>
 
