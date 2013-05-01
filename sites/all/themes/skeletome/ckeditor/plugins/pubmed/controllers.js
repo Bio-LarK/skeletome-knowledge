@@ -1,11 +1,6 @@
 var myApp = angular.module('PubMed', []);
 
-//var baseUrl = "http://115.146.86.60/skeletome/";
-
-//var baseUrl = "http://knowledge.skeletome.org/";
-
-var baseUrl = "http://localhost:8888/drupalv2/";
-
+var baseUrl = parent.Drupal.settings.skeletome_builder.base_url;
 
 myApp.directive('cmReturn', function() {
     return function (scope, iElement, iAttrs) {

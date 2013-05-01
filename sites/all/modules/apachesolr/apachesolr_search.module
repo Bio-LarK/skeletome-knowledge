@@ -1756,15 +1756,27 @@ function theme_apachesolr_search_noresults()
     $markup = '
             <div class="row">
                 <div class="span12">
-                    <div class="page-header">
+                    <div class="page-heading">
                         <h1>Search Results <small>' . $terms . '</small></h1>
                     </div>
                 </div>
             </div>';
 
-    return t($markup . '<section><b>No search results found</b></section><section><ul>
-<li>Check if your spelling is correct, or try removing filters.</li>
-<li>Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.</li>
-<li>You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.</li>
-</ul></section>');
+    $results = '
+        <section>
+            <div class="section-segment">
+                <b>No search results found</b>
+            </div>
+            <div class="section-segment">
+                Check if your spelling is correct, or try removing filters.
+            </div>
+            <div class="section-segment">
+                Remove quotes around phrases to match each word individually: <em>"blue drop"</em> will match less than <em>blue drop</em>.
+            </div>
+            <div class="section-segment">
+                You can require or exclude terms using + and -: <em>big +blue drop</em> will require a match on <em>blue</em> while <em>big blue -drop</em> will exclude results that contain <em>drop</em>.
+            </div>
+        </section>';
+
+    return t($markup . $results);
 }

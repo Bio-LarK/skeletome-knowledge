@@ -10,58 +10,87 @@
 <div class="container">
     <div class="row">
         <div class="span12">
-            <section class="section-top">
+            <div class="page-heading">
                 <h1>Contact Us</h1>
-            </section>
+            </div>
         </div>
         <div class="span6">
             <section>
-                <h2>Project Investigators</h2>
-                <h3>Dr. Andreas Zankl</h3>
-                <p><a href="http://qbdc.org/home-page/">The Queensland Bone Dysplasia Centre</a><br/>
-                UQ Center for Clinical Research (UQCCR)<br/>
-                The University of Queensland, Building 71/918, Level 3,<br/>
-                Royal Brisbane and Women's Hospital Herston, QLD 4029<br/>
-                <b>Email: </b> a.zankl (at) uq.edu.au</p>
+                <div class="section-segment section-segment-header">
+                    <h2>Project Investigators</h2>
+                </div>
 
-                <h3>Prof. Jane Hunter</h3>
-                <p><a href="http://itee.uq.edu.au/~eresearch/">e-Research Group</a><br/>
-                    School of ITEE, The University of Queensland<br/>
-                    Building 78 (GP South), Level 7, Room 709B<br/>
-                    St. Lucia, QLD 4072<br/>
-                <b>Email: </b> jane (at) itee.uq.edu.au</p>
+                <div class="section-segment section-segment-header">
+                    <h3>Dr. Andreas Zankl</h3>
+                </div>
+                <div class="section-segment">
+                    <a href="http://qbdc.org/home-page/">The Queensland Bone Dysplasia Centre</a><br/>
+                        UQ Center for Clinical Research (UQCCR)<br/>
+                        The University of Queensland, Building 71/918, Level 3,<br/>
+                        Royal Brisbane and Women's Hospital Herston, QLD 4029<br/>
+                        <b>Email: </b> a.zankl (at) uq.edu.au
+                </div>
+
+                <div class="section-segment section-segment-header">
+                    <h3>Prof. Jane Hunter</h3>
+                </div>
+                <div class="section-segment">
+                    <a href="http://itee.uq.edu.au/~eresearch/">e-Research Group</a><br/>
+                        School of ITEE, The University of Queensland<br/>
+                        Building 78 (GP South), Level 7, Room 709B<br/>
+                        St. Lucia, QLD 4072<br/>
+                        <b>Email: </b> jane (at) itee.uq.edu.au<
+                </div>
             </section>
         </div>
         <div class="span6">
             <section>
-                <h2>Researchers</h2>
-                <h3>Dr. Tudor Groza</h3>
-                <p><a href="http://itee.uq.edu.au/~eresearch/">e-Research Group</a><br/>
+                <div class="section-segment section-segment-header">
+                    <h2>Researchers</h2>
+                </div>
+                <div class="section-segment section-segment-header">
+                    <h3>Dr. Tudor Groza</h3>
+                </div>
+
+                <div class="section-segment">
+                    <a href="http://itee.uq.edu.au/~eresearch/">e-Research Group</a><br/>
                     School of ITEE, The University of Queensland<br/>
                     Building 78 (GP South), Level 7, Room 709A<br/>
                     St. Lucia, QLD 4072<br/>
                     <b>Responsibilities: </b> Project management, ontology engineering, platform development<br/>
                     <b>Email: </b> tudor.groza (at) uq.edu.au
+                </div>
 
-                </p>
-                <h3>Hasti Ziaimatin</h3>
-                <p>
+
+
+                <div class="section-segment section-segment-header">
+                    <h3>Hasti Ziaimatin</h3>
+                </div>
+
+                <div class="section-segment">
                     <a href="http://itee.uq.edu.au/~eresearch/">e-Research Group</a><br/>
                     School of ITEE, The University of Queensland<br/>
                     Building 78 (GP South), Level 7, Room 709A<br/>
                     St. Lucia, QLD 4072<br/>
                     <b>Responsibilities: </b> Ontology engineering, Expertise modelling from micro-contributions<br/>
                     <b>Email: </b> h.ziaimatin (at) uq.edu.au
-                </p>
-                <h3>Razan Paul</h3>
-                <p>
+                </div>
+
+
+                <div class="section-segment section-segment-header">
+                    <h3>Razan Paul</h3>
+                </div>
+
+                <div class="section-segment">
                     <a href="http://itee.uq.edu.au/~eresearch/">e-Research Group</a><br/>
                     School of ITEE, The University of Queensland<br/>
                     Building 78 (GP South), Level 7, Room 709A<br/>
                     St. Lucia, QLD 4072<br/>
                     <b>Responsibilities: </b> Ontology engineering, Semi-automated diagnosis, Disease key features extraction<br/>
                     <b>Email: </b> razan.paul (at) uq.edu.au
-                </p>
+                </div>
+
+
             </section>
         </div>
     </div>

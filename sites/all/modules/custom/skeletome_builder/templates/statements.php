@@ -63,7 +63,7 @@
         <?php if (!$user->uid): ?>
             <div class="alert alert-info" style="border-radius: 0; text-align: center; margin-bottom: 0">
                 <div>
-                    Statements let you <b>contribute your knowledge</b> about '{{ boneDysplasia.title || gene.title }}'.
+                    Statements let you <b>contribute your knowledge</b> about '{{ master.gene.title || boneDysplasia.title }}'.
                 </div>
                 <div style="margin-top: 7px">
                     <a class="btn btn-info" cm-popover cm-popover-content="loginForm">Login In</a>
@@ -72,7 +72,7 @@
             </div>
         <?php else: ?>
             <div ng-show="!model.isAddingStatement" class="section-segment muted">
-                <i class="icon-info-sign"></i> Statements let you <b>contribute your knowledge</b> about '{{ boneDysplasia.title || gene.title }}'.
+                <i class="icon-info-sign"></i> Statements let you <b>contribute your knowledge</b> about '{{ master.gene.title || boneDysplasia.title }}'.
             </div>
         <?php endif; ?>
 
@@ -83,7 +83,7 @@
         </div>
 
         <div class="section-segment alert alert-success" cm-alert="model.isloadingNewStatement">
-            New statement saved.
+            <i class="icon-ok"></i> New statement saved.
         </div>
 
         <div ng-cloak ng-hide="statements.length" class="section-segment muted">
@@ -114,32 +114,33 @@
                     </div>
 
                     <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments || isEditingStatements">
-                        <span class="section-segment-statement-interaction-username">{{ statement.name || "Anonymous" | capitalize }}</span>
 
-                        <span class="statement-buttons">
-                            <a href>
-                                <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
-                            </a>
-
-                            <a ng-show="isEditingStatements"
-                               ng-click="deleteStatement(statement)"
-                               class="btn btn-danger pull-left" href style="color: white; margin-right: 14px;">
-                                <i class="icon-remove icon-white"></i> Delete
-                            </a>
-
+                        <span class="label">
+                            <i class="icon-user icon-white"></i> {{ statement.name || "Anonymous" | capitalize }}
                         </span>
+
+
+                        <span class="label">
+                            <i class="icon-comment icon-white"></i> {{ statement.comments.length || statement.comment_count }}
+                        </span>
+
+                        <a ng-show="isEditingStatements"
+                           ng-click="deleteStatement(statement)"
+                           class="btn btn-danger pull-left" href style="color: white; margin-right: 14px;">
+                            <i class="icon-remove icon-white"></i> Delete
+                        </a>
+
                     </div>
                 </div>
+
 
 
 
                 <!-- List of comments -->
                 <div ng-show="statement.isShowingComments">
 
-
-
                     <div ng-repeat="comment in statement.comments">
-                        <div class="section-segment section-segment-inner-tabbed">
+                        <div class="section-segment section-segment-inner-tabbed" ng-class="{'section-segment-inner-tabbed-shadow': $index == 0}">
                             <div ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
 
                             <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments">
@@ -149,7 +150,9 @@
                                     <i class="icon-remove icon-white"></i> Delete
                                 </a>
 
-                                <span class="section-segment-statement-interaction-username">{{ comment.name || "Anonymous" | capitalize }}</span>
+                                <span class="label">
+                                    <i class="icon-user icon-white"></i> {{ comment.name || "Anonymous" | capitalize }}
+                                </span>
                             </div>
                         </div>
                     </div>

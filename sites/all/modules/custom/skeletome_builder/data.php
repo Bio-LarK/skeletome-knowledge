@@ -597,6 +597,30 @@ function data_get_omim_for_bone_dysplasia($bone_dysplasia) {
     }
 }
 
+function data_get_lastest_release_for_all_sources() {
+    $sources = data_get_all_sources();
+
+    $releases = array();
+    foreach($sources as $source) {
+        $source_id = $source->tid;
+        $sql = "SELECT t.*, s.sk_gsr_field_timestamp_value
+                FROM {taxonomy_term_data} t
+                INNER JOIN {field_data_sk_gsr_field_group_source} g
+                ON g.entity_id = t.tid
+                LEFT JOIN {field_data_sk_gsr_field_timestamp} s
+                ON s.entity_id = t.tid
+                WHERE g.sk_gsr_field_group_source_tid = $source_id
+                ORDER BY s.sk_gsr_field_timestamp_value DESC
+                LIMIT 1";
+        $results = db_query($sql);
+        foreach($results as $result) {
+            $releases[] = $result;
+        }
+    }
+
+    return $releases;
+}
+
 function data_get_all_sources() {
     $sk_group_source = taxonomy_vocabulary_machine_name_load('sk_group_source');
     $sk_group_source_vid = $sk_group_source->vid;

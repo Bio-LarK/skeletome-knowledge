@@ -24,8 +24,9 @@
     /*float: left;*/
     margin-top: 4px;
     margin-left: 160px;
-    margin-right: 165px;
+    margin-right: 230px;
 }
+
 .navsearch-small .navsearch input.navsearch-input {
     height: 32px;
 }
@@ -48,6 +49,9 @@
     top: 6px;
     font-size: 10px;
 }
+.navsearch-small .navsearch-icon {
+    top: 8px;
+}
 
 /* ================================================
     Nav Search
@@ -62,8 +66,8 @@
     .navsearch-icon {
         position: absolute;
         z-index: 999;
-        top: 8px;
-        left: 10px;
+        top: 14px;
+        left: 13px;
         opacity: 0.8;
     }
     .navsearch-inputs {
@@ -76,7 +80,7 @@
             box-sizing: border-box !important;
             -moz-box-sizing: border-box !important;
             display: block !important;
-            padding-left: 30px !important;
+            padding-left: 35px !important;
             border-radius: 50px !important;
             position: absolute;
             top: 0;
@@ -103,7 +107,7 @@
         .navsearch-helper {
             position: absolute;
             right: 20px;
-            top: 10px;
+            top: 12px;
             color: #aaa9a9;
             font-size: 10px;
             background-color: white;
@@ -124,7 +128,7 @@ ul.navsearch-suggestions {
     border-radius: 5px;
     position: absolute;
     width: 100%;
-    top: 40px;
+    top: 50px;
     z-index: 100;
     border: 1px solid #bbb;
 }
@@ -191,13 +195,29 @@ ul.navsearch-suggestions {
         padding-left: 21px;
         background: url(../images/email.png) left center no-repeat;
     }
+
+    .banner .btn-group {
+        width: 100%;
+    }
+    .banner .btn-group .btn {
+        width: 40%;
+    }
 }
 
+
+@media (min-width: 767px) {
+    .banner .btn-group {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+}
 
 body {
     line-height: 21px;
     font-size: 14px;
     background-color: #eee;
+    background-repeat: repeat;
     position: relative;
 }
 body:before {
@@ -258,18 +278,22 @@ body p {
     Front Page Banner
 */
 .banner {
-    background-color: #2e3033;
+    background-color: #2C3E50;
     color: white;
     text-align: center;
     padding: 21px;;
     padding-bottom: 28px;
     margin-bottom: 21px;;
-    background-image: url(../img/dark-pattern.png);
+    /*background-image: url(../img/dark-pattern.png);*/
     background-repeat: repeat;
 
     -webkit-box-shadow: 0 -5px 20px -10px rgba(0, 0, 0, 1) inset;
 
 }
+    .banner .logo {
+        padding: 0;
+        margin: 0;
+    }
 
 
 
@@ -278,12 +302,10 @@ body p {
 */
 .slogan {
     font-size: 28px;
-    width: 600px;;
-    margin: 0 auto;
     line-height: 35px;;
     font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", Helvetica, Arial, san-serif;
     margin-bottom: 21px;;
-    color: #888;
+    color: #eee;
 }
 
 
@@ -513,9 +535,10 @@ textarea.full-width {
     vertical-align: middle;
     /*background-color: #2e3033 !important;*/
     border: none;
-    background-color: #2e3033;
+    background-color: #2C3E50;
+
     background-image: none;
-    background-image: url(../img/dark-pattern.png);
+    /*background-image: url(../img/dark-pattern.png);*/
     /*background-color: #002040;*/
 
 }
@@ -1283,6 +1306,13 @@ table.table-dark {
 .btn-group.open .btn-primary.dropdown-toggle {
     /*background-color: #1c64a1;*/
 }
+.label.label-primary {
+    background-color: #2980B9;
+}
+    .label i {
+        opacity: 1.0;
+    }
+
 .btn-success {
     border: 1px solid #00a512;
     /*box-shadow: 0px 2px 0px #00a512;*/
@@ -1293,7 +1323,7 @@ table.table-dark {
 
 /* Dark button for the nav bar */
 .btn-dark-navbar {
-    background-color: #333;
+    background-color: #2C3E50;
     color: white;
     border: 1px solid black;
 }
@@ -1330,14 +1360,18 @@ table.table-dark {
     display: none;
 }
 
+.type-logo.type-logo-small {
+    height: 23px;
+    width: 23px;
+}
 .type-logo {
-    background-color: #333;
+    background-color: #2980B9;
     width: 30px;
     height: 30px;
-    padding: 5px;
-    border-radius: 5px;
+    padding: 8px;
+    border-radius: 100px;
     position: relative;
-    top: 6px;
+    top: -2px;
 }
     .type-logo path {
         fill: white;
@@ -1420,8 +1454,8 @@ h1, h2, h3, h4, h5 {
     margin-bottom: 10px;
     margin-right: 10px;
     list-style-type: none;
-    height: 50px;
-    width: 70px;
+    height: 75px;
+    width: 100px;
     overflow: hidden;
     background-color: white;
     position: relative;
@@ -1554,7 +1588,7 @@ h1, h2, h3, h4, h5 {
 
 .page-heading {
     padding-top: 14px;
-    padding-left: 14px;
+    padding-left: 0px;
 }
 /* ================================================
     Section
@@ -1644,6 +1678,7 @@ a.section-segment {
         .section-segment-statement-interaction-username {
             padding-right: 7px;
             font-weight: bold;
+            color: #333;
         }
 /**
 Used to add padding
@@ -1690,7 +1725,15 @@ Used to add padding
 .section-segment-inner-tabbed {
     position: relative;
     padding: 10px 7px 10px 64px !important;
+}
+.section-segment-grey {
+    background-color: rgb(252, 252, 252);
+}
 
+.section-segment-inner-tabbed-shadow {
+    -webkit-box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
+    -moz-box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
 }
 .section-segment-inner-tabbed::before {
      display: block;

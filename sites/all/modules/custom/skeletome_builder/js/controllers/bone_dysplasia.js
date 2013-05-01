@@ -44,6 +44,10 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.description = $scope.boneDysplasia.body.und[0];
         $scope.description.url = '?q=ajax/bone-dysplasia/description';
 
+        // Reference to source for description
+        $scope.provider = Drupal.settings.skeletome_builder.provider;
+        $scope.reference = Drupal.settings.skeletome_builder.reference;
+
         // Make a string of the synonyms
         if(angular.isDefined($scope.boneDysplasia.field_bd_synonym.und)) {
             $scope.synString = $scope.boneDysplasia.field_bd_synonym.und.reduce(function (previous, synonym) {

@@ -90,7 +90,7 @@
                     <?php global $user; ?>
                     <?php if(isset($user->name)):?>
                         <a class="btn btn-dark-navbar" href>
-                            <?php echo $user->name; ?>
+                            {{ user.name | truncate:30 }}
                         </a>
                         <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
                     <?php else: ?>
@@ -155,7 +155,23 @@
                                                                                                                       src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/img/logo-dark.png" alt="<?php print t('Home'); ?>"/></a>
                 <?php endif; ?>
                 <!-- /#logo -->
-                <a class="pull-right contact-us-link" href="?q=contact">Contact</a>
+                <style type="text/css">
+                    .footer-links {
+                        margin-top: 6px;;
+                    }
+                    .footer-links li {
+                        float: left;
+                        list-style-type: none;
+                        margin-right: 10px;;
+                    }
+                </style>
+                <ul class="footer-links pull-right">
+                    <li><a href="/">Home</a></li>
+                    <li>About</li>
+                    <li>Team</li>
+                    <li><a class="contact-us-link" href="?q=contact">Contact</a></li>
+                </ul>
+
 
                 <?php //print render($page['footer']); ?>
 

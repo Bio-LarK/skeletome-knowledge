@@ -55,6 +55,7 @@ function ajax_add_existing_xray_to_bone_dysplasia($bone_dysplasia_id, $xray_id) 
     $bone_dysplasia->log = "Added XRay.";
     node_save($bone_dysplasia);
 
+
     echo "added exsting xray";
 }
 
@@ -105,6 +106,8 @@ function ajax_add_xray_to_bone_dysplasia($bone_dysplasia_id) {
         $saved_file = $bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE][count($bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE]) - 1];
         $saved_file['full_url'] = file_create_url($saved_file['uri']);
         $saved_file['thumb_url'] = image_style_url('thumbnail', $saved_file['uri']);
+
+        drupal_get_messages();
 
         echo drupal_json_encode($saved_file);
     }

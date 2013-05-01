@@ -119,34 +119,43 @@
             <div class="banner">
 
                 <div class="container">
-                    <div class="row">
+                    <div class="row-fluid">
                         <div class="span12" style="position: relative;">
 
-
-                            <h1 class="logo">
+                            <h1 class="logo" style="font-weight: bold">
                                 <img style="height:40px; position: relative; top: -5px; left:-5px"
                                      src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone-logo.png"
                                      alt="Spine"/>Skeletome
                             </h1>
 
-                           <div class="btn-group" style="position: absolute;top: 0px; right: 0px">
+                           <div class="btn-group">
                                 <?php global $user; ?>
                                 <?php if(isset($user->name)):?>
-                                    <a class="btn btn-primary" href>
+                                    <a class="btn btn-dark-navbar" href>
                                         <?php echo $user->name; ?>
                                     </a>
-                                    <a class="btn btn-primary" href="?q=user/logout">Logout</a>
+                                    <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
                                 <?php else: ?>
-                                    <a class="btn btn-primary" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                                    <a class="btn btn-primary" href="?q=user/register">Register</a>
+                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
+                                    <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
                                 <?php endif; ?>
                             </div>
 
 
-                            <h2 class="slogan">
-                                <?php print $site_slogan; ?>
+                            <div class="row-fluid">
+                                <h2 class="slogan span8 offset2">
+                                    <?php print $site_slogan; ?>
+                                </h2>
+                            </div>
 
-                            </h2>
+
+                            <div class="row-fluid">
+                                <div class="span8 offset2">
+                                    <nav-search></nav-search>
+                                </div>
+                            </div>
+
+
 
 
 
@@ -170,117 +179,39 @@
                     </div>
                 </div>
             </div>
-
-
-
-            <div style="display: none;" navbar navbar-inverse navbar-dark navbar-static-top
-            ">
-            <div class="navbar-inner">
-                <div class="container">
-                    <?php if ($logo): ?>
-                        <a class="brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"
-                           id="logo"><img
-                                src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
-                    <?php endif; ?>
-
-                    <form class="navbar-search pull-left">
-                        <div class="input-append">
-                            <input cm-focus="true" autocomplete="?q=ajax/autocomplete/all/" type="text" class="search-query"
-                                   ng-model="searchTerm"
-                                   ng-init="searchTerm='<?php if (arg(0) == "search") echo arg(1); ?>'"
-                                   placeholder="Search for Bone Dysplasias, Groups, Genes or Clinical Features"
-                                   cm-return="globalSearch(searchTerm)">
-                            <a ng-click="globalSearch(searchTerm)" class="btn btn-success" href><i
-                                    class="icon-search icon-white"></i> Full Search</a>
-                        </div>
-                    </form>
-
-                    <div class="jumbotron">
-                        <?php print $site_slogan; ?>
-                    </div>
-
-
-                    <!--<ul class="nav nav-pills">
-                        <?php foreach ($main_menu as $item) : ?>
-                            <?php $url = "";
-                            if ($item['href'] == "<front>") {
-                                $url = base_path();
-                            } else {
-                                $url = "?q=" . $item['href'];
-                            } ?>
-
-
-                            <li>
-                                <a href="<?php echo $url; ?>">
-                                    <?php echo $item['title']; ?>
-                                </a>
-                            </li>
-
-
-                        <?php endforeach; ?>
-
-                    </ul>-->
-
-                    <div class="btn-group pull-right">
-                        <?php global $user; ?>
-                        <?php if (isset($user->name)): ?>
-                            <a class="btn btn-primary"
-                               href><?php echo $user->name; ?>
-                            </a>
-                            <a class="btn btn-primary" href="?q=user/logout">Logout</a>
-                        <?php else: ?>
-                            <a class="btn btn-primary" cm-popover cm-popover-content="loginForm" href id="login_button">Log
-                                In</a>
-                            <a class="btn btn-primary" href="?q=user/register">Register</a>
-                        <?php endif; ?>
-                    </div>
-
-                </div>
-            </div>
-    </div>
-
-    </header>
+        </header>
 
 
     <!--<clinical-feature-adder></clinical-feature-adder>-->
 
+    <?php if(strlen($messages) > 0): ?>
     <div class="container">
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12">
                 <?php print $messages; ?>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <div class="container">
-        <div class="row">
-            <div class="span12">
-                    <section>
-
-                        <div class="section-segment section-segment-header">
-                            <h3 style="float: left">Search</h3>
-                            <nav-search base-url="{{ baseUrl }}"></nav-search>
-                        </div>
-                    </section>
-            </div>
-        </div>
-        <div class="row">
+        <div class="row-fluid">
             <div class="span6">
                 <section>
                     <div class="section-segment section-segment-header">
                         <h3>Browse</h3>
                     </div>
-                    <div class="section-segment">
-                        <div class="muted">Browse an existing disease classification.</div>
+                    <div class="section-segment muted alert">
+                        Browse an existing disease classification.
                     </div>
 
-                    <div ng-repeat="source in allSources">
-                        <a class="section-segment" href="?q=taxonomy/term/{{ source.tid }}">
+                    <div ng-repeat="release in latestReleases">
+                        <a class="section-segment" href="?q=taxonomy/term/{{ release.tid }}">
 
                             <i class="icon-chevron-right pull-right"></i>
                             <i class="icon-chevron-right icon-white pull-right"></i>
 
-                            {{ source.name }} 2012 Nosology
+                            {{ release.name }} Nosology
                         </a>
                     </div>
                 </section>
@@ -290,28 +221,30 @@
                     <div class="section-segment section-segment-header">
                         <h3>Explore</h3>
                     </div>
-                    <div class="section-segment">
-                        <div class="muted">Try our visualization tools.</div>
+                    <div class="section-segment alert">
+                        Try our visualization tools.
                     </div>
-                    <a class="section-segment" href="#">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
+                    <div class="section-segment muted">
+                        Coming soon.
+                    </div>
 
-                        Clustering
-                    </a>
+<!--                    <a class="section-segment" href="#">-->
+<!--                        <i class="icon-chevron-right pull-right"></i>-->
+<!--                        <i class="icon-chevron-right icon-white pull-right"></i>-->
+<!--                    </a>-->
                 </section>
             </div>
         </div>
 
         <div style="display: none">
-            <div class="row">
+            <div class="row-fluid">
                 <section class="span12">
                     <div class="section-segment section-segment-header">
                         <h3>Recently Updated</h3>
                     </div>
 
                     <!-- Active Pages -->
-                    <div class="row">
+                    <div class="row-fluid">
                         <div class="span5">
                             <h4><img style="position: relative; top:-2px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-small-bone-dysplasia.png" alt=""/> Bone Dysplasias</h4>
                             <ul ng-cloak>
@@ -329,7 +262,7 @@
                     </div>
                 </section>
             </div>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span4">
                     <section class="">
                         <h4>Bone Dysplasia Classifications</h4>
@@ -356,7 +289,7 @@
 
     <div class="page-footer">
         <div class="container">
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12">
 
                     <?php if ($logo): ?>
@@ -378,14 +311,14 @@
 
     <!--<div>
         <div class="container" >
-            <div class="row">
+            <div class="row-fluid">
 
                 <div class="span12 section-top">
 
                 </div>
 
                 <section>
-                    <div class="row">
+                    <div class="row-fluid">
                         <div class="span12">
 
                         </div>
@@ -471,7 +404,7 @@
 
             <div id="content" class="column container" role="main">
 
-                <div class="row">
+                <div class="row-fluid">
 
                     <div>
                         <?php //print render($tabs); ?>
@@ -484,7 +417,7 @@
                     <?php print $feed_icons; ?>
                 </div>
 
-                <div class="row">
+                <div class="row-fluid">
                     <?php print render($title_prefix); ?>
 
                     <?php print render($title_suffix); ?>
@@ -504,7 +437,7 @@
             </div>
 
             <div class="container">
-                <div class="row">
+                <div class="row-fluid">
                     <div class="span12">
                         <?php print render($page['highlighted']); ?>
                     </div>

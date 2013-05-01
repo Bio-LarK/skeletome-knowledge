@@ -406,6 +406,42 @@ function page_bone_dysplasia($node) {
     }
 
 
+    // Get the descriptions
+    $provider = null;
+    $reference_string = null;
+
+    if(isset($node->body[LANGUAGE_NONE][0]['safe_value'])) {
+        $description = $node->body[LANGUAGE_NONE][0]['safe_value'];
+        // Get the reference string
+        $first_bracket_pos = strpos($description, '<p>[');
+        $last_bracket_pos = strrpos($description, ']</p>') + 1;
+        $length = 0;
+
+        if($first_bracket_pos !== false && $last_bracket_pos !== false) {
+            $length = $last_bracket_pos - $first_bracket_pos;
+
+            $reference_string = substr($description, $first_bracket_pos, $length);
+
+            // Clear the description
+            $node->body[LANGUAGE_NONE][0]['safe_value'] = str_replace($reference_string, "", $description);
+            // References
+            $reference_string = str_replace("<p>[", "", $reference_string);
+            $reference_string = str_replace("]</p>", "", $reference_string);
+//            $reference_string = substr($reference_string, 1, strlen($reference_string) - 2);
+
+            // Time to get out the 'available at' string
+
+
+            if(strpos($description, 'GeneReviews') !== false) {
+                $provider = "GeneReviews";
+                // get out the position
+            } else {
+                $provider = "OMIM";
+            }
+
+        }
+    }
+
     drupal_add_js(array(
         'skeletome_builder' => array(
             "bone_dysplasia"        => $node,
@@ -419,7 +455,9 @@ function page_bone_dysplasia($node) {
             'all_mois'              => $all_mois,
             'all_genes'             => $all_genes,
             'editors'               => data_get_editors_for_node($node->nid),
-            'similar'               => $similar_bone_dysplasias
+            'similar'               => $similar_bone_dysplasias,
+            'reference'             => $reference_string,
+            'provider'              => $provider
     )), 'setting');
 }
 

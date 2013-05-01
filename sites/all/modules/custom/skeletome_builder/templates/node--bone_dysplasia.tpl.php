@@ -100,12 +100,16 @@
     <div class="span12">
 
         <div class="page-heading">
-            <h1 ng-show="!synString.length"><img
-                    src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia.png"/> <?php print $title; ?>
+
+            <h1 ng-show="!synString.length">
+                <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>
+                <?php print $title; ?>
             </h1>
             <h1 ng-cloak ng-show="synString.length" cm-tooltip="top"
-                cm-tooltip-content="Also known as {{ synString }}"><img
-                    src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-bone-dysplasia.png"/> <?php print $title; ?>
+                cm-tooltip-content="Also known as {{ synString }}">
+
+                <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>
+                <?php print $title; ?>
             </h1>
         </div>
 
@@ -409,6 +413,10 @@
             <h3>Editors</h3>
         </div>
 
+        <div ng-show="!editors.length" class="section-segment muted">
+            No editors associated with this disorder.
+        </div>
+
         <div class="section-segment" ng-repeat="editor in editors">
             <i class="icon-user"></i> {{ editor.name | capitalize }}
         </div>
@@ -463,7 +471,7 @@
 
     <!-- Modal Footer -->
     <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+        <a href class="btn btn-success" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
     </div>
     <!-- /Modal Footer -->
 </div>
@@ -615,8 +623,8 @@
                     <tr>
                         <td>
                             <strong>{{ gene.title | truncate:20 }}</strong>
-                            <a ng-click="gene.showGeneMutations = true" ng-show="!gene.showGeneMutations" class="btn btn-primary pull-right" href><i class="icon-chevron-down icon-white"></i> Show</a>
-                            <a ng-click="gene.showGeneMutations = false" ng-show="gene.showGeneMutations" class="btn btn-primary pull-right" href><i class="icon-chevron-up icon-white"></i> Hide</a>
+                            <a ng-click="gene.showGeneMutations = true" ng-show="!gene.showGeneMutations" class="btn btn-success pull-right" href><i class="icon-chevron-down icon-white"></i> Show</a>
+                            <a ng-click="gene.showGeneMutations = false" ng-show="gene.showGeneMutations" class="btn btn-success pull-right" href><i class="icon-chevron-up icon-white"></i> Hide</a>
                         </td>
                     </tr>
                     <tr ng-show="gene.showGeneMutations">
@@ -649,7 +657,7 @@
 
     <!-- Modal Footer -->
     <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+        <a href class="btn btn-success" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
     </div>
     <!-- /Modal Footer -->
 </div>
@@ -665,9 +673,8 @@
     <!-- Modal Body -->
     <div class="modal-body">
         <div class="modal-body-inner">
-            <clinical-feature-adder></clinical-feature-adder>
 
-            <!--<p>Edit Clinical Features to attached to '{{boneDysplasia.title}}'.</p>
+            <p>Edit Clinical Features to attached to '{{boneDysplasia.title}}'.</p>
 
             <form>
                 <search model="$parent.editClinicalFeatureSearch"
@@ -693,7 +700,7 @@
                                 class="icon-plus icon-white"></i> Add</a>
                     </td>
                 </tr>
-            </table>-->
+            </table>
 
             <!-- Helpful Prompt (show when no text is entered, and no existing genes -->
             <p class="muted info">Want to find another Clinical Feature? <br/>Try using the search bar above e.g.
@@ -708,7 +715,7 @@
 
     <!-- Modal Footer -->
     <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+        <a href class="btn btn-success" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
     </div>
     <!-- /Modal Footer -->
 </div>

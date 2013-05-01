@@ -93,7 +93,7 @@
                     </div>
 
                     <h1>
-                        <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo-large-gene.png"/>
+                        <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/gene_logo.svg"/>
                         <?php print $title; ?>
                     </h1>
 
@@ -224,16 +224,18 @@
                         <h3>Bone Dysplasias</h3>
                     </div>
 
+                    <div ng-show="!boneDysplasias.length" class="section-segment muted">
+                        No Bone dysplasias associated with this gene.
+                    </div>
 
-                        <div ng-repeat="boneDysplasia in boneDysplasias">
+                    <div ng-repeat="boneDysplasia in boneDysplasias">
+                        <a class="section-segment" href="?q=node/{{ boneDysplasia.nid }}">
+                            <i class="icon-chevron-right pull-right"></i>
+                            <i class="icon-chevron-right icon-white pull-right"></i>
 
-                            <a class="section-segment" href="?q=node/{{ boneDysplasia.nid }}">
-                                <i class="icon-chevron-right pull-right"></i>
-                                <i class="icon-chevron-right icon-white pull-right"></i>
-
-                                {{ boneDysplasia.title }}
-                            </a>
-                        </div>
+                            {{ boneDysplasia.title }}
+                        </a>
+                    </div>
 
                 </section>
 
@@ -242,6 +244,9 @@
                         <h3>Editors</h3>
                     </div>
 
+                    <div ng-show="!editors.length" class="section-segment muted">
+                        No editors associated with this gene.
+                    </div>
 
                     <div ng-repeat="editor in editors" class="section-segment">
                         <i class="icon-user"></i> {{ editor.name | capitalize }}

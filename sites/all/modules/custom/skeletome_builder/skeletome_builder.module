@@ -156,6 +156,8 @@ function skeletome_builder_page_build(&$page) {
          * Front Page
          */
 
+
+
         // Get 10 phenotypes
         $all_clinical_features = data_all_clinical_features(20);
 
@@ -201,8 +203,7 @@ function skeletome_builder_page_build(&$page) {
 
         // Get Bone dysplasia classifications
 
-        $sources = data_get_all_sources();
-
+        $releases = data_get_lastest_release_for_all_sources();
 
         $sql = "SELECT r.uid, u.name, COUNT(r.uid)
             FROM node_revision r, users u
@@ -223,7 +224,7 @@ function skeletome_builder_page_build(&$page) {
                 'all_bone_dysplasias'       => $bone_dysplasias,
                 'all_groups'                => $all_groups,
                 'all_genes'                 => $genes,
-                'all_sources'               => $sources,
+                'latest_releases'           => $releases,
                 'top_contributors'          => $top_contributors
         )), 'setting');
 

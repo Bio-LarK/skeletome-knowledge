@@ -33,24 +33,22 @@
 
             <div>
                 <b>Contributors</b>
-                            <span ng-repeat="editor in editors">
-                                {{ editor.name | capitalize }},
-                            </span>
-                <span>Gene Reviews</span>
+                <span ng-repeat="editor in editors">
+                    {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span>
+                </span>
             </div>
         </div>
 
-        <div class="section-segment alert alert-info" ng-show="!isEditingDescription">
+        <div class="section-segment alert alert-info" ng-show="provider && !isEditingDescription">
             <div style="margin-bottom: 7px;">
-                <i class="icon-info-sign"></i> <b>This is a stub sourced from GeneReviews</b>.
+                <i class="icon-info-sign"></i> <b>This is a stub sourced from {{ provider }}</b>.
             </div>
-            <div style="font-size: 12px">
-                Francomano, CA, (Updated January 9, 2006). Achondroplasia. In: Pagon RA, Bird TD, Dolan CR, et al. editors GeneReviews [Internet]. Copyright, University of Washington, Seattle. 1997-2011. Available at http://www.ncbi.nlm.nih.gov/pubmed/20301295
+            <div style="font-size: 12px" ng-bind-html-unsafe="reference">
             </div>
 
         </div>
         <div class="section-segment alert alert-success" cm-alert="description.isLoading">
-            Description saved.
+            <i class="icon-ok"></i> Description saved.
         </div>
 
         <div class="section-segment" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
