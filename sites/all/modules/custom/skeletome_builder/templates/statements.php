@@ -35,7 +35,7 @@
                         <a ng-show="isEditingStatements" href
                            ng-click="hideEditStatements()"
                            data-toggle="modal" role="button"
-                           class="btn btn-info">
+                           class="btn btn-success">
                             <i class="icon-ok icon-white"></i> Done
                         </a>
 
