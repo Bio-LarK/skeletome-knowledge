@@ -182,42 +182,44 @@ $isAdmin = user_access('administer site configuration');
                 <h2>Clinical Features</h2>
             </div>
             <div class="section-segment">
-                <p class="muted" ">
+                <p class="muted">
                     '{{boneDysplasia.title}}' has {{clinicalFeatures.length}} clinical features.
                 </p>
-
                 <form ng-show="clinicalFeatures.length" style="margin-bottom: 0">
                     <search model="clinicalFeatureFilter" placeholder="Search for a Clinical Feature"></search>
                 </form>
             </div>
 
-            <div class="section-segment">
-                <div>
-                    <div style="width: 60%; display: inline-block">
-                        <b>Feature</b>
-                    </div>
-                    <div style="width: 35%; display: inline-block" cm-tooltip="top" cm-tooltip-content="What is information content?">
-                        <i class="icon-list-alt"></i> <b>Information Content</b>
-                    </div>
-                </div>
-            </div>
-            <div  ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content'">
-                <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
-                    <i class="icon-chevron-right pull-right"></i>
-                    <i class="icon-chevron-right icon-white pull-right"></i>
-
-                    <div style="width: 60%; float: left">
-                        {{clinicalFeature.name | truncate:40 | capitalize}}
-                    </div>
-
-                    <div style="width: 35%; float: left">
-                        <div class="progress">
-                            <div class="bar" style="width:{{ clinicalFeature.information_content }}%"></div>
+            <div ng-show="clinicalFeatures.length">
+                <div class="section-segment">
+                    <div>
+                        <div style="width: 60%; display: inline-block">
+                            <b>Feature</b>
+                        </div>
+                        <div style="width: 35%; display: inline-block" cm-tooltip="top" cm-tooltip-content="What is information content?">
+                            <i class="icon-list-alt"></i> <b>Information Content</b>
                         </div>
                     </div>
-                </a>
+                </div>
+                <div  ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content'">
+                    <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
+                        <i class="icon-chevron-right pull-right"></i>
+                        <i class="icon-chevron-right icon-white pull-right"></i>
 
+                        <div style="width: 60%; float: left">
+                            {{clinicalFeature.name | truncate:40 | capitalize}}
+                        </div>
+
+                        <div style="width: 35%; float: left">
+                            <div class="progress">
+                                <div class="bar" style="width:{{ clinicalFeature.information_content }}%"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
             </div>
+
         </section>
 </div>
 

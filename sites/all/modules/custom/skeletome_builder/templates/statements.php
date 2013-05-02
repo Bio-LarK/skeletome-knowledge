@@ -141,14 +141,11 @@ $isAdmin = user_access('administer site configuration');
                     </div>
                 </div>
 
-
-
-
                 <!-- List of comments -->
                 <div ng-show="statement.isShowingComments">
 
                     <div ng-repeat="comment in statement.comments">
-                        <div class="section-segment section-segment-inner-tabbed" ng-class="{'section-segment-inner-tabbed-shadow': $index == 0}">
+                        <div class="section-segment section-segment-inner-tabbed" ng-class="{'section-segment-inner-tabbed-shadow': $index == 0 && !statement.isLoadingComments }">
                             <div ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
 
                             <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments">
@@ -165,57 +162,30 @@ $isAdmin = user_access('administer site configuration');
                         </div>
                     </div>
 
-                    <div class="section-segment section-segment-inner-tabbed" ng-show="statement.isLoadingComments">
+                    <div class="section-segment section-segment-inner-tabbed section-segment-inner-tabbed-shadow" ng-show="statement.isLoadingComments">
                         <div class="refreshing-box">
                             <i class="icon-refresh icon-refreshing"></i>
                         </div>
                     </div>
-
-
-                    <!--<div class="comment-content" ng-repeat="comment in statement.comments">
-
-
-                        <div class="comment-content-user">
-                            <div class="segment-padding comment-content-user-inner">
-
-                                <a ng-show="isEditingStatements"
-                                   ng-click="deleteStatement(statement)"
-                                   class="btn btn-danger" href>
-                                    <i class="icon-remove icon-white"></i> Delete
-                                </a>
-
-                                {{ comment.name || "Anonymous" | capitalize }}
-                            </div>
-                        </div>
-
-                        <div class="segment-padding comment-content-text" ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></div>
-                    </div>
-
-
-                    <div class="comment-content segment-padding" ng-show="statement.isLoadingComments">
-                        <div class="refreshing-box">
-                            <i class="icon-refresh icon-refreshing"></i>
-                        </div>
-                    </div>-->
 
                     <!-- New Comment -->
                     <?php if ($user->uid): ?>
-                        <div ng-show="!isEditingStatements" class="section-segment section-segment-inner-tabbed comment-new">
-                            <textarea cm-focus="statement.showAddComment"
-                                      cm-return="addComment(statement, statement.newComment)"
-                                      ng-model="statement.newComment"
-                                      placeholder="Write a comment about this statement."
-                                      class="full-width">
-                            </textarea>
-                            <div class="pull-right">
-                                <button ng-disabled="!statement.newComment.length" ng-click="addComment(statement, statement.newComment)" class="btn btn-success">
-                                    <i class="icon-ok icon-white"></i> Post
-                                </button>
-                                <button class="btn" ng-click="cancelComment(statement)">
-                                    <i class="icon-remove"></i> Cancel
-                                </button>
-                            </div>
+                    <div ng-show="!isEditingStatements" class="section-segment section-segment-inner-tabbed comment-new" ng-class="{ 'section-segment-inner-tabbed-shadow': !statement.comments.length && !statement.isLoadingComments }">
+                        <textarea cm-focus="statement.showAddComment"
+                                  cm-return="addComment(statement, statement.newComment)"
+                                  ng-model="statement.newComment"
+                                  placeholder="Write a comment about this statement."
+                                  class="full-width">
+                        </textarea>
+                        <div class="pull-right">
+                            <button ng-disabled="!statement.newComment.length" ng-click="addComment(statement, statement.newComment)" class="btn btn-success">
+                                <i class="icon-ok icon-white"></i> Post
+                            </button>
+                            <button class="btn" ng-click="cancelComment(statement)">
+                                <i class="icon-remove"></i> Cancel
+                            </button>
                         </div>
+                    </div>
                     <?php endif; ?>
 
                 </div>
