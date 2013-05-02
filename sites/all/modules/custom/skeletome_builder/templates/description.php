@@ -9,7 +9,7 @@ $isAdmin = user_access('administer site configuration');
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
 
-        <div class="section-segment section-segment-header">
+        <div class="section-segment">
             <?php
             if ($isAdmin || $isCurator || $isEditor): ?>
                 <div class="section-segment-header-buttons pull-right">
@@ -40,13 +40,13 @@ $isAdmin = user_access('administer site configuration');
                 </div>
             <?php endif; ?>
 
-            <div ng-show="!isEditingDescription">
+            <div class="section-segment-header-editors" ng-show="!isEditingDescription">
                 <b><i class="icon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
                     {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}
                 </span>
             </div>
-            <div ng-show="isEditingDescription">
+            <div class="section-segment-header-editors" ng-show="isEditingDescription">
                 <b><i class="icon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
             </div>
         </div>

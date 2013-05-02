@@ -553,6 +553,14 @@ function is_moderator() {
         return false;
     }
 }
+function is_editor() {
+    global $user;
+    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && (in_array('sk_editor', $user->roles) || in_array('sk_moderator', $user->roles)))) {
+        return true;
+    } else {
+        return false;
+    }
+}
 function is_authenticated() {
     global $user;
     if(isset($user->uid)) {
@@ -773,7 +781,7 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_gene_description',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
     );
     $items['ajax/gene/%/details'] = array(
         'type'              => MENU_CALLBACK,
@@ -799,7 +807,7 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_gene_statement',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
     );
 
 
@@ -827,14 +835,14 @@ function skeletome_builder_menu() {
         'title' 		    => t('Add xray to bonedysplasia'),
         'page callback' 	=> 'ajax_add_xray_to_bone_dysplasia',
         'page arguments'    => array(2),
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
         'type'              => MENU_CALLBACK
     );
     $items['ajax/bone-dysplasia/%/xray/%/add'] = array(
         'title' 		    => t('Add existing xray to bonedysplasia'),
         'page callback' 	=> 'ajax_add_existing_xray_to_bone_dysplasia',
         'page arguments'    => array(2, 4),
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
         'type'              => MENU_CALLBACK
     );
 
@@ -842,7 +850,7 @@ function skeletome_builder_menu() {
         'title' 		    => t('Add xray to bonedysplasia'),
         'page callback' 	=> 'ajax_remove_xray_from_bone_dysplasia',
         'page arguments'    => array(2, 4),
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
         'type'              => MENU_CALLBACK
     );
 
@@ -861,7 +869,7 @@ function skeletome_builder_menu() {
         'title' => t('Update Description'),
         'type'              => MENU_CALLBACK,
         'page callback'     => 'ajax_bone_dysplasia_description',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
     );
 
     $items['ajax/bone-dysplasia/%node/statement/add'] = array(
@@ -869,7 +877,7 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_add_statement_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_editor',
     );
 
 

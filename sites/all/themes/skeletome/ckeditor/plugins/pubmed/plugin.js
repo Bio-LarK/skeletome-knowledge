@@ -3,13 +3,13 @@ CKEDITOR.plugins.add( 'pubmed',
         requires: ['iframedialog'],
         init: function( editor )
         {
-            var me = this;
 
-            (function(theEditor) {
+            (function(theEditor, path) {
 
                 /* Define the dialog here, so we have access to the path */
 //            CKEDITOR.dialog.addIframe('pubmedDialog', 'pubmedDialog', me.path + 'dialog.html', 400, 200);
 
+                console.log("IS THIS RUNNING");
                 CKEDITOR.dialog.add( 'pubmedDialog' + theEditor.name, function ()
                 {
                     return {
@@ -24,7 +24,7 @@ CKEDITOR.plugins.add( 'pubmed',
                                         [
                                             {
                                                 type : 'iframe',
-                                                src : me.path + 'dialog.html?nocache=' + Math.floor(Math.random()*110),
+                                                src : path + 'dialog.html?nocache=' + Math.floor(Math.random()*110),
                                                 width : '100%',
                                                 height : '100%'
                                             }
@@ -40,7 +40,6 @@ CKEDITOR.plugins.add( 'pubmed',
                             theEditor.fire('save');
                         },
                         onHide: function() {
-
                         }
                     };
                 });
@@ -53,13 +52,10 @@ CKEDITOR.plugins.add( 'pubmed',
                     {
                         label: 'Add PubMed Reference',
                         command: 'pubmedDialog' + theEditor.name,
-                        icon: this.path + 'images/cite.png'
+                        icon: path +  'images/cite.png' //parent.Drupal.settings.skeletome_builder.base_url + '/sites/all/themes/skeletome/ckeditor/plugins/pubmed/images/cite.png'
                     }
                 );
-            })(editor);
-
-
-
+            })(editor, this.path);
         }
     }
 );

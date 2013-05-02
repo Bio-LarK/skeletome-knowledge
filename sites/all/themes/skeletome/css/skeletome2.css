@@ -1559,6 +1559,9 @@ h1, h2, h3, h4, h5 {
     padding-top: 14px;
     padding-left: 0px;
 }
+.page-heading h1 {
+    padding-bottom: 0;
+}
 /* ================================================
     Section
 */
@@ -1695,6 +1698,10 @@ Used to add padding
     -moz-transform: rotate(90deg);
     /* for ie */
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.section-segment-header-editors {
+    margin: 5px 0;
 }
 
 /**
