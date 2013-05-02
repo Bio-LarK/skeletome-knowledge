@@ -70,6 +70,15 @@
  */
 ?>
 
+<?php
+    // Create some user access variables
+    $isRegistered = isset($user->uid);
+    $isModerator = is_array($user->roles) && in_array('sk_moderator', $user->roles);
+    $isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
+    $isAdmin = user_access('administer site configuration');
+?>
+
+
 <div id="page" style="position:relative;" ng-controller="PageCtrl">
 
 <header id="header" role="banner">
@@ -77,7 +86,7 @@
 
     <div class="navbar navbar-inverse navbar-dark navbar-static-top">
         <div class="navbar-inner">
-            <div class="container-fluid">
+            <div class="container">
 
 
                 <?php if ($logo): ?>
@@ -122,8 +131,8 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <!-- class="container-fluid" -->
+    <div class="container">
+        <!-- class="container" -->
         <a id="main-content"></a>
         <div>
             <?php print render($page['content']); ?>
@@ -131,7 +140,7 @@
 
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row-fluid">
             <div class="span12">
                 <?php print render($page['highlighted']); ?>
@@ -145,7 +154,7 @@
 
 <!-- #Footer -->
 <div class="page-footer">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row-fluid">
             <div class="span12 ">
                 <!-- Site Logo -->

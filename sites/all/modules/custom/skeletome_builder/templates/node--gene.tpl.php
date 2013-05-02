@@ -81,7 +81,7 @@
 ?>
 
 <div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl" ng-init="init()">
-    <div class="container-fluid" ng-cloak>
+    <div  ng-cloak>
 
 
         <div class="row-fluid">

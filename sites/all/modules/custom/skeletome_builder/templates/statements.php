@@ -1,3 +1,11 @@
+<?php
+// Create some user access variables
+$isRegistered = isset($user->uid);
+$isCurator = is_array($user->roles) && in_array('sk_curator', $user->roles);
+$isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
+$isAdmin = user_access('administer site configuration');
+?>
+
 <div ng-controller="StatementCtrl">
     <?php if ($user->uid): ?>
 
@@ -12,7 +20,7 @@
             <div class="pull-right section-segment-header-buttons">
 
                 <!-- Show Add statement button -->
-                <?php if ($user->uid): ?>
+                <?php if ($isRegistered): ?>
                     <a ng-show="!model.isAddingStatement && !isEditingStatements" class="btn btn-success " ng-click="showAddStatement()"  href>
                         <i class="icon-plus icon-white"></i> Add Statement
                     </a>
@@ -30,7 +38,7 @@
 
 
                 <!-- Edit buttons -->
-                <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                <?php if($isAdmin || $isCurator): ?>
                     <span ng-show="!model.isAddingStatement">
                         <a ng-show="isEditingStatements" href
                            ng-click="hideEditStatements()"

@@ -82,12 +82,13 @@
 ?>
 
 
-
-<?php if (user_access('administer site configuration')) : ?>
-
-    <!--    <h1>is admin?</h1>-->
-
-<?php endif; ?>
+<?php
+// Create some user access variables
+$isRegistered = isset($user->uid);
+$isCurator = is_array($user->roles) && in_array('sk_curator', $user->roles);
+$isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
+$isAdmin = user_access('administer site configuration');
+?>
 
 
 <?php if ($page): ?>
@@ -95,7 +96,7 @@
 <div ng-controller="BoneDysplasiaCtrl" ng-init="init()" class="node_page" xmlns="http://www.w3.org/1999/html"
      xmlns="http://www.w3.org/1999/html">
 
-<div class="container-fluid" ng-cloak>
+<div  ng-cloak>
 <div class="row-fluid">
     <div class="span12">
 
@@ -113,7 +114,7 @@
             </h1>
         </div>
 
-        <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+        <?php if ($isAdmin || $isCurator): ?>
             <!--<a href="#new-bone-dysplasia" role="button" class="btn pull-right" data-toggle="modal"><i
                     class="icon-plus"></i> Add New Disorder</a>-->
         <?php endif; ?>
@@ -130,7 +131,7 @@
 
 <section class="media-body" ng-class="{'section-more': xrays.length > xrayDisplayLimit}">
     <div class="section-segment section-segment-header">
-        <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+        <?php if ($isAdmin || $isEditor || $isCurator): ?>
             <div class="pull-right section-segment-header-buttons">
                 <a href ng-click="showEditXRays()" data-toggle="modal" role="button" class="btn"><i
                         class="icon-pencil"></i> Edit</a>
@@ -140,7 +141,7 @@
         <h3>X-Rays</h3>
     </div>
 
-    <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+    <?php if ($isAdmin || $isCurator): ?>
         <div class="section-segment">
             <div class="dropzone" ng-model="xrays"
                  drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add">
@@ -171,7 +172,7 @@
         <section id="clinical_features" class="block">
             <div class="section-segment section-segment-header">
                 <div class="section-segment-header-buttons">
-                    <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                    <?php if ($isAdmin || $isCurator): ?>
                         <div class="pull-right">
                             <a href ng-click="showEditClinicalFeatures()" data-toggle="modal" role="button" class="btn"><i
                                     class="icon-pencil"></i> Edit</a>
@@ -217,65 +218,7 @@
                 </a>
 
             </div>
-
-            <!--<div class="section-segment" ng-show="clinicalFeatures.length">
-                <table class="table">
-                    <tr>
-                        <th>Clinical Feature</th>
-                        <th cm-tooltip="top" cm-tooltip-content="What is information content?">Information Content</th>
-                    </tr>
-                    <tr ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content'">
-                        <td>
-                            <a href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}"
-                               title="{{clinicalFeature.name}}">
-                                {{clinicalFeature.name | truncate:40 | capitalize}}
-                            </a>
-                        </td>
-                        <td>
-                            <div class="progress">
-                                <div class="bar bar-warning" style="width:{{ clinicalFeature.information_content }}%"></div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>-->
         </section>
-
-<!--<div class="section-segment">
-    <div ng-cloak ng-show="clinicalFeatures.length > 0">
-        <table class="table table-striped table-bordered table-dark">
-            <tr>
-                <th>Clinical Feature</th>
-                <th>Information Content</th>
-            </tr>
-            <tr ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content' | limitTo:clinicalFeatureDisplayLimit">
-                <td>
-                    <a href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}"
-                       title="{{clinicalFeature.name}}">
-                        {{clinicalFeature.name | truncate:40 | capitalize}}
-                    </a>
-                </td>
-                <td>
-                    <div class="progress">
-                        <div class="bar bar-warning" style="width:{{ clinicalFeature.information_content }}%"></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-
-        <div class="clearfix" ng-show="clinicalFeatures.length > clinicalFeatureDisplayLimit"
-             style="text-align: center">
-            <a ng-show="(clinicalFeatures | filter:clinicalFeatureFilter).length > clinicalFeatureDisplayLimit"
-               href class="btn btn-more" ng-click="clinicalFeatureDisplayLimit = clinicalFeatures.length"><i
-                    class="icon-chevron-down icon-black"></i> Show All</a>
-            <a ng-show="(clinicalFeatures | filter:clinicalFeatureFilter).length == clinicalFeatureDisplayLimit"
-               href class="btn btn-more" ng-click="clinicalFeatureDisplayLimit = 10"><i
-                    class="icon-chevron-up icon-black"></i> Show Less</a>
-        </div>
-
-    </div>
-</div>-->
-<!--</section>-->
 </div>
 
 <div class="span4">
@@ -312,7 +255,7 @@
 
     <section>
         <div class="section-segment section-segment-header">
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+            <?php if ($isAdmin || $isCurator): ?>
                 <div class="pull-right section-segment-header-buttons">
                     <a ng-click="showEditDetails()" href data-toggle="modal" role="button" class="btn"><i
                             class="icon-pencil"></i> Edit</a>
@@ -353,7 +296,7 @@
 
     <section>
         <div class="section-segment section-segment-header">
-            <?php if ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+            <?php if ($isAdmin || $isCurator): ?>
                 <div class="pull-right section-segment-header-buttons">
                     <a href ng-click="showEditGenes()" data-toggle="modal" role="button" class="btn"><i
                             class="icon-pencil"></i> Edit</a>

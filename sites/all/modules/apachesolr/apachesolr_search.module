@@ -805,7 +805,7 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
     // Retrieve expected results from searching
     $terms = str_replace(";", "", arg(2));
     $markup = '
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12">
                     <div class="page-heading">
                         <h1>Search Results <small>' . $terms . '</small></h1>
@@ -819,7 +819,7 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
 
         // Build up the search page for no reuslts
         $build['title'] = array('#markup' => $markup);
-        $build['row1'] = array('#markup' => '<div class="row">');
+        $build['row1'] = array('#markup' => '<div class="row-fluid">');
         $build['message'] = array('#markup' => '<div class="span8"><section><div class="section-segment">Select from the options on the right to launch a search.</div></section></div>');
         $build['search_results'] = apachesolr_search_page_browse($results['apachesolr_search_browse'], $search_page['env_id']);
         $build['row2'] = array('#markup' => '</div>');
@@ -828,7 +828,7 @@ function apachesolr_search_search_page_custom($results, $search_page, $build = a
 
         // Build up the search page for results
         $build['title'] = array('#markup' => $markup);
-        $build['row'] = array('#markup' => '<div class="row">');
+        $build['row'] = array('#markup' => '<div class="row-fluid">');
         // Get the facts
         $build['search_results'] = array(
             '#theme' => 'search_results',
@@ -1760,7 +1760,7 @@ function theme_apachesolr_search_noresults()
 {
     $terms = str_replace(";", "", arg(2));
     $markup = '
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12">
                     <div class="page-heading">
                         <h1>Search Results <small>' . $terms . '</small></h1>
