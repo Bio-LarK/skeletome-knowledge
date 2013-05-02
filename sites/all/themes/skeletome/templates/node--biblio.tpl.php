@@ -86,34 +86,35 @@
 <div class="container">
     <div class="row">
         <div class="span12">
-            <section class="section-top">
+
+            <div class="page-heading">
                 <h1><?php print $title; ?></h1>
-            </section>
-            <section>
+            </div>
 
-                <article class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+            <section class="node-<?php print $node->nid; ?> <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
-                    <?php if ($title_prefix || $title_suffix || $display_submitted || $unpublished || !$page && $title): ?>
-                        <header>
-                            <?php print render($title_prefix); ?>
-                            <?php if (!$page && $title): ?>
-                                <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-                            <?php endif; ?>
-                            <?php print render($title_suffix); ?>
+                <?php if ($title_prefix || $title_suffix || $display_submitted || $unpublished || !$page && $title): ?>
+                <div class="section-segment">
+                    <?php print render($title_prefix); ?>
+                    <?php if (!$page && $title): ?>
+                        <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
+                    <?php endif; ?>
+                    <?php print render($title_suffix); ?>
 
-                            <?php if ($display_submitted): ?>
-                                <p class="submitted">
-                                    <?php print $user_picture; ?>
-                                    <?php print $submitted; ?>
-                                </p>
-                            <?php endif; ?>
-
-                            <?php if ($unpublished): ?>
-                                <p class="unpublished"><?php print t('Unpublished'); ?></p>
-                            <?php endif; ?>
-                        </header>
+                    <?php if ($display_submitted): ?>
+                        <p class="submitted">
+                            <?php print $user_picture; ?>
+                            <?php print $submitted; ?>
+                        </p>
                     <?php endif; ?>
 
+                    <?php if ($unpublished): ?>
+                        <p class="unpublished"><?php print t('Unpublished'); ?></p>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+
+                <div class="section-segment">
                     <?php
                     // We hide the comments and links now so that we can render them later.
                     hide($content['comments']);
@@ -121,12 +122,13 @@
 
                     print render($content);
                     ?>
+                </div>
 
+                <div class="section-segment">
                     <?php print render($content['links']); ?>
 
                     <?php print render($content['comments']); ?>
-
-                </article><!-- /.node -->
+                </div>
             </section>
         </div>
     </div>
