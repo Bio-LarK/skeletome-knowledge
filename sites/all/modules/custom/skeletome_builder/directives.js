@@ -748,7 +748,7 @@ myApp.directive('navSearch', function() {
                     // enter pressed
                     if($scope.selectedIndex < 0 || $scope.isMultitermQuery()) {
                         // do the search
-                        window.location.href = "?q=search/site/" + $scope.navSearch.query;
+                        window.location.href = "?q=search/site/" + $scope.navSearch.query + "*";
                     } else {
                         // selected object
                         var selectedObject = $scope.navSearch.querySuggestions[$scope.selectedIndex];

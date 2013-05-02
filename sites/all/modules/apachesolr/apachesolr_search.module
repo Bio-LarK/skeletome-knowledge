@@ -1163,6 +1163,7 @@ function apachesolr_search_highlighting_params(DrupalSolrQueryInterface $query =
     // This should be an array of possible field names.
     $params['hl.fl'] = variable_get('apachesolr_hl_fieldtohighlight', NULL);
     $params = array_filter($params);
+
     if ($query) {
         $query->addParams($params);
     }
@@ -1266,9 +1267,12 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
     $results = array();
     // We default to getting snippets from the body content and comments.
     $hl_fl = $query->getParam('hl.fl');
+
     if (!$hl_fl) {
         $hl_fl = array('content', 'ts_comments');
     }
+
+
     $total = $response->response->numFound;
     pager_default_initialize($total, $query->getParam('rows'));
     if ($total > 0) {
@@ -1293,6 +1297,7 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
                 }
             }
             // If there's no snippet at this point, add the teaser.
+
             if (!$snippets) {
                 if (isset($doc->teaser)) {
                     $snippets[] = truncate_utf8($doc->teaser, 256, TRUE);
@@ -1726,6 +1731,7 @@ function apachesolr_search_theme_registry_alter(&$theme_registry)
 function theme_apachesolr_search_snippets($vars)
 {
     $result = '';
+
     if (is_array($vars['snippets'])) {
         $snippets = $vars['snippets'];
         if (isset($snippets['content'])) {
