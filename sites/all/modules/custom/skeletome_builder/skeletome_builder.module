@@ -326,6 +326,28 @@ function skeletome_builder_theme($existing, $type, $theme, $path) {
         'template'  => 'template_contact_us'
     );
 
+    $themes['skeletome_builder_about'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_builder') . '/templates',
+        'template'  => 'template_about'
+    );
+
+    $themes['skeletome_builder_team'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_builder') . '/templates',
+        'template'  => 'template_team'
+    );
+
+
+
+
+
     $themes['bd_add_cf'] = array(
         'variables' => array(
         ),
@@ -573,6 +595,23 @@ function skeletome_builder_menu() {
     $items['contact'] = array(
         'title' => 'Contact Us',
         'page callback' => 'page_contact',
+        'access arguments' => array('access content')
+    );
+    /**
+     * Team Page
+     */
+    $items['team'] = array(
+        'title' => 'team',
+        'page callback' => 'page_team',
+        'access arguments' => array('access content')
+    );
+
+    /**
+     * About Page
+     */
+    $items['about'] = array(
+        'title' => 'about',
+        'page callback' => 'page_about',
         'access arguments' => array('access content')
     );
 

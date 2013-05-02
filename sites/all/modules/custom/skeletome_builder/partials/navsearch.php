@@ -26,7 +26,7 @@
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
             ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED}">
-            <a class="navsearch-suggestion-link" href="?q=search/site/{{ navSearch.query }}">
+            <a class="navsearch-suggestion-link" href="?q=search/site/{{ navSearch.query }}*">
                 <span class="navsearch-suggestion-guide">
                     Search for
                 </span>

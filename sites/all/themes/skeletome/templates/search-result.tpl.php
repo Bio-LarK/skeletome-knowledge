@@ -67,13 +67,18 @@
 
 <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
     <section>
-        <div class="section-segment section-segment-header">
+        <a class="section-segment section-segment-header" href="<?php print $url; ?>">
             <?php print render($title_prefix); ?>
+            <div class="section-segment-header-buttons pull-right">
+                <i class="icon-chevron-right "></i>
+                <i class="icon-chevron-right icon-white"></i>
+            </div>
+
             <h3 <?php print $title_attributes; ?>>
-                <a href="<?php print $url; ?>"><?php print $title; ?></a>
+                <?php print $title; ?>
             </h3>
             <?php print render($title_suffix); ?>
-        </div>
+        </a>
 
         <div class="section-segment">
             <?php if ($snippet): ?>

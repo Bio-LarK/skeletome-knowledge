@@ -122,7 +122,7 @@
         <?php print $page_bottom; ?>
 
 
-        <a class="feedback-tab" href="{{ 'mailto' + ':' + 'admin@knowledge.skeletome.org' }}">
+        <a class="feedback-tab" href="{{ 'mailto' + ':' + 'knowledge@skeletome.org' }}">
             Feedback
         </a>
     </body>

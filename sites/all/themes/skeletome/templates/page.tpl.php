@@ -166,7 +166,7 @@
                     }
                 </style>
                 <ul class="footer-links pull-right">
-                    <li><a href="/">Home</a></li>
+                    <li><a href="<?php print $front_page; ?>">Home</a></li>
                     <li>About</li>
                     <li>Team</li>
                     <li><a class="contact-us-link" href="?q=contact">Contact</a></li>

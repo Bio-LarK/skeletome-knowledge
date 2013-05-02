@@ -51,6 +51,25 @@ function page_contact() {
     return $output;
 }
 
+function page_about() {
+    $output =  array(
+        'skeletome_builder_about' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_builder_about'
+        )
+    );
+    return $output;
+}
+function page_team() {
+    $output =  array(
+        'skeletome_builder_about' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_builder_about'
+        )
+    );
+    return $output;
+}
+
 function page_source_release($term) {
 
     // Get the source for the release
