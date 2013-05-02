@@ -40,10 +40,14 @@ $isAdmin = user_access('administer site configuration');
                 </div>
             <?php endif; ?>
 
-            <div>
+            <div ng-show="!isEditingDescription">
                 <b><i class="icon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
-                    {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}</span>
+                    {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}
+                </span>
+            </div>
+            <div ng-show="isEditingDescription">
+                <b><i class="icon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
             </div>
         </div>
 
