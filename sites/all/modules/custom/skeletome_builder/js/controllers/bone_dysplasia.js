@@ -41,7 +41,8 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.init = function() {
 
         // Setup the description
-        $scope.description = $scope.boneDysplasia.body.und[0];
+
+        $scope.description = angular.isDefined($scope.boneDysplasia.body.und) ? $scope.boneDysplasia.body.und[0] : {'value': "", 'safe_value': ""};
         $scope.description.url = '?q=ajax/bone-dysplasia/description';
 
         // Reference to source for description

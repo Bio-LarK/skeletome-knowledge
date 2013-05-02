@@ -20,7 +20,7 @@ function GeneCtrl($scope, $http) {
         $scope.master.gene.field_gene_gene_mutation = jQuery.map($scope.master.gene.field_gene_gene_mutation, function (value, key) { return value; });
 
         // The description
-        $scope.description = $scope.master.gene.body.und[0];
+        $scope.description = angular.isDefined($scope.master.gene.body.und) ? $scope.master.gene.body.und[0] : {'value': "", 'safe_value': ""};
         $scope.description.url = '?q=ajax/gene/' + $scope.master.gene.nid + '/description';
 
         $scope.boneDysplasias = Drupal.settings.skeletome_builder.bone_dysplasias;
