@@ -241,7 +241,6 @@ function skeletome_preprocess_page(&$variables) {
     }
 }
 
-
 /**
  * Overrides Apache Solr Search Facet Api Holder
  * @param $vars

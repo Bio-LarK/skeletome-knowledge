@@ -30,6 +30,32 @@ function skeletome_builder_help($path, $arg) {
     }
 }
 
+
+function skeletome_builder_apachesolr_query_alter($query) {
+
+    // I only want to see articles by the admin.
+    //
+    // NOTE: this "is_uid" filter does NOT refer to the English word "is"
+    // It is a combination of flags representing Integer-Single, which is
+    // abbreviated with the letters i and s.
+    //
+    // @see the <dynamicField> definitions in schema.xml or schema-solr3.xml
+//    $query->addFilter("is_uid", 1);
+
+    // Only search titles.
+//    $query->replaceParam('qf', 'label');
+}
+
+/**
+ * implements hook_apachesolr_search_result_alter().
+ */
+function skeletome_builder_apachesolr_search_result_alter($doc, $extra, $query) {
+//    echo "<pre>";
+//    print_r($query);
+//    echo "</pre>";
+}
+
+
 /**
  * Implements hook_js_alter
  *

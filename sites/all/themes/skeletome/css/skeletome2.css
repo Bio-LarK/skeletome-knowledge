@@ -695,40 +695,7 @@ input[type=text] {
     display: none;
 }
 
-/* ================================================
-    Refreshing Icon (spins the refresh icon)
-*/
-.refreshing-box {
-    text-align: center !important;
-}
-.icon-refreshing {
-    -webkit-animation-name: rotateThis;
-    -webkit-animation-duration:0.3s;
-    -webkit-animation-iteration-count:infinite;
-    -webkit-animation-timing-function:linear;
 
-    -moz-animation-name: rotateThis;
-    -moz-animation-duration:0.3s;
-    -moz-animation-iteration-count:infinite;
-    -moz-animation-timing-function:linear;
-
-    animation-name: rotateThis;
-    animation-duration:0.3s;
-    animation-iteration-count:infinite;
-    animation-timing-function:linear;
-}
-@keyframes rotateThis {
-    from {transform:scale(1.0) rotate(0deg);}
-    to {transform:scale(1.0) rotate(360deg);}
-}
-@-moz-keyframes rotateThis {
-    from {-moz-transform:scale(1.0) rotate(0deg);}
-    to {-moz-transform:scale(1.0) rotate(360deg);}
-}
-@-webkit-keyframes rotateThis {
-    from {-webkit-transform:scale(1.0) rotate(0deg);}
-    to {-webkit-transform:scale(1.0) rotate(360deg);}
-}
 
 
 /* ================================================
@@ -1555,6 +1522,61 @@ h1, h2, h3, h4, h5 {
     display: none;
 }
 
+
+
+
+/* ================================================
+    Icon Refresh: Refreshing Subclass
+*/
+.icon-refreshing {
+    -webkit-animation-name: rotateThis;
+    -webkit-animation-duration:0.3s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-timing-function:linear;
+
+    -moz-animation-name: rotateThis;
+    -moz-animation-duration:0.3s;
+    -moz-animation-iteration-count:infinite;
+    -moz-animation-timing-function:linear;
+
+    animation-name: rotateThis;
+    animation-duration:0.3s;
+    animation-iteration-count:infinite;
+    animation-timing-function:linear;
+}
+    /* Keyframe animations */
+    @keyframes rotateThis {
+        from {transform:scale(1.0) rotate(0deg);}
+        to {transform:scale(1.0) rotate(360deg);}
+    }
+    @-moz-keyframes rotateThis {
+        from {-moz-transform:scale(1.0) rotate(0deg);}
+        to {-moz-transform:scale(1.0) rotate(360deg);}
+    }
+    @-webkit-keyframes rotateThis {
+        from {-webkit-transform:scale(1.0) rotate(0deg);}
+        to {-webkit-transform:scale(1.0) rotate(360deg);}
+    }
+
+    /* Box to contain spinny icon */
+    .refreshing-box {
+        text-align: center !important;
+    }
+
+/* ================================================
+    Icon Chevron Right: Turn Down Subclass
+*/
+.icon-chevron-right.icon-chevron-turn-down {
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+}
+
+/* ================================================
+    Page Heading
+
+    Used at the top of the page to contain an H1
+*/
 .page-heading {
     padding-top: 14px;
     padding-left: 0px;
@@ -1562,10 +1584,12 @@ h1, h2, h3, h4, h5 {
 .page-heading h1 {
     padding-bottom: 0;
 }
+
 /* ================================================
     Section
-*/
 
+    Used for elements under the page heading.
+*/
 section, div.section {
     margin-top: 21px;
     background-color: white;
@@ -1574,6 +1598,11 @@ section, div.section {
     border-bottom: 1px solid #cccccc;
 }
 
+/* ================================================
+    Section > Section Segment
+
+    Individual segments within a section
+*/
 .section-segment {
     padding: 14px 21px;
     border-bottom: 1px solid #e7e7e7;
@@ -1587,6 +1616,26 @@ section, div.section {
     .section-segment h4 img {
         height: 18px;
     }
+    .section-segment i {
+        opacity: 0.7;
+    }
+    /** Additional Behaviours */
+
+    .segment-border {
+        border-bottom: 1px solid #e7e7e7;
+    }
+    /**
+       Used to remove padding
+    */
+    .section-segment-nopadding {
+        padding: 0px;
+        border-bottom: none;
+    }
+    .segment-padding {
+        padding: 14px 21px;
+    }
+
+    /* Icon behaviours */
     .section-segment .icon-chevron-right.icon-white,
     .section-segment .icon-chevron-left.icon-white,
     .section-segment .icon-chevron-down.icon-white,
@@ -1595,7 +1644,18 @@ section, div.section {
         display: none;
     }
 
+    .section-segment:hover .icon-chevron-right.icon-chevron-turn-down {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        /* for ie */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
 
+
+
+/* ================================================
+    Section Segment: Anchor Subclass
+*/
 a.section-segment {
     color: #333;
     /*text-decoration: underline;*/
@@ -1628,30 +1688,68 @@ a.section-segment {
         opacity: 1;
     }
 
-/* ================================================
-Progress Bar
-*/
-.no-touch a.section-segment:hover .progress {
-    background-color: rgb(0, 79, 119);
-    background-image: none;
-}
-.no-touch a.section-segment:hover .progress .bar {
-    background-color: white;
-    border: 1px solid white;
-}
-.progress {
-    margin-bottom: 0;
-}
-    .progress .bar {
+    /* ================================================
+        Progress Bar Element
+    */
+    .no-touch a.section-segment:hover .progress {
+        background-color: rgb(0, 79, 119);
         background-image: none;
-        -webkit-box-shadow: none;
-        /*border-color: #1576b4;*/
-        margin: 0;
     }
-    .bar.bar-warning {
-        border: 1px solid #d67200;
+    .no-touch a.section-segment:hover .progress .bar {
+        background-color: white;
+        border: 1px solid white;
+    }
+    .progress {
+        margin-bottom: 0;
+    }
+        .progress .bar {
+            background-image: none;
+            -webkit-box-shadow: none;
+            /*border-color: #1576b4;*/
+            margin: 0;
+        }
+        .bar.bar-warning {
+            border: 1px solid #d67200;
+        }
+
+/* ================================================
+    Section Segment: Header Subclass
+
+    Used for the header of a section segment, has a
+    fixed height unlike a regular segment which has
+    a variable height.
+*/
+.section-segment-header {
+    padding: 0px;
+    min-height: 60px;
+    padding: 0px 21px;
+    line-height: 60px;
+}
+    .section-segment-header h1, .section-segment-header h2, .section-segment-header h3, .section-segment-header h4 {
+        line-height: 60px;
+    }
+    .section-segment h1, .section-segment h2, .section-segment h3, .section-segment h4 {
+        margin: 0 !important;
+    }
+    .section-segment h2 {
+        font-size: 28px;
     }
 
+    .section-segment-header-buttons {
+    }
+
+/* ================================================
+    Section Segment: Search Result Subclass
+*/
+.search-result .section-segment em {
+    font-weight: bold;
+    font-style: normal;
+    background-color: rgb(255, 235, 0);
+}
+
+/* ================================================
+    Section Segment: Statement Subclass
+*/
 .section-segment-statement {
     cursor: pointer;
     position: relative;
@@ -1677,121 +1775,70 @@ Progress Bar
             font-weight: bold;
             color: #333;
         }
-/**
-Used to add padding
+
+
+
+/* ================================================
+    Section Segment: CK Editor Subclass
 */
-.section-segment-inner {
-    padding: 14px 21px;
-    border-bottom: 1px solid #e7e7e7;
-    display: block;
-}
+    .section-segment-header-editors {
+        margin: 5px 0;
+    }
 
-/** The down arrow */
-.icon-chevron-right.icon-chevron-turn-down {
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-}
+    .section-segment-editor {
+        padding: 0px;
+    }
 
-.section-segment:hover .icon-chevron-right.icon-chevron-turn-down {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    /* for ie */
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-
-.section-segment-header-editors {
-    margin: 5px 0;
-}
-
-/**
-   Used to remove padding
+/* ================================================
+    Section Segment: Alert Subclass
 */
-.section-segment-nopadding {
-    padding: 0px;
-    border-bottom: none;
-}
-.segment-padding {
-    padding: 14px 21px;
-}
-.section-segment-editor {
-    padding: 0px;
-}
-.segment-border {
-    border-bottom: 1px solid #e7e7e7;
-}
-
-/** Tab in block
-*/
-.section-segment-inner-tabbed {
-    position: relative;
-    padding: 10px 7px 10px 64px !important;
-}
-.section-segment-grey {
-    background-color: rgb(252, 252, 252);
-}
-
-.section-segment-inner-tabbed-shadow {
-    -webkit-box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
-}
-.section-segment-inner-tabbed::before {
-     display: block;
-     content: '';
-     position: absolute;
-     top: 0px;
-     left: 0px;
-     height: 100%;
-     width: 50px;
-     background-color: #dddddd;
-     border-bottom: 2px solid #dddddd;
-}
-.section-segment-inner-tabbed:last-child::before {
-    border-bottom: 1px solid #dddddd;
-}
-
-
 .section-segment.alert {
     border-radius: 0;
     margin-bottom: 0;
 }
 
 
-.section-segment-header {
-    padding: 0px;
-    min-height: 60px;
-    padding: 0px 21px;
-    line-height: 60px;
+
+/* ================================================
+   Inner Segment
+
+   Used inside a section segment (with no padding added)
+*/
+.section-segment-inner {
+    padding: 14px 21px;
+    border-bottom: 1px solid #e7e7e7;
+    display: block;
 }
-.section-segment-header h1, .section-segment-header h2, .section-segment-header h3, .section-segment-header h4 {
-    line-height: 60px;
-}
-    .section-segment h2 {
-        font-size: 28px;
+/* ================================================
+   Inner Segment: Tabbed in Subclass
+*/
+    .section-segment-inner-tabbed {
+        position: relative;
+        padding: 10px 7px 10px 64px !important;
+    }
+    .section-segment-grey {
+        background-color: rgb(252, 252, 252);
     }
 
-    .section-segment-header-buttons {
+    .section-segment-inner-tabbed-shadow {
+        -webkit-box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
+        -moz-box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
+        box-shadow: 0 5px 9px -6px rgba(0, 0, 0, 0.2) inset;
     }
-.section-segment i {
-    opacity: 0.7;
-}
-.section-segment h1, .section-segment h2, .section-segment h3, .section-segment h4 {
-    margin: 0 !important;
-}
-
-
-
-section h1, section h2, section h3 {
-    /*margin: 0px !important;*/
-    margin-top: 0px;
-}
-section.section-even {
-    padding: 21px 28px;
-}
-section.section-top {
-    margin-top: 21px
-}
+    .section-segment-inner-tabbed::before {
+         display: block;
+         content: '';
+         position: absolute;
+         top: 0px;
+         left: 0px;
+         height: 100%;
+         width: 50px;
+         background-color: #dddddd;
+         border-bottom: 2px solid #dddddd;
+    }
+    .section-segment-inner-tabbed:last-child::before {
+        border-bottom: 1px solid #dddddd;
+    }
 section.section-title h1,  section.section-title h2 {
 }
 section.section-large {
@@ -1846,46 +1893,46 @@ section.section-large-description p {
     /* Turn off the tab on the mobile phone */
     display: none;
 }
-.no-touch .feedback-tab {
-    display: block;
-    background-color: #2C3E50;
-    position: fixed;
-    top: 50%;
-    left: 0px;
-    color: white;
-    padding: 5px 18px;
-    border-width: 0px 2px 2px 2px;
-    border-color: white;
-    border-style: solid;
+    .no-touch .feedback-tab {
+        display: block;
+        background-color: #2C3E50;
+        position: fixed;
+        top: 50%;
+        left: 0px;
+        color: white;
+        padding: 5px 18px;
+        border-width: 0px 2px 2px 2px;
+        border-color: white;
+        border-style: solid;
 
-    -webkit-transform-origin: 0% 0%;
-    -moz-transform-origin: 0% 0%;
-    -ms-transform-origin: 0% 0%;
-    -o-transform-origin: 0% 0%;
+        -webkit-transform-origin: 0% 0%;
+        -moz-transform-origin: 0% 0%;
+        -ms-transform-origin: 0% 0%;
+        -o-transform-origin: 0% 0%;
 
-    /* Safari */
-    -webkit-transform: rotate(-90deg);
+        /* Safari */
+        -webkit-transform: rotate(-90deg);
 
-    /* Firefox */
-    -moz-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
 
-    /* IE */
-    -ms-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
 
-    /* Opera */
-    -o-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
 
-    /* Internet Explorer */
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+        /* Internet Explorer */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
-}
-.feedback-tab:hover {
-    padding-top: 10px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
-.feedback-tab:active {
-    padding-top: 8px;
-}
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    }
+    .feedback-tab:hover {
+        padding-top: 10px;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .feedback-tab:active {
+        padding-top: 8px;
+    }

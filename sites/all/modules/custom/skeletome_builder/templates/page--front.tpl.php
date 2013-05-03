@@ -155,34 +155,12 @@
                                 </div>
                             </div>
 
-
-
-
-
-                           <!--<form class="navbar-search">
-                                <div class="input-append">
-                                    <input cm-focus="true" autocomplete="?q=ajax/autocomplete/all/" type="text"
-                                           class="search-query"
-                                           ng-model="searchTerm"
-                                           ng-init="searchTerm='<?php if (arg(0) == "search") echo arg(1); ?>'"
-                                           placeholder="Search for Bone Dysplasias, Groups or Genes"
-                                           cm-return="globalSearch(searchTerm)">
-                                    <a ng-click="globalSearch(searchTerm)" class="btn btn-success" href><i
-                                            class="icon-search icon-white"></i> Search</a>
-                                </div>
-                            </form>-->
-
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-
-    <!--<clinical-feature-adder></clinical-feature-adder>-->
 
     <?php if(strlen($messages) > 0): ?>
     <div class="container">
