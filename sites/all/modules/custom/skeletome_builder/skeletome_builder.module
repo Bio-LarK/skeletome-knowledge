@@ -31,6 +31,8 @@ function skeletome_builder_help($path, $arg) {
 }
 
 
+
+
 function skeletome_builder_apachesolr_query_alter($query) {
 
     // I only want to see articles by the admin.
@@ -44,6 +46,60 @@ function skeletome_builder_apachesolr_query_alter($query) {
 
     // Only search titles.
 //    $query->replaceParam('qf', 'label');
+
+
+    $query_string = $query->getParam('q');
+
+    if(strpos($query_string, "id:") !== false) return;
+
+    $new_query_string = "";
+
+    if(strpos($query_string, ";") !== false) {
+        $vocab = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
+        $vocab_id = $vocab->vid;
+
+        // split by ;
+        $query_params = explode(";", $query_string);
+        foreach($query_params as $query_param) {
+            // check if a clinical feature
+
+            if(strlen($query_param) == 0) continue;
+
+            $sql = "SELECT *
+            FROM {taxonomy_term_data} t
+            WHERE t.vid = :vid
+            AND UPPER(t.name) = UPPER(:name)";
+
+            $results = db_query($sql, array(
+                'vid'   => $vocab_id,
+                'name'  => trim($query_param)
+            ));
+
+            $found = false;
+            foreach($results as $result) {
+                $found = true;
+            }
+
+            if($found) {
+                // Its a clinical feature, add it as a filter
+                $query->addFilter("sm_vid_SKELETOME_vocabulary", $query_param);
+            } else {
+                // its not a clinical feature, just add it back in
+                $new_query_string .= trim($query_param) . '* ';
+            }
+        }
+    } else {
+        $new_query_string = $query_string . "*";
+    }
+
+    $query->replaceParam('q', $new_query_string);
+
+//    echo "Query<pre>";
+//    print_r($query->getParam('q'));
+//    echo "</pre>";
+//    echo "Filters<pre>";
+//    print_r($query->getParam('fq'));
+//    echo "</pre>";
 }
 
 /**

@@ -110,7 +110,11 @@
 
 
                 <div class="navsearch-small">
-                    <nav-search></nav-search>
+                    <?php  //get the query string if there is one
+                        $query = "";
+                        if(arg(0) == "search" && arg(1) == "site") $query = arg(2); ?>
+
+                    <nav-search query="<?php echo $query; ?>"></nav-search>
                 </div>
 
 

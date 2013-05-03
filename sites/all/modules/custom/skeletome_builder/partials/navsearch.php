@@ -1,4 +1,5 @@
 <div class="navsearch">
+
     <div class="navsearch-inputs">
 
 
@@ -10,7 +11,6 @@
                placeholder="Search for Bone Dysplasias, Groups or Genes"/>
 
         <i class="icon-search navsearch-icon"></i>
-
         <span ng-show="navSearch.selectedSuggestion.length && navSearch.selectedSuggestion != navSearch.query && !isMultitermQuery()"
             class="navsearch-helper">
             Press TAB to add another term
@@ -26,7 +26,7 @@
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
             ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED}">
-            <a class="navsearch-suggestion-link" href="?q=search/site/{{ navSearch.query }}*">
+            <a class="navsearch-suggestion-link" href="?q=search/site/{{ navSearch.query }}">
                 <span class="navsearch-suggestion-guide">
                     Search for
                 </span>

@@ -705,6 +705,13 @@ myApp.directive('navSearch', function() {
         },
         link: function($scope, iElement, iAttrs) {
 
+            iAttrs.$observe('query', function(value) {
+                if(value) {
+                    $scope.navSearch.query = iAttrs.query;
+                }
+            });
+
+
             jQuery('.navsearch-suggestions', jQuery(iElement)).click(function(event) {
                 $scope.$apply(function() {
                     console.log("clicked a suggestion");
@@ -748,7 +755,7 @@ myApp.directive('navSearch', function() {
                     // enter pressed
                     if($scope.selectedIndex < 0 || $scope.isMultitermQuery()) {
                         // do the search
-                        window.location.href = "?q=search/site/" + $scope.navSearch.query + "*";
+                        window.location.href = "?q=search/site/" + $scope.navSearch.query;
                     } else {
                         // selected object
                         var selectedObject = $scope.navSearch.querySuggestions[$scope.selectedIndex];
