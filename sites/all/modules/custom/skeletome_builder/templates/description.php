@@ -46,9 +46,12 @@ $isAdmin = user_access('administer site configuration');
                     {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}
                 </span>
             </div>
+
+            <?php if(isset($user->name)):?>
             <div class="section-segment-header-editors" ng-show="isEditingDescription">
                 <b><i class="icon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
             </div>
+            <?php endif; ?>
         </div>
 
         <div class="section-segment alert alert-info" ng-show="provider && !isEditingDescription">

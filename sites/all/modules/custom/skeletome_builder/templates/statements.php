@@ -20,7 +20,7 @@ $isAdmin = user_access('administer site configuration');
             <div class="pull-right section-segment-header-buttons">
 
                 <!-- Show Add statement button -->
-                <?php if ($isRegistered): ?>
+                <?php if ($user->uid): ?>
                     <a ng-show="!model.isAddingStatement && !isEditingStatements" class="btn btn-success " ng-click="showAddStatement()"  href>
                         <i class="icon-plus icon-white"></i> Add Statement
                     </a>
