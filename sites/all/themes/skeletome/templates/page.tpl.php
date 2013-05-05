@@ -78,12 +78,9 @@
     $isAdmin = user_access('administer site configuration');
 ?>
 
-
 <div id="page" style="position:relative;" ng-controller="PageCtrl">
 
 <header id="header" role="banner">
-
-
     <div class="navbar navbar-inverse navbar-dark navbar-static-top">
         <div class="navbar-inner">
             <div class="container">
@@ -108,7 +105,6 @@
                     <?php endif; ?>
                 </div>
 
-
                 <div class="navsearch-small">
                     <?php  //get the query string if there is one
                         $query = "";
@@ -116,9 +112,6 @@
 
                     <nav-search query="<?php echo $query; ?>"></nav-search>
                 </div>
-
-
-
             </div>
         </div>
     </div>
