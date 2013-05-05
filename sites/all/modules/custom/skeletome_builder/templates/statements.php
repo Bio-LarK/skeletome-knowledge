@@ -132,7 +132,7 @@ $isAdmin = user_access('administer site configuration');
                         </span>
 
                         <span style="font-size: 11.844px; line-height: 14px; float: right; color: #bbb; margin-right: 30px;">
-                            {{ statement.created*1000 | date:'medium' }}
+                            {{ statement.created*1000 | date:'MMM d, y - h:mm a' }}
                         </span>
 
                         <a ng-show="isEditingStatements"
@@ -163,7 +163,7 @@ $isAdmin = user_access('administer site configuration');
                                 </span>
 
                                 <span style="font-size: 11.844px; line-height: 14px; float: right; color: #bbb; margin-right: 45px;">
-                                    {{ statement.created*1000 | date:'medium' }}
+                                    {{ comment.created*1000 | date:'MMM d, y - h:mm a' }}
                                 </span>
 
                             </div>
