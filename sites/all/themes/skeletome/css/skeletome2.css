@@ -1264,9 +1264,9 @@ table.table-dark {
     border: 1px solid black;
 }
 .btn-dark-navbar:hover, .btn-dark-navbar:active {
-    background-color: black;
+    background-color: #1d2a36;
     color: white;
-    border: 1px solid black;
+    border: 1px solid #16212b;
 }
 
 .btn-danger {

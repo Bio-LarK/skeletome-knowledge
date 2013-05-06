@@ -123,6 +123,8 @@
         <div class="row">
             <div class="span12">
                 <?php print $messages; ?>
+                <!--<?php print render($tabs); ?>
+                <?php print render($action_links); ?>-->
             </div>
             <?php print render($page['help']); ?>
         </div>
