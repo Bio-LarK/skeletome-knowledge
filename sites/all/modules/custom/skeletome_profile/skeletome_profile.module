@@ -1,0 +1,270 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_profile_menu() {
+
+    $items['profile-page/%user'] = array(
+        'page callback' 	=> 'page_profile',
+        'page arguments'    => array(1),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['upload/images'] = array(
+        'page callback' 	=> 'skeletome_upload_image',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function profile_get($id) {
+    $profile = node_load($id);
+    echo json_encode($profile);
+}
+
+function profile_update($id) {
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $profile = (object) $objData['node'];
+    $profile->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+
+    node_save($profile);
+
+    $profile = node_load($profile->nid);
+    $profile = _setup_profile_picture($profile);
+
+    echo json_encode($profile);
+}
+
+function profile_save() {
+    global $user;
+
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $profile = (object) $objData['node'];
+    $profile->title = $user->name . "'s Profile";
+    $profile->type = "profile";
+    node_object_prepare($profile); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+    $profile->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+    $profile->uid = $user->uid;
+    $profile->status = 1; //(1 or 0): published or not
+    $profile->promote = 0; //(1 or 0): promoted to front page
+    $profile->comment = 1; //2 = comments on, 1 = comments off
+    $profile = node_submit($profile); // Prepare node for saving
+    $profile->revision = 1;
+    $profile->log = "Created new profile.";
+    $profile->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+
+    node_save($profile);
+
+    $profile = node_load($profile->nid);
+    $profile = _setup_profile_picture($profile);
+
+    echo json_encode($profile);
+}
+
+function _setup_profile_picture($profile) {
+    if(isset($profile->field_profile_image[LANGUAGE_NONE])) {
+        foreach($profile->field_profile_image[LANGUAGE_NONE] as &$image_test) {
+            $image_test['full_url'] = file_create_url($image_test['uri']);
+            $image_test['thumb_url'] = image_style_url('thumbnail', $image_test['uri']);
+        }
+    }
+    return $profile;
+}
+
+function skeletome_upload_image() {
+    $source = "image_uploader";
+
+    // convert it to format expected by drupal
+    foreach($_FILES['file'] as $key => $value) {
+        $_FILES['files'][$key][$source] = $value;
+    }
+
+    if (array_key_exists('files', $_FILES)) {
+        global $base_url, $user;
+
+        //check for folders
+        $current_directory = getcwd();
+        if (!file_exists($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads')) {
+            $result = mkdir($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads');
+        }
+        if (!file_exists($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads/' . $user->uid)) {
+            $result = mkdir($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads/' . $user->uid);
+        }
+
+        $secure_file_name = file_munge_filename($_FILES['files']['name'][0], "gif jpeg jpg png tiff");
+
+        $destination_uri = file_build_uri('file_uploads/' . $user->uid);
+
+        $ok = file_save_upload($source, array(), $destination_uri);
+
+        $ok->status = FILE_STATUS_PERMANENT;
+        $file = file_save($ok);
+        $file->display = 1;
+
+        // Get out the file urls
+        $file->full_url = file_create_url($file->uri);
+        $file->thumb_url = image_style_url('thumbnail', $file->uri);
+
+        echo json_encode($file);
+    } else {
+        echo json_encode('error');
+    }
+
+}
+function page_profile($user) {
+
+    // lets get all the contributed for the user
+    $sql = "SELECT DISTINCT n.nid, n.title
+            FROM {node_revision} n
+            RIGHT JOIN {node} o
+            ON o.nid = n.nid
+            WHERE n.uid = :uid
+            AND o.type != 'profile'
+            AND o.type != 'gene_mutation'
+            AND n.title != 'Statement'
+            ORDER BY timestamp DESC
+            LIMIT 20";
+    $results = db_query($sql, array(
+        'uid'   => $user->uid
+    ));
+
+    $contributed = array();
+    foreach($results as $result) {
+        $contributed[] = $result;
+    }
+
+    // get the users activity
+    $sql = "SELECT n.uid, n.nid, b.body_value as `body`, n.created, d.nid as `target_nid`, d.title as `target_title`
+            FROM {node} n
+            LEFT JOIN {field_data_field_statement_node} s
+            ON s.entity_id = n.nid
+            LEFT JOIN {node} d
+            ON s.field_statement_node_target_id = d.nid
+            LEFT JOIN {field_data_body} b
+            ON b.entity_id = n.nid
+            WHERE n.type = 'statement'
+            AND n.uid = :uid
+            ORDER BY n.created DESC
+            LIMIT 10";
+    $results = db_query($sql, array(
+        'uid'   => $user->uid
+    ));
+
+    $statement_activity = array();
+    foreach($results as $result) {
+        $statement_activity[] = $result;
+    }
+
+    // get the user comment activities
+    $sql = "SELECT c.cid, c.nid, c.uid, c.created, b.comment_body_value as `body`
+            FROM {comment} c
+            LEFT JOIN {field_data_comment_body} b
+            ON b.entity_id = c.cid
+            WHERE c.uid = :uid
+            ORDER BY c.created DESC
+            LIMIT 10";
+    $results = db_query($sql, array(
+        'uid'   => $user->uid
+    ));
+    $comment_activity = array();
+    foreach($results as $result) {
+        $comment = $result;
+
+        $sql = "SELECT n.title, n.nid
+                FROM {node} n
+                RIGHT JOIN {field_data_field_statement_node} s
+                ON n.nid = s.field_statement_node_target_id
+                WHERE s.entity_id = :statement_id";
+        $results = db_query($sql, array(
+            'statement_id' => $comment->nid
+        ));
+        $row = $results->fetchObject();
+
+        $comment->target_nid = $row->nid;
+        $comment->target_title = $row->title;
+
+        $comment_activity[] = $comment;
+    }
+
+    $activity = array_merge($statement_activity, $comment_activity);
+    usort($activity, "created_sort");
+
+    // get the profile
+    $sql = "SELECT p.entity_id
+            FROM {field_data_field_profile_user_id} p
+            WHERE p.field_profile_user_id_value = :uid";
+    $results = db_query($sql, array(
+        'uid'   => $user->uid
+    ));
+    $row = $results->fetchObject();
+    $profile = null;
+    if(isset($row->entity_id)) {
+        $profile = node_load($row->entity_id);
+    }
+    $profile = _setup_profile_picture($profile);
+
+    // Get the roles
+    $pretty_roles = array();
+    foreach($user->roles as $role) {
+        if($role == "administrator") {
+            $pretty_roles[] = "Administrator";
+        } else if ($role == "sk_curator") {
+            $pretty_roles[] = "Curator";
+        } else if ($role == "authenticated user" && count($user->roles) == 1) {
+            // if only one user, show it, otherwise, show the other roles
+            $pretty_roles[] = "User";
+        }
+    }
+
+    drupal_add_js(array(
+        'skeletome_profile' => array(
+            'user'          => $user,
+            'roles'         => $pretty_roles,
+            "contributed"     => $contributed,
+            'activity'        => $activity,
+            'profile'         => $profile,
+    )), 'setting');
+
+    $output =  array(
+        'skeletome_profile_profile_page' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_profile_profile_page'
+        )
+    );
+    return $output;
+}
+
+
+function created_sort($a, $b)
+{
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a->created > $b->created) ? -1 : 1;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function skeletome_profile_theme($existing, $type, $theme, $path) {
+
+    $themes['skeletome_profile_profile_page'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_profile') . '/templates',
+        'template'  => 'profile_page'
+    );
+
+    return $themes;
+}

@@ -1,0 +1,66 @@
+<?php
+
+    /**
+    * Implements hook_menu().
+    *
+    */
+function skeletome_rest_menu() {
+
+    $items['rest/%/%/get'] = array(
+        'page callback' 	=> 'rest_api_get',
+        'page arguments'    => array(1, 2),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['rest/%/%/update'] = array(
+        'page callback' 	=> 'rest_api_update',
+        'page arguments'    => array(1, 2),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['rest/%/%/delete'] = array(
+        'page callback' 	=> 'rest_api_update',
+        'page arguments'    => array(1, 2),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['rest/%/save'] = array(
+        'page callback' 	=> 'rest_api_save',
+        'page arguments'    => array(1),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['rest/%/query'] = array(
+        'page callback' 	=> 'rest_api_save',
+        'page arguments'    => array(1),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+
+    return $items;
+}
+
+function rest_api_get($object, $id) {
+    $func = $object . "_get";
+    $func($id);
+}
+
+function rest_api_update($object, $id) {
+    $func = $object . "_update";
+    $func($id);
+}
+
+function rest_api_save($object) {
+    $func = $object . "_save";
+    $func();
+}
+
+function rest_api_query($object) {
+    $func = $object . "_query";
+    $func();
+}

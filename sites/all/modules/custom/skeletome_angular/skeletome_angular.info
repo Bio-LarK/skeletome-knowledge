@@ -1,0 +1,33 @@
+name = Skeletome AngularJS
+description = Adds AngularJS Javascript to pages
+package = Skeletome Groups
+core = 7.x
+
+; AngularJS Library
+scripts[] = js/lib/angular.js
+scripts[] = js/lib/angular-resource.min.js
+
+; AngularJS App
+scripts[] = js/app.js
+
+; AngularJS Controllers
+scripts[] = js/controllers/bone_dysplasia.js
+scripts[] = js/controllers/clinical_feature.js
+scripts[] = js/controllers/description.js
+scripts[] = js/controllers/front_page.js
+scripts[] = js/controllers/gene.js
+scripts[] = js/controllers/group.js
+scripts[] = js/controllers/page.js
+scripts[] = js/controllers/search.js
+scripts[] = js/controllers/source_release.js
+scripts[] = js/controllers/statement.js
+scripts[] = js/controllers/profile.js
+
+; AngularJS Services
+scripts[] = js/services/services.js
+
+; AngularJS Filters
+scripts[] = js/filters/filters.js
+
+; AngularJS Directives
+scripts[] = js/directives/directives.js

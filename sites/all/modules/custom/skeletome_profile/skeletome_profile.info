@@ -1,0 +1,4 @@
+name = Skeletome Profiles
+description = Adds Custom Profile pages to Skeletome
+package = Skeletome Groups
+core = 7.x

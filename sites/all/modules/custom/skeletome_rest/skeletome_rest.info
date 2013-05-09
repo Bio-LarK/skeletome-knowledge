@@ -1,0 +1,4 @@
+name = Skeletome Rest
+description = Rest hooks
+package = Skeletome Groups
+core = 7.x

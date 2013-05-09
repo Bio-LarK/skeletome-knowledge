@@ -3,7 +3,7 @@ myApp.directive('ckEditor', function() {
         require: '?ngModel',
         link: function(scope, elm, attr, ngModel) {
 
-//            CKEDITOR.timestamp = (new Date()).toString() ;
+            CKEDITOR.timestamp = (new Date()).toString() ;
 
             var config = {
 //                height: '800px',
@@ -347,7 +347,7 @@ myApp.directive('dropZoneUpload', function() {
                            url: iAttrs.dropZoneUpload,
                            parallelUploads: 2,
                            enqueueForUpload: true,
-                           dictDefaultMessage: "<b>Drop X-Ray images</b> in here to upload (or click here)."
+                           dictDefaultMessage: iAttrs.dropZoneMessage
                        }
 
                    );
@@ -370,8 +370,10 @@ myApp.directive('dropZoneUpload', function() {
                        if(iAttrs.ngModel) {
                            var jsonResponse = jQuery.parseJSON( response );
                            var model = scope.$eval(iAttrs.ngModel);
+                           console.log("upload module is ", model);
                            scope.$apply(function() {
                                model.unshift(jsonResponse);
+                               console.log("upload module is ", model);
                            });
 
                        }
