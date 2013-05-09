@@ -682,28 +682,28 @@ function skeletome_builder_menu() {
     /**
      * Contact Us Page
      */
-    $items['contact'] = array(
-        'title' => 'Contact Us',
-        'page callback' => 'page_contact',
-        'access arguments' => array('access content')
-    );
+//    $items['contact'] = array(
+//        'title' => 'Contact Us',
+//        'page callback' => 'page_contact',
+//        'access arguments' => array('access content')
+//    );
     /**
      * Team Page
      */
-    $items['team'] = array(
-        'title' => 'team',
-        'page callback' => 'page_team',
-        'access arguments' => array('access content')
-    );
+//    $items['team'] = array(
+//        'title' => 'team',
+//        'page callback' => 'page_team',
+//        'access arguments' => array('access content')
+//    );
 
     /**
      * About Page
      */
-    $items['about'] = array(
-        'title' => 'about',
-        'page callback' => 'page_about',
-        'access arguments' => array('access content')
-    );
+//    $items['about'] = array(
+//        'title' => 'about',
+//        'page callback' => 'page_about',
+//        'access arguments' => array('access content')
+//    );
 
 
     /**

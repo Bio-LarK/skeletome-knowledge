@@ -6,22 +6,48 @@
  */
 function skeletome_dashboard_menu() {
 
-    $items['profile-page/%user'] = array(
-        'page callback' 	=> 'page_profile',
+    $items['dashboard/%user'] = array(
+        'page callback' 	=> 'page_dashboard',
         'page arguments'    => array(1),
         'access arguments'  => array('access content'),
         'type'  => MENU_CALLBACK,
-    );
-
-    $items['upload/images'] = array(
-        'page callback' 	=> 'skeletome_upload_image',
-        'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK
     );
 
     return $items;
 }
 
 function page_dashboard() {
+//    drupal_add_js(array(
+//        'skeletome_profile' => array(
+//            'user'          => $user,
+//            'roles'         => $pretty_roles,
+//            "contributed"     => $contributed,
+//            'activity'        => $activity,
+//            'profile'         => $profile,
+//    )), 'setting');
 
+    $output =  array(
+        'skeletome_dashboard_page' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_dashboard_page'
+        )
+    );
+    return $output;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function skeletome_dashboard_theme($existing, $type, $theme, $path) {
+
+    $themes['skeletome_dashboard_page'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_dashboard') . '/templates',
+        'template'  => 'dashboard_page'
+    );
+
+    return $themes;
 }
