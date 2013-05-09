@@ -22,7 +22,7 @@
     .edit-picture-button {
         position: absolute;
         top: 20px;
-        right: 20px;
+        right: 28px;
         z-index: 100;;
     }
     .isEditing.edit-picture-button {
@@ -82,7 +82,7 @@
 
                     <div ng-switch on="detailsState">
                         <div ng-switch-when="isLoading">
-                            <div class="section-segment refreshing-box">
+                            <div class="refreshing-box">
                                 <i class="icon-refresh icon-refreshing"></i>
                             </div>
                         </div>

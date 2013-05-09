@@ -114,6 +114,8 @@ function skeletome_upload_image() {
         $file->full_url = file_create_url($file->uri);
         $file->thumb_url = image_style_url('thumbnail', $file->uri);
 
+        drupal_get_messages();
+
         echo json_encode($file);
     } else {
         echo json_encode('error');
