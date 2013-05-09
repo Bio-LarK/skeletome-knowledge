@@ -32,3 +32,5 @@ sites/all/modules/.DS_Store
 sites/all/modules/apachesolr/solr-conf/.DS_Store
 
 sites/all/modules/apachesolr/solr-conf/.DS_Store
+
+sites/default/files/file_uploads/

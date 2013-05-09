@@ -43,8 +43,11 @@ $isAdmin = user_access('administer site configuration');
             <div class="section-segment-header-editors" ng-show="!isEditingDescription">
                 <b><i class="icon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
-                    {{ editor.name | capitalize }}<span ng-show=" ! $last ">,</span></span><span ng-show="provider.length">, {{ provider }}
+                    <a href="?q=profile-page/{{ editor.uid }}">
+                        {{ editor.name | capitalize }}</a>
+                    <span ng-show=" ! $last ">,</span>
                 </span>
+                <span ng-show="provider.length">, {{ provider }}</span>
             </div>
 
             <?php if(isset($user->name)):?>

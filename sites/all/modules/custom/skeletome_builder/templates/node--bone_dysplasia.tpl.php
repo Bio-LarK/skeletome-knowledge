@@ -390,9 +390,15 @@ $isAdmin = user_access('administer site configuration');
             No editors associated with this disorder.
         </div>
 
-        <div class="section-segment" ng-repeat="editor in editors">
-            <i class="icon-user"></i> {{ editor.name | capitalize }}
+        <div ng-repeat="editor in editors">
+            <a href="?q=profile-page/{{ editor.uid }}" class="section-segment" >
+                <i class="icon-chevron-right pull-right"></i>
+                <i class="icon-chevron-right icon-white pull-right"></i>
+
+                <i class="icon-user"></i> {{ editor.name | capitalize }}
+            </a>
         </div>
+
     </section>
 </div>
 
