@@ -715,7 +715,6 @@ function data_create_new_bone_dysplasia($title, $uri="") {
     }
     node_save($node);
 
-
     return $node;
 }
 /**

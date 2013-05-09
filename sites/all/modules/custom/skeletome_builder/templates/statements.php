@@ -153,7 +153,7 @@ $isAdmin = user_access('administer site configuration');
 
                             <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments">
                                 <a ng-show="isEditingStatements"
-                                   ng-click="deleteStatement(statement)"
+                                   ng-click="deleteCommentFromStatement(comment, statement)"
                                    class="btn btn-danger" href style="color: white; margin-right: 14px;">
                                     <i class="icon-remove icon-white"></i> Delete
                                 </a>

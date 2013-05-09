@@ -16,19 +16,19 @@ module_load_include('php', 'skeletome_builder', 'pages');
 ////    $javascript['misc/ui/jquery.ui.core.min.js']['data'] = drupal_get_path('module', 'skeletome_builder') . '/jquery-ui-1.10.1.custom.js';
 //}
 
-/**
- * Implements hook_help().
- */
-function skeletome_builder_help($path, $arg) {
-    switch ($path) {
-        case 'admin/help#sk_search':{
-            $ret_val = '<h3>' . t('Hello World') . '</h3>';
-            $ret_val .= '<p>' . t('This is testing Search Help.') . '</p>';
-            return $ret_val;
-            break;
-        }
-    }
-}
+///**
+// * Implements hook_help().
+// */
+//function skeletome_builder_help($path, $arg) {
+//    switch ($path) {
+//        case 'admin/help#sk_search':{
+//            $ret_val = '<h3>' . t('Hello World') . '</h3>';
+//            $ret_val .= '<p>' . t('This is testing Search Help.') . '</p>';
+//            return $ret_val;
+//            break;
+//        }
+//    }
+//}
 
 
 

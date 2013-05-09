@@ -144,7 +144,7 @@ $isAdmin = user_access('administer site configuration');
     <?php if ($isAdmin || $isCurator): ?>
         <div class="section-segment">
             <div class="dropzone" ng-model="xrays"
-                 drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add">
+                 drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
             </div>
         </div>
     <?php endif; ?>
