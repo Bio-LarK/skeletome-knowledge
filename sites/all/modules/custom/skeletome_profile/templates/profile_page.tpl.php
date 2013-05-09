@@ -22,7 +22,7 @@
     .edit-picture-button {
         position: absolute;
         top: 20px;
-        right: 28px;
+        right: 20px;
         z-index: 100;;
     }
     .isEditing.edit-picture-button {
@@ -49,7 +49,7 @@
         <div class="span4">
             <section>
 
-                <div class="section-segment" ng-class="{ 'section-segment-editing': detailsState=='isEditing' }" style="position: relative;">
+                <div class="section-segment" ng-class="{ 'section-segment-editing': detailsState=='isEditing', 'section-segment-nopadding': detailsState=='isDisplaying' }" style="position: relative;">
 
                     <?php if($canEdit): ?>
                     <div ng-class="{'media-body': detailsState=='isEditing'}">
@@ -94,7 +94,10 @@
                             <img ng-show="edit.profile.field_profile_image.und.length"  ng-src="{{ edit.profile.field_profile_image.und[0].full_url }}" alt=""/>
                         </div>
                         <div ng-switch-when="isDisplaying">
-                            <img ng-show="!profile.field_profile_image.und.length" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
+                            <div ng-show="!profile.field_profile_image.und.length" style="padding: 20px">
+                                <img style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
+                            </div>
+
                             <img ng-show="profile.field_profile_image.und.length"  ng-src="{{ profile.field_profile_image.und[0].full_url }}" alt=""/>
                         </div>
                     </div>

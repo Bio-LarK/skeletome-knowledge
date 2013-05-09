@@ -8,6 +8,8 @@ dependencies[] = link
 dependencies[] = taxonomy
 dependencies[] = active_tags
 dependencies[] = sk_group_tag
+dependencies[] = skeletome_angular
+dependencies[] = skeletome_rest
 
 scripts[] = bootstrap.js
 scripts[] = ui-bootstrap-tpls-0.2.0.js
@@ -19,8 +21,6 @@ stylesheets[all][] = lib/dropzone/dropzone.css
 ; Include fancybox
 scripts[] = lib/fancybox/jquery.fancybox.pack.js
 stylesheets[all][] = lib/fancybox/jquery.fancybox.css
-
-
 
 ; scripts[] = jquery-ui-1.10.2.custom.js
  stylesheets[all][] = css/ui-lightness/jquery-ui-1.10.2.custom.css

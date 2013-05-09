@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_file_upload_menu() {
+
+    $items['upload/images'] = array(
+        'page callback' 	=> 'skeletome_upload_image',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function skeletome_upload_image() {
+    $source = "skeletome_upload_image";
+
+    // convert it to format expected by drupal
+    foreach($_FILES['file'] as $key => $value) {
+        $_FILES['files'][$key][$source] = $value;
+    }
+
+    if (array_key_exists('files', $_FILES)) {
+        global $base_url, $user;
+
+        //check for folders
+        $current_directory = getcwd();
+        if (!file_exists($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads')) {
+            $result = mkdir($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads');
+        }
+        if (!file_exists($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads/' . $user->uid)) {
+            $result = mkdir($current_directory . '/' . variable_get('file_public_path', conf_path() . '/files') . '/file_uploads/' . $user->uid);
+        }
+
+        $secure_file_name = file_munge_filename($_FILES['files']['name'][0], "gif jpeg jpg png tiff");
+
+        $destination_uri = file_build_uri('file_uploads/' . $user->uid);
+
+        $ok = file_save_upload($source, array(), $destination_uri);
+
+        $ok->status = FILE_STATUS_PERMANENT;
+        $file = file_save($ok);
+        $file->display = 1;
+
+        // Get out the file urls
+        $file->full_url = file_create_url($file->uri);
+        $file->thumb_url = image_style_url('thumbnail', $file->uri);
+
+        drupal_get_messages();
+
+        echo json_encode($file);
+    } else {
+        echo json_encode('error');
+    }
+}

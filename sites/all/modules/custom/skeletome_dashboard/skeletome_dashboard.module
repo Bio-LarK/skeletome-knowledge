@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_dashboard_menu() {
+
+    $items['profile-page/%user'] = array(
+        'page callback' 	=> 'page_profile',
+        'page arguments'    => array(1),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['upload/images'] = array(
+        'page callback' 	=> 'skeletome_upload_image',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function page_dashboard() {
+
+}
