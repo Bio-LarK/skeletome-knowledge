@@ -74,8 +74,16 @@ function _profile_installed_fields()
             'label' => $t('Profile Image'),
             'cardinality' => 1,
             'type' => 'image'
+        ),
+        'field_profile_orcid_id' => array(
+            'field_name'    => 'field_profile_orcid_id',
+            'label'         => $t('Profile Orcid Id'),
+            'cardinality'   => 1,
+            'type'          => 'text',
+            'settings' => array(
+                'max_length' => 16,
+            )
         )
-
     );
 }
 
@@ -113,6 +121,15 @@ function _profile_installed_instances()
             'description'   => $t('Profile image'),
             'widget'        => array(
                 'type'  => 'image_image',
+            ),
+        ),
+        'field_profile_orcid_id' => array(
+            'field_name'    => 'field_profile_orcid_id',
+            'label'         => $t('Profile Orcid Id'),
+            'description'   => $t('Profile Orcid Id'),
+            'cardinality' => 1,
+            'widget'        => array(
+                'type'  => 'text_textfield',
             ),
         )
     );
