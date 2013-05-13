@@ -277,7 +277,26 @@
                                 src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/img/logo-dark.png"
                                 alt="<?php print t('Home'); ?>"/></a>
                     <?php endif; ?>
-                    <a class="pull-right contact-us-link" href="?q=contact">Contact</a>
+
+                    <style type="text/css">
+                        .footer-links {
+                            margin-top: 6px;;
+                        }
+                        .footer-links li {
+                            float: left;
+                            list-style-type: none;
+                            margin-right: 10px;;
+                        }
+                    </style>
+
+                    <ul class="footer-links pull-right">
+                        <li><a class="contact-us-link" href="<?php print $front_page; ?>">Home</a></li>
+                        <li><a class="contact-us-link" href="?q=about">About</a></li>
+                        <li><a class="contact-us-link" href="?q=team">Team</a></li>
+                        <li><a class="contact-us-link" href="?q=contact">Contact</a></li>
+                    </ul>
+
+                    <!--<a class="pull-right contact-us-link" href="?q=contact">Contact</a>-->
 
                     <?php //print render($page['footer']); ?>
 

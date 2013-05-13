@@ -29,7 +29,7 @@
                 School of ITEE, The University of Queensland<br/>
                 Building 78 (GP South), Level 7, Room 709B<br/>
                 St. Lucia, QLD 4072<br/>
-                <b>Email: </b> jane (at) itee.uq.edu.au<
+                <b>Email: </b> jane (at) itee.uq.edu.au
             </div>
         </section>
     </div>

@@ -232,6 +232,7 @@ function skeletome_preprocess_page(&$variables) {
         $variables['page']['content']['system_main']['no_content'] = array();
 
         $variables['tabs'] = array();
+        $variables['page']['content']['system_main']['nodes'] = null;
         $variables['page']['content']['system_main']['pager'] = array();
 
 //        echo "<pre>";

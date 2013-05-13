@@ -22,6 +22,7 @@ scripts[] = js/controllers/search.js
 scripts[] = js/controllers/source_release.js
 scripts[] = js/controllers/statement.js
 scripts[] = js/controllers/profile.js
+scripts[] = js/controllers/dashboard.js
 
 ; AngularJS Services
 scripts[] = js/services/services.js

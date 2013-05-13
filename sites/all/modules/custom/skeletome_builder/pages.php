@@ -311,6 +311,8 @@ function data_get_editors_for_node($node_id) {
 
 function page_bone_dysplasia($node) {
 
+
+
     /* Left over code */
     $main_menu = array();
 
@@ -342,8 +344,6 @@ function page_bone_dysplasia($node) {
 
     /* Get mode of inheritance */
     $moi = data_get_moi($node);
-
-
 
     /* Get the Genes */
     $genes = data_get_genes_for_bone_dysplasias(array($node));

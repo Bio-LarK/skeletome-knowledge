@@ -752,6 +752,7 @@ function apachesolr_search_search_execute($keys = NULL, $conditions = NULL)
 {
     $search_page = apachesolr_search_page_load('core_search');
     $results = apachesolr_search_search_results($keys, $conditions, $search_page);
+
     return $results;
 }
 
@@ -1112,6 +1113,7 @@ function apachesolr_search_run($name, array $params = array(), $solrsort = '', $
     $env_id = $query->solr('getId');
     apachesolr_has_searched($env_id, TRUE);
     $process_response_callback = apachesolr_environment_variable_get($env_id, 'process_response_callback', 'apachesolr_search_process_response');
+
     if (function_exists($process_response_callback)) {
         return call_user_func($process_response_callback, $response, $final_query);
     } else {

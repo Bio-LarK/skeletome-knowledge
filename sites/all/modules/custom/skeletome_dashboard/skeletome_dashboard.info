@@ -5,3 +5,4 @@ core = 7.x
 
 dependencies[] = skeletome_angular
 dependencies[] = skeletome_rest
+dependencies[] = skeletome_page_tracker

@@ -1477,6 +1477,8 @@ function apachesolr_do_query(DrupalSolrQueryInterface $current_query) {
   // The response is cached so that it is accessible to the blocks and anything
   // else that needs it beyond the initial search.
   apachesolr_static_response_cache($searcher, $response);
+
+
   return array($query, $response);
 }
 

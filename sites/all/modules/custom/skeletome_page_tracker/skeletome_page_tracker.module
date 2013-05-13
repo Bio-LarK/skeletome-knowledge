@@ -1,0 +1,77 @@
+<?php
+
+function skeletome_page_tracker_node_view($node, $view_mode, $langcode) {
+    global $user;
+
+    if(arg(0) == "node" && arg(1)) {
+        $page_track = new stdClass();
+        $page_track->title = "Node " . $node->nid . " viewed";
+        $page_track->type = "page_tracker";
+        node_object_prepare($page_track); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+        $page_track->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+        $page_track->uid = $user->uid;
+        $page_track->status = 1; //(1 or 0): published or not
+        $page_track->promote = 0; //(1 or 0): promoted to front page
+        $page_track->comment = 1; //2 = comments on, 1 = comments off
+        $page_track = node_submit($page_track); // Prepare node for saving
+        $page_track->revision = 1;
+        $page_track->log = "Created new profile.";
+
+//    $page_track->field_page_tracker_search[LANGUAGE_NONE][0]['value'] = 'filtered_html';
+        $page_track->field_page_tracker_node[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+//    $page_track->field_page_tracker_term[LANGUAGE_NONE][0]['target_id'] = 'filtered_html';
+        $page_track->field_page_tracker_user_id[LANGUAGE_NONE][0]['value'] = $user->uid;
+
+        node_save($page_track);
+        $page_track = node_load($page_track->nid);
+
+//        echo "node load";
+    }
+}
+
+function skeletome_page_tracker_apachesolr_query_prepare($query) {
+
+    global $user;
+
+    $page_track = new stdClass();
+    $page_track->title = "Search query: " . $query->getParam('q');
+    $page_track->type = "page_tracker";
+    node_object_prepare($page_track); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+    $page_track->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+    $page_track->uid = $user->uid;
+    $page_track->status = 1; //(1 or 0): published or not
+    $page_track->promote = 0; //(1 or 0): promoted to front page
+    $page_track->comment = 1; //2 = comments on, 1 = comments off
+    $page_track = node_submit($page_track); // Prepare node for saving
+    $page_track->revision = 1;
+    $page_track->log = "Created new profile.";
+
+    $page_track->field_page_tracker_search[LANGUAGE_NONE][0]['value'] = $query->getParam('q');
+    $page_track->field_page_tracker_user_id[LANGUAGE_NONE][0]['value'] = $user->uid;
+
+    node_save($page_track);
+}
+
+function skeletome_page_tracker_taxonomy_term_view($term, $view_mode, $langcode) {
+    global $user;
+
+    if(arg(1)) {
+        $page_track = new stdClass();
+        $page_track->title = "Term " . $term->tid . " viewed" ;
+        $page_track->type = "page_tracker";
+        node_object_prepare($page_track); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+        $page_track->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+        $page_track->uid = $user->uid;
+        $page_track->status = 1; //(1 or 0): published or not
+        $page_track->promote = 0; //(1 or 0): promoted to front page
+        $page_track->comment = 1; //2 = comments on, 1 = comments off
+        $page_track = node_submit($page_track); // Prepare node for saving
+        $page_track->revision = 1;
+        $page_track->log = "Created new profile.";
+
+        $page_track->field_page_tracker_term[LANGUAGE_NONE][0]['tid'] = $term->tid;
+        $page_track->field_page_tracker_user_id[LANGUAGE_NONE][0]['value'] = $user->uid;
+
+        node_save($page_track);
+    }
+}

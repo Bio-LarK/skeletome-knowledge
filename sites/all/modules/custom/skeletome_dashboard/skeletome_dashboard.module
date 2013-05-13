@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Implements hook_menu().
  *
@@ -13,18 +14,156 @@ function skeletome_dashboard_menu() {
         'type'  => MENU_CALLBACK,
     );
 
+    $items['ajax/dashboard/search/%'] = array(
+        'page callback' 	=> 'ajax_dashboard_search',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
     return $items;
 }
 
+function ajax_dashboard_search($query) {
+    $results = apachesolr_search_search_execute($query);
+    $results = array_slice($results, 0, 5, true);
+    echo json_encode($results);
+}
+
+function data_get_top_pages() {
+    global $user;
+    // Get top pages for nodes
+    $sql = "SELECT node.title as `target_title`, node.nid as `target_nid`, count(n.field_page_tracker_node_target_id) as `count`
+            FROM {field_data_field_page_tracker_node} n
+            INNER JOIN {field_data_field_page_tracker_user_id} u
+            ON u.entity_id = n.entity_id
+            LEFT JOIN {node} node
+            ON node.nid = n.field_page_tracker_node_target_id
+            WHERE u.field_page_tracker_user_id_value = :uid
+            GROUP BY n.field_page_tracker_node_target_id
+            LIMIT 5";
+    $results = db_query($sql, array(
+        'uid' => $user->uid
+    ));
+    $top_node_pages = $results->fetchAll();
+
+    // Get top pages for terms
+    $sql = "SELECT term.name as `target_title`, term.tid as `target_tid`, count(t.field_page_tracker_term_tid) as `count`
+            FROM {field_data_field_page_tracker_term} t
+            INNER JOIN {field_data_field_page_tracker_user_id} u
+            ON u.entity_id = t.entity_id
+            LEFT JOIN {taxonomy_term_data} term
+            ON term.tid = t.field_page_tracker_term_tid
+            WHERE u.field_page_tracker_user_id_value = :uid
+            GROUP BY t.field_page_tracker_term_tid
+            LIMIT 5";
+    $results = db_query($sql, array(
+        'uid' => $user->uid
+    ));
+    $top_term_pages = $results->fetchAll();
+
+    // Get top pages for search
+    $sql = "SELECT s.field_page_tracker_search_value as `target_search`, count(s.field_page_tracker_search_value) as `count`
+            FROM {field_data_field_page_tracker_search} s
+            INNER JOIN {field_data_field_page_tracker_user_id} u
+            ON u.entity_id = s.entity_id
+            WHERE u.field_page_tracker_user_id_value = :uid
+            GROUP BY s.field_page_tracker_search_value
+            LIMIT 5";
+    $results = db_query($sql, array(
+        'uid' => $user->uid
+    ));
+    $top_search_pages = $results->fetchAll();
+
+    $top_pages = array_merge($top_node_pages, $top_term_pages, $top_search_pages);
+    usort($top_pages, "count_sort");
+    $top_pages = array_slice($top_pages, 0, 5, true);
+
+    return $top_pages;
+}
+function data_get_recent_pages() {
+    global $user;
+    // get recent searches
+    $sql = "SELECT n.nid
+            FROM {node} n
+            RIGHT JOIN {field_data_field_page_tracker_user_id} u
+            ON n.nid = u.entity_id
+            WHERE u.field_page_tracker_user_id_value = :uid
+            ORDER BY n.created DESC
+            LIMIT 5";
+    $results = db_query($sql, array(
+        'uid' => $user->uid
+    ));
+
+    $page_tracks = array();
+    foreach($results as $result) {
+        $node_id = $result->nid;
+
+        $page_track = node_load($node_id);
+
+        if(isset($page_track->field_page_tracker_search[LANGUAGE_NONE])) {
+
+        }
+
+        if(isset($page_track->field_page_tracker_node[LANGUAGE_NONE])) {
+            $sql = "SELECT n.title, n.nid
+                    FROM {node} n
+                    WHERE n.nid = :nid";
+            $results = db_query($sql, array(
+                'nid'   => $page_track->field_page_tracker_node[LANGUAGE_NONE][0]['target_id']
+            ));
+
+            $page_track->field_page_tracker_node = $results->fetchAssoc();
+        }
+
+        if(isset($page_track->field_page_tracker_term[LANGUAGE_NONE])) {
+            $sql = "SELECT t.tid, t.name
+                    FROM {taxonomy_term_data} t
+                    WHERE t.tid = :tid";
+            $results = db_query($sql, array(
+                'tid'   => $page_track->field_page_tracker_term[LANGUAGE_NONE][0]['tid']
+            ));
+
+            $page_track->field_page_tracker_term = $results->fetchAssoc();
+        }
+
+        $page_tracks[] = $page_track;
+    }
+
+    return $page_tracks;
+}
+
+
 function page_dashboard() {
-//    drupal_add_js(array(
-//        'skeletome_profile' => array(
-//            'user'          => $user,
-//            'roles'         => $pretty_roles,
-//            "contributed"     => $contributed,
-//            'activity'        => $activity,
-//            'profile'         => $profile,
-//    )), 'setting');
+    $page_tracks = data_get_recent_pages();
+    $top_pages = data_get_top_pages();
+
+    // get recent searches results
+    global $user;
+
+    // Get recent search pages
+    $sql = "SELECT s.field_page_tracker_search_value as `target_search`, n.nid, MAX(n.created) as `max_created`
+            FROM {field_data_field_page_tracker_search} s
+            INNER JOIN {field_data_field_page_tracker_user_id} u
+            ON u.entity_id = s.entity_id
+            LEFT JOIN {node} n
+            ON n.nid = u.entity_id
+            WHERE u.field_page_tracker_user_id_value = :uid
+            GROUP BY target_search
+            ORDER BY max_created DESC
+            LIMIT 3";
+    $results = db_query($sql, array(
+        'uid' => $user->uid
+    ));
+    $searches = $results->fetchAll();
+
+    drupal_add_js(array(
+        'skeletome_dashboard' => array(
+            'page_tracks'   => $page_tracks,
+            'top_pages'     => $top_pages,
+            'searches'      => $searches
+
+    )), 'setting');
+
 
     $output =  array(
         'skeletome_dashboard_page' => array(
@@ -33,6 +172,14 @@ function page_dashboard() {
         )
     );
     return $output;
+}
+
+function count_sort($a, $b)
+{
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a->count > $b->count) ? -1 : 1;
 }
 
 /**

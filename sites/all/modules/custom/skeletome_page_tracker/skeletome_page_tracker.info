@@ -1,0 +1,4 @@
+name = Skeletome Page Tracker
+description = Tracks pages loaded for logged in users
+package = Skeletome Groups
+core = 7.x
