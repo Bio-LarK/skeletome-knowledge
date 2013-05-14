@@ -109,53 +109,6 @@
 
                 <?php include('statements.php'); ?>
 
-
-                <!--<section class="section-large" style="display: none;">
-                    <div class="pull-right">
-                        <a ng-click="showAddNewGeneMutation()" class="btn"><i class="icon-plus"></i> New</a>
-                    </div>
-
-                    <h2>Allelic Variants</h2>
-
-                    <div style="margin-bottom: 35px">
-                        <h3>Various</h3>
-                        <div style="margin-left: 21px;">
-                            <h4>Bone Dysplasias ({{ master.gene.various_mutations_bone_dysplasias.length }})</h4>
-                            <ul>
-                                <li ng-repeat="boneDysplasia in master.gene.various_mutations_bone_dysplasias | orderBy:'-title'">
-                                    <a ng-href="?q=node/{{boneDysplasia.vid}}">{{boneDysplasia.title}}</a></td>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div ng-repeat="geneMutation in master.gene.field_gene_gene_mutation">
-                        <div style="margin-bottom: 35px" >
-                            <a href ng-click="showEditGeneMutation(geneMutation)" data-toggle="modal" role="button" class="btn pull-right"><i class="icon-pencil"></i> Edit Description</a>
-                            <h3>{{ geneMutation.title }}</h3>
-
-                            <div style="margin-bottom: 21px;" >
-                                <p class="muted" ng-show="!geneMutation.body.und">
-                                    There is no description.
-                                </p>
-                                <p ng-show="geneMutation.body.und" ng-bind-html-unsafe="geneMutation.body.und[0].value">
-                                </p>
-                            </div>
-
-                            <div style="margin-left: 21px;">
-                                <h4>Bone Dysplasias ({{ geneMutation.field_gene_mutation_bd.length || 0 }})</h4>
-                                <ul>
-                                    <li ng-repeat="boneDysplasia in geneMutation.field_gene_mutation_bd">
-                                        <a ng-href="?q=node/{{boneDysplasia.vid}}">{{boneDysplasia.title}}</a></td>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                </section>-->
-
             </div>
 
             <div class="span4">
@@ -238,23 +191,6 @@
                     </div>
 
                 </section>
-
-                <section>
-                    <div class="section-segment section-segment-header">
-                        <h3>Editors</h3>
-                    </div>
-
-                    <div ng-show="!editors.length" class="section-segment muted">
-                        No editors associated with this gene.
-                    </div>
-
-                    <div ng-repeat="editor in editors" class="section-segment">
-                        <i class="icon-user"></i> {{ editor.name | capitalize }}
-                    </div>
-
-                </section>
-
-
             </div>
         </div>
     </div>

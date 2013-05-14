@@ -367,7 +367,20 @@ $isAdmin = user_access('administer site configuration');
     </section>
 
 
-    <section ng-show="similar.length">
+    <section>
+        <div class="section-segment section-segment-header">
+            <h2>Group Members</h2>
+        </div>
+        <div ng-repeat="groupBoneDysplasia in groupBoneDysplasias">
+            <a class="section-segment" href="?q=node/{{ groupBoneDysplasia.nid }}">
+                <i class="icon-chevron-right pull-right"></i>
+                <i class="icon-chevron-right icon-white pull-right"></i>
+
+                {{ groupBoneDysplasia.title }}
+            </a>
+        </div>
+    </section>
+    <!--<section ng-show="similar.length">
         <div class="section-segment section-segment-header">
             <h3>Similar</h3>
         </div>
@@ -379,9 +392,9 @@ $isAdmin = user_access('administer site configuration');
                 {{ object.label }}
             </a>
         </div>
-    </section>
+    </section>-->
 
-    <section>
+    <!--<section>
         <div class="section-segment section-segment-header">
             <h3>Editors</h3>
         </div>
@@ -399,7 +412,7 @@ $isAdmin = user_access('administer site configuration');
             </a>
         </div>
 
-    </section>
+    </section>-->
 </div>
 
 

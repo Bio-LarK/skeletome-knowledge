@@ -352,6 +352,21 @@ function page_bone_dysplasia($node) {
     /* Get the Groups */
     $tags = data_get_groups_and_tags($node);
 
+    // Get the bone dysplasias in the group
+    // get the first tag
+    $group = $tags[0];
+    $sql = "SELECT n.*
+            FROM {node} n
+            RIGHT JOIN {field_data_sk_bd_tags} t
+            ON n.nid = t.entity_id
+            WHERE sk_bd_tags_tid = :groupid";
+    $results = db_query($sql, array(
+        'groupid'   => $group->tid
+    ));
+
+    $group_bone_dysplasias = $results->fetchAll();
+
+
     /* Get all the modes of inhertiance (used by editing feature) */
     $moi_taxonomy = taxonomy_vocabulary_machine_name_load('mode_of_inheritance');
 
@@ -375,13 +390,15 @@ function page_bone_dysplasia($node) {
         $node->body[LANGUAGE_NONE][0]['value'] = "";
     }
 
+
+
     // Get list of similar nodes
-    $block = block_load("apachesolr_search", "mlt-001");
-    $similar = _block_get_renderable_array(_block_render_blocks(array($block)));
-    $similar_bone_dysplasias = null;
-    if(isset($similar['apachesolr_search_mlt-001'])) {
-        $similar_bone_dysplasias = $similar['apachesolr_search_mlt-001']['#docs'];
-    }
+//    $block = block_load("apachesolr_search", "mlt-001");
+//    $similar = _block_get_renderable_array(_block_render_blocks(array($block)));
+//    $similar_bone_dysplasias = null;
+//    if(isset($similar['apachesolr_search_mlt-001'])) {
+//        $similar_bone_dysplasias = $similar['apachesolr_search_mlt-001']['#docs'];
+//    }
 
 
 
@@ -474,7 +491,7 @@ function page_bone_dysplasia($node) {
             'all_mois'              => $all_mois,
             'all_genes'             => $all_genes,
             'editors'               => data_get_editors_for_node($node->nid),
-            'similar'               => $similar_bone_dysplasias,
+            'group_bone_dysplasias' => $group_bone_dysplasias,
             'reference'             => $reference_string,
             'provider'              => $provider
     )), 'setting');

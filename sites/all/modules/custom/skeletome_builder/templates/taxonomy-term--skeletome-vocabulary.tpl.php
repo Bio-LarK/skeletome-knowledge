@@ -58,7 +58,7 @@
                     </div>
 
                     <h1>
-                        <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/clinical_feature_logo.svg"/>
+                        <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/stethoscope.svg"/>
 
                         {{ clinicalFeature.name }}</h1>
                 </div>

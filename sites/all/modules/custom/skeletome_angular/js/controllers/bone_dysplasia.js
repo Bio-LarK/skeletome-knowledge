@@ -15,7 +15,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.boneDysplasia = Drupal.settings.skeletome_builder.bone_dysplasia;
     $scope.moi = Drupal.settings.skeletome_builder.moi;
     $scope.omim = Drupal.settings.skeletome_builder.omim;
-    $scope.similar = Drupal.settings.skeletome_builder.similar;
+    $scope.groupBoneDysplasias = Drupal.settings.skeletome_builder.group_bone_dysplasias;
 
     $scope.statements = Drupal.settings.skeletome_builder.statements;
     $scope.clinicalFeatures = Drupal.settings.skeletome_builder.clinical_features;

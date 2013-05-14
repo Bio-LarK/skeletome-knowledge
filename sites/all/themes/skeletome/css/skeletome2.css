@@ -1301,11 +1301,12 @@ table.table-dark {
     width: 23px;
 }
 .type-logo {
-    background-color: #2980B9;
+    /*background-color: #2980B9;*/
+    background-color: rgb(44, 63, 78);
     width: 30px;
     height: 30px;
     padding: 8px;
-    border-radius: 100px;
+    border-radius: 5px;
     position: relative;
     top: -2px;
 }
