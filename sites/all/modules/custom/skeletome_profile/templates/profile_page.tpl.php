@@ -1,6 +1,7 @@
 <style type="text/css">
     .profile-page-picture {
         width: 100%;
+        display: block;
     }
     .section-segment.section-segment-editing {
         background-color: rgb(255, 251, 224);
@@ -28,6 +29,9 @@
     .isEditing.edit-picture-button {
         position: inherit;
         float: right;
+    }
+    .profile-page-picture {
+
     }
 </style>
 <?php
@@ -90,15 +94,15 @@
                             <div class="dropzone" ng-model="profilePics.files"
                                  drop-zone-upload="?q=upload/images" drop-zone-message="<b>Drop Profile picture</b> in here to upload (or click here).">
                             </div>
-                            <img class="profile-page-picture" ng-show="!edit.profile.field_profile_image.und.length" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
-                            <img class="profile-page-picture" ng-show="edit.profile.field_profile_image.und.length"  ng-src="{{ edit.profile.field_profile_image.und[0].full_url }}" alt=""/>
+                            <img ng-show="!edit.profile.field_profile_image.und.length" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg" class="profile-page-picture"/>
+                            <img ng-show="edit.profile.field_profile_image.und.length"  ng-src="{{ edit.profile.field_profile_image.und[0].full_url }}" alt=""  class="profile-page-picture"/>
                         </div>
                         <div ng-switch-when="isDisplaying">
                             <div ng-show="!profile.field_profile_image.und.length" style="padding: 20px">
                                 <img class="profile-page-picture" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
                             </div>
 
-                            <img ng-show="profile.field_profile_image.und.length"  ng-src="{{ profile.field_profile_image.und[0].full_url }}" alt=""/>
+                            <img class="profile-page-picture" ng-show="profile.field_profile_image.und.length"  ng-src="{{ profile.field_profile_image.und[0].full_url }}" alt=""/>
                         </div>
                     </div>
 
