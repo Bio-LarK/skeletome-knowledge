@@ -1,5 +1,5 @@
 <style type="text/css">
-    .section-segment img {
+    .profile-page-picture {
         width: 100%;
     }
     .section-segment.section-segment-editing {
@@ -90,12 +90,12 @@
                             <div class="dropzone" ng-model="profilePics.files"
                                  drop-zone-upload="?q=upload/images" drop-zone-message="<b>Drop Profile picture</b> in here to upload (or click here).">
                             </div>
-                            <img ng-show="!edit.profile.field_profile_image.und.length" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
-                            <img ng-show="edit.profile.field_profile_image.und.length"  ng-src="{{ edit.profile.field_profile_image.und[0].full_url }}" alt=""/>
+                            <img class="profile-page-picture" ng-show="!edit.profile.field_profile_image.und.length" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
+                            <img class="profile-page-picture" ng-show="edit.profile.field_profile_image.und.length"  ng-src="{{ edit.profile.field_profile_image.und[0].full_url }}" alt=""/>
                         </div>
                         <div ng-switch-when="isDisplaying">
                             <div ng-show="!profile.field_profile_image.und.length" style="padding: 20px">
-                                <img style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
+                                <img class="profile-page-picture" style="opacity: 0.5" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user_black.svg"/>
                             </div>
 
                             <img ng-show="profile.field_profile_image.und.length"  ng-src="{{ profile.field_profile_image.und[0].full_url }}" alt=""/>
@@ -275,11 +275,10 @@
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
 
-                        <p class="pull-right" style="color: #ccc">{{ item.created*1000 | date:'MMM d, y - h:mm a' }}</p>
+                        <p><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/article-icon.png"/> <b>Statement</b> added to <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
 
-                        <p><b>{{ user.name }}</b> made a statement on <b>{{ item.target_title}}</b>.</p>
-
-                        <div ng-bind-html-unsafe="item.body | truncate:200">
+                        <div>
+                            <span>"</span><span ng-bind-html-unsafe="item.body | truncate:200"></span><span>"</span>
                         </div>
 
                     </a>
@@ -288,11 +287,12 @@
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
 
-                        <p class="pull-right" style="color: #ccc">{{ item.created*1000 | date:'MMM d, y - h:mm a' }}</p>
+                        <p><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/comment-icon.png"/> <b>Comment</b> added to a statement on <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
 
-                        <p><b>{{ user.name }}</b> replied to a statement on <b>{{ item.target_title}}</b></p>
-
-                        <div ng-bind-html-unsafe="item.body | truncate:200">
+                        <div>
+                            <span>"</span><span ng-bind-html-unsafe="item.body | truncate:200"></span><span>"</span>
+                        </div>
+                        <div >
                         </div>
 
                     </a>

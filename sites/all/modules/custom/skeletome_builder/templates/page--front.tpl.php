@@ -112,6 +112,7 @@
     }
 
 </style>
+
 <div id="page" style="position:relative;" ng-controller="FrontPageCtrl">
 
     <div ng-controller="PageCtrl">
@@ -131,7 +132,7 @@
                            <div class="btn-group">
                                 <?php global $user; ?>
                                 <?php if(isset($user->name)):?>
-                                    <a class="btn btn-dark-navbar" href>
+                                    <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
                                         <?php echo $user->name; ?>
                                     </a>
                                     <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>

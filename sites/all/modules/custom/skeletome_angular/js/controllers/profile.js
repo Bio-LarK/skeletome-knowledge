@@ -45,6 +45,15 @@ function ProfileCtrl($scope, $http, Profile) {
         $scope.profile = Drupal.settings.skeletome_profile.profile || {};
         $scope.user = Drupal.settings.skeletome_profile.user;
 
+        // fix up the activity
+        angular.forEach($scope.activity, function(activity, index) {
+
+            if(!angular.isDefined(activity.cid)) {
+                console.log(activity.body);
+                activity.body = jQuery(activity.body).text();
+            }
+        });
+
         $scope.profilePics = {
             files: []
         }

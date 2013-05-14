@@ -91,6 +91,7 @@ function page_profile($user) {
             AND o.type != 'profile'
             AND o.type != 'gene_mutation'
             AND n.title != 'Statement'
+            AND o.type != 'page_tracker'
             ORDER BY timestamp DESC
             LIMIT 20";
     $results = db_query($sql, array(

@@ -95,7 +95,7 @@
                 <div class="btn-group pull-right">
                     <?php global $user; ?>
                     <?php if(isset($user->name)):?>
-                        <a class="btn btn-dark-navbar" href>
+                        <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
                             {{ user.name | truncate:30 }}
                         </a>
                         <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
