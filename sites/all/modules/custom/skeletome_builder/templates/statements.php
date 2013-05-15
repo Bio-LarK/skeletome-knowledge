@@ -61,7 +61,7 @@ $isAdmin = user_access('administer site configuration');
             </div>
 
             <!-- HEADING -->
-            <h2>Statements</h2>
+            <h2>Statements ({{ statements.length }})</h2>
         </div>
 
         <div ng-show="model.isAddingStatement" class="section-segment section-segment-editor statement-new">
@@ -71,7 +71,7 @@ $isAdmin = user_access('administer site configuration');
         <?php if (!$user->uid): ?>
             <div class="section-segment alert alert-info" style="border-radius: 0; margin-bottom: 0">
                 <div>
-                    Statements let you <b>contribute your knowledge</b> about '{{ master.gene.title || boneDysplasia.title }}'.
+                    Statements let you <b>contribute your knowledge</b>.
                 </div>
                 <div style="margin-top: 7px">
                     <a class="btn btn-info" cm-popover cm-popover-content="loginForm">Login In</a>
@@ -80,7 +80,7 @@ $isAdmin = user_access('administer site configuration');
             </div>
         <?php else: ?>
             <div ng-show="!model.isAddingStatement" class="section-segment muted">
-                <i class="icon-info-sign"></i> Statements let you <b>contribute your knowledge</b> about '{{ master.gene.title || boneDysplasia.title }}'.
+                <i class="icon-info-sign"></i> Statements let you <b>contribute your knowledge</b> to Skeletome.
             </div>
         <?php endif; ?>
 

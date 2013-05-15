@@ -86,6 +86,10 @@ function skeletome_builder_apachesolr_query_alter($query) {
             } else {
                 // its not a clinical feature, just add it back in
                 $new_query_string .= trim($query_param) . '* ';
+                if(strlen($query_params) > 4) {
+                    $new_query_string = ' *' . trim($query_param) . '* ';
+                }
+
             }
         }
     } else {

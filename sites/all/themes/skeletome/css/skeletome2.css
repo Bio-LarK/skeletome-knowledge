@@ -54,12 +54,17 @@ body {
 }
 .navsearch-small .navsearch-helper {
     position: absolute;
-    right: 15px;
+    right: 35px;
     top: 6px;
     font-size: 10px;
 }
 .navsearch-small .navsearch-icon {
     top: 8px;
+}
+.navsearch-small .navsearch-clear {
+    right: 15px;
+    top: 4px;
+    font-size: 21px;
 }
 
 /* ================================================
@@ -79,10 +84,20 @@ body {
         left: 13px;
         opacity: 0.8;
     }
+    .navsearch-clear {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 21px;
+        color: #bbb;
+        cursor: pointer;
+    }
+
     .navsearch-inputs {
         position: relative;
         height: 45px;
     }
+
         input.navsearch-input {
             width: 100% !important;
             height: 45px;
@@ -95,11 +110,10 @@ body {
             top: 0;
             left: 0;
 
-            border: none;
+            border: 1px solid #ddd;
         }
             input.navsearch-query {
                 background-color: transparent !important;
-                border: none;
             }
             input.navsearch-query:focus {
                 box-shadow: none;
@@ -110,16 +124,21 @@ body {
                 cursor: not-allowed;
                 background-color: white;
                 color: #bebebe !important;
-                border: none;
             }
 
         .navsearch-helper {
             position: absolute;
-            right: 20px;
+            right: 35px;
             top: 12px;
             color: #aaa9a9;
-            font-size: 10px;
+            font-size: 12px;
             background-color: white;
+        }
+        .navsearch-helper-button {
+            color: white;
+            background-color: #b5bbca;
+            padding: 3px;
+            border-radius: 3px;
         }
 
     .navsearch-searchbar-button {
@@ -282,8 +301,8 @@ ul.navsearch-suggestions {
     Front page slogan
 */
 .slogan {
-    font-size: 28px;
-    line-height: 35px;;
+    font-size: 38px;
+    line-height: 49px;;
     font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", Helvetica, Arial, san-serif;
     margin-bottom: 21px;;
     color: #eee;
@@ -1302,7 +1321,7 @@ table.table-dark {
 }
 .type-logo {
     /*background-color: #2980B9;*/
-    background-color: rgb(44, 63, 78);
+    background-color: rgb(51, 63, 73);
     width: 30px;
     height: 30px;
     padding: 8px;

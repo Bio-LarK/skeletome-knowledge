@@ -31,4 +31,19 @@ scripts[] = js/services/services.js
 scripts[] = js/filters/filters.js
 
 ; AngularJS Directives
+scripts[] = js/directives/autocomplete.js
+scripts[] = js/directives/ck_editor.js
+scripts[] = js/directives/clinical_feature_adder.js
+scripts[] = js/directives/cm_alert.js
+scripts[] = js/directives/cm_focus.js
+scripts[] = js/directives/cm_modal.js
+scripts[] = js/directives/cm_popover.js
+scripts[] = js/directives/cm_return.js
+scripts[] = js/directives/cm_tooltip.js
+scripts[] = js/directives/directives.js
+scripts[] = js/directives/drop_zone_upload.js
+scripts[] = js/directives/fade_in.js
+scripts[] = js/directives/fancy_box.js
+scripts[] = js/directives/nav_search.js
+scripts[] = js/directives/search.js
 scripts[] = js/directives/directives.js

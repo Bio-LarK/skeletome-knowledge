@@ -2,7 +2,6 @@
 
     <div class="navsearch-inputs">
 
-
         <input disabled class="navsearch-input navsearch-selectedSuggestion" ng-model="navSearch.selectedSuggestion" type="text"/>
         <input class="navsearch-input navsearch-query"
                ng-model="navSearch.query"
@@ -13,8 +12,10 @@
         <i class="icon-search navsearch-icon"></i>
         <span ng-show="navSearch.selectedSuggestion.length && navSearch.selectedSuggestion != navSearch.query && !isMultitermQuery()"
             class="navsearch-helper">
-            Press TAB to add another term
+            Press <span class="navsearch-helper-button">TAB</span> to complete
         </span>
+
+        <span class="navsearch-clear" ng-click="clear()" ng-show="navSearch.query.length">&#215;</span>
     </div>
 
     <!--<a class="btn btn-success navsearch-searchbar-button" href="?q=search/site/{{ navSearch.query }}">

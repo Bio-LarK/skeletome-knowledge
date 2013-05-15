@@ -179,12 +179,9 @@ $isAdmin = user_access('administer site configuration');
                         </div>
                     <?php endif ?>
                 </div>
-                <h2>Clinical Features</h2>
+                <h2>Clinical Features ({{ clinicalFeatures.length }})</h2>
             </div>
             <div class="section-segment">
-                <p class="muted">
-                    '{{boneDysplasia.title}}' has {{clinicalFeatures.length}} clinical features.
-                </p>
                 <form ng-show="clinicalFeatures.length" style="margin-bottom: 0">
                     <search model="clinicalFeatureFilter" placeholder="Search for a Clinical Feature"></search>
                 </form>
@@ -196,8 +193,8 @@ $isAdmin = user_access('administer site configuration');
                         <div style="width: 60%; display: inline-block">
                             <b>Feature</b>
                         </div>
-                        <div style="width: 35%; display: inline-block" cm-tooltip="top" cm-tooltip-content="What is information content?">
-                            <i class="icon-list-alt"></i> <b>Information Content</b>
+                        <div style="width: 35%; display: inline-block">
+                            <b>Information Content</b> <i class="icon-question-sign" cm-tooltip="top" cm-tooltip-content="Information content."></i>
                         </div>
                     </div>
                 </div>

@@ -110,7 +110,7 @@
                         $query = "";
                         if(arg(0) == "search" && arg(1) == "site") $query = arg(2); ?>
 
-                    <nav-search query="<?php echo $query; ?>"></nav-search>
+                    <nav-search query-holder="queryHolder" selectedIndex="queryHolder.selectedIndex" show-suggestions="queryHolder.isShowingSuggestions"></nav-search>
                 </div>
             </div>
         </div>

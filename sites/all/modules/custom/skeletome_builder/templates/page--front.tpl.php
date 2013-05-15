@@ -84,6 +84,7 @@
         padding-left: 21px;;
         border-radius: 100px 0 0 100px;
         font-size: 14px;
+        border: 1px solid grey;
     }
 
     .navbar-search a {
@@ -113,9 +114,9 @@
 
 </style>
 
-<div id="page" style="position:relative;" ng-controller="FrontPageCtrl">
+<div ng-controller="PageCtrl">
+    <div id="page" style="position:relative;" ng-controller="FrontPageCtrl">
 
-    <div ng-controller="PageCtrl">
         <header role="banner">
             <div class="banner">
 
@@ -123,24 +124,34 @@
                     <div class="row-fluid">
                         <div class="span12" style="position: relative;">
 
-                            <h1 class="logo" style="font-weight: bold">
+                            <div style="overflow: auto;">
+                                <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+                                    <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
+                                </a>
+
+                                <div class="btn-group">
+                                    <?php global $user; ?>
+                                    <?php if(isset($user->name)):?>
+                                        <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
+                                            <?php echo $user->name; ?>
+                                        </a>
+                                        <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
+                                    <?php else: ?>
+                                        <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
+                                        <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
+                                    <?php endif; ?>
+                                </div>
+
+                            </div>
+
+
+                            <!--<h1 class="logo" style="font-weight: bold">
                                 <img style="height:40px; position: relative; top: -5px; left:-5px"
                                      src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone-logo.png"
                                      alt="Spine"/>Skeletome
-                            </h1>
+                            </h1>-->
 
-                           <div class="btn-group">
-                                <?php global $user; ?>
-                                <?php if(isset($user->name)):?>
-                                    <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
-                                        <?php echo $user->name; ?>
-                                    </a>
-                                    <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
-                                <?php else: ?>
-                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                                    <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
-                                <?php endif; ?>
-                            </div>
+
 
 
                             <div class="row-fluid">
@@ -150,11 +161,7 @@
                             </div>
 
 
-                            <div class="row-fluid">
-                                <div class="span8 offset2">
-                                    <nav-search></nav-search>
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>
@@ -175,10 +182,49 @@
 
     <div class="container">
         <div class="row-fluid">
+            <div class="span12">
+                <style type="text/css">
+                    .go_button {
+                        margin-right: 7px;;
+                    }
+                </style>
+                <section>
+                    <div class="section-segment section-segment-header">
+                        <div class="section-segment-header-buttons pull-right">
+                            <a ng-show="!isShowingInstructions" class="btn btn-primary" ng-click="showInstructions()"><i class="icon-question-sign icon-white"></i> What can you do?</a>
+                        </div>
+
+
+                        <h2>Search</h2>
+                    </div>
+                    <div class="section-segment">
+                        <nav-search query-holder="queryHolder" selectedIndex="queryHolder.selectedIndex" show-suggestions="queryHolder.isShowingSuggestions"></nav-search>
+                    </div>
+                    <div ng-show="isShowingInstructions">
+                        <div class="section-segment">
+                            <a class="btn pull-right" style="position: relative; top: -4px" ng-click="doFind()"><i class="icon-play-circle"></i> Try it - <b>Find</b> Achondroplasia</a>
+                            <b>Find</b> specific bone dysplasias, clinical features, groups or genes.
+
+                        </div>
+                        <div class="section-segment">
+                            <a class="btn pull-right" style="position: relative; top: -4px" ng-click="doCombine()"><i class="icon-play-circle"></i> Try it - <b>Combine</b> Dwarfism & Kyphosis</a>
+                            <b>Combine</b> clinical features to find related disorders.
+                        </div>
+                        <div class="section-segment">
+                            <a class="btn pull-right" style="position: relative; top: -4px" ng-click="doSearch()"><i class="icon-play-circle"></i> Try it - <b>Search</b> for "punctata"</a>
+
+                            <b>Search</b> through full-text descriptions of disorders and genes.
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        <div class="row-fluid">
             <div class="span6">
                 <section>
                     <div class="section-segment section-segment-header">
-                        <h3>Browse</h3>
+                        <h3>Browse ISDS Nosology</h3>
                     </div>
                     <div class="section-segment muted alert">
                         Browse an existing disease classification.
@@ -190,7 +236,7 @@
                             <i class="icon-chevron-right pull-right"></i>
                             <i class="icon-chevron-right icon-white pull-right"></i>
 
-                            {{ release.name }} Nosology
+                            {{ release.name }}
                         </a>
                     </div>
                 </section>

@@ -1274,7 +1274,6 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
         $hl_fl = array('content', 'ts_comments');
     }
 
-
     $total = $response->response->numFound;
     pager_default_initialize($total, $query->getParam('rows'));
     if ($total > 0) {
@@ -1304,7 +1303,50 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
                 if (isset($doc->teaser)) {
                     $snippets[] = truncate_utf8($doc->teaser, 256, TRUE);
                 }
+                //
             }
+
+            $matches = array();
+            preg_match_all('#(?<=sm_vid_SKELETOME_vocabulary:)(.*?)(?="?\))#', $query->getParam('q.alt'), $matches);
+
+            // get rid of those pesky quotes that i cant seem to remove iwth regex
+            if(count($matches)) {
+                $matches = $matches[0];
+
+                foreach($matches as &$match) {
+                    $match = str_replace('"', "", $match);
+
+                    $sql = "SELECT d.*
+                            FROM {taxonomy_term_data} d
+                            INNER JOIN {field_data_field_skeletome_tags} t
+                            ON d.tid = t.field_skeletome_tags_tid
+                            WHERE t.entity_id = :bone_dysplasia_id
+                            AND d.name LIKE :name";
+                    $sql_results = db_query($sql, array(
+                        'bone_dysplasia_id'     => $doc->entity_id,
+                        'name'                  => db_like($match)
+                    ));
+
+                    $bleh = $sql_results->fetchAssoc();
+
+                    $information_content = data_get_information_content_for_feature(
+                        count(data_get_bone_dysplasias_for_clinical_feature($bleh)),
+                        data_get_bone_dysplasia_count(),
+                        data_get_max_clinical_feature_count()
+                    );
+
+                    if(isset($bleh['name'])) {
+                        $snippets[] = '<div>
+                                        <em>' . $bleh['name'] . '</em>
+                                        <div class="progress">
+                                            <div class="bar" style="width: ' . $information_content . '%">
+                                            </div>
+                                        </div>
+                                    </div>';
+                    }
+                }
+            }
+
 
             $hook = 'apachesolr_search_snippets__' . $doc->entity_type;
             $bundle = !empty($doc->bundle) ? $doc->bundle : NULL;
@@ -1371,6 +1413,7 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
                 'fields' => $fields,
                 'entity_type' => $doc->entity_type,
                 'bundle' => $bundle,
+                'cats'  => 'meow'
             );
 
             // Call entity-type-specific callbacks for extra handling.
@@ -1750,7 +1793,7 @@ function theme_apachesolr_search_snippets($vars)
             $result .= implode(' ... ', $snippets);
         }
     }
-    return $result . ' ...';
+    return $result;
 }
 
 /**
