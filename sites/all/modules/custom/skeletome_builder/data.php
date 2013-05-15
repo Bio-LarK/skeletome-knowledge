@@ -38,10 +38,7 @@ function data_autocomplete_search($term) {
         'title'     => db_like($term) .'%'
     ));
 
-    $nodes = array();
-    foreach($results as $result) {
-        $nodes[] = $result;
-    }
+    $nodes = $results->fetchAll();
 
     // Now we need to add in the synonyms annoyingly
     $sql = "SELECT entity_id, field_bd_synonym_value
@@ -52,6 +49,7 @@ function data_autocomplete_search($term) {
     $results = db_query($sql, array(
         'title'     => db_like($term) .'%'
     ));
+
     $node_ids = array();
     $node_titles = array();
     foreach($results as $result) {
@@ -88,30 +86,37 @@ function data_autocomplete_search($term) {
         $terms[] = $result;
     }
 
-    // Get the users
-//    $sql = "SELECT *
-//            FROM {users} u
-//            WHERE (
-//              u.name LIKE :name
-//              OR
-//              u.mail LIKE :name
-//            )
-//            LIMIT $limit";
-//    $results = db_query($sql, array(
-//        'name'      => '%' . db_like($term) . '%'
-//    ));
-//    $user_ids = array();
-//    foreach($results as $result) {
-//        $user_ids[] = $result->uid;
-//    }
-
-//    $users = user_load_multiple($user_ids);
     $users = array();
 
     $results = array_merge($nodes, $bd_syns, $terms, $users);
 
+    usort($results, "cmp_length");
+
     return $results;
 }
+
+function cmp_length($a, $b)
+{
+    if(isset($a->title)) {
+        $a_title = $a->title;
+    } else {
+        $a_title = $a->name;
+    }
+
+    if(isset($b->title)) {
+        $b_title = $b->title;
+    } else {
+        $b_title = $b->name;
+    }
+
+    // comapre titles
+    if (strlen($a_title) == strlen($b_title)) {
+        return 0;
+    }
+    return (strlen($a_title) > strlen($b_title)) ? 1 : -1;
+
+}
+
 
 function data_node_search($term, $full = true) {
     if(count($term < 3)) {
@@ -183,6 +188,9 @@ function data_node_search($term, $full = true) {
         }
 
         return $nodes;
+
+
+
     } else {
         return $node_ids;
     }
