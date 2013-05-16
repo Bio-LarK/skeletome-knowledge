@@ -313,15 +313,20 @@ function page_bone_dysplasia($node) {
 
 
 
-    /* Left over code */
-    $main_menu = array();
 
-    /* Get the statements */
+    // Get the statements
+    $time1 = time();
     $statements = data_get_statements_for_node($node);
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-    /* Get Clinical Features */
+    // Get Clinical Features
+    $time1 = time();
     $clinical_features = data_get_clinical_features_for_bone_dysplasia($node);
+    // echo "<p>" . (time() - $time1) . "</p>";
 
+
+
+    $time1 = time();
     $bone_dysplasia_count = data_get_bone_dysplasia_count();
     $max_clinical_feature_appearance = data_get_max_clinical_feature_count();
 
@@ -330,30 +335,43 @@ function page_bone_dysplasia($node) {
 
     foreach($clinical_features as &$clinical_feature) {
         // get all the bone dysplasias
+
         $bone_dysplasias_with_feature = data_get_bone_dysplasias_for_clinical_feature($clinical_feature, false);
 
-        $clinical_feature['information_content'] = data_get_information_content_for_feature(
+        $clinical_feature->information_content = data_get_information_content_for_feature(
             count($bone_dysplasias_with_feature),
             $bone_dysplasia_count,
             $max_clinical_feature_appearance
         );
     }
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-    /* Get OMIM */
+
+//    Get OMIM
+    $time1 = time();
     $omim = data_get_omim_for_bone_dysplasia($node);
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-    /* Get mode of inheritance */
+
+//    Get mode of inheritance
+    $time1 = time();
     $moi = data_get_moi($node);
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-    /* Get the Genes */
+    // Get the Genes
+    $time1 = time();
     $genes = data_get_genes_for_bone_dysplasias(array($node));
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-
-    /* Get the Groups */
+    // Get the Groups
+    $time1 = time();
     $tags = data_get_groups_and_tags($node);
+    // echo "<p>" . (time() - $time1) . "</p>";
+
 
     // Get the bone dysplasias in the group
     // get the first tag
+    $time1 = time();
     $group = $tags[0];
     $sql = "SELECT n.*
             FROM {node} n
@@ -365,11 +383,14 @@ function page_bone_dysplasia($node) {
     ));
 
     $group_bone_dysplasias = $results->fetchAll();
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-
-    /* Get all the modes of inhertiance (used by editing feature) */
+    // Get all the modes of inhertiance (used by editing feature)
+    $time1 = time();
     $moi_taxonomy = taxonomy_vocabulary_machine_name_load('mode_of_inheritance');
+    // echo "<p>" . (time() - $time1) . "</p>";
 
+    $time1 = time();
     $sql = "SELECT *
                 FROM {taxonomy_term_data}
                 WHERE vid = :vid";
@@ -382,8 +403,9 @@ function page_bone_dysplasia($node) {
     foreach($mois_object as $moi_object) {
         $all_mois[] = $moi_object;
     }
+    // echo "<p>" . (time() - $time1) . "</p>";
 
-//    $all_genes = data_all_genes(1000);
+
     $all_genes = array();
 
     if(!isset($node->body[LANGUAGE_NONE])) {
@@ -400,7 +422,7 @@ function page_bone_dysplasia($node) {
 //        $similar_bone_dysplasias = $similar['apachesolr_search_mlt-001']['#docs'];
 //    }
 
-
+    $time1 = time();
 
     // setup the images
     if(isset($node->field_bd_xray_images[LANGUAGE_NONE])) {
@@ -478,10 +500,12 @@ function page_bone_dysplasia($node) {
         }
     }
 
+    // echo "<p>" . (time() - $time1) . "</p>";
+
+    $time1 = time();
     drupal_add_js(array(
         'skeletome_builder' => array(
             "bone_dysplasia"        => $node,
-            'main_menu'             => $main_menu,
             'statements'            => $statements,
             'clinical_features'     => $clinical_features,
             'genes'                 => $genes,
@@ -495,6 +519,8 @@ function page_bone_dysplasia($node) {
             'reference'             => $reference_string,
             'provider'              => $provider
     )), 'setting');
+    // echo "<p>" . (time() - $time1) . "</p>";
+
 }
 
 

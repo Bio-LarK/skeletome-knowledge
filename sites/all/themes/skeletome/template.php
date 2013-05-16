@@ -227,7 +227,7 @@ function STARTERKIT_preprocess_block(&$variables, $hook) {
 
 
 function skeletome_preprocess_page(&$variables) {
-    if(arg(0) == "taxonomy" && arg(1) == "term") {
+    if((arg(0) == "taxonomy" && arg(1) == "term") || (arg(0) == "node" && arg(2) == "clinical-feature")) {
 
         $variables['page']['content']['system_main']['no_content'] = array();
 

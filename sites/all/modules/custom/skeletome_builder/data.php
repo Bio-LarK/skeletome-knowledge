@@ -410,13 +410,14 @@ function data_get_max_clinical_feature_count() {
  * @return array
  */
 function data_get_bone_dysplasias_for_clinical_feature($clinical_feature, $full=true) {
-    $clinical_feature = (array)$clinical_feature;
+    $clinical_feature = (object)$clinical_feature;
+
 
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
         ->entityCondition('bundle', 'bone_dysplasia')
         ->propertyCondition('status', 1)
-        ->fieldCondition('field_skeletome_tags', 'tid', $clinical_feature['tid'], '=');
+        ->fieldCondition('field_skeletome_tags', 'tid', $clinical_feature->tid, '=');
 //            ->addMetaData('account', user_load(1)); // Run the query as user 1.
     $results = $query->execute();
 
@@ -574,21 +575,35 @@ function data_get_statements_for_node($node) {
  */
 function data_get_clinical_features_for_bone_dysplasia($bone_dysplasia) {
     /* Get the Clinical Features */
-    $clinical_features_array = array();
-    $field_skeletome_tags = field_get_items('node', $bone_dysplasia, 'field_skeletome_tags');
-    $clinical_features_tids = array();
-    if($field_skeletome_tags) {
-        foreach($field_skeletome_tags as $field_skeletome_tag) {
-            $clinical_features_tids[] = $field_skeletome_tag['tid'];
-        }
-        $clinical_features_object = taxonomy_term_load_multiple($clinical_features_tids);
-        // Convert to array
 
-        foreach($clinical_features_object as $clinical_feature) {
-            $clinical_features_array[] = (array)$clinical_feature;
-        }
-    }
-    return $clinical_features_array;
+    $sql = "SELECT t.tid, t.name
+            FROM {taxonomy_term_data} t
+            RIGHT JOIN {field_data_field_skeletome_tags} f
+            ON t.tid = f.field_skeletome_tags_tid
+            WHERE f.entity_id = :bid";
+    $results = db_query($sql, array(
+        'bid'       => $bone_dysplasia->nid
+    ));
+
+    $clinical_features = $results->fetchAll();
+
+    return $clinical_features;
+
+//    $clinical_features_array = array();
+//    $field_skeletome_tags = field_get_items('node', $bone_dysplasia, 'field_skeletome_tags');
+//    $clinical_features_tids = array();
+//    if($field_skeletome_tags) {
+//        foreach($field_skeletome_tags as $field_skeletome_tag) {
+//            $clinical_features_tids[] = $field_skeletome_tag['tid'];
+//        }
+//        $clinical_features_object = taxonomy_term_load_multiple($clinical_features_tids);
+//        // Convert to array
+//
+//        foreach($clinical_features_object as $clinical_feature) {
+//            $clinical_features_array[] = (array)$clinical_feature;
+//        }
+//    }
+//    return $clinical_features_array;
 }
 
 /**

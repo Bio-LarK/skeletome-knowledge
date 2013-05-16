@@ -47,11 +47,13 @@
                     Go to
                 </span>
                 <span class="navsearch-suggestion-content" ng-bind-html-unsafe="suggestion.title | highlight:navSearch.query">
-                    Node result in here
+                    Node
                 </span>
 
-                <img ng-show="suggestion.type == 'bone_dysplasia'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-bone-dysplasia.png" alt=""/>
-                <img ng-show="suggestion.type == 'gene'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-gene.png" alt=""/>
+                <i ng-show="suggestion.type == 'bone_dysplasia'" class="icon-bone pull-right"></i>
+                <i ng-show="suggestion.type == 'gene'" class="icon-gene pull-right"></i>
+                <!--<img ng-show="suggestion.type == 'bone_dysplasia'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-bone-dysplasia.png" alt=""/>
+                <img ng-show="suggestion.type == 'gene'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-gene.png" alt=""/>-->
 
             </a>
 
@@ -60,13 +62,11 @@
                     Go to
                 </span>
                 <span class="navsearch-suggestion-content" ng-bind-html-unsafe="suggestion.name | highlight:navSearch.query">
-                    Term result in here
+                    Term
                 </span>
 
-                <img ng-show="suggestion.machine_name == 'sk_group_tag'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-bone-dysplasia-group.png" alt=""/>
-
-                <img ng-show="suggestion.machine_name == 'skeletome_vocabulary'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-phenotype.png" alt=""/>
-
+                <i ng-show="suggestion.machine_name == 'sk_group_tag'" class="icon-group pull-right"></i>
+                <i ng-show="suggestion.machine_name == 'skeletome_vocabulary'" class="icon-feature pull-right"></i>
             </a>
 
             <a class="navsearch-suggestion-link" ng-show="isMultitermQuery()" ng-click="addToMultitermQuery(suggestion.title || suggestion.name)" href>
@@ -77,10 +77,10 @@
                     Result in here
                 </span>
 
-                <img ng-show="suggestion.type == 'bone_dysplasia'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-bone-dysplasia.png" alt=""/>
-                <img ng-show="suggestion.type == 'gene'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-gene.png" alt=""/>
-                <img ng-show="suggestion.machine_name == 'sk_group_tag'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-bone-dysplasia-group.png" alt=""/>
-                <img ng-show="suggestion.machine_name == 'skeletome_vocabulary'" class="pull-right" ng-src="{{ baseUrl }}/sites/all/modules/custom/skeletome_builder/images/logo-small-phenotype.png" alt=""/>
+                <i ng-show="suggestion.type == 'bone_dysplasia'" class="icon-bone pull-right"></i>
+                <i ng-show="suggestion.type == 'gene'" class="icon-gene pull-right"></i>
+                <i ng-show="suggestion.machine_name == 'sk_group_tag'" class="icon-group pull-right"></i>
+                <i ng-show="suggestion.machine_name == 'skeletome_vocabulary'" class="icon-feature pull-right"></i>
             </a>
 
 

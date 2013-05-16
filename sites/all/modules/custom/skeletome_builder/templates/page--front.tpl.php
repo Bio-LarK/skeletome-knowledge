@@ -194,24 +194,23 @@
                             <a ng-show="!isShowingInstructions" class="btn btn-primary" ng-click="showInstructions()"><i class="icon-question-sign icon-white"></i> What can you do?</a>
                         </div>
 
-
                         <h2>Search</h2>
                     </div>
                     <div class="section-segment">
                         <nav-search query-holder="queryHolder" selectedIndex="queryHolder.selectedIndex" show-suggestions="queryHolder.isShowingSuggestions"></nav-search>
                     </div>
-                    <div ng-show="isShowingInstructions">
+                    <div ng-show="isShowingInstructions" ng-cloak>
                         <div class="section-segment">
-                            <a class="btn pull-right" style="position: relative; top: -4px" ng-click="doFind()"><i class="icon-play-circle"></i> Try it - <b>Find</b> Achondroplasia</a>
+                            <a class="btn btn-success pull-right" style="position: relative; top: -4px" ng-click="doFind()"><i class="icon-play-circle icon-white"></i> Try it - <b>Find</b> Achondroplasia</a>
                             <b>Find</b> specific bone dysplasias, clinical features, groups or genes.
 
                         </div>
                         <div class="section-segment">
-                            <a class="btn pull-right" style="position: relative; top: -4px" ng-click="doCombine()"><i class="icon-play-circle"></i> Try it - <b>Combine</b> Dwarfism & Kyphosis</a>
+                            <a class="btn btn-success pull-right" style="position: relative; top: -4px" ng-click="doCombine()"><i class="icon-play-circle icon-white"></i> Try it - <b>Combine</b> Dwarfism & Kyphosis</a>
                             <b>Combine</b> clinical features to find related disorders.
                         </div>
                         <div class="section-segment">
-                            <a class="btn pull-right" style="position: relative; top: -4px" ng-click="doSearch()"><i class="icon-play-circle"></i> Try it - <b>Search</b> for "punctata"</a>
+                            <a class="btn btn-success pull-right" style="position: relative; top: -4px" ng-click="doSearch()"><i class="icon-play-circle icon-white"></i> Try it - <b>Search</b> for "punctata"</a>
 
                             <b>Search</b> through full-text descriptions of disorders and genes.
                         </div>
