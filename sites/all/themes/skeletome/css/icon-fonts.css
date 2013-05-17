@@ -12,7 +12,7 @@
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
 	font-family: 'icomoon';
-	content: attr(data-icon);
+	content: attr(data-icon);h
 	speak: none;
 	font-weight: normal;
 	font-variant: normal;
@@ -27,7 +27,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-group, .icon-gene, .icon-bone, .icon-feature, .icon-comment, .icon-statement {
+.icon-group, .icon-gene, .icon-bone, .icon-feature, .icon-comment2, .icon-statement {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -49,7 +49,7 @@ you can use the generic selector below, but it's slower:
 .icon-feature:before {
 	content: "\73";
 }
-.icon-comment:before {
+.icon-comment2:before {
 	content: "\63";
 }
 .icon-statement:before {
