@@ -229,8 +229,16 @@ function skeletome_builder_page_build(&$page) {
             'skeletome_builder' => array(
                 'login_form'       => $form
             )), 'setting');
-
     }
+
+    $query = "";
+    if(arg(0) == "search" && arg(1) == "site") {
+        $query = arg(2);
+    }
+    drupal_add_js(array(
+        'skeletome_builder' => array(
+            "search_query"     => arg(2)
+    )), 'setting');
 
     drupal_add_js(array(
         'skeletome_builder' => array(
@@ -313,14 +321,16 @@ function skeletome_builder_page_build(&$page) {
                 'latest_releases'           => $releases,
                 'top_contributors'          => $top_contributors
         )), 'setting');
+//    } else if(arg(0) == "search" && arg(1) == "site") {
 
-    } else if(arg(0) == "search" && arg(1) == "bone-dysplasia") {
 
-        $all_bone_dysplasias = data_all_bone_dysplasias(20, true);
-        drupal_add_js(array(
-            'skeletome_builder' => array(
-                'all_bone_dysplasias'       => $all_bone_dysplasias
-        )), 'setting');
+//    } else if(arg(0) == "search" && arg(1) == "bone-dysplasia") {
+//
+//        $all_bone_dysplasias = data_all_bone_dysplasias(20, true);
+//        drupal_add_js(array(
+//            'skeletome_builder' => array(
+//                'all_bone_dysplasias'       => $all_bone_dysplasias
+//        )), 'setting');
 
     } else if (isset($term) && $term->vocabulary_machine_name == "skeletome_vocabulary") {
         page_clinical_feature($term, $bone_dysplasia);

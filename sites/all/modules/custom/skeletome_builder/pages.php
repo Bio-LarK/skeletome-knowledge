@@ -335,7 +335,6 @@ function page_bone_dysplasia($node) {
 
     foreach($clinical_features as &$clinical_feature) {
         // get all the bone dysplasias
-
         $bone_dysplasias_with_feature = data_get_bone_dysplasias_for_clinical_feature($clinical_feature, false);
 
         $clinical_feature->information_content = data_get_information_content_for_feature(

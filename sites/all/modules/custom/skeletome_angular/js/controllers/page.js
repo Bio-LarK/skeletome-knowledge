@@ -5,11 +5,10 @@ function PageCtrl($scope, $http) {
         window.location.href = "?q=search/site/" + term;
     }
 
-
     $scope.queryHolder = {};
+    $scope.queryHolder.query = Drupal.settings.skeletome_builder.search_query;
     $scope.queryHolder.selectedIndex = -1;
-    $scope.queryHolder.isShowingSuggestions = true;
-
+    $scope.queryHolder.isShowingSuggestions = false;
 
     $scope.baseUrl = Drupal.settings.skeletome_builder.base_url;
 

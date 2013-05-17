@@ -410,8 +410,8 @@ function data_get_max_clinical_feature_count() {
  * @return array
  */
 function data_get_bone_dysplasias_for_clinical_feature($clinical_feature, $full=true) {
-    $clinical_feature = (object)$clinical_feature;
 
+    $clinical_feature = (object)$clinical_feature;
 
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')

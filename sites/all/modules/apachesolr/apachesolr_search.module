@@ -1309,11 +1309,14 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
             $matches = array();
             preg_match_all('#(?<=sm_vid_SKELETOME_vocabulary:)(.*?)(?="?\))#', $query->getParam('q.alt'), $matches);
 
-            // get rid of those pesky quotes that i cant seem to remove iwth regex
-            if(count($matches)) {
-                $matches = $matches[0];
 
-                foreach($matches as &$match) {
+            // get the filters
+            $filters = $query->getParam('fq');
+
+            $counter = 0;
+            foreach($filters as $filter) {
+                if (strpos($filter, "sm_vid_SKELETOME_vocabulary:") !== FALSE) {
+                    $match = substr($filter, strlen("sm_vid_SKELETOME_vocabulary:"));
                     $match = str_replace('"', "", $match);
 
                     $sql = "SELECT d.*
@@ -1336,17 +1339,17 @@ function apachesolr_search_process_response($response, DrupalSolrQueryInterface 
                     );
 
                     if(isset($bleh['name'])) {
-                        $snippets[] = '<div>
-                                        <em>' . $bleh['name'] . '</em>
+                        $snippets['feature_' . $counter++] = '<br/><div>
+                                        <b>' . $bleh['name'] . '</b>
                                         <div class="progress">
                                             <div class="bar" style="width: ' . $information_content . '%">
                                             </div>
                                         </div>
                                     </div>';
                     }
+
                 }
             }
-
 
             $hook = 'apachesolr_search_snippets__' . $doc->entity_type;
             $bundle = !empty($doc->bundle) ? $doc->bundle : NULL;
@@ -1790,9 +1793,10 @@ function theme_apachesolr_search_snippets($vars)
         }
         if (count($snippets)) {
             $result .= (strlen($result) > 0) ? ' ... ' : '';
-            $result .= implode(' ... ', $snippets);
+            $result .= '<br/>' . implode('', $snippets);
         }
     }
+
     return $result;
 }
 
