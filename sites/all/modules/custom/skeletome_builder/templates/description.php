@@ -56,7 +56,7 @@ $isAdmin = user_access('administer site configuration');
 
         <div class="section-segment alert alert-info" ng-show="provider && !isEditingDescription">
             <div style="margin-bottom: 7px;">
-                <i class="icon-info-sign"></i> <b>This stub is sourced from {{ provider }}</b>.
+                <i class="ficon-info-sign"></i> <b>This stub is sourced from {{ provider }}</b>.
             </div>
             <div style="font-size: 12px" ng-bind-html-unsafe="reference">
             </div>

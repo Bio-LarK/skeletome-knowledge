@@ -72,6 +72,7 @@ stylesheets[all][] 		= css/bootstrap.css
 stylesheets[all][] 		= css/bootstrap-responsive.css
 stylesheets[all][] 		= css/skeletome2.css
 stylesheets[all][] 		= css/icon-fonts.css
+stylesheets[all][] 		= css/font-awesome.min.css
 
 
 ; Built-in conditional stylesheet support has been removed from Zen 7.x-5.x.

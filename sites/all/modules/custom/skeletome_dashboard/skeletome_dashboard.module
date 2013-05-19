@@ -133,6 +133,10 @@ function data_get_recent_pages() {
 }
 
 
+function data_get_contributions() {
+
+}
+
 function page_dashboard() {
     $page_tracks = data_get_recent_pages();
     $top_pages = data_get_top_pages();

@@ -1,18 +1,4 @@
-<style type="text/css">
-    .section-segment-header {
-        /*background-color: rgb(50, 76, 100);*/
-        /*color: white;*/
-        /*border-bottom: rgb(50, 76, 100);*/
-    }
-    .bleh-box {
-        padding: 14px;;
-    }
-    .bleh-box .section-segment {
-        padding: 14px 7px;
-        border: 1px solid #eee;
-        margin-bottom: 7px;;
-    }
-</style>
+
 <div ng-controller="DashboardCtrl" ng-init="init()">
     <div class="row">
         <div class="span12">
@@ -25,56 +11,31 @@
         <div class="span6">
             <section>
                 <div class="section-segment section-segment-header">
-                    <h2>Recent Pages</h2>
+                    <h3>Inbox <span class="label label-warning">0</span></h3>
                 </div>
-                <div class="bleh-box">
-                    <div ng-repeat="pageTrack in pageTracks">
+                <div class="section-segment">
+                    No messages.
+                </div>
+            </section>
 
-                        <a href="?q=node/{{ pageTrack.field_page_tracker_node.nid }}" class="section-segment" ng-show="pageTrack.field_page_tracker_node.title">
-                            <i class="icon-certificate"></i>
-
-                            <div class="pull-right">
-                                <i class="icon-chevron-right"></i>
-                                <i class="icon-chevron-right icon-white"></i>
-                            </div>
-
-                            {{ pageTrack.field_page_tracker_node.title }}
-                        </a>
-
-                        <div class="section-segment" ng-show="pageTrack.field_page_tracker_term.name">
-                            <i class="icon-certificate"></i>
-
-                            <div class="pull-right">
-                                <i class="icon-chevron-right"></i>
-                                <i class="icon-chevron-right icon-white"></i>
-                            </div>
-
-                            {{ pageTrack.field_page_tracker_term.name }}
-                        </div>
-
-                        <a href="?q=search/site/{{ pageTrack.field_page_tracker_search.und[0].value }}" class="section-segment" ng-show="pageTrack.field_page_tracker_search.und[0].value">
-                            <i class="icon-search"></i>
-
-                            <div class="pull-right">
-                                <i class="icon-chevron-right"></i>
-                                <i class="icon-chevron-right icon-white"></i>
-                            </div>
-
-                            Search: {{ pageTrack.field_page_tracker_search.und[0].value }}
-                        </a>
-                    </div>
+            <section>
+                <div class="section-segment section-segment-header">
+                    <h3>Your Contributions</h3>
+                </div>
+                <div class="section-segment">
+                    No contributions.
                 </div>
             </section>
         </div>
         <div class="span6">
             <section>
                 <div class="section-segment section-segment-header">
-                    <h2>Top 5 Pages</h2>
+                    <h3>Top Pages</h3>
                 </div>
                 <div class="bleh-box">
                     <div ng-repeat="page in topPages">
 
-                        <a ng-show="page.target_tid" class="section-segment" href="?q={{ page.target_tid }}">
+                        <a ng-show="page.target_tid" class="section-segment" href="?q=taxonomy/term/{{ page.target_tid }}">
                             <div class="pull-right">
                             <span class="label">
                                 {{ page.count }}
@@ -83,12 +44,12 @@
                                 <i class="icon-chevron-right icon-white"></i>
                             </div>
 
-                            <i class="icon-certificate"></i>
+                            <i class="icon-feature"></i>
 
                             {{ page.target_title }}
                         </a>
 
-                        <a ng-show="page.target_nid" class="section-segment" href="?q={{ page.target_nid }}">
+                        <a ng-show="page.target_nid" class="section-segment" href="?q=node/{{ page.target_nid }}">
                             <div class="pull-right">
                             <span class="label">
                                 {{ page.count }}
@@ -98,7 +59,7 @@
                                 <i class="icon-chevron-right icon-white"></i>
                             </div>
 
-                            <i class="icon-certificate"></i>
+                            <i class="icon-bone"></i>
 
                             {{ page.target_title }}
                         </a>
@@ -119,11 +80,82 @@
                         </a>
                     </div>
                 </div>
+            </section>
 
+            <section>
+                <div class="section-segment">
+                    <h2>Past Searches</h2>
+                </div>
+                <div class="section-segment" ng-repeat="search in searches">
+                    <i class="icon-search"></i>
+
+                    <span ng-show="!search.terms.length">
+                        {{ search.target_search }}
+                    </span>
+                    <span ng-repeat="term in search.terms">
+                        <span class="label label-primary" >{{ term }}</span>
+                    </span>
+
+                </div>
+            </section>
+
+            <section>
+                <div class="section-segment section-segment-header">
+                    <h3>Recent Pages</h3>
+                </div>
+                <div class="bleh-box">
+                    <div ng-repeat="pageTrack in pageTracks">
+
+                        <a href="?q=node/{{ pageTrack.field_page_tracker_node.nid }}" class="section-segment" ng-show="pageTrack.field_page_tracker_node.title">
+
+                            <div class="pull-right">
+                                <i class="icon-chevron-right"></i>
+                                <i class="icon-chevron-right icon-white"></i>
+                            </div>
+
+                            <i class="icon-bone"></i> {{ pageTrack.field_page_tracker_node.title }}
+                        </a>
+
+                        <div class="section-segment" ng-show="pageTrack.field_page_tracker_term.name">
+                            <i class="icon-certificate"></i>
+
+                            <div class="pull-right">
+                                <i class="icon-chevron-right"></i>
+                                <i class="icon-chevron-right icon-white"></i>
+                            </div>
+
+                            {{ pageTrack.field_page_tracker_term.name }}
+                        </div>
+
+                        <a href="?q=search/site/{{ pageTrack.field_page_tracker_search.und[0].value }}" class="section-segment" ng-show="pageTrack.field_page_tracker_search.und[0].value">
+
+
+                            <div class="pull-right">
+                                <i class="icon-chevron-right"></i>
+                                <i class="icon-chevron-right icon-white"></i>
+                            </div>
+
+
+                            <i class="icon-search"></i>
+
+                            <span ng-show="!pageTrack.field_page_tracker_search.und[0].terms.length">
+                                {{ pageTrack.field_page_tracker_search.und[0].value }}
+                            </span>
+
+                            <span ng-repeat="term in pageTrack.field_page_tracker_search.und[0].terms">
+                                <span class="label label-primary" >{{ term }}</span>
+                            </span>
+
+                        </a>
+                    </div>
+                </div>
             </section>
         </div>
+        <div class="span6">
+
+        </div>
     </div>
-    <div class="row" style="background-color: white">
+    <!--<div class="row">
 
         <div class="span4" ng-repeat="search in searches">
             <section>
@@ -152,9 +184,9 @@
 
             </section>
         </div>
-    </div>
+    </div>-->
 
-    <div class="row">
+    <!--<div class="row">
         <div class="span4">
             <section>
                 <div class="section-segment section-segment-heading">
@@ -186,6 +218,5 @@
         <div class="span4">
 
         </div>
-
-    </div>
+    </div>-->
 </div>

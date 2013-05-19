@@ -123,6 +123,7 @@ $isAdmin = user_access('administer site configuration');
 
 <div class="row-fluid">
 <div class="span8">
+
 <!-- The content -->
 <!-- ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}" -->
 <?php include('description.php'); ?>

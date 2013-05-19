@@ -1,6 +1,6 @@
 name = Skeletome AngularJS
 description = Adds AngularJS Javascript to pages
-package = Skeletome Groups
+package = A - Skeletome
 core = 7.x
 
 ; AngularJS Library

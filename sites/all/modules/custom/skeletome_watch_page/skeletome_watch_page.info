@@ -1,0 +1,6 @@
+name = Skeletome Watch Page
+description = Lets users watch pages for changes
+package = A - Skeletome
+core = 7.x
+
+dependencies[] = skeletome_angular

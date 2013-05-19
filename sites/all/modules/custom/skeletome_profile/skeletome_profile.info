@@ -1,6 +1,6 @@
 name = Skeletome Profiles
 description = Adds Custom Profile pages to Skeletome
-package = Skeletome Groups
+package = A - Skeletome
 core = 7.x
 
 dependencies[] = skeletome_angular

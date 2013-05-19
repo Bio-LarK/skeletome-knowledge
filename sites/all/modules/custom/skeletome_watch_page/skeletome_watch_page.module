@@ -1,0 +1,55 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: uqcmcna1
+ * Date: 17/05/13
+ * Time: 2:47 PM
+ * To change this template use File | Settings | File Templates.
+ */
+
+
+function skeletome_watch_page_menu() {
+
+    $items['rest/%/%/get'] = array(
+        'page callback' 	=> 'rest_api_get',
+        'page arguments'    => array(1, 2),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+
+/**
+ *  Implements hook_node_presave
+ */
+function skeletome_watch_page_node_presave($node) {
+//    if($node->type != "watch_page") {
+//        //  echo "a node is being saved!";
+//        global $user;
+//
+//        $page_track = new stdClass();
+//        $page_track->title = "Tracking Watch";
+//        $page_track->type = "watch_page";
+//        node_object_prepare($page_track); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+//        $page_track->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+//        $page_track->uid = $user->uid;
+//        $page_track->status = 1; //(1 or 0): published or not
+//        $page_track->promote = 0; //(1 or 0): promoted to front page
+//        $page_track->comment = 1; //2 = comments on, 1 = comments off
+//        $page_track = node_submit($page_track); // Prepare node for saving
+//        $page_track->revision = 1;
+//        $page_track->log = "Created new profile.";
+//
+//        $page_track->field_watch_page_node[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+//        $page_track->field_page_tracker_user_id[LANGUAGE_NONE][0]['value'] = $user->uid;
+//
+//        node_save($page_track);
+//        $page_track = node_load($page_track->nid);
+//
+//    }
+}
+
+
+

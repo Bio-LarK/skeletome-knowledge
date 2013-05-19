@@ -103,7 +103,7 @@ function page_profile($user) {
         $contributed[] = $result;
     }
 
-    // get the users activity
+    // get the users statement activity
     $sql = "SELECT n.uid, n.nid, b.body_value as `body`, n.created, d.nid as `target_nid`, d.title as `target_title`
             FROM {node} n
             LEFT JOIN {field_data_field_statement_node} s

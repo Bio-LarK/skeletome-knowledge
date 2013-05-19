@@ -1272,6 +1272,9 @@ table.table-dark {
     border: 1px solid #00a512;
     /*box-shadow: 0px 2px 0px #00a512;*/
 }
+.label-success {
+    background-color: #00a512;
+}
 .btn[disabled].btn-success {
     border: 1px solid #008c0f;
 }

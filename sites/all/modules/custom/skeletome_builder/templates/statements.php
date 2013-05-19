@@ -80,7 +80,7 @@ $isAdmin = user_access('administer site configuration');
             </div>
         <?php else: ?>
             <div ng-show="!model.isAddingStatement" class="section-segment muted">
-                <i class="icon-info-sign"></i> Statements let you <b>contribute your knowledge</b> to Skeletome.
+                <i class="ficon-info-sign"></i> Statements let you <b>contribute your knowledge</b> to Skeletome.
             </div>
         <?php endif; ?>
 

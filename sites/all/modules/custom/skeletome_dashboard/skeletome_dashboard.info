@@ -1,6 +1,6 @@
 name = Skeletome Dashboard
 description = Adds Custom Dashboard for skeletome users
-package = Skeletome Groups
+package = A - Skeletome
 core = 7.x
 
 dependencies[] = skeletome_angular

@@ -1,4 +1,4 @@
 name = Skeletome File Upload
 description = Adds File Upload end point for skeletome users
-package = Skeletome Groups
+package = A - Skeletome
 core = 7.x

@@ -6,7 +6,12 @@ function PageCtrl($scope, $http) {
     }
 
     $scope.queryHolder = {};
-    $scope.queryHolder.query = Drupal.settings.skeletome_builder.search_query;
+    if(Drupal.settings.skeletome_builder.search_query) {
+        $scope.queryHolder.query = Drupal.settings.skeletome_builder.search_query;
+    } else {
+        $scope.queryHolder.query = "";
+    }
+
     $scope.queryHolder.selectedIndex = -1;
     $scope.queryHolder.isShowingSuggestions = false;
 

@@ -1,6 +1,6 @@
 name = Skeletome Builder
 description = Module that helps build the pages with AngularJS
-package = Skeletome Groups
+package = A - Skeletome
 core = 7.x
 
 dependencies[] = entityreference

@@ -33,7 +33,11 @@ myApp.directive('ckEditor', function() {
                     [
                         { name: 'basicstyles', items : [ 'Bold','Italic' ] },
                         { name: 'paragraph', items : [ 'NumberedList','BulletedList' ] },
-                        { name: 'tools', items : [ 'Pubmed' ] }
+                        { name: 'tools', items : [ 'Pubmed' ] },
+                        { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+                        { name: 'links', items: [ 'Link', 'Unlink'] },
+                        { name: 'styles', items: [ 'Styles', 'Format' ] }
+
                     ]
 
             };
