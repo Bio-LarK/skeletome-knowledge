@@ -74,7 +74,7 @@
                                 <i class="icon-chevron-right icon-white"></i>
                             </div>
 
-                            <i class="icon-search"></i>
+                            <i class="ficon-search"></i>
 
                             {{ page.target_search }}
                         </a>
@@ -136,7 +136,7 @@
                             </div>
 
 
-                            <i class="icon-search"></i>
+                            <i class="ficon-search"></i>
 
                             <span ng-show="!pageTrack.field_page_tracker_search.und[0].terms.length">
                                 {{ pageTrack.field_page_tracker_search.und[0].value }}
