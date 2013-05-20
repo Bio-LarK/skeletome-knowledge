@@ -9,10 +9,10 @@ $isAdmin = user_access('administer site configuration');
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
 
-        <div class="section-segment">
+        <div class="section-segment section-segment-headers section-segment-header-editors">
             <?php
             if ($isAdmin || $isCurator || $isEditor): ?>
-                <div class="section-segment-header-buttons pull-right">
+            <div class="section-segment-header-buttons pull-right">
 
                     <!-- is Editing Description -->
                 <span ng-show="!isEditingDescription">
@@ -27,7 +27,7 @@ $isAdmin = user_access('administer site configuration');
                 <span ng-show="isEditingDescription">
                     <a href class="btn btn-success"
                        ng-click="saveEditedDescription(editedDescription)">
-                        <i class="icon-ok icon-white"></i> Save Description
+                        <i class="icon-ok icon-white"></i> Save
                     </a>
 
                     <a ng-show="isEditingDescription"
@@ -37,10 +37,10 @@ $isAdmin = user_access('administer site configuration');
                     </a>
                 </span>
 
-                </div>
+            </div>
             <?php endif; ?>
 
-            <div class="section-segment-header-editors" ng-show="!isEditingDescription">
+            <div ng-show="!isEditingDescription">
                 <b><i class="icon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
                     <a href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span ng-show=" ! $last ">,</span><span ng-show="$last && provider.length">, {{ provider }}</span>
@@ -48,7 +48,7 @@ $isAdmin = user_access('administer site configuration');
             </div>
 
             <?php if(isset($user->name)):?>
-            <div class="section-segment-header-editors" ng-show="isEditingDescription">
+            <div ng-show="isEditingDescription">
                 <b><i class="icon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
             </div>
             <?php endif; ?>

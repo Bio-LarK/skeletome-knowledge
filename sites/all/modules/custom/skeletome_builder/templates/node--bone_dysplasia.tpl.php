@@ -461,7 +461,7 @@ $isAdmin = user_access('administer site configuration');
 
     <!-- Modal Footer -->
     <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-success" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
     </div>
     <!-- /Modal Footer -->
 </div>
@@ -647,7 +647,7 @@ $isAdmin = user_access('administer site configuration');
 
     <!-- Modal Footer -->
     <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-success" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
     </div>
     <!-- /Modal Footer -->
 </div>
@@ -705,7 +705,7 @@ $isAdmin = user_access('administer site configuration');
 
     <!-- Modal Footer -->
     <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-success" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
+        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
     </div>
     <!-- /Modal Footer -->
 </div>

@@ -43,7 +43,7 @@ $isAdmin = user_access('administer site configuration');
                         <a ng-show="isEditingStatements" href
                            ng-click="hideEditStatements()"
                            data-toggle="modal" role="button"
-                           class="btn btn-success">
+                           class="btn btn-primary">
                             <i class="icon-ok icon-white"></i> Done
                         </a>
 
