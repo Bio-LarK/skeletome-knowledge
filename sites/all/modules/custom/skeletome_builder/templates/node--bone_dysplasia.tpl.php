@@ -128,8 +128,6 @@ $isAdmin = user_access('administer site configuration');
 <!-- ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}" -->
 <?php include('description.php'); ?>
 
-<?php include('statements.php'); ?>
-
 <section class="media-body" ng-class="{'section-more': xrays.length > xrayDisplayLimit}">
     <div class="section-segment section-segment-header">
         <?php if ($isAdmin || $isEditor || $isCurator): ?>
@@ -167,6 +165,9 @@ $isAdmin = user_access('administer site configuration');
     <!--<a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more"
        href>Show All X-Rays ({{ boneDysplasia.field_bd_xray_images.und.length }})</a>-->
 </section>
+
+
+<?php include('statements.php'); ?>
 
 
 <!-- Clinical Features -->

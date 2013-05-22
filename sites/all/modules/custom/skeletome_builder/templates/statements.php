@@ -15,7 +15,7 @@ $isAdmin = user_access('administer site configuration');
     <section class="statements">
         <a name="statements"></a>
 
-        <div class="section-segment section-segment-header">
+        <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': isEditingStatements }">
             <!-- BUTTONS! -->
             <div class="pull-right section-segment-header-buttons">
 
@@ -102,7 +102,7 @@ $isAdmin = user_access('administer site configuration');
 
         <!-- Actual list of statements statements -->
         <div ng-cloak>
-            <div ng-repeat="statement in statements">
+            <div ng-repeat="statement in statements | limitTo:statementDisplayLimit">
 
                 <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
 
@@ -236,6 +236,11 @@ $isAdmin = user_access('administer site configuration');
                     <!--</div>-->
 
                     <!-- List of comments -->
+            </div>
+
+            <div class="section-segment" ng-show="statements.length > defaultStatementDisplayLimit">
+                <button ng-show="isHidingStatements" ng-click="showStatements()" class="btn btn-reveal" ><i class="icon-chevron-down"></i> Show All</button>
+                <button ng-show="!isHidingStatements" ng-click="hideStatements()" class="btn btn-reveal" ><i class="icon-chevron-up"></i> Hide</button>
             </div>
         </div>
     </section>

@@ -1,4 +1,21 @@
 function DescriptionCtrl($scope, $http) {
+
+    $scope.defaultDescriptionLength = 500;
+
+    // Setup the default length
+    $scope.descriptionLength = $scope.defaultDescriptionLength;
+    $scope.isHidingDescription =  $scope.description.value.length > $scope.defaultDescriptionLength;
+
+    $scope.showDescription = function() {
+        $scope.isHidingDescription = false;
+        $scope.descriptionLength = $scope.description.safe_value.length + 100;
+    }
+
+    $scope.hideDescription = function() {
+        $scope.isHidingDescription = true;
+        $scope.descriptionLength = $scope.defaultDescriptionLength;
+    }
+
     /* Add / Editing */
     $scope.editDescription = function() {
         $scope.editedDescription = $scope.description.value;

@@ -85,33 +85,53 @@
         <div class="navbar-inner">
             <div class="container">
 
+                <div class="navbar-inner-table">
 
-                <?php if ($logo): ?>
-                <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-                    <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
-                </a>
-                <?php endif; ?>
-
-                <div class="btn-group pull-right">
-                    <?php global $user; ?>
-                    <?php if(isset($user->name)):?>
-                        <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
-                            {{ user.name | truncate:30 }}
+                    <?php if ($logo): ?>
+                    <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
+                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+                            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
                         </a>
-                        <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
-                    <?php else: ?>
-                        <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                        <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
+                    </div>
                     <?php endif; ?>
+
+                    <div class="navbar-inner-table-cell">
+                        <nav-search model="navSearchModel"></nav-search>
+                    </div>
+
+                    <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-browse">
+                        <a href="">Browse</a>
+                    </div>
+
+
+                    <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-login">
+                        <?php global $user; ?>
+                        <?php if(isset($user->name)):?>
+                            <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
+                                {{ user.name | truncate:30 }}
+                            </a>
+                            <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
+                        <?php else: ?>
+                            <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
+                            <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
-                <div class="navsearch-small">
+
+
+
+                <!--<div class="navsearch-small">
                     <?php  //get the query string if there is one
                         $query = "";
                         if(arg(0) == "search" && arg(1) == "site") $query = arg(2); ?>
 
-                    <nav-search query-holder="queryHolder" selectedIndex="queryHolder.selectedIndex" show-suggestions="queryHolder.isShowingSuggestions"></nav-search>
-                </div>
+                    <!---->
+
+                <!--</div>-->
+
+
+
             </div>
         </div>
     </div>

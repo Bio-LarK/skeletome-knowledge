@@ -1,30 +1,3 @@
-myApp.factory('Profile', function($resource, Api) {
-    return $resource(Api.baseUrl + '?q=rest/profile/:profileId/:type', {
-        profileId: '@nid'
-    }, {
-        update: {
-            method:'POST', params:{
-                type: 'update'
-            }
-        },
-        get: {
-            method:'GET', params:{
-                type: 'get'
-            }
-        },
-        save: {
-            method:'POST', params:{
-                type: 'save'
-            }
-        },
-        query: {
-            method:'GET', params:{
-                type: 'query'
-            }
-        }
-    });
-});
-
 myApp.service('Api', function() {
     this.baseUrl = (function() {
         // Replace : with \\: for angularjs
@@ -38,7 +11,9 @@ myApp.service('Api', function() {
 
 });
 
-function ProfileCtrl($scope, $http, Profile) {
+function ProfileCtrl($scope, $http) {
+
+
     $scope.init = function() {
         $scope.contributed = Drupal.settings.skeletome_profile.contributed;
         $scope.activity = Drupal.settings.skeletome_profile.activity;
@@ -86,6 +61,13 @@ function ProfileCtrl($scope, $http, Profile) {
                 ]
             };
         }
+        if(!angular.isDefined($scope.profile.field_profile_orcid_id)) {
+            $scope.profile.field_profile_orcid_id = {
+                und : [
+                    {value: ""}
+                ]
+            };
+        }
 
         $scope.name = Drupal.settings.skeletome_profile.name;
         $scope.roles = Drupal.settings.skeletome_profile.roles;
@@ -96,10 +78,27 @@ function ProfileCtrl($scope, $http, Profile) {
         $scope.biographyState = "isDisplaying";
         $scope.professionalState = "isDisplaying";
         $scope.detailsState = "isDisplaying";
+        $scope.orcidState = "isDisplaying";
     }
 
 
 
+//    $scope.fetchOrcidPublic = function(orcidId) {
+//        console.log("fetching orcid");
+//        $http.get('?q=ajax/profile/orcid/0000-0002-1808-0964').success(function(data, status, headers, config) {
+//            // this callback will be called asynchronously
+//            // when the response is available
+//            console.log("got data", data);
+//        }).error(function(data, status, headers, config) {
+//                // called asynchronously if an error occurs
+//                // or server returns response with an error status.
+//            console.log("error", data, status, header, config);
+//        });
+//    }
+//
+//    setTimeout(function() {
+//        $scope.fetchOrcidPublic();
+//    }, 2000);
 
     $scope.editDetails = function() {
         $scope.edit.profile = angular.copy($scope.profile);

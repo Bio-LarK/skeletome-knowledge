@@ -12,7 +12,6 @@ dependencies[] = skeletome_angular
 dependencies[] = skeletome_rest
 
 scripts[] = bootstrap.js
-scripts[] = ui-bootstrap-tpls-0.2.0.js
 
 ; Include dropzone
 scripts[] = lib/dropzone/dropzone.js

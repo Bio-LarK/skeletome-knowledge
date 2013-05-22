@@ -13,6 +13,13 @@ function skeletome_profile_menu() {
         'type'  => MENU_CALLBACK,
     );
 
+    $items['ajax/profile/orcid/%'] = array(
+        'page callback' 	=> 'ajax_get_orcid',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
     $items['upload/images'] = array(
         'page callback' 	=> 'skeletome_upload_image',
         'access arguments'  => array('access content'),
@@ -20,6 +27,11 @@ function skeletome_profile_menu() {
     );
 
     return $items;
+}
+
+function ajax_get_orcid($orcid_id) {
+    $xml = simplexml_load_file('http://pub.orcid.org/0000-0002-1808-0964');
+    echo json_encode($xml);
 }
 
 function profile_get($id) {

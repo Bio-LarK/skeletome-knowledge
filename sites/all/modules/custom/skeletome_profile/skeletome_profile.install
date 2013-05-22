@@ -81,7 +81,7 @@ function _profile_installed_fields()
             'cardinality'   => 1,
             'type'          => 'text',
             'settings' => array(
-                'max_length' => 16,
+                'max_length' => 20,
             )
         )
     );

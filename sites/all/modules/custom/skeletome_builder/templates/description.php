@@ -9,7 +9,7 @@ $isAdmin = user_access('administer site configuration');
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
 
-        <div class="section-segment section-segment-headers section-segment-header-editors">
+        <div class="section-segment section-segment-headers section-segment-header-editors" ng-class="{ 'section-segment-editing': isEditingDescription }">
             <?php
             if ($isAdmin || $isCurator || $isEditor): ?>
             <div class="section-segment-header-buttons pull-right">
@@ -60,7 +60,6 @@ $isAdmin = user_access('administer site configuration');
             </div>
             <div style="font-size: 12px" ng-bind-html-unsafe="reference">
             </div>
-
         </div>
         <div class="section-segment alert alert-success" cm-alert="description.isLoading">
             <i class="icon-ok"></i> Description saved.
@@ -86,7 +85,7 @@ $isAdmin = user_access('administer site configuration');
 
                 <!--  | truncate:descriptionLength -->
                 <div ng-show="description.safe_value.length && !description.isLoading">
-                    <div ng-bind-html-unsafe="description.safe_value">
+                    <div ng-bind-html-unsafe="description.safe_value | truncate:descriptionLength">
                         <?php echo render($content); ?>
                     </div>
 
@@ -99,6 +98,11 @@ $isAdmin = user_access('administer site configuration');
                            class="btn btn-more" ng-click="descriptionLength=1000"><i
                                 class="icon-chevron-up icon-black"></i> Hide</a>
                     </div>-->
+                    <div ng-show="description.value.length > defaultDescriptionLength">
+                        <button ng-show="isHidingDescription" ng-click="showDescription()" class="btn btn-reveal" ><i class="icon-chevron-down"></i> Show All</button>
+                        <button ng-show="!isHidingDescription" ng-click="hideDescription()" class="btn btn-reveal" ><i class="icon-chevron-up"></i> Hide</button>
+                    </div>
+
                 </div>
             </div>
         </div>

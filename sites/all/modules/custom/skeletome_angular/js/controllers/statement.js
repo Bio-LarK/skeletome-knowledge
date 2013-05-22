@@ -1,5 +1,21 @@
 function StatementCtrl($scope, $http) {
-    $scope.statementDisplayLimit = 2;
+
+    $scope.defaultStatementDisplayLimit = 3;
+
+    // Setup the default length
+    $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
+    $scope.isHidingStatements =  $scope.statements.length > $scope.defaultStatementDisplayLimit;
+
+    $scope.showStatements = function() {
+        $scope.isHidingStatements = false;
+        $scope.statementDisplayLimit = $scope.statements.length;
+    }
+
+    $scope.hideStatements = function() {
+        $scope.isHidingStatements = true;
+        $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
+    }
+
 
     /**
      * Show the area for statement creation

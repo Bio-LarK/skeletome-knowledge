@@ -3,27 +3,12 @@
         width: 100%;
         display: block;
     }
-    .section-segment.section-segment-editing {
-        background-color: rgb(255, 251, 224);
-    }
-    .section-segment-editing input, .section-segment-editing textarea {
-        border: 1px solid rgb(241, 219, 78);
-    }
-    .section-segment-editing input:focus, .section-segment-editing textarea:focus {
-        outline: none;
-        border: 1px solid rgb(255, 234, 82);
-        box-shadow: none;
-        -moz-box-shadow: none;
-        -webkit-box-shadow: none;
-    }
-    .section-segment-editing textarea {
-        height: 100px;;
-    }
+
 
     .edit-picture-button {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 12px;
+        right: 12px;
         z-index: 100;;
     }
     .isEditing.edit-picture-button {
@@ -39,18 +24,19 @@
     $canEdit = ((arg(1) == $user->uid) || user_access('administer site configuration'));;
 ?>
 <div ng-controller="ProfileCtrl" ng-init="init()">
+
     <div class="row">
         <div class="span12">
             <div class="page-heading">
                 <h1><img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user.svg"/>
-                    {{ user.name }}
+                    {{ user.name | capitalize }}
                 </h1>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="span4">
+        <div class="span3">
             <section>
 
                 <div class="section-segment" ng-class="{ 'section-segment-editing': detailsState=='isEditing', 'section-segment-nopadding': detailsState=='isDisplaying' }" style="position: relative;">
@@ -122,6 +108,32 @@
 
             </section>
 
+            <section>
+                <div class="section-segment section-segment-header">
+                    <div class="section-segment-header-buttons pull-right">
+                        <a ng-click="editProfessional()" href data-toggle="modal" role="button" class="btn">
+                            <i class="icon-pencil"></i> Edit
+                        </a>
+                    </div>
+                    <h3>Orcid</h3>
+                </div>
+                <div ng-switch on="orcidState">
+                    <div ng-switch-when="isLoading">
+                        <div class="section-segment refreshing-box">
+                            <i class="icon-refresh icon-refreshing"></i>
+                        </div>
+                    </div>
+                    <div ng-switch-when="isEditing">
+
+                    </div>
+                    <div ng-switch-when="isDisplaying">
+
+                    </div>
+                </div>
+                <div class="section-segment">
+                    <b>ID</b> {{ profile.field_profile_orcid_id.und[0].value }}
+                </div>
+            </section>
             <section>
                 <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': professionalState=='isEditing' }">
                     <?php if($canEdit): ?>
@@ -197,24 +209,9 @@
                     </div>
                 </div>
             </section>
-
-            <section ng-show="contributed.length">
-                <div class="section-segment section-segment-header">
-                    <h3>Contributed to Pages</h3>
-                </div>
-
-                <div ng-repeat="page in contributed | limitTo:contributedDisplayLimit">
-                    <a href="?q=node/{{ page.nid }}" class="section-segment">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
-
-                        {{ page.title }}
-                    </a>
-                </div>
-            </section>
-
         </div>
-        <div class="span8">
+
+        <div class="span6">
             <section>
                 <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': biographyState=='isEditing' }">
                     <?php if($canEdit): ?>
@@ -279,7 +276,7 @@
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
 
-                        <p><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/article-icon.png"/> <b>Statement</b> added to <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
+                        <p><i class="icon-statement"></i> <b>Statement</b> added to <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
 
                         <div>
                             <span>"</span><span ng-bind-html-unsafe="item.body | truncate:200"></span><span>"</span>
@@ -291,7 +288,7 @@
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
 
-                        <p><img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/comment-icon.png"/> <b>Comment</b> added to a statement on <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
+                        <p><i class="ficon-comment"></i> <b>Comment</b> added to a statement on <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
 
                         <div>
                             <span>"</span><span ng-bind-html-unsafe="item.body | truncate:200"></span><span>"</span>
@@ -302,6 +299,22 @@
                     </a>
                 </div>
 
+            </section>
+        </div>
+        <div class="span3">
+            <section ng-show="contributed.length">
+                <div class="section-segment section-segment-header">
+                    <h3>Contributed to Pages</h3>
+                </div>
+
+                <div ng-repeat="page in contributed | limitTo:contributedDisplayLimit">
+                    <a href="?q=node/{{ page.nid }}" class="section-segment">
+                        <i class="icon-chevron-right pull-right"></i>
+                        <i class="icon-chevron-right icon-white pull-right"></i>
+
+                        {{ page.title }}
+                    </a>
+                </div>
             </section>
         </div>
     </div>
