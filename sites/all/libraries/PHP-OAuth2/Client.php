@@ -238,6 +238,10 @@ class Client
                 break;
         }
 
+        echo "parameters are";
+        echo "<pre>";
+        print_r($parameters);
+        echo "</pre>";
         return $this->executeRequest($token_endpoint, $parameters, self::HTTP_METHOD_POST, $http_headers, self::HTTP_FORM_CONTENT_TYPE_APPLICATION);
     }
 
@@ -313,10 +317,14 @@ class Client
      */
     public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
+        echo "<b>Acces token type </b> " . $this->access_token_type;
+        echo "<b>access toaken is</b>" . $this->access_token;
         if ($this->access_token) {
             switch ($this->access_token_type) {
                 case self::ACCESS_TOKEN_URI:
+
                     if (is_array($parameters)) {
+                        echo "is array";
                         $parameters[$this->access_token_param_name] = $this->access_token;
                     } else {
                         throw new InvalidArgumentException(
@@ -391,6 +399,13 @@ class Client
      */
     private function executeRequest($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = null, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
+
+        echo "<h1>Executing Request</h1>";
+        echo "<h2>Params</h2>";
+        echo "<pre>";
+        print_r($parameters);
+        echo "</pre>";
+
         $curl_options = array(
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,
@@ -412,6 +427,8 @@ class Client
                     $parameters = http_build_query($parameters, null, '&');
                 }
                 $curl_options[CURLOPT_POSTFIELDS] = $parameters;
+
+
                 break;
             case self::HTTP_METHOD_HEAD:
                 $curl_options[CURLOPT_NOBODY] = true;
@@ -427,6 +444,9 @@ class Client
             default:
                 break;
         }
+
+
+
 
         $curl_options[CURLOPT_URL] = $url;
 
@@ -461,6 +481,7 @@ class Client
         } else {
             $json_decode = json_decode($result, true);
         }
+
         curl_close($ch);
 
         return array(

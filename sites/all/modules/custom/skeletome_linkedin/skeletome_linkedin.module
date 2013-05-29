@@ -8,12 +8,12 @@ require(libraries_get_path("PHP-OAuth2") . '/GrantType/AuthorizationCode.php');
 const CLIENT_ID     = 'zlu5tonueq85';
 const CLIENT_SECRET = 'QrnB1PjYgS5fiNSB';
 
-const REDIRECT_URI           = 'http://knowledge.skeletome.org/?q=oauth/linkedin';
+const REDIRECT_URI           = 'http://127.0.0.1:8888/drupalv2/?q=oauth/linkedin';
 // state is some gibberish required by linkedin (see here http://developer.linkedin.com/documents/authentication) NOT OAUTH related
 const STATE                  = "DCEEFWF45453sdffef424";
 // notes: can add scope to request, read here http://developer.linkedin.com/documents/authentication
-const AUTHORIZATION_ENDPOINT = "https://www.linkedin.com/uas/oauth2/authorization";
-const TOKEN_ENDPOINT         = 'https://graph.facebook.com/oauth/access_token';
+const AUTHORIZATION_ENDPOINT = 'https://www.linkedin.com/uas/oauth2/authorization';
+const TOKEN_ENDPOINT         = 'https://www.linkedin.com/uas/oauth2/accessToken';
 
 /**
  * Implements hook_menu().
@@ -31,13 +31,10 @@ function skeletome_linkedin_menu() {
 }
 
 function page_skeletome_linkedin_home() {
-    echo "reached the linked in page.";
-
-
-
-
 
     $client = new OAuth2\Client(CLIENT_ID, CLIENT_SECRET);
+
+
     if (!isset($_GET['code']))
     {
         $auth_url = $client->getAuthenticationUrl(AUTHORIZATION_ENDPOINT, REDIRECT_URI);
@@ -45,22 +42,43 @@ function page_skeletome_linkedin_home() {
         // Append the state to the URL (this is required by linked in)
         $auth_url .= "&state=DCEEFWF45453sdffef424";
 
+        echo "<a href='" . $auth_url . "'>Login</a>";
+
+        die();
         header('Location: ' . $auth_url);
         die('Redirect');
     }
     else
     {
-        // http://knowledge.skeletome.org/?q=oauth/linkedin&code=AQQjaud9XZSdZCISBPXYPqavyLEbzRrDOwMahyQCOtWHluloaJ4svHTqY4yyZ4lH1roj4TVLbtIzR9loy30ZP4ahKTknPPJ44Kao_ekILAYbkBkq5ew&state=DCEEFWF45453sdffef424
+
+    /*    https://www.linkedin.com/uas/oauth2/accessToken?grant_type=authorization_code
+        &code=AUTHORIZATION_CODE
+    &redirect_uri=YOUR_REDIRECT_URI
+    &client_id=YOUR_API_KEY */
+
         $params = array('code' => $_GET['code'], 'redirect_uri' => REDIRECT_URI);
         $response = $client->getAccessToken(TOKEN_ENDPOINT, 'authorization_code', $params);
 
+        echo "access response";
         echo "<pre>";
         print_r($response);
         echo "</pre>";
+
         parse_str($response['result'], $info);
-        $client->setAccessToken($info['access_token']);
-        $response = $client->fetch('https://api.linkedin.com/v1/people/~');
-        var_dump($response, $response['result']);
+
+
+        echo "info";
+        echo "<pre>";
+        print_r($info);
+        echo "</pre>";
+
+        $client->setAccessToken($response['result']['access_token']);
+        $response = $client->fetch('https://api.linkedin.com/v1/people/~', array());
+
+        echo "request";
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
     }
 
 

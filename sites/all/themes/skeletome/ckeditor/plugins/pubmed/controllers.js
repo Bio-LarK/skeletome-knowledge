@@ -1,6 +1,6 @@
 var myApp = angular.module('PubMed', []);
 
-var baseUrl = parent.Drupal.settings.skeletome_builder.base_url;
+var baseUrl = parent.Drupal.settings.skeletome_builder.base_url + "/";
 
 myApp.directive('cmReturn', function() {
     return function (scope, iElement, iAttrs) {
@@ -30,7 +30,6 @@ function ReferenceCtrl($scope, $http, filterFilter) {
     $scope.pubMedOnline = {};
 
 
-
     // Load in existing Publications
     $http.get(baseUrl + '?q=ajax/biblios').success(function(biblios) {
         console.log(biblios);
@@ -51,6 +50,7 @@ function ReferenceCtrl($scope, $http, filterFilter) {
     }
 
     $scope.addNewCitation = function(pubmedId) {
+        console.log("pubmed id is", pubmedId);
         $http.post(baseUrl + '?q=ajax/biblio', {
             'pubmedId': pubmedId
         }).success(function(biblio) {
@@ -64,6 +64,7 @@ function ReferenceCtrl($scope, $http, filterFilter) {
 
 
     $scope.sendNidToEditor = function(nid) {
+        console.log("Sending NID to editor", nid);
         var dialog = window.parent.CKEDITOR.dialog.getCurrent();
         dialog.definition.onOk(
             nid

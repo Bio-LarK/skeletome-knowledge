@@ -17,7 +17,7 @@
             }
         </style>
         <script type="text/javascript" src="angular.js"></script>
-        <script type="text/javascript" src="controllers.js?q=100"></script>
+        <script type="text/javascript" src="controllers.js?q=101"></script>
         <style type="text/css">
             .cke_button_label
             {
@@ -28,7 +28,9 @@
                 margin: 0 10px 10px 10px;
             }
             .search-results-result {
-                margin-bottom: 20px;
+                margin-bottom: 14px;
+                padding: 14px;
+                border: 1px solid #ddd;
             }
 
             .search-area {
@@ -54,6 +56,46 @@
             .pubmed-search-box {
                 margin-bottom: 20px;
             }
+
+            /* ================================================
+                Icon Refresh: Refreshing Subclass
+            */
+            .icon-refreshing {
+                -webkit-animation-name: rotateThis;
+                -webkit-animation-duration:0.3s;
+                -webkit-animation-iteration-count:infinite;
+                -webkit-animation-timing-function:linear;
+
+                -moz-animation-name: rotateThis;
+                -moz-animation-duration:0.3s;
+                -moz-animation-iteration-count:infinite;
+                -moz-animation-timing-function:linear;
+
+                animation-name: rotateThis;
+                animation-duration:0.3s;
+                animation-iteration-count:infinite;
+                animation-timing-function:linear;
+            }
+                /* Keyframe animations */
+                /* Keyframe animations */
+            @keyframes rotateThis {
+                from {transform:scale(1.0) rotate(0deg);}
+                to {transform:scale(1.0) rotate(360deg);}
+            }
+            @-moz-keyframes rotateThis {
+                from {-moz-transform:scale(1.0) rotate(0deg);}
+                to {-moz-transform:scale(1.0) rotate(360deg);}
+            }
+            @-webkit-keyframes rotateThis {
+                from {-webkit-transform:scale(1.0) rotate(0deg);}
+                to {-webkit-transform:scale(1.0) rotate(360deg);}
+            }
+
+                /* Box to contain spinny icon */
+            .refreshing-box {
+                text-align: center !important;
+            }
+
         </style>
     </head>
     <body ng-controller="ReferenceCtrl">
@@ -77,12 +119,15 @@
                 <h3>PubMed Search</h3>
                 <div  ng-show="!isSearching && !pubmedResults" style="text-align: center">
                     <p class="muted" ng-show="!query">Enter a search term above to search PubMed.</p>
-                    <a ng-show="query" class="btn btn-primary" href ng-click="pubmedSearch(query)">Search PubMed for <b>{{ query }}</b></a>
+                    <a ng-show="query" class="btn btn-primary" href ng-click="pubmedSearch(query)"><i class="icon-search icon-white"></i> Search PubMed for <b>{{ query }}</b></a>
                 </div>
 
 
                 <div class="search-results">
                     <div ng-show="isSearching" class="muted" style="text-align: center">
+                        <div class="refreshing-box">
+                            <i class="icon-refresh icon-refreshing"></i>
+                        </div>
                         Loading from PubMed. This may take a while...
                     </div>
 

@@ -2,3 +2,5 @@ name = Skeletome LinkedIn
 description = Adds LinkedIn OAuth
 package = A - Skeletome
 core = 7.x
+
+dependencies[] = libraries

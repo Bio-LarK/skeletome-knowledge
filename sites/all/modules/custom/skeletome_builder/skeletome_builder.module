@@ -503,41 +503,76 @@ function ajax_pubmed_query_search($query) {
     $Eclient->setTerm($query);
     $pubmed_search = $Eclient->search();
 
+//    echo "<pre>";
+//    print_r($pubmed_search);
+//    echo "</pre>";
+
     $return_results = array();
 
-    foreach($pubmed_search->IdList->Id as $publicationId) {
-        if(count($return_results) == 10) {
-            break;
-        }
-
-        $result = $Eclient->fetch($publicationId . "");
-
-        $data = NULL;
+    $records = $Eclient->fetchRecords(0);
 
 
-        if (!isset($result->PubmedArticle)) {
-            if (isset($result->PubmedBookArticle)) {
-                $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
+    // Go through all the PubmedArticle
+    if(isset($records->PubmedArticle)) {
+
+        foreach($records->PubmedArticle as $record) {
+
+            $data = NULL;
+
+            if (!isset($record->PubmedArticle)) {
+                $publicationId = $record->MedlineCitation->PMID . ""; // quotes to get out a string instead of xml object
+                $data = new BiblioEntrezPubmedArticle($record);
+
+                $node_data = $data->getBiblio();
+                $node_data['type'] = 'biblio';
+                $node_data['uid'] = $user->uid;
+                $node = (object)$node_data;
+
+                $markup = theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style));
+
+                $return_results[] = array(
+                    'pubmedId'      => $publicationId,
+                    'markup'        => strip_tags($markup)
+                );
             }
-        } else {
-            $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
-        }
-
-        if ($data !== NULL) {
-            $node_data = $data->getBiblio();
-            $node_data['type'] = 'biblio';
-            $node_data['uid'] = $user->uid;
-            $node = (object)$node_data;
-
-            $return_results[] = array(
-                'pubmedId'      => intval($publicationId . ""),
-                'markup'        => theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style))
-            );
         }
     }
 
+    // TODO: write it for pubmedbookarticle
+//
+//    foreach($pubmed_search->IdList->Id as $publicationId) {
+//        if(count($return_results) == 10) {
+//            break;
+//        }
+//
+//        $result = $Eclient->fetch($publicationId . "");
+//
+//        $data = NULL;
+//
+//
+//        if (!isset($result->PubmedArticle)) {
+//            if (isset($result->PubmedBookArticle)) {
+//                $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
+//            }
+//        } else {
+//            $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
+//        }
+//
+//        if ($data !== NULL) {
+//            $node_data = $data->getBiblio();
+//            $node_data['type'] = 'biblio';
+//            $node_data['uid'] = $user->uid;
+//            $node = (object)$node_data;
+//
+//            $return_results[] = array(
+//                'pubmedId'      => intval($publicationId . ""),
+//                'markup'        => theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style))
+//            );
+//        }
+//    }
+
     $return = array(
-        'query'     => intval($pubmed_search->QueryTranslation . ""),
+        'query'     => $pubmed_search->QueryTranslation . "",
         'results'   => $return_results,
     );
 
