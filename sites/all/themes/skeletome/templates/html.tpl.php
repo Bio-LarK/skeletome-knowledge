@@ -109,7 +109,7 @@
         <script src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/js/modernizr.custom.js"></script>
 
     </head>
-    <body class="<?php print $classes; ?>" <?php print $attributes; ?> >
+    <body class="<?php print $classes; ?>" <?php print $attributes; ?> cm-when-scrolled="loadMore()">
 
         <?php if ($skip_link_text && $skip_link_anchor): ?>
         <p id="skip-link">

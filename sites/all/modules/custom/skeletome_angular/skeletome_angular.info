@@ -47,3 +47,4 @@ scripts[] = js/directives/fancy_box.js
 scripts[] = js/directives/nav_search.js
 scripts[] = js/directives/search.js
 scripts[] = js/directives/directives.js
+scripts[] = js/directives/cm_when_scrolled.js

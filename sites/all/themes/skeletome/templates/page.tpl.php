@@ -96,16 +96,17 @@
                     <?php endif; ?>
 
                     <div class="navbar-inner-table-cell">
-                        <nav-search model="navSearchModel"></nav-search>
+                        <nav-search model="model.navSearchModel"></nav-search>
                     </div>
 
                     <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-browse">
-                        <a href="">Browse</a>
+                        <a href="?q=taxonomy/term/{{ browseTid }}">Browse</a>
                     </div>
 
 
                     <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-login">
                         <?php global $user; ?>
+                        <div class="btn-group">
                         <?php if(isset($user->name)):?>
                             <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
                                 {{ user.name | truncate:30 }}
@@ -115,6 +116,7 @@
                             <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
                             <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
                         <?php endif; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -129,7 +131,6 @@
                     <!---->
 
                 <!--</div>-->
-
 
 
             </div>

@@ -54,7 +54,7 @@ body {
                 width: 1px;
                 white-space: nowrap;
             }
-            .navbar-inner-table-cell-login .btn {
+            .navbar-inner-table-cell-login .btn-group {
                 margin-top: 0px;
                 color: #bcc8d3;
                 text-shadow: none;
@@ -65,9 +65,6 @@ body {
             .navbar-inner-table-cell-browse {
                 padding-right: 21px;
             }
-
-
-
 
 
 /* ================================================
@@ -112,7 +109,7 @@ body {
 .navsearch-small .navsearch-helper {
     position: absolute;
     right: 35px;
-    top: 6px;
+    top: 3px;
     font-size: 10px;
 }
 .navsearch-small .navsearch-icon {
@@ -160,14 +157,14 @@ body {
         .navsearch-terms {
             float: left;
         }
-            a.navsearch-term {
+            a.navsearch-term, span.navsearch-term {
                 background-color: #0e90d2;
                 border-radius: 100px;
                 color: white;
                 padding: 4px 12px;
                 display: inline-block;
-                margin-top: 5px;
                 margin-right: 3px;
+                margin-top: 5px;
             }
             a.navsearch-term:hover {
                 text-decoration: none;
@@ -225,7 +222,7 @@ body {
         .navsearch-helper {
             position: absolute;
             right: 35px;
-            top: 12px;
+            top: 10px;
             color: rgb(111, 132, 168);
             font-size: 12px;
         }
@@ -285,10 +282,20 @@ ul.navsearch-suggestions {
     .navsearch-suggestion-selected .navsearch-suggestion-link {
         color: white;
     }
+    .navsearch-suggestion-selected .navsearch-term {
+        background-color: white;
+        color: #0e90d2;
+    }
     .navsearch-suggestion-selected .navsearch-suggestion-guide {
         color: rgba(255, 255, 255, 0.5);
     }
-
+    .navsearch-suggestion-search .navsearch-suggestion-link {
+        padding-top: 5px;
+    }
+    .navsearch-suggestion-search .ficon-search {
+        position: relative;
+        top: 10px;
+    }
 
 @media (max-width: 767px) {
     .navbar {
@@ -1278,6 +1285,7 @@ table.table-dark {
     width: 100%;
     display: block;
     border: 1px solid #eee;
+    box-sizing: border-box;
 }
 
 /* Makes the button pill shaped */
@@ -1894,7 +1902,7 @@ a.section-segment {
 */
     .section-segment-header-editors {
         /*margin: 1px 0;*/
-        padding: 14px 14px;
+        padding: 13px 14px;
         line-height: 21px;
     }
         .section-segment-header-editors .section-segment-header-buttons {

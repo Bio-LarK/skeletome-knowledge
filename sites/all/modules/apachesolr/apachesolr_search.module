@@ -445,7 +445,7 @@ function apachesolr_search_block_view($delta = '') {
           // Get the query and response. Without these no blocks make sense.
           $response = apachesolr_static_response_cache($query->getSearcher());
         }
-        
+
         // If there are less than two results, do not return the sort block
         if (empty($response) || ($response->response->numFound < 2)) {
           return NULL;

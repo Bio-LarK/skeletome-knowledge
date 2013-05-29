@@ -1,253 +1,121 @@
-function SearchCtrl($scope, $http, filterFilter, autocomplete, drupalContent) {
+function SearchCtrl($scope, $http) {
+    $scope.init = function() {
 
-    // Variables
-    $scope.filterType = ''
-    $scope.showEditingPanel = false;
-    $scope.refinePanel = "refine-bone-dysplasias";
 
-    // Get the boostrapped in data
-    $scope.type = Drupal.settings.skeletome_builder.type;
-    $scope.query = Drupal.settings.skeletome_builder.query;
-    $scope.results = Drupal.settings.skeletome_builder.data.results || [];
-    $scope.clinicalFeatures = Drupal.settings.skeletome_builder.data.clinical_features || [];
-    $scope.counts = Drupal.settings.skeletome_builder.counts;
+        $scope.model.results = Drupal.settings.skeletome_search_page.results;
+        $scope.model.boneDysplasias = Drupal.settings.skeletome_search_page.boneDysplasias || [];
+        $scope.model.genes = Drupal.settings.skeletome_search_page.genes || [];
+        $scope.model.clinicalFeatures = Drupal.settings.skeletome_search_page.clinicalFeatures || [];
+        $scope.model.groups = Drupal.settings.skeletome_search_page.groups || [];
 
-    $scope.filters = [];
-    $scope.newFilters = [];
 
-    $scope.totalCount = function() {
-        return parseInt($scope.counts.bone_dysplasia) + parseInt($scope.counts.gene) + parseInt($scope.counts.clinical_feature) + parseInt($scope.counts.group);
+        $scope.model.searchString = Drupal.settings.skeletome_search_page.searchString;
+        $scope.model.conditions = Drupal.settings.skeletome_search_page.conditions;
+        console.log($scope.model.conditions);
+
+        $scope.model.navSearchModel.entry = Drupal.settings.skeletome_search_page.queryString;
+        $scope.model.navSearchModel.query = Drupal.settings.skeletome_search_page.queryTerms;
+        $scope.model.navSearchModel.isShowingSuggestion = false;
+        console.log("search", $scope.model.navSearchModel);
+
+        $scope.model.facets = [];
+        $scope._updateFacets(Drupal.settings.skeletome_search_page.facets);
+
+        $scope.model.pageCount = 0;
+
+        $scope.model.moreResults = true;
+
+        $scope.$watch('model.navSearchModel.query', function(query) {
+            if(query) {
+                // the query has been changed, lets see if we can change the conditions
+                $scope.model.conditions = [];
+                $scope.model.searchString = "";
+                $scope.model.results = [];
+
+                $scope.model.clinicalFeatures = [];
+                $scope.model.boneDysplasias = [];
+                $scope.model.genes = [];
+                $scope.model.groups = [];
+
+                angular.forEach(query, function(queryTerm, index) {
+                    if(queryTerm.machine_name == "skeletome_vocabulary") {
+                        $scope.model.conditions.push("im_field_skeletome_tags:" + queryTerm.tid);
+                        $scope.model.clinicalFeatures.push(queryTerm);
+                    } else if(queryTerm.machine_name == "sk_group_tag") {
+                        $scope.model.groups.push(queryTerm);
+                    } else if (queryTerm.type == "bone_dysplasia") {
+                        $scope.model.boneDysplasias.push(queryTerm);
+                        $scope.model.searchString += " " + queryTerm.title;
+                    } else if (queryTerm.type == "gene") {
+                        $scope.model.genes.push(queryTerm);
+                        $scope.model.searchString += " " + queryTerm.title;
+                    }
+                });
+
+                // deal with the special case
+                // only a clinical feature remains, deal with it specially
+                if($scope.model.searchString.length == 0 && query[0].machine_name == "skeletome_vocabulary") {
+                    $scope.model.searchString += " " + query[0].name;
+                }
+
+                $scope.model.pageCount = 0;
+                $scope._doSearch(false);
+            }
+        }, true);
+
     }
 
-    $scope.selectedCount = function() {
-        if($scope.type == "all") {
-            return $scope.totalCount();
-        } else if ($scope.type == "bone-dysplasias") {
-            return $scope.counts.bone_dysplasia;
-        } else if ($scope.type == "genes") {
-            return $scope.counts.gene;
-        } else if ($scope.type == "groups") {
-            return $scope.counts.group;
-        }
+
+    $scope.loadMore = function() {
+        $scope.model.pageCount++;
+        $scope._doSearch(true);
     }
 
-//    $scope.filters = [];
-//
-//    /**
-//     * Adds an object ot filter by (e.g. a clinical feature - show all items that have htis clinical feature)
-//     */
-    $scope.filterBy = function(content) {
-        content.filter = true;
-        $scope.newFilters.push(content);
-    }
-    $scope.removeFilter = function(content) {
-        content.filter = false;
-        $scope.newFilters.splice($scope.newFilters.indexOf(content), 1);
-    }
-//    /**
-//     * Clears all filters
-//     */
-//    $scope.clearAllFilters = function() {
-//        $scope.filters = [];
-//    }
-//
-//    $scope.filteredResults = $scope.results;
-
-    /**
-     * Returns a list of results, filtered by the filters
-     * @returns {*}
-     */
-    $scope.filterResults = function() {
-//        console.log("Filtering results");
-//        // Scope the results to the type
-//        var scopedResults = filterFilter($scope.results, $scope.query);
-//
-//        // If there are no other things, return the scoped
-//        if(!$scope.filters.length) {
-//            console.log("no filters");
-//            $scope.filteredResults = scopedResults;
-//        }
-//
-//        // There are other things to filter by, lets do that
-//        var results = [];
-//
-//        // The fields to look at for filtering
-//        var fields = [
-//            {
-//                name            : 'sk_bd_tags',
-//                referenceType   : 'tid'
-//            },
-//            {
-//                name            : 'field_skeletome_tags',
-//                referenceType   : 'tid'
-//            },
-//            {
-//                name            : 'field_bd_gm',
-//                referenceType   : 'nid'
-//            }
-//        ];
-//
-//
-//        console.log('filters');
-//        console.log($scope.filters);
-//        // Now lets look through, and check if the results should be in the filtered set
-//        angular.forEach(scopedResults, function(result, index) {
-//            var allFound = true;
-//
-//            angular.forEach($scope.filters, function(filterContent) {
-//                var found = false;
-//
-//                angular.forEach(fields, function(field, index) {
-//                    if(angular.isDefined(result[field.name])) {
-//                        angular.forEach(result[field.name], function(fieldValue, index) {
-//                            // For each of the ids for each field, save it
-//
-//                            if(angular.isDefined(fieldValue.tid) && angular.isDefined(filterContent.tid) && fieldValue.tid == filterContent.tid) {
-//                                found = true;
-//                                // break
-//                                console.log(fieldValue.tid + " " + filterContent.tid);
-//                                return false;
-//                            }
-//
-//                            if(angular.isDefined(fieldValue.nid) && angular.isDefined(filterContent.nid) && fieldValue.nid == filterContent.nid) {
-//                                found = true;
-//                                // break
-//                                console.log(fieldValue.nid + " " + filterContent.nid);
-//                                return false;
-//                            }
-//                        });
-//                    }
-//                    // we found the filter id
-//                    if(found) {
-//                        // break;
-//                        return false;
-//                    }
-//                });
-//
-//                if(!found) {
-//                    // we didnt find the filter id, in any of the fields
-//                    allFound = false;
-//                    return false;
-//                }
-//            });
-//
-//            // All the filter ids were found, so add it to the return list
-//            if(allFound) {
-//                results.push(result);
-//            }
-//        });
-//
-//        $scope.filteredResults = results;
+    $scope.addClinicalFeature = function(clinicalFeature) {
+        $scope.model.results = [];
+        // add the clinical feature to the query
+        clinicalFeature.machine_name = "skeletome_vocabulary";
+        $scope.model.navSearchModel.query.push(clinicalFeature);
     }
 
-//    $scope.filteredGenes = function() {
-//        console.log("filtering genes");
-//        var results = $scope.filteredResults;
-//        var gms = [];
-//        angular.forEach(results, function(result, index) {
-//            angular.forEach(result.field_bd_gm, function(gm, index) {
-//                gms.push(gm);
-//            });
-//        });
-//
-//        return drupalContent.sortUniqueNodes(gms);
-//    }
+    $scope._doSearch = function(append) {
+        var url = "?q=ajax/full-search&searchstring=" + $scope.model.searchString + "&conditions=" + encodeURIComponent(JSON.stringify($scope.model.conditions)) + "&page=0";
 
-//    $scope.clinicalFeatureDisplayCount = 40;
-//    $scope.filteredClinicalFeatures = function() {
-//        console.log("filtering clinical features");
-//        var results = $scope.filteredResults;
-//        var features = [];
-//        angular.forEach(results, function(result, index) {
-//            angular.forEach(result.field_skeletome_tags, function(clinicalFeature, index) {
-//                features.push(clinicalFeature);
-//            });
-//        });
-//
-//        return drupalContent.sortUniqueTerms(features);;
-//    }
-//
-//    $scope.filteredGroups = function() {
-//        console.log("filtering group");
-//
-//        var groupTags = [];
-//        angular.forEach($scope.filteredResults, function(result, index) {
-//            angular.forEach(result.sk_bd_tags, function(groupTag, index) {
-//                groupTags.push(groupTag);
-//            });
-//        });
-//
-//        return drupalContent.sortUniqueTerms(groupTags);
-//    }
+        $scope.model.isLoading = true;
 
-    $scope.showRefinePanel = function() {
-        $scope.showEditingPanel = true;
-    }
-    $scope.closeRefinePanel = function() {
-        $scope.showEditingPanel = false;
-    }
-    $scope.showRefineGenes = function() {
-        $scope.filterType =  'genes';
-        $scope.showRefinePanel();
-    }
-    $scope.showRefineClinicalFeatures = function() {
-        $scope.filterType =  'clinicalFeature';
-        $scope.showRefinePanel();
-    }
-    $scope.showRefineGroups = function() {
-        $scope.filterType = 'group';
-        $scope.showRefinePanel();
+        $http.get(url).success(function(data) {
+            $scope.model.moreResults = true;
+            $scope.model.isLoading = false;
+
+            if(append) {
+                $scope.model.results = $scope.model.results.concat(data.results);
+            } else {
+                $scope.model.results = data.results;
+            }
+
+            $scope._updateFacets(data.facets);
+
+            if(data.results.length != 10) {
+                $scope.model.moreResults = false;
+            }
+        });
     }
 
-//    /**
-//     * Filter to show all
-//     */
-//    $scope.showAll = function() {
-//        $scope.type = 'all';
-//        $scope.query = {};
-//        $scope.filterResults();
-//        $scope.displayCount = $scope.defaultDisplayCount;
-//    }
+    $scope._updateFacets = function(data) {
+        // clean the facets
+        $scope.model.facets = [];
 
-//    /**
-//     * Filter to show only Groups
-//     */
-//    $scope.showGroups = function() {
-//        $scope.type = 'groups';
-//        $scope.query = {
-//            vocabulary_machine_name: 'sk_group'
-//        }
-//        $scope.filterResults();
-//        $scope.displayCount = $scope.defaultDisplayCount;
-//
-//    }
+        angular.forEach(data, function(value, index) {
+            var found = false;
+            angular.forEach($scope.model.navSearchModel.query, function(term, index2) {
+                if(term.tid == value.tid) {
+                    found = true;
+                }
+            })
+            if(!found) {
+                $scope.model.facets.push(value);
+            }
+        });
+    }
 
-//    /**
-//     * Filter to show only bone dysplasias
-//     */
-//    $scope.showBoneDysplasias = function() {
-//        $scope.type = "bone-dysplasias";
-//        $scope.filterResults();
-//        $scope.displayCount = $scope.defaultDisplayCount;
-//    }
-//
-//    /**
-//     * Filter to show clinical feature results
-//     */
-//    $scope.showClinicalFeatures = function() {
-//        $scope.type = 'clinical-features';
-//        $scope.query = {
-//            vocabulary_machine_name: 'skeletome_vocabulary'
-//        }
-//        $scope.filterResults();
-//        $scope.displayCount = $scope.defaultDisplayCount;
-//    }
-//    $scope.showGenes = function() {
-//        $scope.type = 'genes';
-//        $scope.query = {
-//            type: 'gene'
-//        }
-//        $scope.filterResults();
-//        $scope.displayCount = $scope.defaultDisplayCount;
-//    }
 }

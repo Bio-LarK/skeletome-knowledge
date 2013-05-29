@@ -5,17 +5,14 @@ function PageCtrl($scope, $http) {
         window.location.href = "?q=search/site/" + term;
     }
 
-    $scope.navSearchModel = {};
-    if(Drupal.settings.skeletome_builder.search_query) {
-        $scope.navSearchModel.entry = Drupal.settings.skeletome_builder.search_query;
-    } else {
-        $scope.navSearchModel.entry = "";
-    }
 
-
-    $scope.navSearchModel.selectedIndex = -1;
-    $scope.navSearchModel.isShowingSuggestions = false;
+    $scope.model = {};
+    $scope.model.navSearchModel = {};
+    $scope.model.navSearchModel.entry = "";
+    $scope.model.navSearchModel.query = [];
+    $scope.model.navSearchModel.selectedIndex = -1;
+    $scope.model.navSearchModel.isShowingSuggestions = false;
 
     $scope.baseUrl = Drupal.settings.skeletome_builder.base_url;
-
+    $scope.browseTid = Drupal.settings.skeletome_builder.isds;
 }

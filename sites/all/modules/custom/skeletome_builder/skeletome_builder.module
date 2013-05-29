@@ -31,90 +31,86 @@ module_load_include('php', 'skeletome_builder', 'pages');
 //}
 
 
-
-
-function skeletome_builder_apachesolr_query_alter($query) {
-
-    // I only want to see articles by the admin.
-    //
-    // NOTE: this "is_uid" filter does NOT refer to the English word "is"
-    // It is a combination of flags representing Integer-Single, which is
-    // abbreviated with the letters i and s.
-    //
-    // @see the <dynamicField> definitions in schema.xml or schema-solr3.xml
-//    $query->addFilter("is_uid", 1);
-
-    // Only search titles.
-//    $query->replaceParam('qf', 'label');
-
-
-    $query_string = $query->getParam('q');
-
-    if(strpos($query_string, "id:") !== false) return;
-
-    $new_query_string = "";
-
-    if(strpos($query_string, ";") !== false) {
-        $vocab = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
-        $vocab_id = $vocab->vid;
-
-        // split by ;
-        $query_params = explode(";", $query_string);
-        foreach($query_params as $query_param) {
-            // check if a clinical feature
-
-            if(strlen($query_param) == 0) continue;
-
-            $sql = "SELECT *
-            FROM {taxonomy_term_data} t
-            WHERE t.vid = :vid
-            AND UPPER(t.name) = UPPER(:name)";
-
-            $results = db_query($sql, array(
-                'vid'   => $vocab_id,
-                'name'  => trim($query_param)
-            ));
-
-            $found = false;
-            foreach($results as $result) {
-                $found = true;
-            }
-
-            if($found) {
-                // Its a clinical feature, add it as a filter
-                $query->addFilter("sm_vid_SKELETOME_vocabulary", $query_param);
-            } else {
-                // its not a clinical feature, just add it back in
-                $new_query_string .= trim($query_param) . '* ';
-                if(strlen($query_param) > 4) {
-                    $new_query_string = ' *' . trim($query_param) . '* ';
-                }
-
-            }
-        }
-    } else {
-        $new_query_string = $query_string . "*";
-    }
-
-    $query->replaceParam('q', $new_query_string);
-
-//    echo "Query<pre>";
+//function skeletome_builder_apachesolr_query_alter($query) {
+//
+//    // I only want to see articles by the admin.
+//    //
+//    // NOTE: this "is_uid" filter does NOT refer to the English word "is"
+//    // It is a combination of flags representing Integer-Single, which is
+//    // abbreviated with the letters i and s.
+//    //
+//    // @see the <dynamicField> definitions in schema.xml or schema-solr3.xml
+////    $query->addFilter("is_uid", 1);
+//
+//    // Only search titles.
+////    $query->replaceParam('qf', 'label');
+//
+//
+//    $query_string = $query->getParam('q');
+//
+//    echo "<pre>";
+////    print_r($query->getParam('fq'));
 //    print_r($query->getParam('q'));
 //    echo "</pre>";
-//    echo "Filters<pre>";
-//    print_r($query->getParam('fq'));
-//    echo "</pre>";
-}
+//
+//    if(strpos($query_string, "id:") !== false) return;
+//
+//    $new_query_string = "";
+//
+//    if(strpos($query_string, ";") !== false) {
+//        $vocab = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
+//        $vocab_id = $vocab->vid;
+//
+//        // split by ;
+//        $query_params = explode(";", $query_string);
+//        foreach($query_params as $query_param) {
+//            // check if a clinical feature
+//
+//            if(strlen($query_param) == 0) continue;
+//
+//            $sql = "SELECT *
+//            FROM {taxonomy_term_data} t
+//            WHERE t.vid = :vid
+//            AND UPPER(t.name) = UPPER(:name)";
+//
+//            $results = db_query($sql, array(
+//                'vid'   => $vocab_id,
+//                'name'  => trim($query_param)
+//            ));
+//
+//            $found = false;
+//            foreach($results as $result) {
+//                $found = true;
+//            }
+//
+//            if($found) {
+//                // Its a clinical feature, add it as a filter
+//                $query->addFilter("sm_vid_SKELETOME_vocabulary", $query_param);
+//            } else {
+//                // its not a clinical feature, just add it back in
+//                $new_query_string .= trim($query_param) . '* ';
+//                if(strlen($query_param) > 4) {
+//                    $new_query_string = ' *' . trim($query_param) . '* ';
+//                }
+//
+//            }
+//        }
+//    } else {
+//        $new_query_string = $query_string . "*";
+//    }
+//
+//    $query->replaceParam('q', $new_query_string);
+//}
 
 /**
  * implements hook_apachesolr_search_result_alter().
  */
-function skeletome_builder_apachesolr_search_result_alter($doc, $extra, $query) {
+//function skeletome_builder_apachesolr_search_result_alter($doc, $extra, $query) {
 //    echo "<pre>";
 //    print_r($query);
 //    echo "</pre>";
-}
-
+//}
+//}
 
 /**
  * Implements hook_js_alter
@@ -185,14 +181,31 @@ function skeletome_builder_page_build(&$page) {
     "administer comments"
 
      */
-    // Create the drupal role for sk_moderator
 
-    // check if it exists
 
+
+
+    // Get the base url
     global $base_url;
     drupal_add_js(array(
         'skeletome_builder' => array(
             'base_url'       => $base_url
+    )), 'setting');
+
+
+    // Get the Browse URL
+    $vocab = taxonomy_vocabulary_machine_name_load('sk_group_source');
+
+    $sql = "SELECT t.tid
+           FROM {taxonomy_term_data} t
+           WHERE t.vid = :vid";
+    $results = db_query($sql, array(
+        'vid'       => $vocab->vid
+    ));
+    $isds = $results->fetchField();
+    drupal_add_js(array(
+        'skeletome_builder' => array(
+            'isds'       => $isds
     )), 'setting');
 
 
@@ -221,10 +234,21 @@ function skeletome_builder_page_build(&$page) {
         $destination = drupal_get_destination();
 
         $elements = drupal_get_form("user_login");
+        // change the submit page url, so it goes to that page
+        // instead of the front page (awful default behaviour!)
         $elements['#action'] = url($_GET['q'], array('query' => array('destination' => $destination['destination'])));
+
+        $elements['name']['#description'] = "";
+        $elements['pass']['#description'] = "";
+
+
+//        echo "<pre>";
+//        print_r($elements);
+//        echo "</pre>";
 
         $form = drupal_render($elements);
 
+        $form .= "<div><a href='?q=user/password'>Forgot your password?</a></div>";
         drupal_add_js(array(
             'skeletome_builder' => array(
                 'login_form'       => $form
@@ -321,6 +345,8 @@ function skeletome_builder_page_build(&$page) {
                 'latest_releases'           => $releases,
                 'top_contributors'          => $top_contributors
         )), 'setting');
+
+
 //    } else if(arg(0) == "search" && arg(1) == "site") {
 
 

@@ -1,0 +1,95 @@
+<?php
+
+
+require(libraries_get_path("PHP-OAuth2") . '/Client.php');
+require(libraries_get_path("PHP-OAuth2") . '/GrantType/IGrantType.php');
+require(libraries_get_path("PHP-OAuth2") . '/GrantType/AuthorizationCode.php');
+
+const CLIENT_ID     = 'zlu5tonueq85';
+const CLIENT_SECRET = 'QrnB1PjYgS5fiNSB';
+
+const REDIRECT_URI           = 'http://knowledge.skeletome.org/?q=oauth/linkedin';
+// state is some gibberish required by linkedin (see here http://developer.linkedin.com/documents/authentication) NOT OAUTH related
+const STATE                  = "DCEEFWF45453sdffef424";
+// notes: can add scope to request, read here http://developer.linkedin.com/documents/authentication
+const AUTHORIZATION_ENDPOINT = "https://www.linkedin.com/uas/oauth2/authorization";
+const TOKEN_ENDPOINT         = 'https://graph.facebook.com/oauth/access_token';
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_linkedin_menu() {
+
+    $items['oauth/linkedin'] = array(
+        'page callback' 	=> 'page_skeletome_linkedin_home',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function page_skeletome_linkedin_home() {
+    echo "reached the linked in page.";
+
+
+
+
+
+    $client = new OAuth2\Client(CLIENT_ID, CLIENT_SECRET);
+    if (!isset($_GET['code']))
+    {
+        $auth_url = $client->getAuthenticationUrl(AUTHORIZATION_ENDPOINT, REDIRECT_URI);
+
+        // Append the state to the URL (this is required by linked in)
+        $auth_url .= "&state=DCEEFWF45453sdffef424";
+
+        header('Location: ' . $auth_url);
+        die('Redirect');
+    }
+    else
+    {
+        // http://knowledge.skeletome.org/?q=oauth/linkedin&code=AQQjaud9XZSdZCISBPXYPqavyLEbzRrDOwMahyQCOtWHluloaJ4svHTqY4yyZ4lH1roj4TVLbtIzR9loy30ZP4ahKTknPPJ44Kao_ekILAYbkBkq5ew&state=DCEEFWF45453sdffef424
+        $params = array('code' => $_GET['code'], 'redirect_uri' => REDIRECT_URI);
+        $response = $client->getAccessToken(TOKEN_ENDPOINT, 'authorization_code', $params);
+
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        parse_str($response['result'], $info);
+        $client->setAccessToken($info['access_token']);
+        $response = $client->fetch('https://api.linkedin.com/v1/people/~');
+        var_dump($response, $response['result']);
+    }
+
+
+//    require('client.php');
+//    require('GrantType/IGrantType.php');
+//    require('GrantType/AuthorizationCode.php');
+//
+//    const CLIENT_ID     = 'your client id';
+//    const CLIENT_SECRET = 'your client secret';
+//
+//    const REDIRECT_URI           = 'http://url/of/this.php';
+//    const AUTHORIZATION_ENDPOINT = 'https://graph.facebook.com/oauth/authorize';
+//    const TOKEN_ENDPOINT         = 'https://graph.facebook.com/oauth/access_token';
+//
+//    $client = new OAuth2\Client(CLIENT_ID, CLIENT_SECRET);
+//    if (!isset($_GET['code']))
+//    {
+//        $auth_url = $client->getAuthenticationUrl(AUTHORIZATION_ENDPOINT, REDIRECT_URI);
+//        header('Location: ' . $auth_url);
+//        die('Redirect');
+//    }
+//    else
+//    {
+//        $params = array('code' => $_GET['code'], 'redirect_uri' => REDIRECT_URI);
+//        $response = $client->getAccessToken(TOKEN_ENDPOINT, 'authorization_code', $params);
+//        parse_str($response['result'], $info);
+//        $client->setAccessToken($info['access_token']);
+//        $response = $client->fetch('https://graph.facebook.com/me');
+//        var_dump($response, $response['result']);
+//    }
+
+}

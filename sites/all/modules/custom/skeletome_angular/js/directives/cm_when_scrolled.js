@@ -1,7 +1,14 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: uqcmcna1
- * Date: 28/05/13
- * Time: 1:20 PM
- * To change this template use File | Settings | File Templates.
- */
+myApp.directive('cmWhenScrolled', function() {
+    return function(scope, elm, attr) {
+        var raw = elm[0];
+
+        elm.bind('scroll', function() {
+            console.log("scrolling");
+            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+
+                console.log("SCROLL LOAD NOW");
+                scope.$apply(attr.whenScrolled);
+            }
+        });
+    };
+});

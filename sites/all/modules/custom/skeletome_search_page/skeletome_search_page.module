@@ -4,20 +4,280 @@
 * Implements hook_menu().
 *
 */
-function skeletome_profile_menu() {
+function skeletome_search_page_menu() {
 
-    $items['search/%'] = array(
-    'page callback' 	=> 'page_skeletome_search',
-    'page arguments'    => array(1),
-    'access arguments'  => array('access content'),
-    'type'  => MENU_CALLBACK,
+    $items['full-search'] = array(
+        'page callback' 	=> 'page_skeletome_search_page',
+        'page arguments'    => array(1),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
     );
+
+    $items['ajax/full-search'] = array(
+        'page callback' 	=> 'ajax_skeletome_search_page_results',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
 
     return $items;
 }
 
 
-function page_skeletome_search($term) {
+//ajax/full-search&searchstring=" + $scope.model.searchString + "&conditions=
 
-    echo "now page";
+/**
+ * Implements hook_apachesolr_process_results
+ * @param $results
+ * @param DrupalSolrQueryInterface $query
+ */
+function skeletome_search_page_apachesolr_process_results(&$results, DrupalSolrQueryInterface $query) {
+//    echo "HOOK";
+
+
+//        echo "<pre>";
+//  echo $query->getSearcher();
+//    $elements = facetapi_build_realm($searcher, 'block');
+//        echo "</pre>";
+//
+//    print_r($elements['#adapter']);
+}
+
+function ajax_skeletome_search_page_results() {
+    $search_string = $_GET['searchstring'];
+
+    $conditions = json_decode($_GET['conditions']);
+
+    $results = apachesolr_search_search_execute($search_string, array(
+        'fq'    => $conditions
+    ));
+
+    foreach($results as &$result) {
+        // Add in the clinical features, for bone dysplasia results
+        if($result['bundle'] == "bone_dysplasia") {
+
+            $sql = "SELECT d.*
+                    FROM {taxonomy_term_data} d
+                    RIGHT JOIN {field_data_field_skeletome_tags} t
+                    ON d.tid = t.field_skeletome_tags_tid
+                    WHERE t.entity_id = :bd_id
+                    LIMIT 5";
+            $cf_results  = db_query($sql, array(
+                'bd_id'     => $result['node']->entity_id
+            ));
+
+            $result['clinical_features'] = $cf_results->fetchAll();
+        }
+    }
+
+    $facets = data_get_facets_for_search();
+
+    echo json_encode(array(
+        'results'   => $results,
+        'facets'    => $facets,
+    ));
+}
+
+function page_skeletome_search_page() {
+
+
+
+
+
+//    echo "search page";
+//    $vocab = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
+//
+//    $sql = "SELECT *
+//            FROM {taxonomy_term_data} t
+//            WHERE t.vid = :vid
+//            LIMIT 5000";
+//    $results = db_query($sql, array(
+//        'vid'   => $vocab->vid
+//    ));
+//
+//    $count = 0;
+//    print_r($results->fetchAll());
+//    foreach($results as $result) {
+//        $count++;
+//        echo "$count deleting " . $result->tid . "<br/>";
+//        taxonomy_term_delete($result->tid);
+//    }
+
+    // query
+    $query = isset($_GET['query']) ? $_GET['query'] : "";
+
+    // Get all the bone dysplasias we searched
+    $bone_dysplasias = array();
+    if(isset($_GET['bd'])) {
+        $bone_dysplasia_ids = $_GET['bd'];
+        $placeholder = implode(", ", $bone_dysplasia_ids);
+        $sql = "SELECT n.nid, n.title, n.type
+                FROM {node} n
+                WHERE n.nid IN ($placeholder)";
+        $bd_results = db_query($sql);
+
+        $bone_dysplasias = $bd_results->fetchAll();
+    }
+
+    // Get all the genes we searched
+    $genes = array();
+    if(isset($_GET['ge'])) {
+        $gene_ids = $_GET['ge'];
+        $placeholder = implode(", ", $gene_ids);
+        $sql = "SELECT n.nid, n.title, n.type
+                FROM {node} n
+                WHERE n.nid IN ($placeholder)";
+        $ge_results = db_query($sql);
+
+        $genes = $ge_results->fetchAll();
+    }
+
+    // Get all the clinical features we searched
+    $clinical_features = array();
+    if(isset($_GET['cf'])) {
+        $clinical_feature_ids = $_GET['cf'];
+        $placeholder = implode(", ", $clinical_feature_ids);
+        $sql = "SELECT t.tid, t.name, v.machine_name
+                FROM {taxonomy_term_data} t
+                LEFT JOIN {taxonomy_vocabulary} v
+                ON v.vid = t.vid
+                WHERE t.tid IN ($placeholder)";
+        $cf_results = db_query($sql);
+
+        $clinical_features = $cf_results->fetchAll();
+    }
+
+    // Get all the groups we searched
+    $groups = array();
+    if(isset($_GET['gr'])) {
+        $group_ids = $_GET['gr'];
+        $placeholder = implode(", ", $group_ids);
+        $sql = "SELECT t.tid, t.name, v.machine_name
+                FROM {taxonomy_term_data} t
+                LEFT JOIN {taxonomy_vocabulary} v
+                ON v.vid = t.vid
+                WHERE t.tid IN ($placeholder)";
+        $gr_results = db_query($sql);
+
+        $groups = $gr_results->fetchAll();
+    }
+
+    // Build the text query
+    $searchable_terms = array_merge($bone_dysplasias, $genes);
+    $search_string = $query;
+    foreach($searchable_terms as $searchable_term) {
+        $search_string .=  " " . $searchable_term->title;
+    }
+
+
+    $conditions = array();
+    foreach($clinical_features as $clinical_feature) {
+        $conditions[] = "im_field_skeletome_tags:" . $clinical_feature->tid;
+    }
+
+    if($search_string == "") {
+        if(count($clinical_features)) {
+            $search_string = $clinical_features[0]->name;
+        }
+    }
+    $results = apachesolr_search_search_execute($search_string, array(
+        'fq'    => $conditions
+    ));
+
+    foreach($results as &$result) {
+        // Add in the clinical features, for bone dysplasia results
+        if($result['bundle'] == "bone_dysplasia") {
+
+            $blah = array(0);
+            foreach($clinical_features as $clinical_feature) {
+                $blah[] = $clinical_feature->tid;
+            }
+
+            $clinical_features_string = implode(", ", $blah);
+
+            $sql = "SELECT d.*
+                    FROM {taxonomy_term_data} d
+                    RIGHT JOIN {field_data_field_skeletome_tags} t
+                    ON d.tid = t.field_skeletome_tags_tid
+                    WHERE t.entity_id = :bd_id
+                    AND t.field_skeletome_tags_tid NOT IN ($clinical_features_string)
+                    LIMIT 5";
+            $cf_results  = db_query($sql, array(
+                'bd_id'     => $result['node']->entity_id
+            ));
+
+            $result['clinical_features'] = $cf_results->fetchAll();
+        }
+    }
+    // Get a list of all the terms we queried
+    $query_terms = array_merge($bone_dysplasias, $genes, $clinical_features, $groups);
+
+
+
+    $facet_data = data_get_facets_for_search();
+
+    drupal_add_js(array(
+        'skeletome_search_page' => array(
+            'queryString'       => $query,
+            'queryTerms'        => $query_terms,
+            'results'           => $results,
+            'boneDysplasias'    => $bone_dysplasias,
+            'genes'             => $genes,
+            'clinicalFeatures'  => $clinical_features,
+            'groups'            => $groups,
+            'facets'            => $facet_data,
+            'searchString'      => $search_string,
+            'conditions'        => $conditions,
+    )), 'setting');
+
+    $output =  array(
+        'skeletome_search_page_page' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_search_page_page'
+        )
+    );
+    return $output;
+}
+
+function data_get_facets_for_search() {
+    // Get the filters
+    $response = apachesolr_static_response_cache("apachesolr@solr");
+    $facets = $response->facet_counts->facet_fields->im_field_skeletome_tags;
+    $facets = (array)$facets;
+    $facet_ids = array_keys($facets);
+    $facets_values = array_values($facets);
+
+    $i = 0;
+    foreach($facet_ids as $facet_id) {
+        $sql = "SELECT t.name
+                FROM {taxonomy_term_data} t
+                WHERE t.tid = :tid";
+        $facet_results = db_query($sql, array(
+            'tid'   => $facet_id
+        ));
+
+        $facet_data[] = array(
+            'tid'       => $facet_id,
+            'count'     => $facets_values[$i],
+            'name'      => $facet_results->fetchField()
+        );
+        $i++;
+    }
+    return $facet_data;
+}
+/**
+ * Implements hook_theme().
+ */
+function skeletome_search_page_theme($existing, $type, $theme, $path) {
+
+    $themes['skeletome_search_page_page'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_search_page') . '/templates',
+        'template'  => 'search_page'
+    );
+
+    return $themes;
 }

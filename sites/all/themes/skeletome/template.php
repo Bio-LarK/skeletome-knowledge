@@ -249,7 +249,7 @@ function skeletome_preprocess_page(&$variables) {
  */
 function skeletome_apachesolr_search_browse_blocks($vars)
 {
-
+    $html = "";
     if ($vars['content']['#children']) {
         $html = '<div class="span4">
                     <section>
@@ -363,7 +363,7 @@ function skeletome_theme(&$existing, $type, $theme, $path) {
         'path' => drupal_get_path('theme', 'skeletome') . '/templates',
         'template' => 'user-login',
         'preprocess functions' => array(
-            'skeletome_builder_preprocess_user_login'
+            'skeletome_preprocess_user_login'
         ),
     );
     $hooks['user_register_form'] = array(
@@ -371,15 +371,25 @@ function skeletome_theme(&$existing, $type, $theme, $path) {
         'path' => drupal_get_path('theme', 'skeletome') . '/templates',
         'template' => 'user-register-form',
         'preprocess functions' => array(
-            'skeletome_builder_preprocess_user_register_form'
+            'skeletome_preprocess_user_register_form'
         ),
     );
+
+    $items['user_pass'] = array(
+        'render element' => 'form',
+        'path' => drupal_get_path('theme', 'skeletome') . '/templates',
+        'template' => 'user-pass',
+        'preprocess functions' => array(
+            'skeletome_preprocess_user_pass'
+        ),
+    );
+
 
     return $hooks;
 }
 
 
-function skeletome_builder_preprocess_user_login(&$vars) {
+function skeletome_preprocess_user_login(&$vars) {
     $vars['intro_text'] = t('This is my awesome login form');
 
     $vars['form']['actions']['submit']['#attributes'] = array(
@@ -392,7 +402,8 @@ function skeletome_builder_preprocess_user_login(&$vars) {
 
 }
 
-function skeletome_builder_preprocess_user_register_form(&$vars) {
+function skeletome_preprocess_user_register_form(&$vars) {
+
     $vars['intro_text'] = t('This is my super awesome reg form');
 
     $vars['form']['actions']['submit']['#attributes'] = array(
@@ -404,6 +415,16 @@ function skeletome_builder_preprocess_user_register_form(&$vars) {
     $vars['form']['actions']['#attributes'] = array();
 }
 
+function skeletome_preprocess_user_pass(&$vars) {
+    echo "HELLO";
+    $vars['form']['actions']['submit']['#attributes'] = array(
+        'class' => array(
+            'btn', 'btn-primary'
+        )
+    );
+
+    $vars['form']['actions']['#attributes'] = array();
+}
 
 function skeletome_preprocess_comment(&$variables) {
 

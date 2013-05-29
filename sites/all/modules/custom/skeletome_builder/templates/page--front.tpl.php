@@ -117,57 +117,63 @@
 <div ng-controller="PageCtrl">
     <div id="page" style="position:relative;" ng-controller="FrontPageCtrl">
 
-        <header role="banner">
-            <div class="banner">
-
+    <header id="header" role="banner">
+        <div class="navbar navbar-inverse navbar-dark navbar-static-top">
+            <div class="navbar-inner">
                 <div class="container">
-                    <div class="row-fluid">
-                        <div class="span12" style="position: relative;">
 
-                            <div style="overflow: auto;">
+                    <div class="navbar-inner-table">
+
+                        <?php if ($logo): ?>
+                            <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
                                 <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
                                     <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
                                 </a>
-
-                                <div class="btn-group">
-                                    <?php global $user; ?>
-                                    <?php if(isset($user->name)):?>
-                                        <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
-                                            <?php echo $user->name; ?>
-                                        </a>
-                                        <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
-                                    <?php else: ?>
-                                        <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                                        <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
-                                    <?php endif; ?>
-                                </div>
-
                             </div>
+                        <?php endif; ?>
+
+                        <div class="navbar-inner-table-cell">
+                            <nav-search model="model.navSearchModel"></nav-search>
+                        </div>
+
+                        <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-browse">
+                            <a href="?q=taxonomy/term/{{ browseTid }}">Browse</a>
+                        </div>
 
 
-                            <!--<h1 class="logo" style="font-weight: bold">
-                                <img style="height:40px; position: relative; top: -5px; left:-5px"
-                                     src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone-logo.png"
-                                     alt="Spine"/>Skeletome
-                            </h1>-->
-
-
-
-
-                            <div class="row-fluid">
-                                <h2 class="slogan span8 offset2">
-                                    <?php print $site_slogan; ?>
-                                </h2>
+                        <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-login">
+                            <?php global $user; ?>
+                            <div class="btn-group">
+                                <?php if(isset($user->name)):?>
+                                    <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
+                                        {{ user.name | truncate:30 }}
+                                    </a>
+                                    <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
+                                <?php else: ?>
+                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
+                                    <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
+                                <?php endif; ?>
                             </div>
-
-
-
-
                         </div>
                     </div>
+
+
+
+
+                    <!--<div class="navsearch-small">
+                    <?php  //get the query string if there is one
+                        $query = "";
+                        if(arg(0) == "search" && arg(1) == "site") $query = arg(2); ?>
+
+                    <!---->
+
+                    <!--</div>-->
+
+
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
 
     <?php if(strlen($messages) > 0): ?>
@@ -195,9 +201,6 @@
                         </div>
 
                         <h2>Search</h2>
-                    </div>
-                    <div class="section-segment">
-                        <nav-search query-holder="queryHolder" selectedIndex="queryHolder.selectedIndex" show-suggestions="queryHolder.isShowingSuggestions"></nav-search>
                     </div>
                     <div ng-show="isShowingInstructions" ng-cloak>
                         <div class="section-segment">

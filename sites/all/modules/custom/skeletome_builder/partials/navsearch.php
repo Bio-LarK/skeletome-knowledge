@@ -17,7 +17,7 @@
                    ng-change="search(model.entry)"
                    ng-model="model.entry"
                    type="text"
-                   placeholder="Search for Bone Dysplasias, Groups or Genes"
+                   placeholder="Search for Bone Dysplasias, Clinical Features, Groups or Genes"
             />
 
             <span ng-show="model.suggestions.length"
@@ -29,26 +29,21 @@
         </div>
     </div>
 
-
-<!--    <i class="icon-search icon-white navsearch-icon pull-right"></i>-->
-
-
-
-
-    <ul ng-show="model.entry.length && model.isShowingSuggestions" class="navsearch-suggestions unstyled">
+    <ul ng-show="(model.entry.length || model.query.length) && model.isShowingSuggestions" class="navsearch-suggestions unstyled">
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
-            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED}">
-            <a class="navsearch-suggestion-link" href="?q=search/site/{{ navSearch.query }}">
+            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED, 'navsearch-suggestion-search': model.query.length > 0 }">
+
+            <a class="navsearch-suggestion-link" href="{{ searchUrl() }}">
                 <span class="navsearch-suggestion-guide">
                     Search for
                 </span>
                 <span class="navsearch-suggestion-content">
-                    <span ng-repeat="term in model.query">
-                        <b>{{ term.title || term.name }}</b>
-                    </span> <b>{{ model.entry }}</b>...
+                    <span ng-repeat="term in model.query" class="navsearch-term">{{ term.title || term.name }}</span>
+
+                    <b>{{ model.entry }}</b>...
                 </span>
-                <i class="icon-search pull-right" style="position: relative; right: 5px;top:2px;"></i>
+                <i class="ficon-search pull-right" style="position: relative; right: 4px"></i>
             </a>
         </li>
         <li class="navsearch-suggestion"

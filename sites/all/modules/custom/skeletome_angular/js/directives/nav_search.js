@@ -7,9 +7,7 @@ myApp.directive('navSearch', function() {
         restrict: 'E',
         replace: true,
         scope: {       // create an isolate scope
-            model: '=model',
-            isShowingSuggestions: '=isShowingSuggestions'
-//            selectedIndex: '=selectedIndex'
+            model: '=model'
         },
         // /drupalv2/sites/all/modules/custom/skeletome_builder/images/bone-logo.png
         templateUrl: Drupal.settings.skeletome_builder.base_url + '/sites/all/modules/custom/skeletome_builder/partials/navsearch.php',
@@ -18,15 +16,20 @@ myApp.directive('navSearch', function() {
             $scope.baseUrl = Drupal.settings.skeletome_builder.base_url;
 
             // Array of selected terms
-            $scope.model.query = [];
+            if(!angular.isDefined($scope.model.query)) {
+                $scope.model.query = [];
+            }
+
             // the text being entered by the user
-            $scope.model.entry = "";
+            if(!angular.isDefined($scope.model.entry)) {
+                $scope.model.entry = "";
+            }
+
             // suggestions for the entry
             $scope.model.suggestions = [];
             // the highlighted suggestion
             $scope.model.suggestionText = "";
             // show suggestions
-            $scope.model.isShowingSuggestions = true;
 
             $scope.NOT_SELECTED = -2;
             $scope.SEARCH_SELECTED = -1;
@@ -46,7 +49,6 @@ myApp.directive('navSearch', function() {
                     var newSuggestionText = newSuggestion.title || newSuggestion.name;
 
                     $scope.model.suggestionText = $scope.model.entry + newSuggestionText.substring($scope.model.entry.length);;
-
                 } else {
                     $scope.model.suggestionText = "";
                 }
@@ -67,6 +69,7 @@ myApp.directive('navSearch', function() {
                 // Empty string
                 if($scope.model.entry == "") {
                     $scope.model.suggestions = [];
+                    $scope.model.suggestionText = "";
                     return;
                 }
 
@@ -130,47 +133,57 @@ myApp.directive('navSearch', function() {
             $scope.removeQueryObject = function(object) {
                 var objectIndex = $scope.model.query.indexOf(object);
                 $scope.model.query.splice(objectIndex, 1);
+                $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
+//                $scope.model.isShowingSuggestions = true;
             }
 
             /** Tab pressed, complete with first suggestion */
             $scope.tabPressed = function() {
                 if($scope.selectedIndex >= 0) {
-
                     var selectedObject = $scope.model.suggestions[$scope.selectedIndex];
 
-                    // add the object to the query
-                    $scope.model.query.push(selectedObject);
-                    $scope.model.entry = "";
-
-
-                    $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
-                    $scope.doAutocomplete();
+                    $scope.addToMultitermQuery(selectedObject);
                 }
+            }
+
+            $scope.addToMultitermQuery = function(term) {
+                $scope.model.query.push(term);
+                $scope.model.entry = "";
+                $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
+                $scope.doAutocomplete();
+            }
+
+            $scope.searchUrl = function() {
+                // Lets build the query
+                var boneDysplasiaIds = "";
+                var boneDysplasiaCount = 0;
+                var geneIds = "";
+                var geneCount = 0;
+                var clinicalFeatureIds = "";
+                var clinicalFeatureCount = 0;
+                var groupIds = "";
+                var groupCount = 0;
+
+                angular.forEach($scope.model.query, function(value, index) {
+                    if(value.machine_name == "skeletome_vocabulary") {
+                        clinicalFeatureIds += "&cf[" + clinicalFeatureCount++ + "]=" + value.tid;
+                    } else if (value.machine_name == "sk_group_tag") {
+                        groupIds += "&gr[" + groupCount++ + "]=" + value.tid;
+                    } else if (value.type == "bone_dysplasia") {
+                        boneDysplasiaIds += "&bd[" + boneDysplasiaCount++ + "]=" + value.nid;
+                    } else if (value.type == "gene") {
+                        geneIds += "&bd[" + geneCount++ + "]=" + value.nid;
+                    }
+                });
+
+                return "?q=full-search&query=" + angular.copy($scope.model.entry) + boneDysplasiaIds + geneIds + clinicalFeatureIds + groupIds;
             }
 
             /** Enter pressed, run the search */
             $scope.enterPressed = function() {
                 if($scope.model.query.length) {
                     // multi-part query
-                    // &f[0]=im_field_skeletome_tags%3A13004&f[1]=im_field_skeletome_tags%3A17077
-
-                    // Lets build the query
-
-                    // Filters
-                    var filters = "";
-                    var query = "";
-                    var filterIndex = 0;
-                    angular.forEach($scope.model.query, function(value, index) {
-                        if(value.machine_name == 'skeletome_vocabulary') {
-                            filters += "&f[" + filterIndex++ + "]=im_field_skeletome_tags%3A" + value.tid;
-                        }
-                        if(value.type == 'bone_dysplasia' || value.type == 'gene') {
-                            query += value.title + " ";
-                        }
-                    });
-                    var entry = angular.copy($scope.model.entry);
-
-                    window.location.href = "?q=search/site/" + entry + " " + query + filters;
+                    window.location.href = $scope.searchUrl();
                 } else {
                     var selectedObject = $scope.model.suggestions[$scope.selectedIndex];
 
@@ -183,7 +196,6 @@ myApp.directive('navSearch', function() {
             }
 
             $scope.arrowPressed = function(key) {
-                console.log("arrow pressed", key);
                 if(key == 40) {
                     var newIndex = Math.min($scope.model.suggestions.length, ++$scope.selectedIndex);
                 } else {
@@ -198,16 +210,13 @@ myApp.directive('navSearch', function() {
                 $scope.model.isShowingSuggestions = false;
             }
             $scope.inputFocused = function() {
+                console.log("input focused!");
                 $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
                 $scope.model.isShowingSuggestions = true;
             }
-
-            $scope.addToMultitermQuery = function(term) {
-                $scope.model.query.push(term);
-                $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
-            }
-
         },
+
+
         link: function($scope, iElement, iAttrs) {
 
             $scope.$watch(function() {
@@ -259,12 +268,9 @@ myApp.directive('navSearch', function() {
             });
 
 
-            jQuery('.navsearch-suggestions', jQuery(iElement)).click(function(event) {
-                $scope.$apply(function() {
-                    console.log("clicked a suggestion");
-                    $scope.isShowingSuggestions = true;
-                });
-            });
+
+
+
 
 
 
