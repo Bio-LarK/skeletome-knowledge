@@ -1,0 +1,4 @@
+name = Skeletome Search2
+description = The Search Page
+package = A - Skeletome
+core = 7.x
