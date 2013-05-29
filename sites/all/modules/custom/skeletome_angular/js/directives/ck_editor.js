@@ -3,7 +3,8 @@ myApp.directive('ckEditor', function() {
         require: '?ngModel',
         link: function(scope, elm, attr, ngModel) {
 
-            CKEDITOR.timestamp = (new Date()).toString() ;
+            // Uncomment this code to try and make ckeditor refresh
+//            CKEDITOR.timestamp = (new Date()).toString() ;
 
             var config = {
 //                height: '800px',
