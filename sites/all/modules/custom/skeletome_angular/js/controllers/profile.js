@@ -79,6 +79,13 @@ function ProfileCtrl($scope, $http) {
         $scope.professionalState = "isDisplaying";
         $scope.detailsState = "isDisplaying";
         $scope.orcidState = "isDisplaying";
+
+        $scope.linkedIn = Drupal.settings.skeletome_profile.linkedIn;
+        $scope.linkedInImportFields = {
+            summary: true,
+            position: true,
+            location: true
+        };
     }
 
 
@@ -152,6 +159,41 @@ function ProfileCtrl($scope, $http) {
         $scope.biographyState = "isDisplaying";
     }
 
+    $scope.showImportFromLinkedIn = function() {
+        $scope.isShowingImportFromLinkedIn = true;
+    }
+    $scope.hideImportFromLinkedIn = function() {
+        $scope.isShowingImportFromLinkedIn = false;
+    }
+    $scope.importFromLinkedIn = function() {
+        $scope.isLoadingImportFromLinkedIn = true;
+
+        $http.get('?q=linkedin/profile').success(function(data) {
+
+            $scope.edit.profile = angular.copy($scope.profile);
+            if($scope.linkedInImportFields.summary) {
+                $scope.edit.profile.body.und[0].value = data.result.summary;
+            }
+            if($scope.linkedInImportFields.position) {
+                $scope.edit.profile.field_profile_position.und[0].value = data.result.positions.values[0].company.name;
+            }
+            if($scope.linkedInImportFields.location) {
+                $scope.edit.profile.field_profile_location.und[0].value = data.result.location.name;
+            }
+
+            $scope.biographyState = "isLoading";
+            $scope.professionalState = "isLoading";
+
+            $scope.saveProfile($scope.edit.profile).success(function(data) {
+                $scope.isLoadingImportFromLinkedIn = false;
+                $scope.isShowingImportFromLinkedIn = false;
+                $scope.biographyState = "isDisplaying";
+                $scope.professionalState = "isDisplaying";
+                $scope.profile = data;
+            });
+        });
+    }
+
     $scope.editProfessional = function() {
         $scope.professionalState = "isEditing";
         $scope.edit.profile = angular.copy($scope.profile);
@@ -168,6 +210,8 @@ function ProfileCtrl($scope, $http) {
         $scope.professionalState = "isDisplaying";
     }
 
+
+
     $scope.saveProfile = function(profile) {
         var url = "";
         if(angular.isDefined(profile.nid)) {
@@ -180,6 +224,7 @@ function ProfileCtrl($scope, $http) {
             node: profile
         });
     }
+
 
 
 

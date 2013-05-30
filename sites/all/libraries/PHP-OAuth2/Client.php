@@ -317,14 +317,11 @@ class Client
      */
     public function fetch($protected_resource_url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = array(), $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
-        echo "<b>Acces token type </b> " . $this->access_token_type;
-        echo "<b>access toaken is</b>" . $this->access_token;
         if ($this->access_token) {
             switch ($this->access_token_type) {
                 case self::ACCESS_TOKEN_URI:
 
                     if (is_array($parameters)) {
-                        echo "is array";
                         $parameters[$this->access_token_param_name] = $this->access_token;
                     } else {
                         throw new InvalidArgumentException(
@@ -399,18 +396,12 @@ class Client
      */
     private function executeRequest($url, $parameters = array(), $http_method = self::HTTP_METHOD_GET, array $http_headers = null, $form_content_type = self::HTTP_FORM_CONTENT_TYPE_MULTIPART)
     {
-
-        echo "<h1>Executing Request</h1>";
-        echo "<h2>Params</h2>";
-        echo "<pre>";
-        print_r($parameters);
-        echo "</pre>";
-
         $curl_options = array(
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_CUSTOMREQUEST  => $http_method
         );
+
 
         switch($http_method) {
             case self::HTTP_METHOD_POST:
@@ -444,9 +435,6 @@ class Client
             default:
                 break;
         }
-
-
-
 
         $curl_options[CURLOPT_URL] = $url;
 

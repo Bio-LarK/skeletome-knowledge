@@ -28,10 +28,68 @@
     <div class="row">
         <div class="span12">
             <div class="page-heading">
-                <h1><img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user.svg"/>
+
+
+
+                <div class="pull-right">
+
+                    <a ng-show="linkedIn.isAuthenticated" class="btn" href="" ng-click="showImportFromLinkedIn()">Import from <img style="height: 16px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
+                    <a ng-show="!linkedIn.isAuthenticated" class="btn" href="{{ linkedIn.authUrl }}">Import from <img style="height: 16px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
+                    <!--<a class="btn" href="">Import from Orcid</a>-->
+                </div>
+
+                <h1>
+                    <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user.svg"/>
                     {{ user.name | capitalize }}
                 </h1>
             </div>
+        </div>
+    </div>
+
+    <!--<div class="row">
+        <div class="span12">
+            <section>
+                <div class="section-segment section-segment-header">
+                    <h3>Import from Orcid</h3>
+                </div>
+                <div class="section-segment">
+                    Orcid ID <input type="text"/>
+                </div>
+            </section>
+        </div>
+    </div>-->
+
+    <!-- Import from LinkedIn -->
+    <div ng-show="linkedIn.justGranted || isShowingImportFromLinkedIn" class="row">
+        <div class="span12">
+            <section>
+                <div class="section-segment section-segment-header">
+                    <h3>Import from LinkedIn</h3>
+                </div>
+                <div class="section-segment" ng-show="isLoadingImportFromLinkedIn">
+                    <div class="refreshing-box">
+                        <i class="icon-refresh icon-refreshing"></i>
+                    </div>
+                </div>
+
+                <div ng-show="!isLoadingImportFromLinkedIn">
+                    <div class="section-segment">
+                        <input type="checkbox" name="vehicle" ng-model="linkedInImportFields.summary" checked="checked"> Summary / Biography
+                    </div>
+                    <div class="section-segment">
+                        <input type="checkbox" name="vehicle" ng-model="linkedInImportFields.position" checked="checked"> Position
+                    </div>
+                    <div class="section-segment">
+                        <input type="checkbox" name="vehicle" ng-model="linkedInImportFields.location" checked="checked"> Location
+                    </div>
+
+                    <div class="section-segment">
+                        <a class="btn btn-success" href="" ng-click="importFromLinkedIn()"><i class="icon-download icon-white"></i> Import</a>
+                        <a class="btn" href="" ng-click="hideImportFromLinkedIn()">Cancel</a>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </div>
 
@@ -153,6 +211,10 @@
                                 <div ng-switch-when="isDisplaying">
                                     <a ng-click="editProfessional()" href data-toggle="modal" role="button" class="btn">
                                         <i class="icon-pencil"></i> Edit
+                                    </a>
+
+                                    <a ng-click="importProfessionalFromLinkedIn()" href data-toggle="modal" role="button" class="btn">
+                                        <i class="icon-download"></i>
                                     </a>
                                 </div>
                             </div>

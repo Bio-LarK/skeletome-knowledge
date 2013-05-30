@@ -198,13 +198,35 @@ function page_profile($user) {
         }
     }
 
+    // Get the LinkedIn OAuth stuff
+    $linked_in = array(
+        'authUrl'           => skeletome_linkedin_get_auth_url()
+    );
+    if(isset($_SESSION['linkedOAuth']) && isset($_SESSION['linkedOAuth']['access_token'])) {
+        if($_SESSION['linkedOAuth']['expires'] > time()) {
+            $linked_in['isAuthenticated'] = true;
+        } else {
+            $linked_in['isAuthenticated'] = false;
+        }
+    } else {
+        $linked_in['isAuthenticated'] = false;
+    }
+
+    if(isset($_SESSION['linkedOAuth']) && isset($_SESSION['linkedOAuth']['just_granted']) && $_SESSION['linkedOAuth']['just_granted']) {
+        $linked_in['justGranted'] = $_SESSION['linkedOAuth']['just_granted'];
+        $_SESSION['linkedOAuth']['just_granted'] = false;
+    } else {
+        $linked_in['justGranted'] = false;
+    }
+
     drupal_add_js(array(
-        'skeletome_profile' => array(
-            'user'          => $user,
-            'roles'         => $pretty_roles,
-            "contributed"     => $contributed,
-            'activity'        => $activity,
-            'profile'         => $profile,
+        'skeletome_profile'     => array(
+            'user'              => $user,
+            'roles'             => $pretty_roles,
+            "contributed"       => $contributed,
+            'activity'          => $activity,
+            'profile'           => $profile,
+            'linkedIn'          => $linked_in
     )), 'setting');
 
     $output =  array(

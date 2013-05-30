@@ -16,6 +16,9 @@ body {
     position: relative;
 }
 
+a {
+    color: #3a87ad;
+}
 
 /* ================================================
     Navbar

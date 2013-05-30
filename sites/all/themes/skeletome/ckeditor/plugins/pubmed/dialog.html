@@ -156,9 +156,16 @@
                 </div>
             </div>
 
+            <div class="refreshing-box" ng-show="!biblios">
+                <i class="icon-refresh icon-refreshing"></i>
+            </div>
+
             <!-- Show the recent citations until people enter some text -->
             <div class="recent-citations" ng-show="(biblios | filter:query).length">
+
                 <h3>Recent Citations</h3>
+
+
 
                 <!-- Show recent citations -->
                 <div class="search-results-result" ng-repeat="biblio in biblios | filter:query">

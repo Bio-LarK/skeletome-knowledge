@@ -1,0 +1,6 @@
+name = Skeletome Orcid
+description = Adds Orcid Public Api
+package = A - Skeletome
+core = 7.x
+
+dependencies[] = libraries

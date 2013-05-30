@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_orcid_menu() {
+
+    $items['profile-page/%user'] = array(
+        'page callback' 	=> 'page_profile',
+        'page arguments'    => array(1),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['ajax/profile/orcid/%'] = array(
+        'page callback' 	=> 'ajax_get_orcid',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    $items['upload/images'] = array(
+        'page callback' 	=> 'skeletome_upload_image',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function skeletome_orcid_get_profile($orcid_id) {
+    $xml = simplexml_load_file('http://pub.orcid.org/' + $orcid_id);
+    echo json_encode($xml);
+}
