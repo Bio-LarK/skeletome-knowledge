@@ -1668,6 +1668,15 @@ h1, h2, h3, h4, h5 {
     height: 23px;
     width: 23px;
 }
+.type-logo.type-logo-navsearch {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    background-color: transparent;
+}
+
 .type-logo {
     /*background-color: #2980B9;*/
     background-color: rgb(61, 65, 70);

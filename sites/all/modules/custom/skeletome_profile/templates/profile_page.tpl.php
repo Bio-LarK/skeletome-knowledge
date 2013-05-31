@@ -212,10 +212,6 @@
                                     <a ng-click="editProfessional()" href data-toggle="modal" role="button" class="btn">
                                         <i class="icon-pencil"></i> Edit
                                     </a>
-
-                                    <a ng-click="importProfessionalFromLinkedIn()" href data-toggle="modal" role="button" class="btn">
-                                        <i class="icon-download"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>

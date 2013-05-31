@@ -64,7 +64,7 @@
                     <h3 ng-bind-html-unsafe="result.title"></h3>
                 </a>
                 <div class="section-segment">
-                    <b>Description </b>
+                    <b>Abstract </b>
                     <span ng-bind-html-unsafe="result.snippets.content[0]"></span>
                 </div>
                 <div class="section-segment">
