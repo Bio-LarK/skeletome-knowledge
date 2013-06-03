@@ -29,10 +29,6 @@ function skeletome_profile_menu() {
     return $items;
 }
 
-function ajax_get_orcid($orcid_id) {
-    $xml = simplexml_load_file('http://pub.orcid.org/0000-0002-1808-0964');
-    echo json_encode($xml);
-}
 
 function profile_get($id) {
     $profile = node_load($id);

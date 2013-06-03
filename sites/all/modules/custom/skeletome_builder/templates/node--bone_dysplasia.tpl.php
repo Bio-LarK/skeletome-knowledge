@@ -132,35 +132,93 @@ $isAdmin = user_access('administer site configuration');
     <div class="section-segment section-segment-header">
         <?php if ($isAdmin || $isEditor || $isCurator): ?>
             <div class="pull-right section-segment-header-buttons">
-                <a href ng-click="showEditXRays()" data-toggle="modal" role="button" class="btn"><i
-                        class="icon-pencil"></i> Edit</a>
+
+
+                <div ng-switch on="model.xrayState">
+                    <div ng-switch-when="isLoading">
+                    </div>
+                    <div ng-switch-when="isEditing">
+                        <a href ng-click="saveXRays()" class="btn btn-success">
+                            <i class="icon-ok icon-white"></i> Save
+                        </a>
+                    </div>
+                    <div ng-switch-when="isDisplaying">
+                        <a href ng-click="editXRays()" class="btn">
+                            <i class="icon-pencil"></i> Edit
+                        </a>
+                    </div>
+                </div>
+
+
             </div>
         <?php endif; ?>
 
         <h3>X-Rays</h3>
     </div>
 
-    <?php if ($isAdmin || $isCurator): ?>
-        <div class="section-segment">
-            <div class="dropzone" ng-model="xrays"
-                 drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
+
+
+    <div ng-switch on="model.xrayState">
+        <div ng-switch-when="isLoading">
+            <div class="section-segment">
+                <div class="refreshing-box">
+                    <i class="icon-refresh icon-refreshing"></i>
+                </div>
             </div>
         </div>
-    <?php endif; ?>
+        <div ng-switch-when="isEditing">
+            <div class="section-segment">
+                <div class="dropzone" ng-model="xrays"
+                     drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
+                </div>
+            </div>
 
-    <!-- No x-rays -->
-    <div ng-show="!xrays.length" class="section-segment muted">
-        There are no x-rays for '{{boneDysplasia.title}}'.
-    </div>
+            <div class="section-segment">
+                <ul class="xray-list unstyled media-body">
 
-    <!-- has x-rays -->
-    <div ng-show="xrays.length" fancy-box="xrays" class="section-segment media-body">
-        <div ng-repeat="image in xrays" class="xray-list-image">
-            <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
-                <img ng-src="{{ image.thumb_url }}" alt=""/>
-            </a>
+                    <li class="xray-list-image-edit" ng-repeat="xray in model.edit.xrays">
+                        <div>
+                            <!-- XRay images -->
+                            <div class="xray-list-image-edit-image">
+                                <img ng-src="{{ xray.thumb_url }}" alt=""/>
+                            </div>
+
+                            <!-- Add Button -->
+                            <a ng-show="!xray.added" ng-class="readdXRay(xray)" class="btn btn-success" href>
+                                <i class="icon-plus icon-white"></i> Add
+                            </a>
+                            <!-- Remove Button -->
+                            <a ng-show="xray.added" ng-click="removeXRay(xray)" class="btn btn-danger" href>
+                                <i class="icon-remove icon-white"></i> Remove
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+        <div ng-switch-when="isDisplaying">
+            <!-- No x-rays -->
+            <div ng-show="!xrays.length" class="section-segment muted">
+                There are no x-rays for '{{boneDysplasia.title}}'.
+            </div>
+
+            <!-- has x-rays -->
+            <div ng-show="xrays.length" fancy-box="xrays" class="section-segment media-body">
+                <div ng-repeat="image in xrays" class="xray-list-image">
+                    <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
+                        <img ng-src="{{ image.thumb_url }}" alt=""/>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
+
 
     <!--<a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more"
        href>Show All X-Rays ({{ boneDysplasia.field_bd_xray_images.und.length }})</a>-->
@@ -451,8 +509,6 @@ $isAdmin = user_access('administer site configuration');
                             <i class="icon-remove icon-white"></i> Remove
                         </a>
                     </div>
-
-
                 </li>
             </ul>
         </div>

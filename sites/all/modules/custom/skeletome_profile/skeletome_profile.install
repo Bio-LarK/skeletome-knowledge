@@ -83,7 +83,16 @@ function _profile_installed_fields()
             'settings' => array(
                 'max_length' => 20,
             )
-        )
+        ),
+        'field_profile_publications' => array(
+            'field_name' => 'field_profile_publications',
+            'label' => t('Works'),
+            'cardinality' => -1,
+            'type' => 'text',
+            'settings' => array(
+                'max_length' => 1000,
+            )
+        ),
     );
 }
 
@@ -131,7 +140,18 @@ function _profile_installed_instances()
             'widget'        => array(
                 'type'  => 'text_textfield',
             ),
-        )
+        ),
+
+        'field_profile_publications' => array(
+            'field_name'    => 'field_profile_publications',
+            'label'         => $t('Profile Publications'),
+            'description'   => $t('Profile Publications'),
+            'cardinality' => -1,
+            'widget'        => array(
+                'type'  => 'text_textfield',
+            ),
+        ),
+
     );
 }
 

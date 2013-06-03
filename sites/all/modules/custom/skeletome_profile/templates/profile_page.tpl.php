@@ -31,12 +31,19 @@
 
 
 
+                <?php if($canEdit): ?>
+
                 <div class="pull-right">
 
-                    <a ng-show="linkedIn.isAuthenticated" class="btn" href="" ng-click="showImportFromLinkedIn()">Import from <img style="height: 16px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
-                    <a ng-show="!linkedIn.isAuthenticated" class="btn" href="{{ linkedIn.authUrl }}">Import from <img style="height: 16px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
-                    <!--<a class="btn" href="">Import from Orcid</a>-->
+                    <!-- LinkedIn Buttons -->
+                    <a ng-click="showImportFromLinkedIn()" ng-show="linkedIn.isAuthenticated" class="btn btn-white btn-global" href="" ><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
+                    <a ng-show="!linkedIn.isAuthenticated" class="btn btn-white btn-global" href="{{ linkedIn.authUrl }}"><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
+
+
+                    <!-- Import from Orcid Button (no authentication needed) -->
+                    <a ng-click="showImportFromOrcid()" href="" class="btn btn-white btn-global"><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/orcid-logo.png"/></a>
                 </div>
+                <?php endif; ?>
 
                 <h1>
                     <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user.svg"/>
@@ -46,18 +53,40 @@
         </div>
     </div>
 
-    <!--<div class="row">
+    <!-- Import from Orcid -->
+    <div ng-show="isShowingImportFromOrcid" class="row">
         <div class="span12">
             <section>
                 <div class="section-segment section-segment-header">
                     <h3>Import from Orcid</h3>
                 </div>
-                <div class="section-segment">
-                    Orcid ID <input type="text"/>
+
+                <div class="section-segment" ng-show="isLoadingImportFromOrcid">
+                    <div class="refreshing-box">
+                        <i class="icon-refresh icon-refreshing"></i>
+                    </div>
                 </div>
+
+                <div ng-show="!isLoadingImportFromOrcid">
+                    <div class="section-segment">
+                        Orcid ID <input type="text" ng-model="orcidId" placeholder="0000-0000-0000-0000"/>
+                    </div>
+                    <div class="section-segment">
+                        <input type="checkbox" name="vehicle" ng-model="orcidImportFields.biography" checked="checked"> Biography
+                    </div>
+                    <div class="section-segment">
+                        <input type="checkbox" name="vehicle" ng-model="orcidImportFields.works" checked="checked"> Works / Publications
+                    </div>
+                    <div class="section-segment" >
+                        <a class="btn btn-success" href="" ng-disabled="!orcidId.length" ng-click="importFromOrcid(orcidId)"><i class="icon-download icon-white"></i> Import Now</a>
+                        <a class="btn" href="" ng-click="hideImportFromOrcid()">Cancel</a>
+                    </div>
+                </div>
+
             </section>
         </div>
-    </div>-->
+    </div>
+
 
     <!-- Import from LinkedIn -->
     <div ng-show="linkedIn.justGranted || isShowingImportFromLinkedIn" class="row">
@@ -84,7 +113,7 @@
                     </div>
 
                     <div class="section-segment">
-                        <a class="btn btn-success" href="" ng-click="importFromLinkedIn()"><i class="icon-download icon-white"></i> Import</a>
+                        <a class="btn btn-success" href="" ng-click="importFromLinkedIn()"><i class="icon-download icon-white"></i> Import Now</a>
                         <a class="btn" href="" ng-click="hideImportFromLinkedIn()">Cancel</a>
                     </div>
                 </div>
@@ -166,32 +195,8 @@
 
             </section>
 
-            <section>
-                <div class="section-segment section-segment-header">
-                    <div class="section-segment-header-buttons pull-right">
-                        <a ng-click="editProfessional()" href data-toggle="modal" role="button" class="btn">
-                            <i class="icon-pencil"></i> Edit
-                        </a>
-                    </div>
-                    <h3>Orcid</h3>
-                </div>
-                <div ng-switch on="orcidState">
-                    <div ng-switch-when="isLoading">
-                        <div class="section-segment refreshing-box">
-                            <i class="icon-refresh icon-refreshing"></i>
-                        </div>
-                    </div>
-                    <div ng-switch-when="isEditing">
 
-                    </div>
-                    <div ng-switch-when="isDisplaying">
 
-                    </div>
-                </div>
-                <div class="section-segment">
-                    <b>ID</b> {{ profile.field_profile_orcid_id.und[0].value }}
-                </div>
-            </section>
             <section>
                 <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': professionalState=='isEditing' }">
                     <?php if($canEdit): ?>
@@ -321,6 +326,37 @@
                     </div>
                 </div>
             </section>
+
+            <section>
+                <div class="section-segment section-segment-header">
+                    <h3>Publications</h3>
+                </div>
+
+                <div ng-switch on="publicationsState">
+                    <div ng-switch-when="isLoading">
+                        <div class="section-segment refreshing-box">
+                            <i class="icon-refresh icon-refreshing"></i>
+                        </div>
+                    </div>
+                    <div ng-switch-when="isEditing">
+                    </div>
+                    <div ng-switch-when="isDisplaying">
+                        <div class="section-segment muted media-body" ng-show="!profile.field_profile_publications.und.length">
+                            <a ng-click="showImportFromOrcid()" href="" class="btn btn-white btn-global pull-right"><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/orcid-logo.png"/></a>
+
+                            No publications.
+                        </div>
+                        <div ng-repeat="publication in profile.field_profile_publications.und | limitTo:publicationDisplayLimit" class="section-segment" ng-bind-html-unsafe="publication.value">
+                        </div>
+                        <div class="section-segment" ng-show="profile.field_profile_publications.und.length">
+                            <a ng-show="isHidingPublications" ng-click="showAllPublications()" class="btn btn-reveal" href="">Show All</a>
+                            <a ng-show="!isHidingPublications" ng-click="hidePublications()" class="btn btn-reveal" href="">Show Less</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
             <section>
                 <div class="section-segment section-segment-header">
                     <h2>Recent Activity</2>

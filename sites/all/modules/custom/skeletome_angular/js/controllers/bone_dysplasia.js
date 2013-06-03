@@ -41,6 +41,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.init = function() {
 
         // Setup the description
+        $scope.model.edit = {};
 
         $scope.description = angular.isDefined($scope.boneDysplasia.body.und) ? $scope.boneDysplasia.body.und[0] : {'value': "", 'safe_value': ""};
         $scope.description.url = '?q=ajax/bone-dysplasia/description';
@@ -66,14 +67,19 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
         // Setup the xrays
         if(angular.isDefined(Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und)) {
-            $scope.xrays = Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und;
+            $scope.model.xrays = Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und;
         } else {
-            $scope.xrays = [];
+            $scope.model.xrays = [];
         }
 
         // X-Ray display limit
         $scope.xrayDefaultDisplayLimit = 9;
         $scope.xrayDisplayLimit = $scope.xrayDefaultDisplayLimit;
+
+        $scope.IS_DISPLAYING = "isDisplaying";
+        $scope.IS_EDITING = "isEditing";
+        $scope.IS_LOADING = "isLoading";
+        $scope.model.xrayState = $scope.IS_DISPLAYING;
     }
 
     /* Actions */
@@ -103,36 +109,55 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.showEditingPanel = false;
     }
 
-    $scope.edit = {};
+
+
+    $scope.editXRays = function() {
+        // Copy the xray
+        $scope.model.edit.xrays = angular.copy($scope.model.xrays);
+        $scope.model.xrayState = $scope.IS_EDITING;
+    }
+    $scope.saveXRays = function(profile) {
+        $scope.model.xrayState = $scope.IS_LOADING;
+
+//        $scope.saveProfile(profile).success(function(data) {
+//            $scope.detailsState = "isDisplaying";
+//            $scope.profile = data;
+//        });
+    }
 
     $scope.showEditXRays = function() {
         /* Set up the selected moi for the dropdown */
 
-        angular.forEach($scope.xrays, function(xray, key) {
-            xray.added = true;
-        });
-        $scope.editedXRays = angular.copy($scope.xrays);
-        $scope.openEditingPanel('edit-xrays');
+//        angular.forEach($scope.xrays, function(xray, key) {
+//            xray.added = true;
+//        });
+//        $scope.editedXRays = angular.copy($scope.xrays);
+//        $scope.openEditingPanel('edit-xrays');
     }
-    $scope.removeXRay = function(xray) {
-        xray.added = false;
-        angular.forEach($scope.xrays, function(existingXray, index) {
-            if(existingXray.fid == xray.fid) {
-                $scope.xrays.splice(index, 1);
-            }
-        });
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
-        }).success(function(data) {
-                console.log(data);
-            });
-    }
-    $scope.readdXRay = function(xray) {
-        xray.added = true;
-        $scope.xrays.push(xray);
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/add', {
-        }).success(function(data) {
-            });
-    }
+
+
+//    $scope.removeXRay = function(xray) {
+//        xray.added = false;
+//        angular.forEach($scope.xrays, function(existingXray, index) {
+//            if(existingXray.fid == xray.fid) {
+//                $scope.xrays.splice(index, 1);
+//            }
+//        });
+//        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
+//        }).success(function(data) {
+//                console.log(data);
+//            });
+//    }
+//    $scope.readdXRay = function(xray) {
+//        xray.added = true;
+//        $scope.xrays.push(xray);
+//        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/add', {
+//        }).success(function(data) {
+//            });
+//    }
+
+
+
 
     $scope.showEditDetails = function() {
         $scope.mois = Drupal.settings.skeletome_builder.all_mois;

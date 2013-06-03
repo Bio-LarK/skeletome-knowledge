@@ -6,30 +6,194 @@
  */
 function skeletome_orcid_menu() {
 
-    $items['profile-page/%user'] = array(
-        'page callback' 	=> 'page_profile',
-        'page arguments'    => array(1),
+    $items['orcid/profile/%'] = array(
+        'page callback' 	=> 'skeletome_orcid_get_profile',
         'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
-    );
-
-    $items['ajax/profile/orcid/%'] = array(
-        'page callback' 	=> 'ajax_get_orcid',
-        'page arguments'    => array(3),
-        'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
-    );
-
-    $items['upload/images'] = array(
-        'page callback' 	=> 'skeletome_upload_image',
-        'access arguments'  => array('access content'),
+        'page arguments'    => array(2),
         'type'  => MENU_CALLBACK
     );
 
     return $items;
 }
 
+
+
 function skeletome_orcid_get_profile($orcid_id) {
-    $xml = simplexml_load_file('http://pub.orcid.org/' + $orcid_id);
-    echo json_encode($xml);
+    $xml_bio = simplexml_load_file("http://pub.orcid.org/{$orcid_id}/orcid-bio");
+    $xml_work = simplexml_load_file("http://pub.orcid.org/{$orcid_id}/orcid-works");
+
+    // Get the biography text
+    $biography = $xml_bio->{'orcid-profile'}->{'orcid-bio'}->biography . "";
+
+    // Get the publication array
+    $publications = array();
+
+    $works = $xml_work->{'orcid-profile'}->{'orcid-activities'}->{'orcid-works'}; //->{'orcid-work'};
+
+    foreach($works->{'orcid-work'} as $work) {
+
+
+        if($work->{'work-citation'}->{'work-citation-type'} == "bibtex") {
+            $keywords = preg_split("/[{}]+/", $work->{'work-citation'}->citation . "");
+
+
+            $bibtex = array();
+
+            for($i = 0; $i < count($keywords); $i++) {
+                $term = $keywords[$i];
+                if(strstr($term, "=") === FALSE) {
+                    // its a value
+                } else {
+                    // its a key
+                    // clean the key
+                    $parts = explode(",", $term);
+                    $key = $parts[count($parts) - 1];
+                    $key = str_replace(",", "", $key);
+                    $key = trim(str_replace(" =", "", $key));
+                    $bibtex[$key] = $keywords[++$i];
+                }
+            }
+            $publications[] = $bibtex['author'] . ", " . $bibtex['year'] . ", <b>'" . $bibtex['title'] . "'</b>, " .  $bibtex['journal'] . ", vol." . $bibtex['volume'] . ", no." . $bibtex['number'] . ", pp." . $bibtex['pages'];
+
+
+        } else {
+            $publications[] = $work->{'work-citation'}->citation . "";
+        }
+    }
+
+    echo json_encode(array(
+        'bio'         => $biography,
+        'publications'     => $publications
+    ));
+}
+
+/**
+ * parse()
+ *
+ * Main method that parses the data.
+ */
+function parse($string) {
+    $value = array();
+    $var = array();
+    $lines = preg_split( '/\n/', $string );
+    $items = array(
+        'note' => array(),
+        'abstract' => array(),
+        'year' => array(),
+        'group' => array(),
+        'publisher' => array(),
+        'page-start' => array(),
+        'page-end' => array(),
+        'pages' => array(),
+        'address' => array(),
+        'url' => array(),
+        'volume' => array(),
+        'chapter' => array(),
+        'journal' => array(),
+        'author' => array(),
+        'raw' => array(),
+        'title' => array(),
+        'booktitle' => array(),
+        'folder' => array(),
+        'type' => array(),
+        'linebegin' => array(),
+        'lineend' => array()
+    );
+    $lineindex = 0;
+    $fieldcount = -1;
+    $count = 1;
+    $types = array();
+
+    foreach($lines as $line) {
+        $lineindex++;
+        $items['lineend'][$count] = $lineindex;
+        $line = trim($line);
+        $raw_line = $line + '\n';
+        $line=str_replace("'","`",$line);
+        $seg=str_replace("\"","`",$line);
+        $ps=strpos($seg,'=');
+        $segtest=strtolower($seg);
+
+        // some funny comment string
+        if (strpos($segtest,'@string')!==false)
+            continue;
+
+        // pybliographer comments
+        if (strpos($segtest,'@comment')!==false)
+            continue;
+
+        // normal TeX style comment
+        if (strpos($seg,'%%')!==false)
+            continue;
+
+        /* ok when there is nothing to see, skip it! */
+        if (!strlen($seg))
+            continue;
+
+
+        if ("@" == $seg[0]) {
+
+
+            echo "<pre>";
+            print_r($seg);
+            echo "</pre>";
+
+            $count++;
+            $items['raw'][$count] = $line . "\r\n";
+
+            $ps=strpos($seg,'@');
+            $pe=strpos($seg,'{');
+            $types[$count]=trim(substr($seg, 1,$pe-1));
+            $fieldcount=-1;
+            $items['linebegin'][$count] = $lineindex;
+        } // #of item increase
+        elseif ($ps!==false ) { // one field begins
+            $items['raw'][$count] .= $line . "\r\n";
+            $ps=strpos($seg,'=');
+            $fieldcount++;
+            $var[$fieldcount]=strtolower(trim(substr($seg,0,$ps)));
+
+            if ($var[$fieldcount]=='pages') {
+                $ps=strpos($seg,'=');
+                $pm=strpos($seg,'--');
+                $pe=strpos($seg,'},');
+                $pagefrom[$count] = substr($seg,$ps,$pm-$ps);
+                $pageto[$count]=substr($seg,$pm,$pe-$pm);
+                $bp=str_replace('=','',$pagefrom[$count]); $bp=str_replace('{','',$bp);$bp=str_replace('}','',$bp);$bp=trim(str_replace('-','',$bp));
+                $ep=str_replace('=','',$pageto[$count]); $bp=str_replace('{','',$bp);$bp=str_replace('}','',$bp);;$ep=trim(str_replace('-','',$ep));
+            }
+            $pe=strpos($seg,'},');
+
+            if ($pe===false)
+                $value[$fieldcount]=strstr($seg,'=');
+            else
+                $value[$fieldcount]=substr($seg,$ps,$pe);
+        } else {
+            $items['raw'][$count] .= $line . "\r\n";
+            $pe=strpos($seg,'},');
+
+            if ($fieldcount > -1) {
+                if ($pe===false)
+                    $value[$fieldcount].=' '.strstr($seg,' ');
+                else
+                    $value[$fieldcount] .=' '.substr($seg,$ps,$pe);
+            }
+        }
+
+
+
+        if ($fieldcount > -1) {
+            $v = $value[$fieldcount];
+            $v=str_replace('=','',$v);
+            $v=str_replace('{','',$v);
+            $v=str_replace('}','',$v);
+            $v=str_replace(',',' ',$v);
+            $v=str_replace('\'',' ',$v);
+            $v=str_replace('\"',' ',$v);
+            // test!
+            $v=str_replace('`',' ',$v);
+            $v=trim($v);
+            $items["$var[$fieldcount]"][$count]="$v";
+        }
+    }
 }

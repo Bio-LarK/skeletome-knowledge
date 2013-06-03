@@ -54,6 +54,12 @@ function ProfileCtrl($scope, $http) {
                 ]
             };
         }
+        if(!angular.isDefined($scope.profile.field_profile_publications) || !angular.isDefined($scope.profile.field_profile_publications.und)) {
+            $scope.profile.field_profile_publications = {
+                und : []
+            };
+        }
+
         if(!angular.isDefined($scope.profile.field_profile_user_id)) {
             $scope.profile.field_profile_user_id = {
                 und : [
@@ -73,10 +79,14 @@ function ProfileCtrl($scope, $http) {
         $scope.roles = Drupal.settings.skeletome_profile.roles;
         $scope.recentActivityDisplayLimit = 10;
         $scope.contributedDisplayLimit = 10;
+
+        // Edit holder
         $scope.edit = {};
 
+        // States of ui
         $scope.biographyState = "isDisplaying";
         $scope.professionalState = "isDisplaying";
+        $scope.publicationsState = "isDisplaying";
         $scope.detailsState = "isDisplaying";
         $scope.orcidState = "isDisplaying";
 
@@ -86,26 +96,32 @@ function ProfileCtrl($scope, $http) {
             position: true,
             location: true
         };
+        $scope.orcidImportFields = {
+            biography: true,
+            works: true
+        }
+
+        $scope.DEFAULT_PUB_LIMIT = 3;
+
+        // Setup the default length
+        $scope.publicationDisplayLimit = $scope.DEFAULT_PUB_LIMIT;
+        $scope.isHidingPublications =  $scope.profile.field_profile_publications.und.length > $scope.DEFAULT_PUB_LIMIT;
+
+        console.log($scope.isHidingPublications);
+
     }
 
 
+    $scope.showAllPublications = function() {
+        $scope.isHidingPublications = false;
+        console.log("hell oworld", $scope.profile.field_profile_publications.und.length);
+        $scope.publicationDisplayLimit = $scope.profile.field_profile_publications.und.length;
+    }
 
-//    $scope.fetchOrcidPublic = function(orcidId) {
-//        console.log("fetching orcid");
-//        $http.get('?q=ajax/profile/orcid/0000-0002-1808-0964').success(function(data, status, headers, config) {
-//            // this callback will be called asynchronously
-//            // when the response is available
-//            console.log("got data", data);
-//        }).error(function(data, status, headers, config) {
-//                // called asynchronously if an error occurs
-//                // or server returns response with an error status.
-//            console.log("error", data, status, header, config);
-//        });
-//    }
-//
-//    setTimeout(function() {
-//        $scope.fetchOrcidPublic();
-//    }, 2000);
+    $scope.hidePublications = function() {
+        $scope.isHidingPublications = true;
+        $scope.publicationDisplayLimit = $scope.DEFAULT_PUB_LIMIT;
+    }
 
     $scope.editDetails = function() {
         $scope.edit.profile = angular.copy($scope.profile);
@@ -159,6 +175,49 @@ function ProfileCtrl($scope, $http) {
         $scope.biographyState = "isDisplaying";
     }
 
+    $scope.showImportFromOrcid = function() {
+        $scope.isShowingImportFromOrcid = true;
+    }
+    $scope.hideImportFromOrcid = function() {
+        $scope.isShowingImportFromOrcid = false;
+    }
+    $scope.importFromOrcid = function(orcidId) {
+        if(orcidId.length == 0) {
+            return;
+        }
+        $scope.edit.profile = angular.copy($scope.profile);
+        console.log("import from orcid " + orcidId);
+        $scope.isLoadingImportFromOrcid = true;
+
+        var url = '?q=orcid/profile/' + orcidId;
+        console.log("url is" + url);
+        $http.get(url).success(function(data) {
+//            console.log(data);
+            if($scope.orcidImportFields.biography) {
+                $scope.edit.profile.body.und[0].value = data.bio || "";
+            }
+
+            if($scope.orcidImportFields.works) {
+                $scope.edit.profile.field_profile_publications.und = [];
+                angular.forEach(data.publications, function(publication) {
+                    $scope.edit.profile.field_profile_publications.und.push({'value': publication});
+                });
+            }
+
+            $scope.biographyState = "isLoading";
+            $scope.publicationsState = "isLoading";
+
+            $scope.saveProfile($scope.edit.profile).success(function(data) {
+                $scope.isLoadingImportFromOrcid = false;
+                $scope.isShowingImportFromOrcid = false;
+                $scope.biographyState = "isDisplaying";
+                $scope.publicationsState = "isDisplaying";
+                $scope.profile = data;
+            });
+
+        });
+    }
+
     $scope.showImportFromLinkedIn = function() {
         $scope.isShowingImportFromLinkedIn = true;
     }
@@ -166,19 +225,21 @@ function ProfileCtrl($scope, $http) {
         $scope.isShowingImportFromLinkedIn = false;
     }
     $scope.importFromLinkedIn = function() {
+        $scope.edit.profile = angular.copy($scope.profile);
         $scope.isLoadingImportFromLinkedIn = true;
 
         $http.get('?q=linkedin/profile').success(function(data) {
+            $scope.linkedIn.justGranted = false;
 
             $scope.edit.profile = angular.copy($scope.profile);
             if($scope.linkedInImportFields.summary) {
-                $scope.edit.profile.body.und[0].value = data.result.summary;
+                $scope.edit.profile.body.und[0].value = data.bio || "";
             }
             if($scope.linkedInImportFields.position) {
-                $scope.edit.profile.field_profile_position.und[0].value = data.result.positions.values[0].company.name;
+                $scope.edit.profile.field_profile_position.und[0].value = data.position || "";
             }
             if($scope.linkedInImportFields.location) {
-                $scope.edit.profile.field_profile_location.und[0].value = data.result.location.name;
+                $scope.edit.profile.field_profile_location.und[0].value = data.location || "";
             }
 
             $scope.biographyState = "isLoading";

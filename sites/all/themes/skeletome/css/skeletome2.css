@@ -1291,6 +1291,23 @@ table.table-dark {
     box-sizing: border-box;
 }
 
+/** Reveal button */
+.btn-global {
+    padding: 7px 14px;
+}
+    .btn-global img {
+        height: 16px;
+        position: relative;
+        top: -2px;
+    }
+.btn-white {
+    background-color: white;
+    border: 1px solid #eee;
+}
+    .btn-white:hover {
+        background-color: white;
+    }
+
 /* Makes the button pill shaped */
 .btn-pill {
     border-radius: 20px;
