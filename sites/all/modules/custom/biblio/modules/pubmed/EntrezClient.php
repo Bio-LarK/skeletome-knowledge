@@ -460,6 +460,7 @@ class BiblioEntrezClient
       $this->query = self::BASE_URL . 'esummary.fcgi?' . http_build_query($params);
     }
     else {
+        print_r($params);
       $this->query = self::BASE_URL . 'efetch.fcgi?' . http_build_query($params);
     }
     $request_options = array('method' => 'POST');

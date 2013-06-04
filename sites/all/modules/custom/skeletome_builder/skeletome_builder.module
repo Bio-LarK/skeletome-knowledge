@@ -546,20 +546,14 @@ function ajax_pubmed_query_search($query) {
     $Eclient = new BiblioEntrezClient;
 
     $Eclient->setTerm($query);
+    $Eclient->setReturnMax(10);
     $pubmed_search = $Eclient->search();
-
-//    echo "<pre>";
-//    print_r($pubmed_search);
-//    echo "</pre>";
+    $records = $Eclient->fetchRecords(0);
 
     $return_results = array();
 
-    $records = $Eclient->fetchRecords(0);
-
-
     // Go through all the PubmedArticle
     if(isset($records->PubmedArticle)) {
-
         foreach($records->PubmedArticle as $record) {
 
             $data = NULL;
@@ -582,6 +576,9 @@ function ajax_pubmed_query_search($query) {
             }
         }
     }
+
+
+
 
     // TODO: write it for pubmedbookarticle
 //
