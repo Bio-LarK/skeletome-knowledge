@@ -59,6 +59,20 @@ function ajax_add_existing_xray_to_bone_dysplasia($bone_dysplasia_id, $xray_id) 
     echo "added exsting xray";
 }
 
+function ajax_bone_dysplasia_xrays($bone_dysplasia_id) {
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $xrays = (object) $objData['xrays'];
+
+    $bone_dysplasia = node_load($bone_dysplasia_id);
+    $bone_dysplasia->field_bd_xray_images[LANGUAGE_NONE] = $xrays;
+    node_save($bone_dysplasia);
+
+    echo json_encode($bone_dysplasia);
+}
+
+
 function ajax_add_xray_to_bone_dysplasia($bone_dysplasia_id) {
     // Debugging info
 

@@ -12,7 +12,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
     /* Bone Dysplasia stuff */
-    $scope.boneDysplasia = Drupal.settings.skeletome_builder.bone_dysplasia;
+    $scope.model.boneDysplasia = Drupal.settings.skeletome_builder.bone_dysplasia;
     $scope.moi = Drupal.settings.skeletome_builder.moi;
     $scope.omim = Drupal.settings.skeletome_builder.omim;
     $scope.groupBoneDysplasias = Drupal.settings.skeletome_builder.group_bone_dysplasias;
@@ -24,7 +24,6 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     });
 
     $scope.genes = Drupal.settings.skeletome_builder.genes;
-
 
     $scope.tags = Drupal.settings.skeletome_builder.tags;
 
@@ -39,11 +38,14 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
     $scope.init = function() {
+        $scope.IS_DISPLAYING = "isDisplaying";
+        $scope.IS_EDITING = "isEditing";
+        $scope.IS_LOADING = "isLoading";
 
         // Setup the description
         $scope.model.edit = {};
 
-        $scope.description = angular.isDefined($scope.boneDysplasia.body.und) ? $scope.boneDysplasia.body.und[0] : {'value': "", 'safe_value': ""};
+        $scope.description = angular.isDefined($scope.model.boneDysplasia.body.und) ? $scope.model.boneDysplasia.body.und[0] : {'value': "", 'safe_value': ""};
         $scope.description.url = '?q=ajax/bone-dysplasia/description';
 
         // Reference to source for description
@@ -51,8 +53,8 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.reference = Drupal.settings.skeletome_builder.reference;
 
         // Make a string of the synonyms
-        if(angular.isDefined($scope.boneDysplasia.field_bd_synonym.und)) {
-            $scope.synString = $scope.boneDysplasia.field_bd_synonym.und.reduce(function (previous, synonym) {
+        if(angular.isDefined($scope.model.boneDysplasia.field_bd_synonym.und)) {
+            $scope.synString = $scope.model.boneDysplasia.field_bd_synonym.und.reduce(function (previous, synonym) {
                 var seperator = "";
                 if(previous != "") {
                     seperator = ", ";
@@ -66,21 +68,10 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.editors = Drupal.settings.skeletome_builder.editors;
 
         // Setup the xrays
-        if(angular.isDefined(Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und)) {
-            $scope.model.xrays = Drupal.settings.skeletome_builder.bone_dysplasia.field_bd_xray_images.und;
-        } else {
-            $scope.model.xrays = [];
-        }
-
-        // X-Ray display limit
-        $scope.xrayDefaultDisplayLimit = 9;
-        $scope.xrayDisplayLimit = $scope.xrayDefaultDisplayLimit;
-
-        $scope.IS_DISPLAYING = "isDisplaying";
-        $scope.IS_EDITING = "isEditing";
-        $scope.IS_LOADING = "isLoading";
-        $scope.model.xrayState = $scope.IS_DISPLAYING;
+        $scope.setupXRays();
     }
+
+
 
     /* Actions */
     $scope.editDescription = function() {
@@ -111,19 +102,63 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
 
+    $scope.setupXRays = function() {
+        $scope.model.xrayState = $scope.IS_DISPLAYING;
+        if(!angular.isDefined($scope.model.boneDysplasia.field_bd_xray_images.und)) {
+            $scope.model.xrays = [];
+        } else {
+            $scope.model.xrays = $scope.model.boneDysplasia.field_bd_xray_images.und;
+        }
+        // X-Ray display limit
+        $scope.xrayDefaultDisplayLimit = 9;
+        $scope.xrayDisplayLimit = $scope.xrayDefaultDisplayLimit;
+    }
+
     $scope.editXRays = function() {
         // Copy the xray
         $scope.model.edit.xrays = angular.copy($scope.model.xrays);
+        angular.forEach($scope.model.edit.xrays, function(xray, index) {
+            xray.added = true;
+        });
         $scope.model.xrayState = $scope.IS_EDITING;
+    }
+    $scope.cancelXRays = function() {
+        $scope.model.xrayState = $scope.IS_DISPLAYING;
     }
     $scope.saveXRays = function(profile) {
         $scope.model.xrayState = $scope.IS_LOADING;
 
-//        $scope.saveProfile(profile).success(function(data) {
-//            $scope.detailsState = "isDisplaying";
-//            $scope.profile = data;
-//        });
+        // Remove all xrays in the edit, that are set to 'false' for added
+        var xrays = [];
+        angular.forEach($scope.model.edit.xrays, function(xray, index) {
+            if(xray.added) {
+                xrays.push(xray);
+            }
+        });
+
+        $scope.model.xrays = xrays;
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xrays', {
+            'xrays': $scope.model.xrays
+        }).success(function(data) {
+            $scope.model.xrayState = $scope.IS_DISPLAYING;
+        });
     }
+
+    $scope.toggleXRay = function(xray) {
+        xray.added = !xray.added;
+    }
+//        angular.forEach($scope.xrays, function(existingXray, index) {
+//            if(existingXray.fid == xray.fid) {
+//                $scope.xrays.splice(index, 1);
+//            }
+//        });
+//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
+//        }).success(function(data) {
+//                console.log(data);
+//            });
+//    }
+//    $scope.readdXRay = function(xray) {
+
 
     $scope.showEditXRays = function() {
         /* Set up the selected moi for the dropdown */
@@ -143,7 +178,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //                $scope.xrays.splice(index, 1);
 //            }
 //        });
-//        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
+//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
 //        }).success(function(data) {
 //                console.log(data);
 //            });
@@ -151,7 +186,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //    $scope.readdXRay = function(xray) {
 //        xray.added = true;
 //        $scope.xrays.push(xray);
-//        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/xray/' + xray.fid + '/add', {
+//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xray/' + xray.fid + '/add', {
 //        }).success(function(data) {
 //            });
 //    }
@@ -181,7 +216,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
         // if there is no moi, or its changed, save it
 
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/details', {
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
             'moiTid': editedMoi.tid,
             'omim': editedOMIM
         }).success(function(data) {
@@ -488,7 +523,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         var newStatementText = angular.copy(newStatement);
         $scope.model.newStatement = "";
 
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.boneDysplasia.nid + '/statement/add', {
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statement/add', {
             'statement': newStatementText
         }).success(function(data) {
                 $scope.model.isloadingNewStatement = false;

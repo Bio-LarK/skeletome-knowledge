@@ -32,6 +32,7 @@ myApp.directive('dropZoneUpload', function() {
 
                         if(iAttrs.ngModel) {
                             var jsonResponse = jQuery.parseJSON( response );
+                            jsonResponse.added = true;
                             var model = scope.$eval(iAttrs.ngModel);
                             console.log("upload module is ", model);
                             scope.$apply(function() {
@@ -44,9 +45,6 @@ myApp.directive('dropZoneUpload', function() {
 
                 }
             });
-
-
-
         }
     }
 })

@@ -5,6 +5,51 @@ module_load_include('php', 'skeletome_builder', 'data');
 module_load_include('php', 'skeletome_builder', 'ajax');
 module_load_include('php', 'skeletome_builder', 'pages');
 
+
+
+function bone_dysplasia_get($id) {
+//    $profile = node_load($id);
+//    echo json_encode($profile);
+}
+
+function bone_dysplasia_update($id) {
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $bone_dysplasia = (object) $objData['node'];
+    node_save($bone_dysplasia);
+
+    echo json_encode($bone_dysplasia);
+}
+
+function bone_dysplasia_save() {
+//    global $user;
+//
+//    $data = file_get_contents("php://input");
+//    $objData = json_decode($data, true);
+//
+//    $profile = (object) $objData['node'];
+//    $profile->title = $user->name . "'s Profile";
+//    $profile->type = "profile";
+//    node_object_prepare($profile); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+//    $profile->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+//    $profile->uid = $user->uid;
+//    $profile->status = 1; //(1 or 0): published or not
+//    $profile->promote = 0; //(1 or 0): promoted to front page
+//    $profile->comment = 1; //2 = comments on, 1 = comments off
+//    $profile = node_submit($profile); // Prepare node for saving
+//    $profile->revision = 1;
+//    $profile->log = "Created new profile.";
+//    $profile->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+//
+//    node_save($profile);
+//
+//    $profile = node_load($profile->nid);
+//    $profile = _setup_profile_picture($profile);
+//
+//    echo json_encode($profile);
+}
+
 /**
  * @file
  * Custom search for bone dysplasias.
@@ -988,6 +1033,14 @@ function skeletome_builder_menu() {
     /**
      * XRays
      */
+    $items['ajax/bone-dysplasia/%/xrays'] = array(
+        'title' 		    => t('Add xray to bonedysplasia'),
+        'page callback' 	=> 'ajax_bone_dysplasia_xrays',
+        'page arguments'    => array(2),
+        'access callback'   => 'is_editor',
+        'type'              => MENU_CALLBACK
+    );
+
     $items['ajax/bone-dysplasia/%/xray/add'] = array(
         'title' 		    => t('Add xray to bonedysplasia'),
         'page callback' 	=> 'ajax_add_xray_to_bone_dysplasia',

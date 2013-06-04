@@ -141,6 +141,9 @@ $isAdmin = user_access('administer site configuration');
                         <a href ng-click="saveXRays()" class="btn btn-success">
                             <i class="icon-ok icon-white"></i> Save
                         </a>
+                        <a href ng-click="cancelXRays()" class="btn">
+                            <i class="icon-remove"></i> Cancel
+                        </a>
                     </div>
                     <div ng-switch-when="isDisplaying">
                         <a href ng-click="editXRays()" class="btn">
@@ -156,8 +159,6 @@ $isAdmin = user_access('administer site configuration');
         <h3>X-Rays</h3>
     </div>
 
-
-
     <div ng-switch on="model.xrayState">
         <div ng-switch-when="isLoading">
             <div class="section-segment">
@@ -168,8 +169,8 @@ $isAdmin = user_access('administer site configuration');
         </div>
         <div ng-switch-when="isEditing">
             <div class="section-segment">
-                <div class="dropzone" ng-model="xrays"
-                     drop-zone-upload="?q=ajax/bone-dysplasia/{{ boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
+                <div class="dropzone" ng-model="model.edit.xrays"
+                     drop-zone-upload="?q=ajax/bone-dysplasia/{{ model.boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
                 </div>
             </div>
 
@@ -177,19 +178,18 @@ $isAdmin = user_access('administer site configuration');
                 <ul class="xray-list unstyled media-body">
 
                     <li class="xray-list-image-edit" ng-repeat="xray in model.edit.xrays">
-                        <div>
+                        <div ng-click="toggleXRay(xray)" style="cursor: pointer">
                             <!-- XRay images -->
                             <div class="xray-list-image-edit-image">
                                 <img ng-src="{{ xray.thumb_url }}" alt=""/>
                             </div>
 
                             <!-- Add Button -->
-                            <a ng-show="!xray.added" ng-class="readdXRay(xray)" class="btn btn-success" href>
-                                <i class="icon-plus icon-white"></i> Add
-                            </a>
-                            <!-- Remove Button -->
-                            <a ng-show="xray.added" ng-click="removeXRay(xray)" class="btn btn-danger" href>
-                                <i class="icon-remove icon-white"></i> Remove
+                            <a class="btn"
+                               ng-class="{ 'btn-success': !xray.added, 'btn-danger': xray.added }"
+                               href>
+                                    <i class="icon-white" ng-class="{ 'icon-plus': !xray.added, 'icon-remove': xray.added }"></i>
+                                    {{xray.added && 'Remove' || 'Re-Add' }}
                             </a>
                         </div>
                     </li>
@@ -200,13 +200,13 @@ $isAdmin = user_access('administer site configuration');
         </div>
         <div ng-switch-when="isDisplaying">
             <!-- No x-rays -->
-            <div ng-show="!xrays.length" class="section-segment muted">
-                There are no x-rays for '{{boneDysplasia.title}}'.
+            <div ng-show="!model.xrays.length" class="section-segment muted">
+                There are no x-rays for '{{model.boneDysplasia.title}}'.
             </div>
 
             <!-- has x-rays -->
-            <div ng-show="xrays.length" fancy-box="xrays" class="section-segment media-body">
-                <div ng-repeat="image in xrays" class="xray-list-image">
+            <div ng-show="model.xrays.length" fancy-box="xrays" class="section-segment media-body">
+                <div ng-repeat="image in model.xrays" class="xray-list-image">
                     <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
                         <img ng-src="{{ image.thumb_url }}" alt=""/>
                     </a>
@@ -221,7 +221,7 @@ $isAdmin = user_access('administer site configuration');
 
 
     <!--<a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more"
-       href>Show All X-Rays ({{ boneDysplasia.field_bd_xray_images.und.length }})</a>-->
+       href>Show All X-Rays ({{ model.boneDysplasia.field_bd_xray_images.und.length }})</a>-->
 </section>
 
 
@@ -259,7 +259,7 @@ $isAdmin = user_access('administer site configuration');
                     </div>
                 </div>
                 <div  ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content'">
-                    <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
+                    <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ model.boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
 
@@ -281,12 +281,12 @@ $isAdmin = user_access('administer site configuration');
 </div>
 
 <div class="span4">
-    <section ng-show="boneDysplasia.field_bd_superbd.length">
+    <section ng-show="model.boneDysplasia.field_bd_superbd.length">
         <div class="section-segment section-segment-header">
             <h3>Parent </h3>
         </div>
 
-        <div ng-repeat="subType in boneDysplasia.field_bd_superbd">
+        <div ng-repeat="subType in model.boneDysplasia.field_bd_superbd">
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
                 <i class="icon-chevron-right pull-right"></i>
                 <i class="icon-chevron-right icon-white pull-right"></i>
@@ -366,23 +366,23 @@ $isAdmin = user_access('administer site configuration');
         </div>
 
 
-        <a ng-href="?q=node/{{boneDysplasia.nid}}/gene/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
+        <a ng-href="?q=node/{{model.boneDysplasia.nid}}/gene/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
             {{ gene.title }}
             <i class="icon-chevron-right pull-right"></i>
             <i class="icon-chevron-right icon-white pull-right"></i>
         </a>
 
         <div class="section-segment muted" ng-show="!genes.length">
-            '{{ boneDysplasia.title }}' is associated with {{ genes.length }} genes.
+            '{{ model.boneDysplasia.title }}' is associated with {{ genes.length }} genes.
         </div>
 
     </section>
 
-    <section ng-show="boneDysplasia.field_bd_subbd.length">
+    <section ng-show="model.boneDysplasia.field_bd_subbd.length">
         <div class="section-segment section-segment-header">
             <h3>Sub-types</h3>
         </div>
-        <div ng-repeat="subType in boneDysplasia.field_bd_subbd">
+        <div ng-repeat="subType in model.boneDysplasia.field_bd_subbd">
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
                 {{ subType.title }}
 
@@ -393,11 +393,11 @@ $isAdmin = user_access('administer site configuration');
 
     </section>
 
-    <section ng-show="boneDysplasia.field_bd_sameas.length">
+    <section ng-show="model.boneDysplasia.field_bd_sameas.length">
         <div class="section-segment section-segment-header">
             <h3>Same As</h3>
         </div>
-        <div ng-repeat="subType in boneDysplasia.field_bd_sameas">
+        <div ng-repeat="subType in model.boneDysplasia.field_bd_sameas">
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
                 {{ subType.title }}
 
@@ -409,11 +409,11 @@ $isAdmin = user_access('administer site configuration');
 
 
 
-    <section ng-show="boneDysplasia.field_bd_seealso.length">
+    <section ng-show="model.boneDysplasia.field_bd_seealso.length">
         <div class="section-segment section-segment-header">
             <h3>See Also</h3>
         </div>
-        <div ng-repeat="subType in boneDysplasia.field_bd_seealso">
+        <div ng-repeat="subType in model.boneDysplasia.field_bd_seealso">
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
                 <i class="icon-chevron-right pull-right"></i>
                 <i class="icon-chevron-right icon-white pull-right"></i>
@@ -487,7 +487,7 @@ $isAdmin = user_access('administer site configuration');
     <!-- Modal Body -->
     <div class="modal-body">
         <div class="modal-body-inner">
-            <p>Edit the X-Rays for '{{boneDysplasia.title}}'.</p>
+            <p>Edit the X-Rays for '{{model.boneDysplasia.title}}'.</p>
 
             <ul class="xray-list unstyled media-body">
 
@@ -535,7 +535,7 @@ $isAdmin = user_access('administer site configuration');
     <!-- Modal Body -->
     <div class="modal-body">
         <div class="modal-body-inner">
-            <p>Edit the details for '{{boneDysplasia.title}}'.</p>
+            <p>Edit the details for '{{model.boneDysplasia.title}}'.</p>
 
             <div class="section-top">
                 <p>OMIM Number</p>
@@ -570,7 +570,7 @@ $isAdmin = user_access('administer site configuration');
     <!-- Modal Body -->
     <div class="modal-body">
         <div class="modal-body-inner">
-            <p>Add a statement about '{{boneDysplasia.title}}'.</p>
+            <p>Add a statement about '{{model.boneDysplasia.title}}'.</p>
             <textarea ck-editor ng-model="newStatement"></textarea>
         </div>
 
@@ -596,7 +596,7 @@ $isAdmin = user_access('administer site configuration');
     <!-- Modal Body -->
     <div class="modal-body">
         <div class="modal-body-inner">
-            <p>Edit the Description for '{{boneDysplasia.title}}'.</p>
+            <p>Edit the Description for '{{model.boneDysplasia.title}}'.</p>
 
             <textarea ck-editor ng-model="$parent.editedDescription"></textarea>
         </div>
@@ -624,7 +624,7 @@ $isAdmin = user_access('administer site configuration');
     <!-- Modal Body -->
     <div class="modal-body">
         <div class="modal-body-inner">
-            <p>Search for a Gene to Add/Remove to '{{boneDysplasia.title}}'.</p>
+            <p>Search for a Gene to Add/Remove to '{{model.boneDysplasia.title}}'.</p>
 
             <!-- Search box -->
             <form>
@@ -642,9 +642,9 @@ $isAdmin = user_access('administer site configuration');
 
                 <div ng-repeat="gene in editingGenes" style="overflow: auto; margin-bottom: 10px">
                     <strong>{{ gene.title }}</strong>
-                    <a ng-show="!gene.added" ng-click="addGeneToBoneDysplasia(gene, boneDysplasia)"
+                    <a ng-show="!gene.added" ng-click="addGeneToBoneDysplasia(gene, model.boneDysplasia)"
                        class="btn btn-success pull-right" href><i class="icon-plus icon-white"></i> Add</a>
-                    <a ng-show="gene.added" ng-click="removeGeneFromBoneDysplasia(gene, boneDysplasia)"
+                    <a ng-show="gene.added" ng-click="removeGeneFromBoneDysplasia(gene, model.boneDysplasia)"
                        class="btn btn-danger pull-right" href><i class="icon-minus icon-white"></i> Remove</a>
                 </div>
 
@@ -653,7 +653,7 @@ $isAdmin = user_access('administer site configuration');
 
                     <div class="input-append">
                         <input placeholder="Enter a Gene Name" ng-model="newGeneName" type="text"/>
-                        <a ng-click="addNewGeneToBoneDysplasia(newGeneName, boneDysplasia)" class="btn btn-success"><i
+                        <a ng-click="addNewGeneToBoneDysplasia(newGeneName, model.boneDysplasia)" class="btn btn-success"><i
                                 class="icon-plus icon-white"></i> Add Gene</a>
                     </div>
                 </div>
@@ -721,7 +721,7 @@ $isAdmin = user_access('administer site configuration');
     <div class="modal-body">
         <div class="modal-body-inner">
 
-            <p>Edit Clinical Features to attached to '{{boneDysplasia.title}}'.</p>
+            <p>Edit Clinical Features to attached to '{{model.boneDysplasia.title}}'.</p>
 
             <form>
                 <search model="$parent.editClinicalFeatureSearch"
@@ -740,10 +740,10 @@ $isAdmin = user_access('administer site configuration');
 
                     <td>
                         <a role="button" ng-show="clinicalFeature.added" class="btn btn-danger pull-right"
-                           ng-click="removeClinicalFeature(clinicalFeature, boneDysplasia)"><i
+                           ng-click="removeClinicalFeature(clinicalFeature, model.boneDysplasia)"><i
                                 class="icon-remove icon-white"></i> Remove</a>
                         <a role="button" ng-show="!clinicalFeature.added" class="btn btn-success pull-right"
-                           ng-click="addClinicalFeature(clinicalFeature, boneDysplasia)"><i
+                           ng-click="addClinicalFeature(clinicalFeature, model.boneDysplasia)"><i
                                 class="icon-plus icon-white"></i> Add</a>
                     </td>
                 </tr>
