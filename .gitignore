@@ -3,9 +3,15 @@
 
 .idea/workspace.xml
 
-*.PNG
+# Ignore configuration files that may contain sensitive information.
+sites/*/settings*.php
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
 
 sites/default/files/file_uploads/1/backbone-pelvis-socket-of-hip-joint-thigh-bone-x-ray-osteoporosis-thumb1501702.jpg
+
 
 sites/default/files/file_uploads/1/tumblr_m9x1irVyQF1qzd516o1_400.gif
 
