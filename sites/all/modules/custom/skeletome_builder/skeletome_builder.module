@@ -628,19 +628,19 @@ function ajax_get_pub_med($query) {
 
 
     // Search for a term
-    $Eclient->setTerm($pubmedId);
-    $pubmed_search = $Eclient->search();
-
-    // Get all the ids
-    foreach($pubmed_search->IdList->Id as $pubmedId) {
-
-        echo "<pre>" . $pubmedId . "</pre>";
-
-        $pubmed = $Eclient->fetch($pubmedId);
-
-        echo "<pre>" . $pubmed . "</pre>";
-
-        die();
+//    $Eclient->setTerm($pubmedId);
+//    $pubmed_search = $Eclient->search();
+//
+//    // Get all the ids
+//    foreach($pubmed_search->IdList->Id as $pubmedId) {
+//
+//        echo "<pre>" . $pubmedId . "</pre>";
+//
+//        $pubmed = $Eclient->fetch($pubmedId);
+//
+//        echo "<pre>" . $pubmed . "</pre>";
+//
+//        die();
 //
 //        if (!isset($pubmed->PubmedArticle)) {
 //            if (isset($pubmed->PubmedBookArticle)) {
@@ -664,46 +664,46 @@ function ajax_get_pub_med($query) {
 //
 //        }
 
-    }
+//    }
 
 
-    die();
-
-
-    try {
-        $result = $Eclient->fetch($pubmedId);
-    } catch (Exception $e) {
-        form_set_error($e->getMessage());
-    }
-
-
-    $data = NULL;
-    if (!isset($result->PubmedArticle)) {
-        if (isset($result->PubmedBookArticle)) {
-            $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
-        }
-    } else {
-        $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
-    }
-
-    if ($data !== NULL) {
-        $node_data = $data->getBiblio();
-        $node_data['type'] = 'biblio';
-        $node_data['uid'] = $user->uid;
-        $node = (object)$node_data;
-
-        $markup = theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style));
-
-        $return = array(
-            'pubmedId'  => $pubmedId,
-            'markup'    => $markup
-        );
-
-        echo drupal_json_encode($return);
-
-    } else {
-        echo drupal_json_encode(array());
-    }
+//    die();
+//
+//
+//    try {
+//        $result = $Eclient->fetch($pubmedId);
+//    } catch (Exception $e) {
+//        form_set_error($e->getMessage());
+//    }
+//
+//
+//    $data = NULL;
+//    if (!isset($result->PubmedArticle)) {
+//        if (isset($result->PubmedBookArticle)) {
+//            $data = new BiblioEntrezPubmedBookArticle($result->PubmedBookArticle);
+//        }
+//    } else {
+//        $data = new BiblioEntrezPubmedArticle($result->PubmedArticle);
+//    }
+//
+//    if ($data !== NULL) {
+//        $node_data = $data->getBiblio();
+//        $node_data['type'] = 'biblio';
+//        $node_data['uid'] = $user->uid;
+//        $node = (object)$node_data;
+//
+//        $markup = theme('biblio_style', array('node' => $node, 'base' => $base, 'style' => $style));
+//
+//        $return = array(
+//            'pubmedId'  => $pubmedId,
+//            'markup'    => $markup
+//        );
+//
+//        echo drupal_json_encode($return);
+//
+//    } else {
+//        echo drupal_json_encode(array());
+//    }
 
 
 }
