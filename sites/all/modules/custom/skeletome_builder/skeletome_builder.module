@@ -546,7 +546,7 @@ function ajax_pubmed_query_search($query) {
     $Eclient = new BiblioEntrezClient;
 
     $Eclient->setTerm($query);
-    $Eclient->setReturnMax(10);
+    $Eclient->setReturnMax(5);
     $pubmed_search = $Eclient->search();
     $records = $Eclient->fetchRecords(0);
 
