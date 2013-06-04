@@ -27,6 +27,8 @@ function DescriptionCtrl($scope, $http) {
         $scope.isEditingDescription = false;
     }
     $scope.saveEditedDescription = function(newDescription) {
+
+        console.log("saving editied description");
         $scope.isEditingDescription = false;
 
         $scope.description.safe_value = "Loading...";
@@ -36,7 +38,7 @@ function DescriptionCtrl($scope, $http) {
         if(angular.isDefined($scope.master)) {
             nodeId = $scope.master.gene.nid;
         } else {
-            nodeId = $scope.boneDysplasia.nid;
+            nodeId = $scope.model.boneDysplasia.nid;
         }
 
         // Save the description
