@@ -78,10 +78,6 @@
     $isAdmin = user_access('administer site configuration');
 ?>
 
-
-<h1>
-    Trying to deploy with git.
-</h1>
 <div id="page" style="position:relative;" ng-controller="PageCtrl">
 
 <header id="header" role="banner">
