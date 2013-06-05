@@ -1845,15 +1845,15 @@ a.section-segment {
         }
 
 .section-segment.section-segment-editing {
-    background-color: rgb(255, 251, 224);
-    border-bottom: none;
+    background-color: #fffbe6;
+    border-bottom: 1px solid rgb(233, 230, 194);
 }
 .section-segment-editing input, .section-segment-editing textarea {
-    border: 1px solid rgb(241, 219, 78);
+    border: 1px solid rgb(233, 230, 194);
 }
 .section-segment-editing input:focus, .section-segment-editing textarea:focus {
     outline: none;
-    border: 1px solid rgb(255, 234, 82);
+    border: 1px solid rgb(233, 230, 194);
     box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;

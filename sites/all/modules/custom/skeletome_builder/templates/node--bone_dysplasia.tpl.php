@@ -128,8 +128,8 @@ $isAdmin = user_access('administer site configuration');
 <!-- ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}" -->
 <?php include('description.php'); ?>
 
-<section class="media-body" ng-class="{'section-more': xrays.length > xrayDisplayLimit}">
-    <div class="section-segment section-segment-header">
+<section>
+    <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.xrayState == 'isEditing' }">
         <?php if ($isAdmin || $isEditor || $isCurator): ?>
             <div class="pull-right section-segment-header-buttons">
 
@@ -168,13 +168,13 @@ $isAdmin = user_access('administer site configuration');
             </div>
         </div>
         <div ng-switch-when="isEditing">
-            <div class="section-segment">
+            <div class="section-segment section-segment-editing">
                 <div class="dropzone" ng-model="model.edit.xrays"
                      drop-zone-upload="?q=ajax/bone-dysplasia/{{ model.boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
                 </div>
             </div>
 
-            <div class="section-segment">
+            <div class="section-segment section-segment-editing">
                 <ul class="xray-list unstyled media-body">
 
                     <li class="xray-list-image-edit" ng-repeat="xray in model.edit.xrays">
