@@ -32,7 +32,7 @@
                 <div class="pull-right">
                     <!-- LinkedIn Buttons -->
                     <a ng-click="showImportFromLinkedIn()" ng-show="linkedIn.isAuthenticated" class="btn btn-white btn-global" href="" ><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
-                    <a ng-show="!linkedIn.isAuthenticated" class="btn btn-white btn-global" href="{{ linkedIn.authUrl }}"><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
+                    <a ng-show="!linkedIn.isAuthenticated" ng-click="linkedIn.disabled = true" ng-disabled="{{ linkedIn.disabled }}" class="btn btn-white btn-global" href="{{ linkedIn.disabled && '' || linkedIn.authUrl}}"><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/linkedin.png"/></a>
 
                     <!-- Import from Orcid Button (no authentication needed) -->
                     <a ng-click="showImportFromOrcid()" href="" class="btn btn-white btn-global"><i class="icon-download-alt"></i> Import from <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/orcid-logo.png"/></a>

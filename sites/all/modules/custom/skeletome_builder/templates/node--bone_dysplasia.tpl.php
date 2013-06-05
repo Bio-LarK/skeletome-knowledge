@@ -101,7 +101,15 @@ $isAdmin = user_access('administer site configuration');
     <div class="span12">
 
         <div class="page-heading">
-
+            <div class="breadcrumbs">
+                <span ng-cloak ng-repeat="tag in tags">
+                    <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
+                    <span><a href="?q=taxonomy/term/{{ tag.sk_gt_field_group_source_release.tid }}">BDO</a> &#187; </span>
+                    <a href="?q=taxonomy/term/{{ tag.tid }}">
+                        {{ tag.sk_gt_field_group_name.name }}
+                    </a>
+                </span>
+            </div>
             <h1 ng-show="!synString.length">
                 <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>
                 <?php print $title; ?>
@@ -189,7 +197,7 @@ $isAdmin = user_access('administer site configuration');
                                ng-class="{ 'btn-success': !xray.added, 'btn-danger': xray.added }"
                                href>
                                     <i class="icon-white" ng-class="{ 'icon-plus': !xray.added, 'icon-remove': xray.added }"></i>
-                                    {{xray.added && 'Remove' || 'Re-Add' }}
+                                    {{ xray.added && 'Remove' || 'Re-Add' }}
                             </a>
                         </div>
                     </li>
@@ -325,8 +333,6 @@ $isAdmin = user_access('administer site configuration');
                             </a>
                         </div>
                     </div>
-
-
                 </div>
             <?php endif; ?>
 

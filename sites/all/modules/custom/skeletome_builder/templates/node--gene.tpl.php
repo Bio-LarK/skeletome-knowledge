@@ -88,6 +88,10 @@
             <div class="span12">
 
                 <div class="page-heading" >
+                    <div class="breadcrumbs">
+                        <span><a href=" {{ baseUrl }}">Home</a> &#187; </span>
+                    </div>
+
                     <div ng-show="boneDysplasia">
                         From <a href="?q=node/{{ boneDysplasia.nid }}">{{ boneDysplasia.title }}</a>
                     </div>

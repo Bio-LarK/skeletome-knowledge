@@ -52,6 +52,9 @@
             <?php if ($name): ?>
             <div class="span12">
                 <div class="page-heading" >
+                    <div class="breadcrumbs">
+                        <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
+                    </div>
 
                     <div ng-show="bone_dysplasia" class="muted">
                         From <a href="?q=node/{{ bone_dysplasia.nid }}">{{ bone_dysplasia.title }}</a>

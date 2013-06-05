@@ -1577,44 +1577,47 @@ h1, h2, h3, h4, h5 {
 /* ================================================
     Breadcrumbs
 */
-.breadcrumbs {
-    margin-top: 10px;
-    float: left;
+.breadcrumbs, .breadcrumbs a {
+    color: #a0a0a0;
 }
-.breadcrumbs {
-    overflow: auto;
-    list-style-type: none;
-    margin-bottom: 0px;
-    margin-left: 0px;
-}
-.breadcrumbs li {
-    float: left;
-    margin-bottom: 0;
-}
-.breadcrumbs li:after {
-    color: #a9a9a9;
-}
-.breadcrumbs li a {
-    color: #333;
+/*.breadcrumbs {*/
+    /*margin-top: 10px;*/
+    /*float: left;*/
+/*}*/
+/*.breadcrumbs {*/
+    /*overflow: auto;*/
+    /*list-style-type: none;*/
+    /*margin-bottom: 0px;*/
+    /*margin-left: 0px;*/
+/*}*/
+/*.breadcrumbs li {*/
+    /*float: left;*/
+    /*margin-bottom: 0;*/
+/*}*/
+/*.breadcrumbs li:after {*/
+    /*color: #a9a9a9;*/
+/*}*/
+/*.breadcrumbs li a {*/
+    /*color: #333;*/
     /*background-color: black;*/
-    display: block;
-    padding: 14px;
-    margin-right: 1px;
-    border-right: 1px solid white;
-    border-radius: 40px;
-}
-.breadcrumb {
-    display: none;
-    margin: 0;
-    margin-top: 14px;
-    padding: 0px;
+    /*display: block;*/
+    /*padding: 14px;*/
+    /*margin-right: 1px;*/
+    /*border-right: 1px solid white;*/
+    /*border-radius: 40px;*/
+/*}*/
+/*.breadcrumb {*/
+    /*display: none;*/
+    /*margin: 0;*/
+    /*margin-top: 14px;*/
+    /*padding: 0px;*/
     /*margin-top: 21px;*/
-    overflow: auto;
+    /*overflow: auto;*/
     /*border: 1px solid red;*/
-    background-color: transparent;
+    /*background-color: transparent;*/
     /*padding: 7px;*/
-    border-radius: 0;
-}
+    /*border-radius: 0;*/
+/*}*/
 
 .search-form {
     display: none;
