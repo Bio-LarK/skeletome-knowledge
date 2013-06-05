@@ -632,7 +632,9 @@ $isAdmin = user_access('administer site configuration');
             <!-- /Search box -->
             <div style="margin-bottom: 20px">
                 <div ng-show="editGeneLoading > 0">
-                    Loading...
+                    <div class="refreshing-box">
+                        <i class="icon-refresh icon-refreshing"></i>
+                    </div>
                 </div>
 
                 <div ng-repeat="gene in editingGenes" style="overflow: auto; margin-bottom: 10px">

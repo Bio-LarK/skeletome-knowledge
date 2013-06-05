@@ -429,11 +429,11 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
     $scope.addNewGeneToBoneDysplasia = function(geneName, boneDysplasia) {
         $scope.showAddNewGeneForm = false;
-
+        $scope.editGeneLoading = 1;
         $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/add', {
             'geneName': geneName
         }).success(function(gene) {
-
+                $scope.editGeneLoading = 0;
                 $scope.editingGenes = [
                     gene
                 ];
