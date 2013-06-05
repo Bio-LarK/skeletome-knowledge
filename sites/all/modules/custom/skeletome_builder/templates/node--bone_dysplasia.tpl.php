@@ -214,14 +214,6 @@ $isAdmin = user_access('administer site configuration');
             </div>
         </div>
     </div>
-
-
-
-
-
-
-    <!--<a ng-show="xrays.length > xrayDisplayLimit" ng-click="xrayDisplayLimit = xrays.length" class="btn btn-more"
-       href>Show All X-Rays ({{ model.boneDysplasia.field_bd_xray_images.und.length }})</a>-->
 </section>
 
 
@@ -313,44 +305,90 @@ $isAdmin = user_access('administer site configuration');
     </section>
 
     <section>
-        <div class="section-segment section-segment-header">
-            <?php if ($isAdmin || $isCurator): ?>
+        <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.detailsState=='isEditing' }">
+            <?php if ($isAdmin || $isEditor || $isCurator): ?>
                 <div class="pull-right section-segment-header-buttons">
-                    <a ng-click="showEditDetails()" href data-toggle="modal" role="button" class="btn"><i
-                            class="icon-pencil"></i> Edit</a>
-                    <!--<a href="#edit-omim" data-toggle="modal" role="button"  class="btn" ><i class="icon-edit"></i> Edit</a>-->
+                    <div ng-switch on="model.detailsState">
+                        <div ng-switch-when="isLoading">
+                        </div>
+                        <div ng-switch-when="isEditing">
+                            <a href ng-click="saveDetails()" class="btn btn-success">
+                                <i class="icon-ok icon-white"></i> Save
+                            </a>
+                            <a href ng-click="cancelDetails()" class="btn">
+                                <i class="icon-remove"></i> Cancel
+                            </a>
+                        </div>
+                        <div ng-switch-when="isDisplaying">
+                            <a href ng-click="editDetails()" class="btn">
+                                <i class="icon-pencil"></i> Edit
+                            </a>
+                        </div>
+                    </div>
+
+
                 </div>
             <?php endif; ?>
 
             <h3>Details</h3>
         </div>
 
-        <a ng-show="omim" class="section-segment" ng-href="http://www.omim.org/entry/{{omim}}" target="_blank">
-            <i class="icon-globe pull-right"></i>
-            <i class="icon-globe icon-white pull-right"></i>
+        <div ng-switch on="model.detailsState">
+            <div ng-switch-when="isLoading">
+                <div class="section-segment">
+                    <div class="refreshing-box">
+                        <i class="icon-refresh icon-refreshing"></i>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="isEditing">
+                <div class="section-segment section-segment-editing">
+                    <b>OMIM</b>
+                    <div>
+                        <input class="full-width" ng-model="model.edit.omim" type="text"/>
+                    </div>
+                </div>
 
-            <span><b>OMIM</b></span>
-            <span ng-show="omim">{{omim}}</span>
-            <span ng-show="!omim" class="muted">Not Recorded</span>
-        </a>
+                <div class="section-segment section-segment-editing">
+                    <b>Mode of Inheritance</b>
+                    <div>
+                        <select class="full-width"
+                                ng-model="model.edit.moi"
+                                ng-options="moi.name for moi in model.edit.allMois">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="isDisplaying">
+                <div>
+                    <a ng-show="omim" class="section-segment" ng-href="http://www.omim.org/entry/{{omim}}" target="_blank">
+                        <i class="icon-globe pull-right"></i>
+                        <i class="icon-globe icon-white pull-right"></i>
 
-                    <span ng-show="!omim" class="section-segment">
+                        <span><b>OMIM</b></span>
+                        <span ng-show="omim">{{omim}}</span>
+                    </a>
+
+                    <div ng-show="!omim" class="section-segment">
                         <span><b>OMIM</b></span>
                         <span class="muted">Not Recorded</span>
-                    </span>
+                    </div>
+                </div>
 
-        <div ng-show="moi" class="section-segment" target="_blank">
-
-            <span><b>Mode of Inheritance</b></span>
-            <span>{{ moi.name }}</span>
-        </div>
+                <div>
+                    <div ng-show="moi" class="section-segment" target="_blank">
+                        <span><b>Mode of Inheritance</b></span>
+                        <span>{{ moi.name }}</span>
+                    </div>
 
                     <span ng-show="!moi" class="section-segment">
                         <span><b>Mode of Inheritance</b></span>
                         <span  class="muted">Not Recorded</span>
                     </span>
+                </div>
+            </div>
 
-
+        </div>
     </section>
 
     <section>
@@ -472,57 +510,8 @@ $isAdmin = user_access('administer site configuration');
     </section>-->
 </div>
 
-
 <div cm-modal="showEditingPanel" ng-switch on="editingPanel" class="modal modal-dark fade hide" tabindex="-1"
      role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-<div class="modal-switch" ng-switch-when="edit-xrays">
-    <!-- Modal Header -->
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Edit X-Rays</h3>
-    </div>
-    <!-- /Modal Header -->
-
-    <!-- Modal Body -->
-    <div class="modal-body">
-        <div class="modal-body-inner">
-            <p>Edit the X-Rays for '{{model.boneDysplasia.title}}'.</p>
-
-            <ul class="xray-list unstyled media-body">
-
-                <li class="xray-list-image-edit" ng-repeat="xray in editedXRays">
-                    <div ng-show="!xray.added" ng-click="readdXRay(xray)">
-                        <div class="xray-list-image-edit-image">
-                            <img ng-src="{{ xray.thumb_url }}" alt=""/>
-                        </div>
-                        <a class="btn btn-success" href>
-                            <i class="icon-plus icon-white"></i> Add
-                        </a>
-                    </div>
-
-                    <div ng-show="xray.added" ng-click="removeXRay(xray)">
-                        <div class="xray-list-image-edit-image">
-                            <img ng-src="{{ xray.thumb_url }}" alt=""/>
-                        </div>
-                        <a class="btn btn-danger" href>
-                            <i class="icon-remove icon-white"></i> Remove
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-    <!-- /Modal Body -->
-
-    <!-- Modal Footer -->
-    <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
-    </div>
-    <!-- /Modal Footer -->
-</div>
-
 
 <div class="modal-switch" ng-switch-when="edit-details">
     <!-- Modal Header -->

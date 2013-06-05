@@ -13,8 +13,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
     /* Bone Dysplasia stuff */
     $scope.model.boneDysplasia = Drupal.settings.skeletome_builder.bone_dysplasia;
-    $scope.moi = Drupal.settings.skeletome_builder.moi;
-    $scope.omim = Drupal.settings.skeletome_builder.omim;
+
     $scope.groupBoneDysplasias = Drupal.settings.skeletome_builder.group_bone_dysplasias;
 
     $scope.statements = Drupal.settings.skeletome_builder.statements;
@@ -69,6 +68,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
         // Setup the xrays
         $scope.setupXRays();
+        $scope.setupDetails();
     }
 
 
@@ -101,7 +101,85 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     }
 
 
+    /**
+     * Edit Details
+     */
+    $scope.setupDetails = function() {
+        $scope.model.detailsState = $scope.IS_DISPLAYING;
+        $scope.moi = Drupal.settings.skeletome_builder.moi;
+        $scope.omim = Drupal.settings.skeletome_builder.omim;
+    }
+    $scope.editDetails = function() {
+        $scope.model.detailsState = $scope.IS_EDITING;
+        $scope.model.edit.omim = angular.copy($scope.omim);
+        $scope.model.edit.allMois = Drupal.settings.skeletome_builder.all_mois;
 
+        if($scope.moi) {
+            angular.forEach($scope.model.edit.allMois, function(moi, key) {
+                if(moi.tid == $scope.moi.tid) {
+                    $scope.model.edit.moi = moi;
+                    console.log("edit moi set to");
+                    return false;
+                }
+            });
+        }
+    }
+    $scope.saveDetails = function() {
+
+        $scope.model.detailsState = $scope.IS_LOADING;
+
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
+            'moiTid': $scope.model.edit.moi.tid,
+            'omim': $scope.model.edit.omim
+        }).success(function(data) {
+            $scope.model.detailsState = $scope.IS_DISPLAYING;
+            $scope.omim = $scope.model.edit.omim;
+            $scope.moi = $scope.model.edit.moi;
+        });
+    }
+    $scope.cancelDetails = function() {
+        $scope.model.detailsState = $scope.IS_DISPLAYING;
+    }
+
+    $scope.showEditDetails = function() {
+        $scope.mois = Drupal.settings.skeletome_builder.all_mois;
+
+        /* Set up the selected moi for the dropdown */
+        if($scope.moi) {
+            angular.forEach($scope.mois, function(moi, key) {
+                if(moi.tid == $scope.moi.tid) {
+                    $scope.edit.editedMoi = moi;
+                    console.log("edit moi set to");
+                    return false;
+                }
+            });
+        }
+
+
+        $scope.openEditingPanel('edit-details');
+    }
+
+//    $scope.saveDetails = function(editedOMIM, editedMoi) {
+//
+//        // if there is no moi, or its changed, save it
+//
+//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
+//            'moiTid': editedMoi.tid,
+//            'omim': editedOMIM
+//        }).success(function(data) {
+//            });
+//
+//        // Check if the values have changed
+//        $scope.moi = editedMoi
+//        $scope.omim = editedOMIM;
+//
+//        $scope.closeEditingPanel();
+//
+//    }
+
+    /**
+     * Edit Xrays
+     */
     $scope.setupXRays = function() {
         $scope.model.xrayState = $scope.IS_DISPLAYING;
         if(!angular.isDefined($scope.model.boneDysplasia.field_bd_xray_images.und)) {
@@ -194,41 +272,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
 
-    $scope.showEditDetails = function() {
-        $scope.mois = Drupal.settings.skeletome_builder.all_mois;
 
-        /* Set up the selected moi for the dropdown */
-        if($scope.moi) {
-            angular.forEach($scope.mois, function(moi, key) {
-                if(moi.tid == $scope.moi.tid) {
-                    $scope.edit.editedMoi = moi;
-                    console.log("edit moi set to");
-                    return false;
-                }
-            });
-        }
-
-
-        $scope.openEditingPanel('edit-details');
-    }
-
-    $scope.saveDetails = function(editedOMIM, editedMoi) {
-
-        // if there is no moi, or its changed, save it
-
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
-            'moiTid': editedMoi.tid,
-            'omim': editedOMIM
-        }).success(function(data) {
-            });
-
-        // Check if the values have changed
-        $scope.moi = editedMoi
-        $scope.omim = editedOMIM;
-
-        $scope.closeEditingPanel();
-
-    }
 
 
 
