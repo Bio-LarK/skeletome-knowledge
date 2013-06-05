@@ -102,11 +102,11 @@ $isAdmin = user_access('administer site configuration');
 
         <div class="page-heading">
             <div class="breadcrumbs">
-                <span ng-cloak ng-repeat="tag in tags">
+                <span ng-cloak>
                     <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
-                    <span><a href="?q=taxonomy/term/{{ tag.sk_gt_field_group_source_release.tid }}">BDO</a> &#187; </span>
-                    <a href="?q=taxonomy/term/{{ tag.tid }}">
-                        {{ tag.sk_gt_field_group_name.name }}
+                    <span><a href="?q=taxonomy/term/{{ tags[0].sk_gt_field_group_source_release.tid }}">BDO</a> &#187; </span>
+                    <a href="?q=taxonomy/term/{{ tags[0].tid }}">
+                        {{ tags[0].sk_gt_field_group_name.name }}
                     </a>
                 </span>
             </div>

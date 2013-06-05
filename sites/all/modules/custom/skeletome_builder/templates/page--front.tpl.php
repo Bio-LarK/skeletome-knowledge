@@ -148,10 +148,10 @@
                                     <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
                                         {{ user.name | truncate:30 }}
                                     </a>
-                                    <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
+                                    <a class="btn btn-dark-navbar" href="user/logout">Logout</a>
                                 <?php else: ?>
                                     <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                                    <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
+                                    <a class="btn btn-dark-navbar" href="user/register">Register</a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                     </div>
 
                     <div ng-repeat="release in latestReleases">
-                        <a class="section-segment" href="?q=taxonomy/term/{{ release.tid }}">
+                        <a class="section-segment" href="{{ baseUrl }}/release/{{ release.name | uri }}">
 
                             <i class="icon-chevron-right pull-right"></i>
                             <i class="icon-chevron-right icon-white pull-right"></i>

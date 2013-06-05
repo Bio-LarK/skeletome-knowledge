@@ -1,3 +1,15 @@
+myApp.filter('uri', function() {
+    return function(input) {
+
+        if(!input) {
+            // No input, dont bother
+            return input;
+        }
+
+        return encodeURIComponent(input.replace(" ", "-").toLowerCase());
+    }
+});
+
 myApp.filter('truncate', function() {
     return function(input, count) {
 
