@@ -147,10 +147,6 @@
                     </div>
                     <?php endif; ?>
 
-                    <div style="background-color: white;">
-
-                    </div>
-
                     <div ng-switch on="detailsState">
                         <div ng-switch-when="isLoading">
                             <div class="refreshing-box">

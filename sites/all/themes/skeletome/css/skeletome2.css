@@ -1294,11 +1294,13 @@ table.table-dark {
 /** Reveal button */
 .btn-global {
     padding: 7px 14px;
+    border: 1px solid #dbdbdb !important;
 }
     .btn-global img {
         height: 16px;
         position: relative;
         top: -2px;
+
     }
 .btn-white {
     background-color: white;

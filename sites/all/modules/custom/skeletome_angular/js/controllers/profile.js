@@ -131,13 +131,8 @@ function ProfileCtrl($scope, $http) {
         // get out the new file
         if(files.length) {
             var newFile = files.pop();
-            // Add the file to the image property of the profile
-            if(!angular.isDefined($scope.edit.profile.field_profile_image)) {
-                $scope.edit.profile.field_profile_image = {
-                    und: []
-                };
-            }
-
+            // Add the new file to the profile
+            $scope.edit.profile.field_profile_image = {};
             $scope.edit.profile.field_profile_image.und = [newFile];
 
             console.log("profile image set", $scope.edit.profile.field_profile_image);
@@ -147,6 +142,7 @@ function ProfileCtrl($scope, $http) {
     $scope.saveDetails = function(profile) {
         $scope.detailsState = "isLoading";
 
+        console.log("saving profile", profile);
         $scope.saveProfile(profile).success(function(data) {
             $scope.detailsState = "isDisplaying";
             $scope.profile = data;
