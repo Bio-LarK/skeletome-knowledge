@@ -73,7 +73,7 @@
 <?php
     // Create some user access variables
     $isRegistered = isset($user->uid);
-    $isModerator = is_array($user->roles) && in_array('sk_moderator', $user->roles);
+    $isModerator = is_array($user->roles) && in_array('sk_curator', $user->roles);
     $isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
     $isAdmin = user_access('administer site configuration');
 ?>

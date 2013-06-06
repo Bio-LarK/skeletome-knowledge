@@ -120,7 +120,7 @@
                     <div class="section-segment section-segment-header">
                         <div class="section-segment-header-buttons pull-right">
 
-                            <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles)): ?>
+                            <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_curator', $user->roles)): ?>
                                 <a href ng-click="showEditDetails()" data-toggle="modal" role="button" class="btn"><i class="icon-pencil"></i> Edit</a>
                             <?php endif; ?>
                         </div>

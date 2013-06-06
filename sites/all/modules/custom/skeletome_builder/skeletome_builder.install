@@ -4,12 +4,6 @@
 * Implements hook_install()
 */
 function skeletome_builder_install() {
-    $moderator_role = user_role_load_by_name('sk_moderator');
-    if(isset($moderator_role->rid)) {
-        $moderator_rid = $moderator_role->rid;
-        user_role_delete($moderator_rid);
-    }
-
     create_sk_curator_role();
     create_sk_editor_role();
 }
@@ -27,7 +21,7 @@ function skeletome_builder_uninstall() {
  * The SK Curator role has permissions to edit pages.
  */
 function create_sk_curator_role() {
-    // Create the SK Moderator Role
+    // Create the SK Curator Role
     if(!user_role_load_by_name('sk_curator')) {
         $role = new stdClass();
         $role->name = 'sk_curator';
@@ -59,7 +53,7 @@ function create_sk_curator_role() {
  * The SK Moderator role has edit descriptions and x-rays.
  */
 function create_sk_editor_role() {
-// Create the SK Moderator Role
+// Create the SK Editor Role
     if(!user_role_load_by_name('sk_editor')) {
         $role = new stdClass();
         $role->name = 'sk_editor';
@@ -80,7 +74,7 @@ function create_sk_editor_role() {
 }
 
 /**
- * Removes the SK Moderator role from the system.
+ * Removes the SK Curator role from the system.
  */
 function delete_sk_curator_role() {
     $curator_role = user_role_load_by_name('sk_curator');

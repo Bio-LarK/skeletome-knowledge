@@ -743,11 +743,11 @@ function ajax_get_biblio() {
 /**
  * Returns if a user can access an ajax editing URL
  *
- * @return bool Returns true for admin or sk_moderator
+ * @return bool Returns true for admin or sk_curator
  */
-function is_moderator() {
+function is_curator() {
     global $user;
-    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_moderator', $user->roles))) {
+    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_curator', $user->roles))) {
         return true;
     } else {
         return false;
@@ -755,7 +755,7 @@ function is_moderator() {
 }
 function is_editor() {
     global $user;
-    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && (in_array('sk_editor', $user->roles) || in_array('sk_moderator', $user->roles)))) {
+    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && (in_array('sk_editor', $user->roles) || in_array('sk_curator', $user->roles)))) {
         return true;
     } else {
         return false;
@@ -962,14 +962,14 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_remove_statement',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
     $items['ajax/gene/%/statement/%/remove'] = array(
         'title'             => t('Remove Statement from Gene'),
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(4),
         'page callback'     => 'ajax_remove_statement',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
 
@@ -987,21 +987,21 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_gene_details',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
     $items['ajax/gene/%/gene-mutation'] = array(
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_create_gene_mutation_for_gene',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
     $items['ajax/gene-mutation/%/description'] = array(
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_gene_mutation_description',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
     $items['ajax/gene/%/statement'] = array(
         'type'              => MENU_CALLBACK,
@@ -1024,7 +1024,7 @@ function skeletome_builder_menu() {
     $items['ajax/bone-dysplasia/new'] = array(
         'title' 		    => t('Create New Bone Dysplasia'),
         'page callback' 	=> 'ajax_new_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
         'type'  => MENU_CALLBACK
     );
 
@@ -1068,7 +1068,7 @@ function skeletome_builder_menu() {
         'title' 		    => t('Bone Dysplasia Search'),
         'page callback' 	=> 'ajax_bone_dysplasia_genes',
         'page arguments'    => array(2),
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
         'type'  => MENU_CALLBACK
     );
 
@@ -1095,14 +1095,14 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_add_gene_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
     $items['ajax/bone-dysplasia/%/gene/%/remove'] = array(
         'title'             => t('Add Gene Mutation'),
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2, 4),
         'page callback'     => 'ajax_remove_gene_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
     $items['ajax/bone-dysplasia/%node/gene-mutation/add'] = array(
@@ -1110,14 +1110,14 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_add_gene_mutation_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
     $items['ajax/bone-dysplasia/%node/gene-mutation/remove/%'] = array(
         'title'             => t('Update Description'),
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2, 5),
         'page callback'     => 'ajax_remove_gene_mutation_from_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
 
@@ -1125,13 +1125,13 @@ function skeletome_builder_menu() {
         'title'             => t('Add Clincial Feature to Bone Dysplasia'),
         'type'              => MENU_CALLBACK,
         'page callback'     => 'ajax_add_clinical_feature_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
     $items['ajax/bone-dysplasia/clinical-feature/remove'] = array(
         'title'             => t('Remove Clincial Feature from Bone Dysplasia'),
         'type'              => MENU_CALLBACK,
         'page callback'     => 'ajax_remove_clinical_feature_from_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
 
@@ -1142,27 +1142,27 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_add_details_to_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 //    $items['ajax/bone-dysplasia/%/moi'] = array(
 //        'title'             => t('Edit Moi to Bone Dysplasia'),
 //        'type'              => MENU_CALLBACK,
 //        'page arguments'    => array(2),
 //        'page callback'     => 'ajax_edit_moi_to_bone_dysplasia',
-//        'access callback'   => 'is_moderator',
+//        'access callback'   => 'is_curator',
 //    );
 
     $items['ajax/bone-dysplasia/groups/edit'] = array(
         'title'             => t('Edit Groups for Bone Dysplasia'),
         'type'              => MENU_CALLBACK,
         'page callback'     => 'ajax_edit_groups_for_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
     $items['ajax/bone-dysplasia/groups/new'] = array(
         'title'             => t('Add New Group to Bone Dysplasia'),
         'type'              => MENU_CALLBACK,
         'page callback'     => 'ajax_new_group_for_bone_dysplasia',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
     $items['ajax/gene/%/gene-mutations'] = array(
@@ -1170,7 +1170,7 @@ function skeletome_builder_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'ajax_gene_gene_mutations',
-        'access callback'   => 'is_moderator',
+        'access callback'   => 'is_curator',
     );
 
 
