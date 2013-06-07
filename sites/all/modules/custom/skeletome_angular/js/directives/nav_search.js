@@ -62,11 +62,11 @@ myApp.directive('navSearch', function() {
              */
             $scope.$watch('model.entry', function(entry) {
                 if(angular.isDefined(entry)) {
-                    $scope.doAutocomplete();
+                    $scope.doAutocomplete(entry);
                 }
             });
 
-            $scope.doAutocomplete = function() {
+            $scope.doAutocomplete = function(entry) {
 
                 // Empty string
                 if($scope.model.entry == "") {
@@ -91,11 +91,14 @@ myApp.directive('navSearch', function() {
                 if($scope.model.entry.length >= 2) {
                     // Got 2 characters, so search
                     $scope.isLoading++;
-                    console.log("loading count", $scope.isLoading);
+
                     $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
                         // add in all suggestions
                         $scope.isLoading--;
-                        console.log("loading count", $scope.isLoading);
+
+                        if(entry.length < $scope.model.entry - 2) {
+                            return;
+                        }
 
                         // We filter the results by what we have entered
                         // cause we might be getting old results back from the database
@@ -157,7 +160,7 @@ myApp.directive('navSearch', function() {
                 $scope.model.query.push(term);
                 $scope.model.entry = "";
                 $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
-                $scope.doAutocomplete();
+                $scope.doAutocomplete($scope.model.entry);
             }
 
             $scope.searchUrl = function() {
