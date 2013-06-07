@@ -35,6 +35,8 @@ myApp.directive('navSearch', function() {
             $scope.SEARCH_SELECTED = -1;
             $scope.FIRST_SUGGESTION = 0;
 
+            $scope.isLoading = 0;
+
             $scope.model.highlightedIndex = $scope.SEARCH_SELECTED;
 
 
@@ -70,6 +72,7 @@ myApp.directive('navSearch', function() {
                 if($scope.model.entry == "") {
                     $scope.model.suggestions = [];
                     $scope.model.suggestionText = "";
+                    $scope.isLoading = 0;
                     return;
                 }
 
@@ -87,8 +90,12 @@ myApp.directive('navSearch', function() {
 
                 if($scope.model.entry.length >= 2) {
                     // Got 2 characters, so search
+                    $scope.isLoading++;
+                    console.log("loading count", $scope.isLoading);
                     $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
                         // add in all suggestions
+                        $scope.isLoading--;
+                        console.log("loading count", $scope.isLoading);
 
                         // We filter the results by what we have entered
                         // cause we might be getting old results back from the database

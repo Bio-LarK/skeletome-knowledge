@@ -747,6 +747,7 @@ function ajax_get_biblio() {
  */
 function is_curator() {
     global $user;
+
     if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_curator', $user->roles))) {
         return true;
     } else {
