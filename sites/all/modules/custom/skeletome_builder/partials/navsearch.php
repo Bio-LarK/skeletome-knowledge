@@ -47,14 +47,12 @@
                     <b>{{ model.entry }}</b>...
                 </span>
 
+                <span ng-show="isLoading" class="pull-right">
+                    <i class="icon-refresh icon-refreshing"></i>
+                </span>
+
             </a>
         </li>
-        <li class="navsearch-suggestion" ng-show="isLoading">
-            <div class="refreshing-box" style="padding: 14px">
-                <i class="icon-refresh icon-refreshing"></i>
-            </div>
-        </li>
-
 
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion(suggestion)" ng-mouseleave="leavedSuggestion(suggestion)"
