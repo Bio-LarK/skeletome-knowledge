@@ -87,13 +87,11 @@
 
                 <div class="navbar-inner-table">
 
-                    <?php if ($logo): ?>
                     <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
-                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-                            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
+                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home">
+                            <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo1.png" alt="<?php print t('Home'); ?>"/>
                         </a>
                     </div>
-                    <?php endif; ?>
 
                     <div class="navbar-inner-table-cell">
                         <nav-search model="model.navSearchModel"></nav-search>
