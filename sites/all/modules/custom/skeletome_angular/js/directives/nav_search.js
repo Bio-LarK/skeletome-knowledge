@@ -100,7 +100,7 @@ myApp.directive('navSearch', function() {
                     $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
                         // add in all suggestions
                         if($scope.isLoading > 0) {
-                            $scope.isLoading = $scope.isLoading--;
+                            $scope.isLoading--;
                             console.log("is loading", $scope.isLoading);
                         }
 
