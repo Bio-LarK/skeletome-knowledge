@@ -95,11 +95,13 @@ myApp.directive('navSearch', function() {
                 if($scope.model.entry.length >= 2) {
                     // Got 2 characters, so search
                     $scope.isLoading++;
+                    console.log("is loading", $scope.isLoading);
 
                     $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
                         // add in all suggestions
                         if($scope.isLoading > 0) {
                             $scope.isLoading = $scope.isLoading--;
+                            console.log("is loading", $scope.isLoading);
                         }
 
                         if(entry.length < $scope.model.entry - 2) {
