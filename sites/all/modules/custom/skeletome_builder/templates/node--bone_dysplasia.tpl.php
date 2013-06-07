@@ -302,7 +302,7 @@ $isAdmin = user_access('administer site configuration');
         </div>
     </section>
 
-    <section>
+    <!--<section>
         <div class="section-segment section-segment-header">
             <h3>Classifications</h3>
         </div>
@@ -316,7 +316,7 @@ $isAdmin = user_access('administer site configuration');
                 <b>{{ tag.sk_gt_field_group_source_release.name }}</b> &#187; {{ tag.sk_gt_field_group_name.name }}
             </a>
         </div>
-    </section>
+    </section>-->
 
     <section>
         <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.detailsState=='isEditing' }">
