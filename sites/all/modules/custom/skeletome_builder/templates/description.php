@@ -17,23 +17,23 @@ $isAdmin = user_access('administer site configuration');
                     <!-- is Editing Description -->
                 <span ng-show="!isEditingDescription">
                     <a ng-show="!showEditDescription"
-                       href class="btn"
+                       href class="btn btn-edit"
                        ng-click="editDescription()">
-                        <i class="icon-pencil"></i> Edit
+                        <i class="ficon-pencil"></i> Edit
                     </a>
                 </span>
 
                     <!-- Not Editing Description -->
                 <span ng-show="isEditingDescription">
-                    <a href class="btn btn-success"
-                       ng-click="saveEditedDescription(editedDescription)">
-                        <i class="icon-ok icon-white"></i> Save
+                    <a ng-show="isEditingDescription"
+                       href class="btn btn-cancel"
+                       ng-click="cancelEditingDescription()">
+                        <i class="ficon-remove"></i> Cancel
                     </a>
 
-                    <a ng-show="isEditingDescription"
-                       href class="btn"
-                       ng-click="cancelEditingDescription()">
-                        <i class="icon-remove"></i> Cancel
+                    <a href class="btn btn-primary"
+                       ng-click="saveEditedDescription(editedDescription)">
+                        <i class="ficon-ok icon-white"></i> Save
                     </a>
                 </span>
 
@@ -41,7 +41,7 @@ $isAdmin = user_access('administer site configuration');
             <?php endif; ?>
 
             <div ng-show="!isEditingDescription">
-                <b><i class="icon-user"></i> Contributors</b>
+                <b><i class="ficon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
                     <a href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span ng-show=" ! $last ">,</span><span ng-show="$last && provider.length">, {{ provider }}</span>
                 </span>
@@ -49,20 +49,13 @@ $isAdmin = user_access('administer site configuration');
 
             <?php if(isset($user->name)):?>
             <div ng-show="isEditingDescription">
-                <b><i class="icon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
+                <b><i class="ficon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
             </div>
             <?php endif; ?>
         </div>
 
-        <div class="section-segment alert alert-info" ng-show="provider && !isEditingDescription">
-            <div style="margin-bottom: 7px;">
-                <i class="ficon-info-sign"></i> <b>This stub is sourced from {{ provider }}</b>.
-            </div>
-            <div style="font-size: 12px" ng-bind-html-unsafe="reference">
-            </div>
-        </div>
         <div class="section-segment alert alert-success" cm-alert="description.isLoading">
-            <i class="icon-ok"></i> Description saved.
+            <i class="ficon-ok"></i> Description saved.
         </div>
 
         <div class="section-segment" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
@@ -75,6 +68,13 @@ $isAdmin = user_access('administer site configuration');
 
             <!-- Not Editing Description -->
             <div ng-show="!isEditingDescription" class="description-text">
+
+                <div class="alert alert-stub" ng-show="provider && !isEditingDescription">
+                    <i class="ficon-info-sign"></i> <em>This stub is sourced from {{ provider }}</em>.
+                    <div style="font-size: 12px" ng-bind-html-unsafe="reference">
+                    </div>
+                </div>
+
                 <!-- is Loading -->
                 <div ng-show="description.isLoading" class="refreshing-box">
                     <i class="icon-refresh icon-refreshing"></i>

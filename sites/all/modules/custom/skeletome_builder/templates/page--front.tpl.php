@@ -124,13 +124,12 @@
 
                     <div class="navbar-inner-table">
 
-                        <?php if ($logo): ?>
-                            <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
-                                <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-                                    <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
-                                </a>
-                            </div>
-                        <?php endif; ?>
+
+                        <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
+                            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home">
+                                <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/logo1.png" alt="<?php print t('Home'); ?>"/>
+                            </a>
+                        </div>
 
                         <div class="navbar-inner-table-cell">
                             <nav-search model="model.navSearchModel"></nav-search>
@@ -146,122 +145,116 @@
                             <div class="btn-group">
                                 <?php if(isset($user->name)):?>
                                     <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
-                                        {{ user.name | truncate:30 }}
+                                        <i class="icon-user icon-white"></i> {{ user.name | truncate:30 }}
                                     </a>
-                                    <a class="btn btn-dark-navbar" href="user/logout">Logout</a>
+                                    <a class="btn btn-dark-navbar" href="user/logout"><i class="ficon-signout"></i> Logout</a>
                                 <?php else: ?>
-                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
                                     <a class="btn btn-dark-navbar" href="user/register">Register</a>
+
+                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button"><i class="ficon-signin"></i> Log In</a>
+
                                 <?php endif; ?>
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    <!--<div class="navsearch-small">
-                    <?php  //get the query string if there is one
-                        $query = "";
-                        if(arg(0) == "search" && arg(1) == "site") $query = arg(2); ?>
-
-                    <!---->
-
-                    <!--</div>-->
-
-
                 </div>
             </div>
         </div>
     </header>
 
+    <div class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="span5">
+                    <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/video.png" alt=""/>
+                </div>
+                <div class="span7">
+                    <div class="banner-big">
+                        Everything you wanted to know about Bone Dysplasias.
+                    </div>
+                    <div class="banner-small">
+                        A community-driven knowledge curation platform for skeletal dysplasias.
+                    </div>
+                    <div class="banner-calltoaction">
+                        <a class="btn btn-calltoaction btn-danger" href="">
+                            Take the Tour
+                        </a>
+                    </div>
+                </div>
 
-    <?php if(strlen($messages) > 0): ?>
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span12">
-                <?php print $messages; ?>
             </div>
         </div>
     </div>
-    <?php endif; ?>
+
+
+    <div class="triptych">
+        <div class="container">
+            <?php if(strlen($messages) > 0): ?>
+            <div class="row" style="margin-bottom: 14px;">
+                <div class="span12">
+                    <?php print $messages; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <div class="row">
+                <div class="span4">
+                    <div class="triptych-heading">
+                        <i class="icon-knowledge"></i> Comprehensive
+                    </div>
+                    <div class="triptych-subheading">
+                        Everything you wanted to know about Bone Dysplasias.
+                    </div>
+                    <div class="triptych-body">
+                        <p>
+                            The Skeletome knowledge base provides information on all bone dypslasias recognised by the Interational Skeletal Dysplasia Society.
+                        </p>
+                        <p>
+                            Find expert-written summaries, disease genes, lists of clinical features, radiographs and much more.
+                        </p>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="triptych-heading">
+                        <i class="icon-community2"></i> Community Driven
+                    </div>
+                    <div class="triptych-subheading">
+                        Continuously Updated by the Global Bone Dysplasia Community
+                    </div>
+                    <div class="triptych-body">
+                        <p>
+                            All entires are continuously reviews and updated by the global community of clinicians and researchers working on done dysplasias.
+                        </p>
+                        <p>
+                            Stringent quality control mechanisms ensure the data is of the highest quality.
+                        </p>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="triptych-heading">
+                        <i class="icon-rdf"></i> Onotology Based
+                    </div>
+                    <div class="triptych-subheading">
+                        Readable by Humans and Computers, get the Best of Both Worlds.
+                    </div>
+                    <div class="triptych-body">
+                        <p>
+                            The Skeletome knowledge base makes extensive use of ontologies to standardise the entered information and make it accessible to computational analysis.
+                        </p>
+                        <p>
+                            Sophisticated tools that make use of these ontologies are currently under development.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <div class="container">
-        <div class="row-fluid">
-            <div class="span12">
-                <style type="text/css">
-                    .go_button {
-                        margin-right: 7px;;
-                    }
-                </style>
-                <section>
-                    <div class="section-segment section-segment-header">
-                        <div class="section-segment-header-buttons pull-right">
-                            <a ng-show="!isShowingInstructions" class="btn btn-primary" ng-click="showInstructions()"><i class="icon-question-sign icon-white"></i> What can you do?</a>
-                        </div>
 
-                        <h2>Search</h2>
-                    </div>
-                    <div ng-show="isShowingInstructions" ng-cloak>
-                        <div class="section-segment">
-                            <a class="btn btn-success pull-right" style="position: relative; top: -4px" ng-click="doFind()"><i class="icon-play-circle icon-white"></i> Try it - <b>Find</b> Achondroplasia</a>
-                            <b>Find</b> specific bone dysplasias, clinical features, groups or genes.
 
-                        </div>
-                        <div class="section-segment">
-                            <a class="btn btn-success pull-right" style="position: relative; top: -4px" ng-click="doCombine()"><i class="icon-play-circle icon-white"></i> Try it - <b>Combine</b> Dwarfism & Kyphosis</a>
-                            <b>Combine</b> clinical features to find related disorders.
-                        </div>
-                        <div class="section-segment">
-                            <a class="btn btn-success pull-right" style="position: relative; top: -4px" ng-click="doSearch()"><i class="icon-play-circle icon-white"></i> Try it - <b>Search</b> for "punctata"</a>
-
-                            <b>Search</b> through full-text descriptions of disorders and genes.
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <section>
-                    <div class="section-segment section-segment-header">
-                        <h3>Browse ISDS Nosology</h3>
-                    </div>
-                    <div class="section-segment muted alert">
-                        Browse an existing disease classification.
-                    </div>
-
-                    <div ng-repeat="release in latestReleases">
-                        <a class="section-segment" href="{{ baseUrl }}/release/{{ release.name | uri }}">
-
-                            <i class="icon-chevron-right pull-right"></i>
-                            <i class="icon-chevron-right icon-white pull-right"></i>
-
-                            {{ release.name }}
-                        </a>
-                    </div>
-                </section>
-            </div>
-            <div class="span6">
-                <section>
-                    <div class="section-segment section-segment-header">
-                        <h3>Explore</h3>
-                    </div>
-                    <div class="section-segment alert">
-                        Try our visualization tools.
-                    </div>
-                    <div class="section-segment muted">
-                        Coming soon.
-                    </div>
-
-<!--                    <a class="section-segment" href="#">-->
-<!--                        <i class="icon-chevron-right pull-right"></i>-->
-<!--                        <i class="icon-chevron-right icon-white pull-right"></i>-->
-<!--                    </a>-->
-                </section>
-            </div>
-        </div>
 
         <div style="display: none">
             <div class="row-fluid">
@@ -319,24 +312,9 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <?php if ($logo): ?>
-                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"
-                           id="logo"><img
-                                style="width: 100px"
-                                src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/img/logo-dark.png"
-                                alt="<?php print t('Home'); ?>"/></a>
-                    <?php endif; ?>
-
-                    <style type="text/css">
-                        .footer-links {
-                            margin-top: 6px;;
-                        }
-                        .footer-links li {
-                            float: left;
-                            list-style-type: none;
-                            margin-right: 10px;;
-                        }
-                    </style>
+                    <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+                        <img style="width: 100px" src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/img/logo-dark.png" alt="<?php print t('Home'); ?>"/>
+                    </a>
 
                     <ul class="footer-links pull-right">
                         <li><a class="contact-us-link" href="<?php print $front_page; ?>">Home</a></li>

@@ -146,16 +146,18 @@ $isAdmin = user_access('administer site configuration');
                     <div ng-switch-when="isLoading">
                     </div>
                     <div ng-switch-when="isEditing">
-                        <a href ng-click="saveXRays()" class="btn btn-success">
-                            <i class="icon-ok icon-white"></i> Save
+                        <a href ng-click="cancelXRays()" class="btn btn-cancel">
+                            <i class="ficon-remove"></i> Cancel
                         </a>
-                        <a href ng-click="cancelXRays()" class="btn">
-                            <i class="icon-remove"></i> Cancel
+
+                        <a href ng-click="saveXRays()" class="btn btn-primary">
+                            <i class="ficon-ok"></i> Save
                         </a>
+
                     </div>
                     <div ng-switch-when="isDisplaying">
-                        <a href ng-click="editXRays()" class="btn">
-                            <i class="icon-pencil"></i> Edit
+                        <a href ng-click="editXRays()" class="btn btn-edit">
+                            <i class="ficon-pencil"></i> Edit
                         </a>
                     </div>
                 </div>
@@ -165,6 +167,10 @@ $isAdmin = user_access('administer site configuration');
         <?php endif; ?>
 
         <h3>X-Rays</h3>
+    </div>
+
+    <div class="section-segment alert alert-success" cm-alert="model.xrayState == 'isLoading'">
+        <i class="ficon-ok"></i> X-Rays Saved.
     </div>
 
     <div ng-switch on="model.xrayState">
@@ -193,10 +199,10 @@ $isAdmin = user_access('administer site configuration');
                             </div>
 
                             <!-- Add Button -->
-                            <a class="btn"
+                            <a class="btn btn-edit"
                                ng-class="{ 'btn-success': !xray.added, 'btn-danger': xray.added }"
                                href>
-                                    <i class="icon-white" ng-class="{ 'icon-plus': !xray.added, 'icon-remove': xray.added }"></i>
+                                    <i class="icon-white" ng-class="{ 'icon-plus': !xray.added, 'ficon-remove': xray.added }"></i>
                                     {{ xray.added && 'Remove' || 'Re-Add' }}
                             </a>
                         </div>
@@ -234,8 +240,8 @@ $isAdmin = user_access('administer site configuration');
                 <div class="section-segment-header-buttons">
                     <?php if ($isAdmin || $isCurator): ?>
                         <div class="pull-right">
-                            <a href ng-click="showEditClinicalFeatures()" data-toggle="modal" role="button" class="btn"><i
-                                    class="icon-pencil"></i> Edit</a>
+                            <a href ng-click="showEditClinicalFeatures()" data-toggle="modal" role="button" class="btn btn-edit"><i
+                                    class="ficon-pencil"></i> Edit</a>
                         </div>
                     <?php endif ?>
                 </div>
@@ -320,16 +326,16 @@ $isAdmin = user_access('administer site configuration');
                         <div ng-switch-when="isLoading">
                         </div>
                         <div ng-switch-when="isEditing">
-                            <a href ng-click="saveDetails()" class="btn btn-success">
-                                <i class="icon-ok icon-white"></i> Save
+                            <a href ng-click="cancelDetails()" class="btn btn-cancel">
+                                <i class="ficon-remove"></i> Cancel
                             </a>
-                            <a href ng-click="cancelDetails()" class="btn">
-                                <i class="icon-remove"></i> Cancel
+                            <a href ng-click="saveDetails()" class="btn btn-primary">
+                                <i class="icon-ok icon-white"></i> Save
                             </a>
                         </div>
                         <div ng-switch-when="isDisplaying">
-                            <a href ng-click="editDetails()" class="btn">
-                                <i class="icon-pencil"></i> Edit
+                            <a href ng-click="editDetails()" class="btn btn-edit">
+                                <i class="ficon-pencil"></i> Edit
                             </a>
                         </div>
                     </div>
@@ -337,6 +343,10 @@ $isAdmin = user_access('administer site configuration');
             <?php endif; ?>
 
             <h3>Details</h3>
+        </div>
+
+        <div class="section-segment alert alert-success" cm-alert="model.detailsState == 'isLoading'">
+            <i class="ficon-ok"></i> Details Updated.
         </div>
 
         <div ng-switch on="model.detailsState">
@@ -401,8 +411,8 @@ $isAdmin = user_access('administer site configuration');
         <div class="section-segment section-segment-header">
             <?php if ($isAdmin || $isCurator): ?>
                 <div class="pull-right section-segment-header-buttons">
-                    <a href ng-click="showEditGenes()" data-toggle="modal" role="button" class="btn"><i
-                            class="icon-pencil"></i> Edit</a>
+                    <a href ng-click="showEditGenes()" data-toggle="modal" role="button" class="btn btn-edit"><i
+                            class="ficon-pencil"></i> Edit</a>
                 </div>
             <?php endif; ?>
 
@@ -554,59 +564,6 @@ $isAdmin = user_access('administer site configuration');
     <!-- /Modal Footer -->
 </div>
 
-<div class="modal-switch" ng-switch-when="add-statement">
-    <!-- Modal Header -->
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Add New Statement</h3>
-    </div>
-    <!-- /Modal Header -->
-
-    <!-- Modal Body -->
-    <div class="modal-body">
-        <div class="modal-body-inner">
-            <p>Add a statement about '{{model.boneDysplasia.title}}'.</p>
-            <textarea ck-editor ng-model="newStatement"></textarea>
-        </div>
-
-    </div>
-    <!-- /Modal Body -->
-
-    <!-- Modal Footer -->
-    <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-success" ng-click="addStatement(newStatement); newStatement = ''"><i
-                class="icon-plus icon-white"></i> Add Statement</a>
-    </div>
-    <!-- /Modal Footer -->
-</div>
-
-<div class="modal-switch" ng-switch-when="edit-description">
-    <!-- Modal Header -->
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Edit Description</h3>
-    </div>
-    <!-- /Modal Header -->
-
-    <!-- Modal Body -->
-    <div class="modal-body">
-        <div class="modal-body-inner">
-            <p>Edit the Description for '{{model.boneDysplasia.title}}'.</p>
-
-            <textarea ck-editor ng-model="$parent.editedDescription"></textarea>
-        </div>
-
-    </div>
-    <!-- /Modal Body -->
-
-    <!-- Modal Footer -->
-    <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-success" ng-click="saveEditedDescription(editedDescription)"><i
-                class="icon-ok icon-info"></i> Save DescriptionDescription</a>
-    </div>
-    <!-- /Modal Footer -->
-</div>
-
 
 <div class="modal-switch" ng-switch-when="edit-genes">
     <!-- Modal Header -->
@@ -738,7 +695,7 @@ $isAdmin = user_access('administer site configuration');
                     <td>
                         <a role="button" ng-show="clinicalFeature.added" class="btn btn-danger pull-right"
                            ng-click="removeClinicalFeature(clinicalFeature, model.boneDysplasia)"><i
-                                class="icon-remove icon-white"></i> Remove</a>
+                                class="ficon-remove icon-white"></i> Remove</a>
                         <a role="button" ng-show="!clinicalFeature.added" class="btn btn-success pull-right"
                            ng-click="addClinicalFeature(clinicalFeature, model.boneDysplasia)"><i
                                 class="icon-plus icon-white"></i> Add</a>

@@ -80,7 +80,7 @@
 
 <div id="page" style="position:relative;" ng-controller="PageCtrl">
 
-<header id="header" role="banner">
+<header id="header">
     <div class="navbar navbar-inverse navbar-dark navbar-static-top">
         <div class="navbar-inner">
             <div class="container">
@@ -107,32 +107,20 @@
                     <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-login">
                         <?php global $user; ?>
                         <div class="btn-group">
-                        <?php if(isset($user->name)):?>
-                            <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
-                                {{ user.name | truncate:30 }}
-                            </a>
-                            <a class="btn btn-dark-navbar" href="?q=user/logout">Logout</a>
-                        <?php else: ?>
-                            <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button">Log In</a>
-                            <a class="btn btn-dark-navbar" href="?q=user/register">Register</a>
-                        <?php endif; ?>
+                            <?php if(isset($user->name)):?>
+                                <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
+                                    <i class="icon-user icon-white"></i> {{ user.name | truncate:30 }}
+                                </a>
+                                <a class="btn btn-dark-navbar" href="user/logout"><i class="ficon-signout"></i> Logout</a>
+                            <?php else: ?>
+                                <a class="btn btn-dark-navbar" href="user/register">Register</a>
+
+                                <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button"><i class="ficon-signin"></i> Log In</a>
+
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-
-
-
-
-                <!--<div class="navsearch-small">
-                    <?php  //get the query string if there is one
-                        $query = "";
-                        if(arg(0) == "search" && arg(1) == "site") $query = arg(2); ?>
-
-                    <!---->
-
-                <!--</div>-->
-
-
             </div>
         </div>
     </div>
@@ -140,10 +128,19 @@
 
 <div id="main">
 
+    <?php if(strlen($messages) > 0): ?>
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <?php print $messages; ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <div id="content" class="container" role="main">
         <div class="row">
             <div class="span12">
-                <?php print $messages; ?>
                 <!--<?php print render($tabs); ?>
                 <?php print render($action_links); ?>-->
             </div>

@@ -21,18 +21,19 @@ $isAdmin = user_access('administer site configuration');
 
                 <!-- Show Add statement button -->
                 <?php if ($user->uid): ?>
-                    <a ng-show="!model.isAddingStatement && !isEditingStatements" class="btn btn-success " ng-click="showAddStatement()"  href>
-                        <i class="icon-plus icon-white"></i> Add Statement
+                    <a ng-show="!model.isAddingStatement && !isEditingStatements" class="btn btn-edit " ng-click="showAddStatement()"  href>
+                        <i class="ficon-plus"></i> Add Statement
                     </a>
                 <?php endif; ?>
 
                 <!-- Add statement buttons -->
                 <span ng-show="model.isAddingStatement">
-                    <button ng-disabled="!model.newStatement.length" ng-click="saveStatement(model.newStatement)" class="btn btn-success">
-                        <i class="icon-ok icon-white"></i> Save Statement
+                    <button ng-click="cancelStatement(model.newStatement)" class="btn btn-cancel">
+                        <i class="ficon-remove"></i> Cancel
                     </button>
-                    <button ng-click="cancelStatement(model.newStatement)" class="btn">
-                        <i class="icon-remove"></i> Cancel
+
+                    <button ng-disabled="!model.newStatement.length" ng-click="saveStatement(model.newStatement)" class="btn btn-save">
+                        <i class="ficon-ok icon-white"></i> Save Statement
                     </button>
                 </span>
 
@@ -44,15 +45,15 @@ $isAdmin = user_access('administer site configuration');
                            ng-click="hideEditStatements()"
                            data-toggle="modal" role="button"
                            class="btn btn-primary">
-                            <i class="icon-ok icon-white"></i> Done
+                            <i class="ficon-ok icon-white"></i> Done
                         </a>
 
                         <a ng-show="!isEditingStatements" href
                            ng-click="showEditStatements()"
                            data-toggle="modal"
                            role="button"
-                           class="btn">
-                            <i class="icon-pencil"></i> Edit
+                           class="btn btn-edit">
+                            <i class="ficon-pencil"></i> Edit
                         </a>
                     </span>
 
@@ -91,7 +92,7 @@ $isAdmin = user_access('administer site configuration');
         </div>
 
         <div class="section-segment alert alert-success" cm-alert="model.isloadingNewStatement">
-            <i class="icon-ok"></i> New statement saved.
+            <i class="ficon-ok"></i> New statement saved.
         </div>
 
         <div ng-cloak ng-hide="statements.length" class="section-segment muted">
@@ -138,7 +139,7 @@ $isAdmin = user_access('administer site configuration');
                         <a ng-show="isEditingStatements"
                            ng-click="deleteStatement(statement)"
                            class="btn btn-danger pull-left" href style="color: white; margin-right: 14px;">
-                            <i class="icon-remove icon-white"></i> Delete
+                            <i class="ficon-remove icon-white"></i> Delete
                         </a>
 
                     </div>
@@ -155,7 +156,7 @@ $isAdmin = user_access('administer site configuration');
                                 <a ng-show="isEditingStatements"
                                    ng-click="deleteCommentFromStatement(comment, statement)"
                                    class="btn btn-danger" href style="color: white; margin-right: 14px;">
-                                    <i class="icon-remove icon-white"></i> Delete
+                                    <i class="ficon-remove icon-white"></i> Delete
                                 </a>
 
                                 <span class="label">
@@ -187,10 +188,10 @@ $isAdmin = user_access('administer site configuration');
                         </textarea>
                         <div class="pull-right">
                             <button ng-disabled="!statement.newComment.length" ng-click="addComment(statement, statement.newComment)" class="btn btn-success">
-                                <i class="icon-ok icon-white"></i> Post
+                                <i class="ficon-ok icon-white"></i> Post
                             </button>
                             <button class="btn" ng-click="cancelComment(statement)">
-                                <i class="icon-remove"></i> Cancel
+                                <i class="ficon-remove"></i> Cancel
                             </button>
                         </div>
                     </div>
@@ -210,7 +211,7 @@ $isAdmin = user_access('administer site configuration');
                                 <a ng-show="isEditingStatements"
                                    ng-click="deleteStatement(statement)"
                                    class="btn btn-danger" href>
-                                    <i class="icon-remove icon-white"></i> Delete
+                                    <i class="ficon-remove icon-white"></i> Delete
                                 </a>
 
 
