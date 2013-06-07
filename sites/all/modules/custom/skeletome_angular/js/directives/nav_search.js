@@ -69,6 +69,10 @@ myApp.directive('navSearch', function() {
             $scope.doAutocomplete = function(entry) {
 
                 // Empty string
+                if(entry.length == "") {
+                    $scope.isLoading = 0;
+                }
+
                 if($scope.model.entry == "") {
                     $scope.model.suggestions = [];
                     $scope.model.suggestionText = "";
@@ -94,7 +98,9 @@ myApp.directive('navSearch', function() {
 
                     $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
                         // add in all suggestions
-                        $scope.isLoading--;
+                        if($scope.isLoading > 0) {
+                            $scope.isLoading = $scope.isLoading--;
+                        }
 
                         if(entry.length < $scope.model.entry - 2) {
                             return;
