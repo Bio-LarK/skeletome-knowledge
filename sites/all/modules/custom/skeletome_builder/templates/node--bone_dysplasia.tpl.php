@@ -136,6 +136,8 @@ $isAdmin = user_access('administer site configuration');
 <!-- ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}" -->
 <?php include('description.php'); ?>
 
+<?php include('statements.php'); ?>
+
 <section>
     <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.xrayState == 'isEditing' }">
         <?php if ($isAdmin || $isEditor || $isCurator): ?>
@@ -231,7 +233,7 @@ $isAdmin = user_access('administer site configuration');
 </section>
 
 
-<?php include('statements.php'); ?>
+
 
 
 <!-- Clinical Features -->
