@@ -132,13 +132,13 @@ $isAdmin = user_access('administer site configuration');
 <div class="row-fluid">
 <div class="span8">
 
-    <?php include('description.php'); ?>
+    <?php include('bone_dysplasia/description.php'); ?>
 
-    <?php include('statements.php'); ?>
+    <?php include('bone_dysplasia/statements.php'); ?>
 
-    <?php include('xrays.php'); ?>
+    <?php include('bone_dysplasia/xrays.php'); ?>
 
-    <?php include('clinical_features.php'); ?>
+    <?php include('bone_dysplasia/clinical_features.php'); ?>
 
 </div>
 
