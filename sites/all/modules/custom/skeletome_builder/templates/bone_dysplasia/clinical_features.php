@@ -32,7 +32,7 @@
 
     <div ng-switch on="model.clinicalFeaturesState">
         <div ng-switch-when="isLoading">
-            <div class="section-segment section-segment-editing">
+            <div class="section-segment">
                 <div class="refreshing-box">
                     <i class="icon-refresh icon-refreshing"></i>
                 </div>
