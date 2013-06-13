@@ -1242,6 +1242,7 @@ table.table-dark {
     border: none;
     position: relative;
     text-shadow: none;
+    color: #4d5d6e;
 }
 .btn i {
     text-shadow: none;
@@ -1252,16 +1253,37 @@ table.table-dark {
         background-color: #f5f5f5;
         color: #4d5d6e;
         border: 1px solid #e8e8e8;
-    }
+    }/* the cancel button */
     .btn.btn-cancel {
         background-color: #E8E8E8;
         color: #4d5d6e;
         border: 1px solid #d6d6d6;
     }
+    /* the save button */
     .btn.btn-save {
         background-color: #0e90d2;
         border: 1px solid #1b6bb6 !important;
         color: white;
+    }
+    .btn.btn-remove {
+        background-color: red;
+        color: white;
+    }
+    .btn.btn-add {
+        background-color: green;
+        color: white;
+    }
+    /* add new button */
+    .btn.btn-addnew {
+
+    }
+    /* reveal button */
+    .btn.btn-reveal {
+        background-color: white;
+        width: 100%;
+        display: block;
+        border: 1px solid #eee;
+        box-sizing: border-box;
     }
 
     /* Dark button for the nav bar */

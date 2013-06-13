@@ -1,0 +1,4 @@
+name = Skeletome Clinical Feature
+description = Hooks for Clinical Feature
+package = A - Skeletome
+core = 7.x

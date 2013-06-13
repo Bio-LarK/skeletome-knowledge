@@ -59,6 +59,27 @@ function ajax_add_existing_xray_to_bone_dysplasia($bone_dysplasia_id, $xray_id) 
     echo "added exsting xray";
 }
 
+/**
+ * Updates the Clinical Features on a Bone Dysplasia
+ * @param $bone_dysplasia_id    The ID of the bone dysplasia
+ */
+function ajax_bone_dysplasia_clinical_features($bone_dysplasia_id) {
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $clinical_features = (object) $objData['clinical_features'];
+
+    $bone_dysplasia = node_load($bone_dysplasia_id);
+    $bone_dysplasia->field_skeletome_tags[LANGUAGE_NONE] = $clinical_features;
+    node_save($bone_dysplasia);
+
+    echo json_encode($bone_dysplasia);
+}
+
+/**
+ * Updates the XRays attached to a bone dysplasia
+ * @param $bone_dysplasia_id    The ID of the bone dysplasia
+ */
 function ajax_bone_dysplasia_xrays($bone_dysplasia_id) {
     $data = file_get_contents("php://input");
     $objData = json_decode($data, true);
@@ -1348,34 +1369,6 @@ function ajax_autocomplete_groups($search) {
     drupal_json_output($groups);
 }
 
-
-/**
- * Find the first 10 clinical features thats match the search term
- * @param $search
- */
-function ajax_autocomplete_clinical_feature($search = "", $limit = 20) {
-    $return_clinical_features = array();
-    if ($search) {
-        $phenotype_taxonomy = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
-
-        $sql = "SELECT *
-                FROM {taxonomy_term_data}
-                WHERE vid = :vid
-                AND name LIKE :name
-                LIMIT $limit";
-
-        $clinical_features = db_query($sql, array(
-            'vid'       => $phenotype_taxonomy->vid,
-            'name'      => '%' . db_like($search) . '%'
-        ));
-
-        $return_clinical_features = array();
-        foreach($clinical_features as $clinical_feature) {
-            $return_clinical_features[] = $clinical_feature;
-        }
-    }
-    drupal_json_output($return_clinical_features);
-}
 
 function ajax_bone_dysplasia_genes($node) {
 

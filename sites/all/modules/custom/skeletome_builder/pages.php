@@ -311,9 +311,6 @@ function data_get_editors_for_node($node_id) {
 
 function page_bone_dysplasia($node) {
 
-
-
-
     // Get the statements
     $time1 = time();
     $statements = data_get_statements_for_node($node);
@@ -323,8 +320,6 @@ function page_bone_dysplasia($node) {
     $time1 = time();
     $clinical_features = data_get_clinical_features_for_bone_dysplasia($node);
     // echo "<p>" . (time() - $time1) . "</p>";
-
-
 
     $time1 = time();
     $bone_dysplasia_count = data_get_bone_dysplasia_count();

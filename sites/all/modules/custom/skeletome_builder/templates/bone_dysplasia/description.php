@@ -1,11 +1,3 @@
-<?php
-// Create some user access variables
-$isRegistered = isset($user->uid);
-$isCurator = is_array($user->roles) && in_array('sk_curator', $user->roles);
-$isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
-$isAdmin = user_access('administer site configuration');
-?>
-
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
 
@@ -31,7 +23,7 @@ $isAdmin = user_access('administer site configuration');
                         <i class="ficon-remove"></i> Cancel
                     </a>
 
-                    <a href class="btn btn-primary"
+                    <a href class="btn btn-save"
                        ng-click="saveEditedDescription(editedDescription)">
                         <i class="ficon-ok icon-white"></i> Save
                     </a>

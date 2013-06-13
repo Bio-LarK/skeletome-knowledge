@@ -4,11 +4,9 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.showEditingPanel = false;
     $scope.editingPanel = "";
 
-    $scope.clinicalFeatureDisplayLimit = 10;
     $scope.descriptionLength = 1300;
 
     $scope.addFeatureFormVisible = false;
-    $scope.editClinicalFeaturesVisible = false;
 
 
     /* Bone Dysplasia stuff */
@@ -17,10 +15,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.groupBoneDysplasias = Drupal.settings.skeletome_builder.group_bone_dysplasias;
 
     $scope.statements = Drupal.settings.skeletome_builder.statements;
-    $scope.clinicalFeatures = Drupal.settings.skeletome_builder.clinical_features;
-    angular.forEach($scope.clinicalFeatures, function(clinicalFeature, key) {
-        clinicalFeature.added = true;
-    });
+
 
     $scope.genes = Drupal.settings.skeletome_builder.genes;
 
@@ -69,6 +64,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         // Setup the xrays
         $scope.setupXRays();
         $scope.setupDetails();
+        $scope.setupClinicalFeatures();
     }
 
 
@@ -225,49 +221,107 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.toggleXRay = function(xray) {
         xray.added = !xray.added;
     }
-//        angular.forEach($scope.xrays, function(existingXray, index) {
-//            if(existingXray.fid == xray.fid) {
-//                $scope.xrays.splice(index, 1);
-//            }
-//        });
-//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
-//        }).success(function(data) {
-//                console.log(data);
-//            });
-//    }
-//    $scope.readdXRay = function(xray) {
 
+    /**
+     * Setup the Clinical Features
+     */
+    $scope.setupClinicalFeatures = function() {
+        $scope.model.clinicalFeatures = Drupal.settings.skeletome_builder.clinical_features;
+        $scope.model.clinicalFeaturesState = $scope.IS_DISPLAYING;
 
-    $scope.showEditXRays = function() {
-        /* Set up the selected moi for the dropdown */
+        // X-Ray display limit
+        $scope.model.clinicalFeaturesDefaultDisplayLimit = 5;
+        $scope.model.clinicalFeaturesDisplayLimit = $scope.clinicalFeaturesDefaultDisplayLimit;
 
-//        angular.forEach($scope.xrays, function(xray, key) {
-//            xray.added = true;
-//        });
-//        $scope.editedXRays = angular.copy($scope.xrays);
-//        $scope.openEditingPanel('edit-xrays');
     }
 
+    /**
+     * Edit clinical features
+     */
+    $scope.editClinicalFeatures = function() {
+        $scope.model.edit.clinicalFeatures = angular.copy($scope.model.clinicalFeatures);
+        angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
+            clinicalFeature.added = true;
+        });
+        $scope.model.clinicalFeaturesState = $scope.IS_EDITING;
+        $scope.model.edit.clinicalFeaturesSearchResultsCounter = 0;
+    }
+    $scope.searchForClinicalFeature = function(query) {
+        if(query.length > 2) {
+            // there is a query
+            $scope.model.edit.clinicalFeaturesSearchResultsCounter++;
+            $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_LOADING;
+            $http.get('?q=ajax/clinical-features/search/' + query).success(function(data) {
 
-//    $scope.removeXRay = function(xray) {
-//        xray.added = false;
-//        angular.forEach($scope.xrays, function(existingXray, index) {
-//            if(existingXray.fid == xray.fid) {
-//                $scope.xrays.splice(index, 1);
-//            }
-//        });
-//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xray/' + xray.fid + '/remove', {
-//        }).success(function(data) {
-//                console.log(data);
-//            });
-//    }
-//    $scope.readdXRay = function(xray) {
-//        xray.added = true;
-//        $scope.xrays.push(xray);
-//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xray/' + xray.fid + '/add', {
-//        }).success(function(data) {
-//            });
-//    }
+                // loop through results we got back and add add/remove buttons
+                angular.forEach(data, function(result, index) {
+                    angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
+                        if(result.tid == clinicalFeature.tid) {
+                            result.added = clinicalFeature.added;
+                        }
+                    });
+                });
+
+                $scope.model.edit.clinicalFeaturesSearchResults = data;
+                $scope.model.edit.clinicalFeaturesSearchResultsCounter--;
+                if($scope.model.edit.clinicalFeaturesSearchResultsCounter == 0) {
+                    $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_DISPLAYING;
+                }
+            });
+        } else {
+            $scope.model.edit.clinicalFeaturesSearchResultsCounter = 0;
+        }
+    }
+    $scope.toggleClinicalFeatureResult = function(result) {
+        result.added = !result.added;
+
+        var found = false;
+        angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
+            if(clinicalFeature.tid == result.tid) {
+                found = true;
+                if(!result.added) {
+                    // we need to remove the result
+                    $scope.model.edit.clinicalFeatures.splice(index, 1);
+                } else {
+                    // we need to add the result
+                    clinicalFeature.added = true;
+                }
+            }
+        });
+
+        // we didnt find it, but it needs to be added
+        if(!found && result.added) {
+            $scope.model.edit.clinicalFeatures.push(result);
+        }
+    }
+
+    /**
+     * Save Clinical features
+     */
+    $scope.saveClinicalFeatures = function() {
+        $scope.model.clinicalFeaturesState = $scope.IS_LOADING;
+
+//        Remove all xrays in the edit, that are set to 'false' for added
+        var clinicalFeatures = [];
+        angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
+            if(clinicalFeature.added) {
+                clinicalFeatures.push(clinicalFeature);
+            }
+        });
+
+        $scope.model.clinicalFeatures = clinicalFeatures;
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/clinical-features', {
+            'clinical_features': $scope.model.clinicalFeatures
+        }).success(function(data) {
+            $scope.model.clinicalFeaturesState = $scope.IS_DISPLAYING;
+        });
+    }
+    $scope.cancelClinicalFeatures = function() {
+        $scope.model.clinicalFeaturesState = $scope.IS_DISPLAYING;
+    }
+    $scope.toggleClinicalFeature = function(clinicalFeature) {
+        clinicalFeature.added = !clinicalFeature.added;
+    }
 
 
 

@@ -914,15 +914,7 @@ function skeletome_builder_menu() {
         'type'  => MENU_CALLBACK,
     );
 
-    /**
-     * Autocomplete Clinical Features
-     */
-    $items['ajax/autocomplete/clinical-feature/%'] = array(
-        'page callback' 	=> 'ajax_autocomplete_clinical_feature',
-        'page arguments'    => array(3),
-        'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
-    );
+
 
     /**
      * Autocomplete Groups
@@ -1030,7 +1022,28 @@ function skeletome_builder_menu() {
     );
 
     /**
-     * XRays
+     * Update Clinical Features
+     */
+    $items['ajax/bone-dysplasia/%/clinical-features'] = array(
+        'title' 		    => t('Update clinical features'),
+        'page callback' 	=> 'ajax_bone_dysplasia_clinical_features',
+        'page arguments'    => array(2),
+        'access callback'   => 'is_curator',
+        'type'              => MENU_CALLBACK
+    );
+    /**
+     * Autocomplete Clinical Features
+     */
+    $items['ajax/autocomplete/clinical-feature/%'] = array(
+        'page callback' 	=> 'ajax_autocomplete_clinical_feature',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+
+    /**
+     * Update XRays
      */
     $items['ajax/bone-dysplasia/%/xrays'] = array(
         'title' 		    => t('Add xray to bonedysplasia'),

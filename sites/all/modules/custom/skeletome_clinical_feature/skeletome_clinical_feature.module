@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_clinical_feature_menu() {
+
+    $items['ajax/clinical-features/search/%'] = array(
+        'page callback' 	=> 'skeletome_clinical_feature_incremental_search',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+/**
+ *
+ *
+ * @param $query
+ * @param int $limit
+ */
+function skeletome_clinical_feature_incremental_search($query, $limit = 20) {
+    $return_clinical_features = array();
+    if ($query != "") {
+        $phenotype_taxonomy = taxonomy_vocabulary_machine_name_load('skeletome_vocabulary');
+
+        $sql = "SELECT *
+                FROM {taxonomy_term_data}
+                WHERE vid = :vid
+                AND name LIKE :name
+                LIMIT $limit";
+
+        $clinical_features = db_query($sql, array(
+            'vid'       => $phenotype_taxonomy->vid,
+            'name'      => '%' . db_like($query) . '%'
+        ));
+
+        $return_clinical_features = array();
+        foreach($clinical_features as $clinical_feature) {
+            $return_clinical_features[] = $clinical_feature;
+        }
+    }
+    drupal_json_output($return_clinical_features);
+}

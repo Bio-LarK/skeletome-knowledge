@@ -132,161 +132,16 @@ $isAdmin = user_access('administer site configuration');
 <div class="row-fluid">
 <div class="span8">
 
-<!-- The content -->
-<!-- ng-class="{'section-more': boneDysplasia.body.und[0].safe_value.length > 500}" -->
-<?php include('description.php'); ?>
+    <?php include('description.php'); ?>
 
-<?php include('statements.php'); ?>
+    <?php include('statements.php'); ?>
 
-<section>
-    <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.xrayState == 'isEditing' }">
-        <?php if ($isAdmin || $isEditor || $isCurator): ?>
-            <div class="pull-right section-segment-header-buttons">
+    <?php include('xrays.php'); ?>
 
+    <?php include('clinical_features.php'); ?>
 
-                <div ng-switch on="model.xrayState">
-                    <div ng-switch-when="isLoading">
-                    </div>
-                    <div ng-switch-when="isEditing">
-                        <a href ng-click="cancelXRays()" class="btn btn-cancel">
-                            <i class="ficon-remove"></i> Cancel
-                        </a>
-
-                        <a href ng-click="saveXRays()" class="btn btn-primary">
-                            <i class="ficon-ok"></i> Save
-                        </a>
-
-                    </div>
-                    <div ng-switch-when="isDisplaying">
-                        <a href ng-click="editXRays()" class="btn btn-edit">
-                            <i class="ficon-pencil"></i> Edit
-                        </a>
-                    </div>
-                </div>
-
-
-            </div>
-        <?php endif; ?>
-
-        <h3>X-Rays</h3>
-    </div>
-
-    <div class="section-segment alert alert-success" cm-alert="model.xrayState == 'isLoading'">
-        <i class="ficon-ok"></i> X-Rays Saved.
-    </div>
-
-    <div ng-switch on="model.xrayState">
-        <div ng-switch-when="isLoading">
-            <div class="section-segment">
-                <div class="refreshing-box">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </div>
-            </div>
-        </div>
-        <div ng-switch-when="isEditing">
-            <div class="section-segment section-segment-editing">
-                <div class="dropzone" ng-model="model.edit.xrays"
-                     drop-zone-upload="?q=ajax/bone-dysplasia/{{ model.boneDysplasia.nid }}/xray/add" drop-zone-message="<b>Drop X-Ray images</b> in here to upload (or click here).">
-                </div>
-            </div>
-
-            <div class="section-segment section-segment-editing">
-                <ul class="xray-list unstyled media-body">
-
-                    <li class="xray-list-image-edit" ng-repeat="xray in model.edit.xrays">
-                        <div ng-click="toggleXRay(xray)" style="cursor: pointer">
-                            <!-- XRay images -->
-                            <div class="xray-list-image-edit-image">
-                                <img ng-src="{{ xray.thumb_url }}" alt=""/>
-                            </div>
-
-                            <!-- Add Button -->
-                            <a class="btn btn-edit"
-                               ng-class="{ 'btn-success': !xray.added, 'btn-danger': xray.added }"
-                               href>
-                                    <i class="icon-white" ng-class="{ 'icon-plus': !xray.added, 'ficon-remove': xray.added }"></i>
-                                    {{ xray.added && 'Remove' || 'Re-Add' }}
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-
-        </div>
-        <div ng-switch-when="isDisplaying">
-            <!-- No x-rays -->
-            <div ng-show="!model.xrays.length" class="section-segment muted">
-                There are no x-rays for '{{model.boneDysplasia.title}}'.
-            </div>
-
-            <!-- has x-rays -->
-            <div ng-show="model.xrays.length" fancy-box="xrays" class="section-segment media-body">
-                <div ng-repeat="image in model.xrays" class="xray-list-image">
-                    <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
-                        <img ng-src="{{ image.thumb_url }}" alt=""/>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-<!-- Clinical Features -->
-        <section id="clinical_features" class="block">
-            <div class="section-segment section-segment-header">
-                <div class="section-segment-header-buttons">
-                    <?php if ($isAdmin || $isCurator): ?>
-                        <div class="pull-right">
-                            <a href ng-click="showEditClinicalFeatures()" data-toggle="modal" role="button" class="btn btn-edit"><i
-                                    class="ficon-pencil"></i> Edit</a>
-                        </div>
-                    <?php endif ?>
-                </div>
-                <h2>Clinical Features ({{ clinicalFeatures.length }})</h2>
-            </div>
-            <div class="section-segment">
-                <form ng-show="clinicalFeatures.length" style="margin-bottom: 0">
-                    <search model="clinicalFeatureFilter" placeholder="Search for a Clinical Feature"></search>
-                </form>
-            </div>
-
-            <div ng-show="clinicalFeatures.length">
-                <div class="section-segment">
-                    <div>
-                        <div style="width: 60%; display: inline-block">
-                            <b>Feature</b>
-                        </div>
-                        <div style="width: 35%; display: inline-block">
-                            <b>Information Content</b> <i class="icon-question-sign" cm-tooltip="top" cm-tooltip-content="Information content."></i>
-                        </div>
-                    </div>
-                </div>
-                <div  ng-repeat="clinicalFeature in clinicalFeatures | filter:clinicalFeatureFilter | orderBy:'-information_content'">
-                    <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ model.boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
-
-                        <div style="width: 60%; float: left">
-                            {{clinicalFeature.name | truncate:40 | capitalize}}
-                        </div>
-
-                        <div style="width: 35%; float: left">
-                            <div class="progress">
-                                <div class="bar" style="width:{{ clinicalFeature.information_content }}%"></div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-            </div>
-
-        </section>
 </div>
+
 
 <div class="span4">
     <section ng-show="model.boneDysplasia.field_bd_superbd.length">
@@ -331,7 +186,7 @@ $isAdmin = user_access('administer site configuration');
                             <a href ng-click="cancelDetails()" class="btn btn-cancel">
                                 <i class="ficon-remove"></i> Cancel
                             </a>
-                            <a href ng-click="saveDetails()" class="btn btn-primary">
+                            <a href ng-click="saveDetails()" class="btn btn-save">
                                 <i class="icon-ok icon-white"></i> Save
                             </a>
                         </div>
@@ -380,8 +235,7 @@ $isAdmin = user_access('administer site configuration');
             <div ng-switch-when="isDisplaying">
                 <div>
                     <a ng-show="omim" class="section-segment" ng-href="http://www.omim.org/entry/{{omim}}" target="_blank">
-                        <i class="icon-globe pull-right"></i>
-                        <i class="icon-globe icon-white pull-right"></i>
+                        <i class="ficon-globe pull-right"></i>
 
                         <span><b>OMIM</b></span>
                         <span ng-show="omim">{{omim}}</span>

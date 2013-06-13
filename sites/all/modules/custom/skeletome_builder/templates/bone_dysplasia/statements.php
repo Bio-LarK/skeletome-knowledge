@@ -1,11 +1,3 @@
-<?php
-// Create some user access variables
-$isRegistered = isset($user->uid);
-$isCurator = is_array($user->roles) && in_array('sk_curator', $user->roles);
-$isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
-$isAdmin = user_access('administer site configuration');
-?>
-
 <div ng-controller="StatementCtrl">
     <?php if ($user->uid): ?>
 
@@ -44,7 +36,7 @@ $isAdmin = user_access('administer site configuration');
                         <a ng-show="isEditingStatements" href
                            ng-click="hideEditStatements()"
                            data-toggle="modal" role="button"
-                           class="btn btn-primary">
+                           class="btn btn-save">
                             <i class="ficon-ok icon-white"></i> Done
                         </a>
 
@@ -98,8 +90,6 @@ $isAdmin = user_access('administer site configuration');
         <div ng-cloak ng-hide="statements.length" class="section-segment muted">
             No statements.
         </div>
-
-
 
         <!-- Actual list of statements statements -->
         <div ng-cloak>
