@@ -15,6 +15,8 @@ body {
     background-repeat: repeat;
     position: relative;
     color: #4d5d6e;
+    font-family: "Source Sans Pro", san-serif;
+    font-weight: 400;
 }
 
 a {
@@ -335,7 +337,8 @@ ul.navsearch-suggestions {
 .banner {
     background-color: #E8E8E8;
     padding: 42px 0 49px 0;
-    font-family: "HelveticaNeue-Light";
+    font-family: "Source Sans Pro";
+    font-weight: 200;
 }
     .banner-big {
         margin-bottom: 7px;
@@ -370,7 +373,8 @@ ul.navsearch-suggestions {
         color: #AFB9C2;
         font-size: 21px;
         line-height: 28px;
-        font-family: "HelveticaNeue-Light";
+        font-family: "Source Sans Pro";
+        font-weight: 200;
         margin-bottom: 14px;
     }
     .triptych-body {
@@ -385,7 +389,8 @@ ul.navsearch-suggestions {
 .slogan {
     font-size: 38px;
     line-height: 49px;;
-    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue Ultra Light", Helvetica, Arial, san-serif;
+    font-family: "Source Sans Pro", Arial, san-serif;
+    font-weight: 200;
     margin-bottom: 21px;;
     color: #eee;
 }
@@ -1422,9 +1427,9 @@ h3 {
 }
 h1, h2, h3, h4, h5 {
     /*font-weight: 800;*/
-    font-weight: normal;
+    font-weight: 200;
     /*font-family: 'Arvo';*/
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", Helvetica, Arial, san-serif;
+    font-family: "Source Sans Pro", Arial, san-serif;
 }
 
 

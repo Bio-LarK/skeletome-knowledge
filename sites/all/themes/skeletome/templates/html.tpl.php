@@ -103,8 +103,8 @@
             <![endif]-->
         <?php endif; ?>
 
-        <link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
+        <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700' rel='stylesheet' type='text/css'>
 
         <script src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/js/modernizr.custom.js"></script>
 
