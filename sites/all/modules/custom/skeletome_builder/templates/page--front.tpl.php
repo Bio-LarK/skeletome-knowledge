@@ -176,7 +176,7 @@
                         A community-driven knowledge curation platform for skeletal dysplasias.
                     </div>
                     <div class="banner-calltoaction">
-                        <a class="btn btn-calltoaction btn-danger" href="">
+                        <a class="btn btn-calltoaction" href="">
                             Take the Tour
                         </a>
                     </div>

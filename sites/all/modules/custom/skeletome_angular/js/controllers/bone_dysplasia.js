@@ -247,7 +247,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.model.edit.clinicalFeaturesSearchResultsCounter = 0;
     }
     $scope.searchForClinicalFeature = function(query) {
-        if(query.length > 2) {
+        if(query.length) {
             // there is a query
             $scope.model.edit.clinicalFeaturesSearchResultsCounter++;
             $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_LOADING;
@@ -300,7 +300,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
      */
     $scope.saveClinicalFeatures = function() {
         $scope.model.clinicalFeaturesState = $scope.IS_LOADING;
-
+        $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_DISPLAYING;
 //        Remove all xrays in the edit, that are set to 'false' for added
         var clinicalFeatures = [];
         angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
@@ -317,6 +317,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         });
     }
     $scope.cancelClinicalFeatures = function() {
+        $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_DISPLAYING;
         $scope.model.clinicalFeaturesState = $scope.IS_DISPLAYING;
     }
     $scope.toggleClinicalFeature = function(clinicalFeature) {

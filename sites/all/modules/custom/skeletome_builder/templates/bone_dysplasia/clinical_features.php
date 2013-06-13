@@ -69,7 +69,7 @@
                 <div ng-switch-when="isDisplaying">
                     <div ng-show="model.edit.clinicalFeatureQuery.length" ng-repeat="result in model.edit.clinicalFeaturesSearchResults">
                         <div style="overflow: hidden" class="section-segment section-segment-editing">
-                            <div style="width: 60%; float: left" ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.clinicalFeatureQuery | capitalize">
+                            <div style="width: 60%; float: left" ng-bind-html-unsafe="result.name | truncate:40 | capitalize | highlight:model.edit.clinicalFeatureQuery">
                                 {{ result.name | truncate:40 | highlight:model.edit.clinicalFeatureQuery | capitalize }}
                             </div>
 
@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <div ng-repeat="clinicalFeature in model.clinicalFeatures | filter:model.clinicalFeatureFilter">
+                <div ng-repeat="clinicalFeature in model.clinicalFeatures | filter:model.clinicalFeatureFilter | orderBy:'-information_content'">
                     <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ model.boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>

@@ -355,13 +355,7 @@ ul.navsearch-suggestions {
     .banner-calltoaction {
 
     }
-        .btn.btn-calltoaction {
-            padding: 14px 42px;
-            border: none !important;
-            border-radius: 100px;
 
-            font-size: 21px;
-        }
 .triptych {
     background-color: white;
     padding: 45px 0;
@@ -1277,6 +1271,17 @@ table.table-dark {
     .btn.btn-addnew {
 
     }
+    .btn.btn-calltoaction {
+        padding: 14px 42px;
+        border: none !important;
+        border-radius: 100px;
+        color: white;
+        font-size: 21px;
+        background-color: #da4f49;
+    }
+        .btn.btn-calltoaction:hover {
+            background-color: #bd362f;
+        }
     /* reveal button */
     .btn.btn-reveal {
         background-color: white;
