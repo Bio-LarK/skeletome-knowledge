@@ -6,6 +6,6 @@ package = SKELETOME Dysplasia
 
 core = 7.x
 dependencies[] = entityreference
-
+version = 0.2
 files[] = statement.module
 files[] = statement.install
