@@ -2,6 +2,42 @@
 // $Id: statement.module $
 
 /**
+ * Implements hook_menu()
+ */
+function statement_menu() {
+//
+    $items['ajax/statement/approve/%'] = array(
+        'page callback' 	=> 'statement_approve',
+        'page arguments'    => array(3),
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+function statement_approve($statement_id) {
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $statement = node_load($statement_id);
+    $statement->field_statement_approved_time[LANGUAGE_NONE][0]["value"] = time();
+
+    foreach($objData['userIds'] as $user_id) {
+        $user_id = array(
+            'value' => $user_id
+        );
+        $statement->field_statement_approved_users[LANGUAGE_NONE][] = $user_id;
+    }
+
+    node_save($statement);
+
+    $statement = node_load($statement->nid);
+    echo json_encode($statement);
+}
+
+
+/**
  * Implements HOOK_form_FORM_ID_alter().
  * @param $form
  * @param $form_state
@@ -17,17 +53,17 @@ if (isset($form['type']) && isset($form['#node'])) {
 }
 
 function statement_node_presave($node) {
-  if (property_exists($node, 'field_statement_bonedysplasia')) {
-    $val = $node->field_statement_bonedysplasia;
-
-    if (empty($val['und'])) {
-      $node->field_statement_bonedysplasia['und'] = array (
-	'0' => array (
-	  'nid' => arg(3),
-	),
-      );
-    }
-  }
+//  if (property_exists($node, 'field_statement_bonedysplasia')) {
+//    $val = $node->field_statement_bonedysplasia;
+//
+//    if (empty($val['und'])) {
+//      $node->field_statement_bonedysplasia['und'] = array (
+//	'0' => array (
+//	  'nid' => arg(3),
+//	),
+//      );
+//    }
+//  }
 }
 
 function statement_node_insert($node) {
@@ -79,41 +115,41 @@ function statement_node_delete($node) {
 }
 
 function statement_node_view($node, $view_mode) {
-  if ($node->type == 'statement' && $view_mode == 'teaser') {
-    drupal_add_css(drupal_get_path('module', 'statement') . '/statement.css');
-    $permissions = _bdf_get_node_access_for_user($node->uid, $node->type);
-
-    if ($permissions['edit'] == 1) {
-      $node->content['edit_bdf_link'] = array(
-        '#theme' => 'links',
-        '#links' => array (
-	  'edit-bdf-link' => array (
-	    'title' => t('Edit'),
-	    'href' => 'node/' . $node->nid . '/edit',
-	    'html' => true,
-	  ),
-        ),
-        '#attributes' => array (
-	  'class' => 'bdf-title-link',
-        ),
-      );
-    }
-    if ($permissions['delete'] == 1) {
-      $node->content['delete_bdf_link'] = array(
-        '#theme' => 'links',
-        '#links' => array (
-	  'delete-bdf-link' => array (
-	    'title' => t('Delete'),
-	    'href' => 'node/' . $node->nid . '/delete',
-	    'html' => true,
-	  ),
-        ),
-        '#attributes' => array (
-	  'class' => 'bdf-title-link',
-        ),
-      );
-    }
-  }
+//  if ($node->type == 'statement' && $view_mode == 'teaser') {
+//    drupal_add_css(drupal_get_path('module', 'statement') . '/statement.css');
+//    $permissions = _bdf_get_node_access_for_user($node->uid, $node->type);
+//
+//    if ($permissions['edit'] == 1) {
+//      $node->content['edit_bdf_link'] = array(
+//        '#theme' => 'links',
+//        '#links' => array (
+//	  'edit-bdf-link' => array (
+//	    'title' => t('Edit'),
+//	    'href' => 'node/' . $node->nid . '/edit',
+//	    'html' => true,
+//	  ),
+//        ),
+//        '#attributes' => array (
+//	  'class' => 'bdf-title-link',
+//        ),
+//      );
+//    }
+//    if ($permissions['delete'] == 1) {
+//      $node->content['delete_bdf_link'] = array(
+//        '#theme' => 'links',
+//        '#links' => array (
+//	  'delete-bdf-link' => array (
+//	    'title' => t('Delete'),
+//	    'href' => 'node/' . $node->nid . '/delete',
+//	    'html' => true,
+//	  ),
+//        ),
+//        '#attributes' => array (
+//	  'class' => 'bdf-title-link',
+//        ),
+//      );
+//    }
+//  }
   
   return $node;
 }

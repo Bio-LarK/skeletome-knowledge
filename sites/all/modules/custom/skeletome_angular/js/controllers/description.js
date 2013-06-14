@@ -4,6 +4,7 @@ function DescriptionCtrl($scope, $http) {
 
     // Setup the default length
     $scope.descriptionLength = $scope.defaultDescriptionLength;
+    $scope.model.editedDescription = $scope.description.value;
     $scope.isHidingDescription =  $scope.description.value.length > $scope.defaultDescriptionLength;
 
     $scope.showDescription = function() {
@@ -18,18 +19,19 @@ function DescriptionCtrl($scope, $http) {
 
     /* Add / Editing */
     $scope.editDescription = function() {
-        $scope.editedDescription = $scope.description.value;
-        $scope.isEditingDescription = true;
+        $scope.model.editedDescription = $scope.description.value;
+        $scope.model.isEditingDescription = true;
     }
 
     /* Save edited descrption */
     $scope.cancelEditingDescription = function() {
-        $scope.isEditingDescription = false;
+        $scope.model.isEditingDescription = false;
+        $scope.model.statementPackage = null;
     }
     $scope.saveEditedDescription = function(newDescription) {
 
         console.log("saving editied description");
-        $scope.isEditingDescription = false;
+        $scope.model.isEditingDescription = false;
 
         $scope.description.safe_value = "Loading...";
         $scope.description.isLoading = true;
@@ -50,5 +52,29 @@ function DescriptionCtrl($scope, $http) {
             $scope.description.safe_value = data.safe_value;
             $scope.description.value = data.value;
         });
+
+        // Save the statement stuff
+        if($scope.model.statementPackage) {
+            var userIds = [];
+            angular.forEach($scope.model.statementPackage.users, function(value, index) {
+                if(value.approved) {
+                    userIds.push(value.uid);
+                }
+            });
+
+            $http.post('?q=ajax/statement/approve/' + $scope.model.statementPackage.nid, {
+                userIds: userIds
+            }).success(function(statement) {
+                jQuery.extend($scope.model.statementPackage.statement, statement);
+                console.log("my statement", $scope.model.statementPackage.statement);
+                $scope.model.statementPackage = null;
+            });
+
+        }
     }
+
+    $scope.$watch('model.statementPackage', function(value) {
+        console.log("statement saved", value);
+    })
+
 }

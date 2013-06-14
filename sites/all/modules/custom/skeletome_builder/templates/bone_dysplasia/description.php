@@ -1,13 +1,13 @@
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
 
-        <div class="section-segment section-segment-headers section-segment-header-editors" ng-class="{ 'section-segment-editing': isEditingDescription }">
+        <div class="section-segment section-segment-headers section-segment-header-editors" ng-class="{ 'section-segment-editing': model.isEditingDescription }">
             <?php
             if ($isAdmin || $isCurator || $isEditor): ?>
             <div class="section-segment-header-buttons pull-right">
 
                     <!-- is Editing Description -->
-                <span ng-show="!isEditingDescription">
+                <span ng-show="!model.isEditingDescription">
                     <a ng-show="!showEditDescription"
                        href class="btn btn-edit"
                        ng-click="editDescription()">
@@ -16,15 +16,15 @@
                 </span>
 
                     <!-- Not Editing Description -->
-                <span ng-show="isEditingDescription">
-                    <a ng-show="isEditingDescription"
+                <span ng-show="model.isEditingDescription">
+                    <a ng-show="model.isEditingDescription"
                        href class="btn btn-cancel"
                        ng-click="cancelEditingDescription()">
                         <i class="ficon-remove"></i> Cancel
                     </a>
 
                     <a href class="btn btn-save"
-                       ng-click="saveEditedDescription(editedDescription)">
+                       ng-click="saveEditedDescription(model.editedDescription)">
                         <i class="ficon-ok icon-white"></i> Save
                     </a>
                 </span>
@@ -32,7 +32,7 @@
             </div>
             <?php endif; ?>
 
-            <div ng-show="!isEditingDescription">
+            <div ng-show="!model.isEditingDescription">
                 <b><i class="ficon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
                     <a href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span ng-show=" ! $last ">,</span><span ng-show="$last && provider.length">, {{ provider }}</span>
@@ -40,7 +40,7 @@
             </div>
 
             <?php if(isset($user->name)):?>
-            <div ng-show="isEditingDescription">
+            <div ng-show="model.isEditingDescription">
                 <b><i class="ficon-user"></i> You are editing</b> <span style="color: #ccc">(<?php echo $user->name; ?>)</span>
             </div>
             <?php endif; ?>
@@ -50,18 +50,38 @@
             <i class="ficon-ok"></i> Description saved.
         </div>
 
-        <div class="section-segment" ng-class="{ 'section-segment-nopadding': isEditingDescription }">
+        <div ng-show="model.isEditingDescription && model.statementPackage" class="section-segment section-segment-editing">
+            <div>
+                <b>Step 1 - Add to Abstract</b>
+            </div>
+            <div>
+                You can copy and paste this text into the Abstract.
+            </div>
+            <div ng-bind-html-unsafe="model.statementPackage.text" class="alert alert-info">
+                Statement text
+            </div>
+
+            <div>
+                <b>Step 2 - Choose which users to acknowledge.</b>
+            </div>
+            <div ng-repeat="user in model.statementPackage.users">
+                <input type="checkbox" ng-model="user.approved" ng-init="user.approved = true"/> {{ user.name }}
+            </div>
+
+        </div>
+
+        <div class="section-segment" ng-class="{ 'section-segment-nopadding': model.isEditingDescription }">
 
             <!-- is Editing Description -->
-            <div ng-show="isEditingDescription">
-                <textarea ck-editor height="800px" ng-model="editedDescription"></textarea>
+            <div ng-show="model.isEditingDescription">
+                <textarea ck-editor height="800px" ng-model="model.editedDescription"></textarea>
             </div>
 
 
             <!-- Not Editing Description -->
-            <div ng-show="!isEditingDescription" class="description-text">
+            <div ng-show="!model.isEditingDescription" class="description-text">
 
-                <div class="alert alert-stub" ng-show="provider && !isEditingDescription">
+                <div class="alert alert-stub" ng-show="provider && !model.isEditingDescription">
                     <i class="ficon-info-sign"></i> <em>This stub is sourced from {{ provider }}</em>.
                     <div style="font-size: 12px" ng-bind-html-unsafe="reference">
                     </div>

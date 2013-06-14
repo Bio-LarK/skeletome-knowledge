@@ -59,7 +59,21 @@ function _statement_installed_fields()
             'label' => $t('Bone Dysplasia'),
             'cardinality' => 1,
             'type' => 'entityreference'
-        )
+        ),
+
+        'field_statement_approved_time' => array(
+            'field_name' => 'field_statement_approved_time',
+            'label' => $t('Approved for Abstract'),
+            'cardinality' => 1,
+            'type' => 'text',
+        ),
+
+        'field_statement_approved_users' => array(
+            'field_name' => 'field_statement_approved_users',
+            'label' => $t('Approved Users'),
+            'cardinality' => -1,
+            'type' => 'number_integer',
+        ),
     );
 }
 
@@ -96,7 +110,22 @@ function _statement_installed_instances()
                     'type' => 'entityreference_default'
                 )
             )
-        )
+        ),
+        'field_statement_approved_time' => array(
+            'field_name' => 'field_statement_approved_time',
+            'label' => $t('Approved for Abstract At time'),
+            'cardinality' => 1,
+        ),
+
+        'field_statement_approved_users' => array(
+            'field_name' => 'field_statement_approved_users',
+            'label' => $t('Approved Users'),
+            'cardinality' => -1,
+            'widget' => array(
+                'type' => 'number',
+            ),
+        ),
+
     );
 }
 

@@ -1362,6 +1362,11 @@ table.table-dark {
 .btn-group.open .btn-primary.dropdown-toggle {
     /*background-color: #1c64a1;*/
 }
+
+.label {
+    font-weight: normal;
+    text-shadow: none;
+}
 .label.label-primary {
     background-color: #2980B9;
 }

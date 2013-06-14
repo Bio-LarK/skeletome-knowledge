@@ -3,6 +3,7 @@
 
     <?php endif; ?>
 
+
     <!-- The statements sections -->
     <section class="statements">
         <a name="statements"></a>
@@ -109,22 +110,36 @@
                         </span>
                     </div>
 
+
+
                     <div class="section-segment-statement-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
                     </div>
+
+
 
                     <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments || isEditingStatements">
 
                         <span class="label">
-                            <i class="icon-user icon-white"></i> {{ statement.name || "Anonymous" | capitalize }}
+                            <i class="ficon-user"></i> {{ statement.name || "Anonymous" | capitalize }}
                         </span>
 
                         <span class="label">
-                            <i class="icon-comment icon-white"></i> {{ statement.comments.length || statement.comment_count }}
+                            <i class="ficon-comment"></i> {{ statement.comments.length || statement.comment_count }}
                         </span>
 
                         <span style="font-size: 11.844px; line-height: 14px; float: right; color: #bbb; margin-right: 30px;">
                             {{ statement.created*1000 | date:'MMM d, y - h:mm a' }}
                         </span>
+
+                        <span class="label label-success" ng-show="statement.field_statement_approved_time">
+                            <i class="ficon-ok"></i> Added to Abstract {{ statement.field_statement_approved_time.und[0].value * 1000 | date:'MMM d, y - h:mm a' }}
+                        </span>
+
+                        <a ng-show="!statement.field_statement_approved_time.und"  ng-click="addStatementToDescription(statement)" class="btn btn-save" href="#">
+                            Add to Description
+                        </a>
+
+
 
                         <a ng-show="isEditingStatements"
                            ng-click="deleteStatement(statement)"

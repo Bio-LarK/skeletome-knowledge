@@ -16,6 +16,42 @@ function StatementCtrl($scope, $http) {
         $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
     }
 
+    $scope.addStatementToDescription = function(statement) {
+
+        $scope.model.editedDescription = $scope.description.value;
+        $scope.model.isEditingDescription = true;
+
+        $scope.model.statementPackage = {
+            nid: statement.nid,
+            users:  [],
+            text:   "",
+            statement: statement
+        };
+
+        var uidsAdded = [];
+
+        $scope.model.statementPackage.users.push({
+            uid: statement.uid,
+            name: statement.name
+        });
+        uidsAdded.push(statement.uid);
+
+        $scope.model.statementPackage.text += statement.body.und[0].value;
+
+        angular.forEach(statement.comments, function(comment, index) {
+            if(uidsAdded.indexOf(comment.uid) == -1) {
+                $scope.model.statementPackage.users.push({
+                    uid: comment.uid,
+                    name: comment.name
+                });
+                uidsAdded.push(comment.uid);
+            }
+            $scope.model.statementPackage.text += comment.comment_body.und[0].value + "<br/>";
+        });
+//        $scope.model.statementPackage.text = $scope.model.statementPackage.text.replace(/(<([^>]+)>)/ig,"");
+
+        console.log($scope.model.statementPackage);
+    }
 
     /**
      * Show the area for statement creation
@@ -54,7 +90,7 @@ function StatementCtrl($scope, $http) {
 
         $http.get('?q=ajax/statement/' + statement.nid + '/comment/' + comment.cid + '/remove', {
         }).success(function(data) {
-            });
+        });
     }
     $scope.showEditStatements = function() {
         $scope.isEditingStatements = true;
