@@ -129,16 +129,16 @@
                                 <div ng-switch-when="isLoading">
                                 </div>
                                 <div ng-switch-when="isEditing">
-                                    <a ng-click="saveDetails(edit.profile)" href role="button" class="btn btn-success">
+                                    <a ng-click="saveDetails(edit.profile)" href class="btn btn-success">
                                         <i class="icon-ok icon-white"></i> Save
                                     </a>
-                                    <a ng-click="cancelDetails()" href role="button" class="btn">
+                                    <a ng-click="cancelDetails()" href class="btn btn-cancel">
                                         <i class="icon-remove"></i> Cancel
                                     </a>
 
                                 </div>
                                 <div ng-switch-when="isDisplaying">
-                                    <a ng-click="editDetails()" href data-toggle="modal" role="button" class="btn">
+                                    <a ng-click="editDetails()" href class="btn btn-edit">
                                         <i class="icon-pencil"></i> Edit
                                     </a>
                                 </div>
@@ -185,84 +185,24 @@
 
             </section>
 
-            <section>
-                <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': professionalState=='isEditing' }">
-                    <?php if($canEdit): ?>
-                    <div class="section-segment-header-buttons">
-                        <div class="pull-right">
-                            <div ng-switch on="professionalState">
-                                <div ng-switch-when="isLoading">
-                                </div>
-                                <div ng-switch-when="isEditing">
-                                    <a ng-click="saveProfessional(edit.profile)" href role="button" class="btn btn-success">
-                                        <i class="icon-ok icon-white"></i> Save
-                                    </a>
-                                    <a ng-click="cancelProfessional()" href role="button" class="btn">
-                                        <i class="icon-remove"></i> Cancel
-                                    </a>
-                                </div>
-                                <div ng-switch-when="isDisplaying">
-                                    <a ng-click="editProfessional()" href data-toggle="modal" role="button" class="btn">
-                                        <i class="icon-pencil"></i> Edit
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endif; ?>
-
-                    <h3>Professional</h3>
+            <section ng-show="contributed.length">
+                <div class="section-segment section-segment-header">
+                    <h3>Contributed to Pages</h3>
                 </div>
 
-                <div ng-switch on="professionalState">
-                    <div ng-switch-when="isLoading">
-                        <div class="section-segment refreshing-box">
-                            <i class="icon-refresh icon-refreshing"></i>
-                        </div>
-                    </div>
-                    <div ng-switch-when="isEditing">
-                        <div class="section-segment section-segment-editing">
-                            <b>Position</b>
-                            <div>
-                                <input class="full-width" ng-model="edit.profile.field_profile_position.und[0].value" type="text"/>
-                            </div>
-                        </div>
+                <div ng-repeat="page in contributed | limitTo:contributedDisplayLimit">
+                    <a href="?q=node/{{ page.nid }}" class="section-segment">
+                        <i class="icon-chevron-right pull-right"></i>
+                        <i class="icon-chevron-right icon-white pull-right"></i>
 
-                        <div class="section-segment section-segment-editing">
-                            <b>Location</b>
-                            <div>
-                                <input class="full-width" ng-model="edit.profile.field_profile_location.und[0].value" type="text"/>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div ng-switch-when="isDisplaying">
-                        <div class="section-segment">
-                            <b>Position</b>
-                            <span ng-show="profile.field_profile_position.und[0].value.length">
-                                {{ profile.field_profile_position.und[0].value }}
-                            </span>
-                            <span ng-show="!profile.field_profile_position.und[0].value.length" class="muted">
-                                Not recorded.
-                            </span>
-                        </div>
-
-                        <div class="section-segment">
-                            <b>Location</b>
-                            <span ng-show="profile.field_profile_location.und[0].value.length">
-                                {{ profile.field_profile_location.und[0].value }}
-                            </span>
-                            <span ng-show="!profile.field_profile_location.und[0].value.length" class="muted">
-                                Not recorded.
-                            </span>
-
-                        </div>
-                    </div>
+                        {{ page.title }}
+                    </a>
                 </div>
             </section>
+
         </div>
 
-        <div class="span6">
+        <div class="span9">
             <section>
                 <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': biographyState=='isEditing' }">
                     <?php if($canEdit): ?>
@@ -272,15 +212,16 @@
                                 <div ng-switch-when="isLoading">
                                 </div>
                                 <div ng-switch-when="isEditing">
-                                    <a ng-click="saveBiography(edit.profile)" href role="button" class="btn btn-success">
-                                        <i class="icon-ok icon-white"></i> Save
-                                    </a>
-                                    <a ng-click="cancelBiography()" href role="button" class="btn">
+                                    <a ng-click="cancelBiography()" href role="button" class="btn btn-cancel">
                                         <i class="icon-remove"></i> Cancel
+                                    </a>
+
+                                    <a ng-click="saveBiography(edit.profile)" href role="button" class="btn btn-save">
+                                        <i class="icon-ok icon-white"></i> Save
                                     </a>
                                 </div>
                                 <div ng-switch-when="isDisplaying">
-                                    <a ng-click="editBiography()" href data-toggle="modal" role="button" class="btn">
+                                    <a ng-click="editBiography()" href data-toggle="modal" role="button" class="btn btn-edit">
                                         <i class="icon-pencil"></i> Edit
                                     </a>
                                 </div>
@@ -381,22 +322,6 @@
                     </a>
                 </div>
 
-            </section>
-        </div>
-        <div class="span3">
-            <section ng-show="contributed.length">
-                <div class="section-segment section-segment-header">
-                    <h3>Contributed to Pages</h3>
-                </div>
-
-                <div ng-repeat="page in contributed | limitTo:contributedDisplayLimit">
-                    <a href="?q=node/{{ page.nid }}" class="section-segment">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
-
-                        {{ page.title }}
-                    </a>
-                </div>
             </section>
         </div>
     </div>

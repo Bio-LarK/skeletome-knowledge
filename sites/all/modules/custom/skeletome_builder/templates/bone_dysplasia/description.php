@@ -111,8 +111,8 @@
                                 class="icon-chevron-up icon-black"></i> Hide</a>
                     </div>-->
                     <div ng-show="description.value.length > defaultDescriptionLength">
-                        <button ng-show="isHidingDescription" ng-click="showDescription()" class="btn btn-reveal" ><i class="icon-chevron-down"></i> Show All</button>
-                        <button ng-show="!isHidingDescription" ng-click="hideDescription()" class="btn btn-reveal" ><i class="icon-chevron-up"></i> Hide</button>
+                        <button ng-show="isHidingDescription" ng-click="showDescription()" class="btn btn-reveal" >Show All</button>
+                        <button ng-show="!isHidingDescription" ng-click="hideDescription()" class="btn btn-reveal" >Hide</button>
                     </div>
 
                 </div>
