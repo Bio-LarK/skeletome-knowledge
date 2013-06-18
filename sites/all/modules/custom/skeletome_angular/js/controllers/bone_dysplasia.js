@@ -65,6 +65,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.setupXRays();
         $scope.setupDetails();
         $scope.setupClinicalFeatures();
+        $scope.setupStatements();
     }
 
 
@@ -621,6 +622,18 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     }
 
 
+    $scope.setupStatements = function() {
+        $scope.model.statementsState = "isDisplaying";
+    }
+    $scope.editStatements = function() {
+        $scope.model.statementsState = "isEditing";
+    }
+    $scope.approveStatements = function() {
+        $scope.model.statementsState = "isApproving";
+    }
+    $scope.cancelStatements = function() {
+        $scope.model.statementsState = "isDisplaying";
+    }
 
     $scope.saveStatement = function(newStatement) {
         // Set it as loading the statement

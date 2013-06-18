@@ -1,7 +1,7 @@
 <section>
     <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.xrayState == 'isEditing' }">
         <?php if ($isAdmin || $isEditor || $isCurator): ?>
-            <div class="pull-right section-segment-header-buttons">
+            <div class="section-segment-header-buttons">
 
 
                 <div ng-switch on="model.xrayState">
