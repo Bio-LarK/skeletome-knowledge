@@ -33,12 +33,20 @@
 
                 <!-- Edit buttons -->
                 <?php if($isAdmin || $isCurator): ?>
+
+
                     <span ng-show="!model.isAddingStatement">
+                        <div class="header-divider"></div>
+
                         <a ng-show="isEditingStatements" href
                            ng-click="hideEditStatements()"
                            data-toggle="modal" role="button"
                            class="btn btn-save">
                             <i class="ficon-ok icon-white"></i> Done
+                        </a>
+
+                        <a href role="button" class="btn btn-edit">
+                            <i class="ficon-ok"></i> Approve Statements
                         </a>
 
                         <a ng-show="!isEditingStatements" href
@@ -250,4 +258,8 @@
             </div>
         </div>
     </section>
+
+
+
+
 </div>

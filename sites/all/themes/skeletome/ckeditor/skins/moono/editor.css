@@ -115,10 +115,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
     /*border: 1px solid rgb(255, 235, 0);*/
     /*border: none;*/
     /*border: 1px solid red;*/
-    border-bottom: 1px solid rgb(255, 235, 0);
+    /*border-bottom: 1px solid rgb(255, 235, 0);*/
     /*border-top: 1px solid #eee;*/
     padding: 10px 21px 7px 21px;
-    background-color: rgb(255, 251, 224);
+    /*background-color: rgb(255, 251, 224);*/
+    background-color: white;
+    border-bottom: 1px solid #ddd;
 }
 
 .cke_float .cke_top {

@@ -10,13 +10,21 @@
 
                         </div>
                         <div ng-switch-when="isEditing">
-                            <a href ng-click="cancelClinicalFeatures()" class="btn btn-cancel">
-                                <i class="ficon-remove"></i> Cancel
-                            </a>
 
                             <a href ng-click="saveClinicalFeatures()" class="btn btn-save">
                                 <i class="ficon-ok"></i> Save
                             </a>
+
+                            <a href ng-click="cancelClinicalFeatures()" class="btn btn-cancel">
+                                <i class="ficon-remove"></i> Cancel
+                            </a>
+
+                            <div class="header-divider"></div>
+
+                            <a ng-click="showAddClinicalFeature()" class="btn btn-cancel" href >
+                                <i class="ficon-plus-sign"></i> Add
+                            </a>
+
                         </div>
                         <div ng-switch-when="isDisplaying">
                             <a href ng-click="editClinicalFeatures()" class="btn btn-edit">
@@ -41,9 +49,10 @@
         <div ng-switch-when="isEditing">
 
             <!-- Search form -->
+            <!--  -->
             <div class="section-segment section-segment-editing">
                 <form style="margin-bottom: 0">
-                    <search model="model.edit.clinicalFeatureQuery" placeholder="Find a Clinical Feature to Add or Remove" change="searchForClinicalFeature(model.edit.clinicalFeatureQuery)" placeholder="Search for a Clinical Feature"></search>
+                    <search model="model.edit.clinicalFeatureQuery" placeholder="Find a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
                 </form>
             </div>
 
@@ -59,39 +68,19 @@
                 </div>
             </div>
 
-            <!-- Search Results -->
-            <div ng-switch on="model.edit.clinicalFeaturesSearchResultsState">
-                <div ng-switch-when="isLoading">
-                    <div class="section-segment section-segment-editing refreshing-box" ng-show="model.edit.clinicalFeaturesSearchResultsState">
-                        <i class="icon-refresh icon-refreshing"></i>
-                    </div>
-                </div>
-                <div ng-switch-when="isDisplaying">
-                    <div ng-show="model.edit.clinicalFeatureQuery.length" ng-repeat="result in model.edit.clinicalFeaturesSearchResults">
-                        <div style="overflow: hidden" class="section-segment section-segment-editing">
-                            <div style="width: 60%; float: left" ng-bind-html-unsafe="result.name | truncate:40 | capitalize | highlight:model.edit.clinicalFeatureQuery">
-                                {{ result.name | truncate:40 | highlight:model.edit.clinicalFeatureQuery | capitalize }}
-                            </div>
-
-                            <a ng-show="result.added" ng-click="toggleClinicalFeatureResult(result)" class="btn btn-remove" href="">Remove</a>
-                            <a ng-show="!result.added" ng-click="toggleClinicalFeatureResult(result)" class="btn btn-add" href="">Add</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Existing Clinical Features -->
-            <div ng-show="!model.edit.clinicalFeatureQuery.length" ng-repeat="clinicalFeature in model.edit.clinicalFeatures | filter:model.edit.clinicalFeatureQuery">
-                <div style="overflow: hidden" class="section-segment section-segment-editing" href="?q=node/{{ model.boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
 
-                    <div style="width: 60%; float: left">
-                        {{clinicalFeature.name | truncate:40 | capitalize}}
-                    </div>
+            <div ng-repeat="clinicalFeature in model.edit.clinicalFeatures | filter:model.edit.clinicalFeatureQuery | orderBy:'-information_content'">
+                <a ng-click="removeClinicalFeature(clinicalFeature)" class="section-segment section-segment-editing">
 
-                    <a ng-show="clinicalFeature.added" ng-click="toggleClinicalFeature(clinicalFeature)" class="btn btn-remove" href="">Remove</a>
-                    <a ng-show="!clinicalFeature.added" ng-click="toggleClinicalFeature(clinicalFeature)" class="btn btn-add" href="">Add</a>
-                </div>
+                    <span class="btn btn-remove" href=""><i class="ficon-remove"></i></span>
+
+                    <span >
+                        {{clinicalFeature.name | truncate:100 | capitalize}}
+                    </span>
+                </a>
             </div>
+
         </div>
 
         <div ng-switch-when="isDisplaying">
@@ -129,9 +118,48 @@
                             </div>
                         </div>
                     </a>
-
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<my-modal visible="isAddingClinicalFeature">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Add Clinical Feature</h3>
+    </div>
+
+    <div class="section-segment">
+        <p>
+            Enter your Orcid ID. Only public information on Orcid can be imported.
+        </p>
+        <search model="model.edit.addClinicalFeatureQuery" change="searchForClinicalFeature(model.edit.addClinicalFeatureQuery)" placeholder="Find a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
+    </div>
+    <div>
+        <!-- Search Results -->
+        <div ng-show="model.edit.addClinicalFeatureQuery.length" ng-switch on="model.edit.clinicalFeaturesSearchResultsState">
+            <div ng-switch-when="isLoading">
+                <div class="section-segment refreshing-box" ng-show="model.edit.clinicalFeaturesSearchResultsState">
+                    <i class="icon-refresh icon-refreshing"></i>
+                </div>
+            </div>
+            <div ng-switch-when="isDisplaying">
+                <div ng-repeat="result in model.edit.clinicalFeaturesSearchResults">
+                    <div style="overflow: hidden" class="section-segment">
+                        <a ng-show="result.added" ng-click="toggleClinicalFeatureResult(result)" class="btn btn-added" href=""><i class="ficon-ok"></i></a>
+                        <a ng-show="!result.added" ng-click="toggleClinicalFeatureResult(result)" class="btn btn-add" href=""><i class="ficon-plus"></i></a>
+
+                        <div style="display: inline-block" ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.addClinicalFeatureQuery">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--<div class="section-segment media-body">
+        <a class="btn btn-save" href="" ng-enabled="orcidId.length >= 16" ng-click="importFromOrcid(orcidId)">Import</a>
+        <a class="btn btn-cancel" href="" ng-click="hideImportFromOrcid()">Cancel</a>
+    </div>-->
+</my-modal>

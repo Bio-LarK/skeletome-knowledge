@@ -31,6 +31,7 @@ scripts[] = js/services/services.js
 scripts[] = js/filters/filters.js
 
 ; AngularJS Directives
+scripts[] = js/directives/my_modal.js
 scripts[] = js/directives/autocomplete.js
 scripts[] = js/directives/ck_editor.js
 scripts[] = js/directives/clinical_feature_adder.js

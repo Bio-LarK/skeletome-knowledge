@@ -106,11 +106,7 @@ function ProfileCtrl($scope, $http) {
         // Setup the default length
         $scope.publicationDisplayLimit = $scope.DEFAULT_PUB_LIMIT;
         $scope.isHidingPublications =  $scope.profile.field_profile_publications.und.length > $scope.DEFAULT_PUB_LIMIT;
-
-        console.log($scope.isHidingPublications);
-
     }
-
 
     $scope.showAllPublications = function() {
         $scope.isHidingPublications = false;
@@ -159,6 +155,31 @@ function ProfileCtrl($scope, $http) {
         $scope.edit.profile = angular.copy($scope.profile);
         $scope.biographyState = "isEditing";
     }
+    $scope.importLinkedInBiography = function() {
+        if($scope.biographyState != "isEditing") {
+            $scope.edit.profile = angular.copy($scope.profile);
+        }
+        $scope.biographyState = "isLoading";
+
+        $http.get('?q=linkedin/profile').success(function(data) {
+            $scope.linkedIn.justGranted = false;
+
+            if(angular.isDefined(data.error)) {
+                linkedIn.isAuthenticated = false;
+                $scope.biographyState = "isEditing";
+            } else {
+                $scope.edit.profile = angular.copy($scope.profile);
+                $scope.edit.profile.body.und[0].value = data.bio + " " + data.position + " " + (data.location || "") + $scope.edit.profile.body.und[0].value;
+                $scope.biographyState = "isEditing";
+            }
+        });
+    }
+    $scope.importOrcidBiography = function() {
+        $scope.orcidImportFields.biography = true;
+        $scope.orcidImportFields.works = false;
+        $scope.isShowingImportFromOrcid = true;
+    }
+
     $scope.saveBiography = function(profile) {
         $scope.biographyState = "isLoading";
 
@@ -171,9 +192,32 @@ function ProfileCtrl($scope, $http) {
         $scope.biographyState = "isDisplaying";
     }
 
-    $scope.showImportFromOrcid = function() {
+
+    $scope.editPublications = function() {
+        $scope.edit.profile = angular.copy($scope.profile);
+        $scope.publicationsState = "isEditing";
+    }
+    $scope.savePublications = function(profile) {
+        $scope.publicationsState = "isLoading";
+
+        $scope.saveProfile(profile).success(function(data) {
+            $scope.publicationsState = "isDisplaying";
+            $scope.profile = data;
+        });
+    }
+    $scope.removePublication = function(publication) {
+        var index = $scope.edit.profile.field_profile_publications.und.indexOf(publication);
+        $scope.edit.profile.field_profile_publications.und.splice(index, 1);
+    }
+    $scope.cancelPublications = function() {
+        $scope.publicationsState = "isDisplaying";
+    }
+    $scope.importOrcidPublications = function() {
+        $scope.orcidImportFields.biography = false;
+        $scope.orcidImportFields.works = true;
         $scope.isShowingImportFromOrcid = true;
     }
+
     $scope.hideImportFromOrcid = function() {
         $scope.isShowingImportFromOrcid = false;
     }
@@ -181,73 +225,58 @@ function ProfileCtrl($scope, $http) {
         if(orcidId.length == 0) {
             return;
         }
-        $scope.edit.profile = angular.copy($scope.profile);
-        console.log("import from orcid " + orcidId);
-        $scope.isLoadingImportFromOrcid = true;
+        $scope.isShowingImportFromOrcid = false;
 
-        var url = '?q=orcid/profile/' + orcidId;
-        console.log("url is" + url);
-        $http.get(url).success(function(data) {
-//            console.log(data);
+        if($scope.biographyState != "isEditing") {
+            $scope.edit.profile = angular.copy($scope.profile);
+        }
+
+        if($scope.orcidImportFields.biography) {
+            $scope.biographyState = "isLoading";
+        }
+        if($scope.orcidImportFields.works) {
+            $scope.publicationsState = "isLoading";
+        }
+        $http.get('?q=orcid/profile/' + orcidId).success(function(data) {
+
             if($scope.orcidImportFields.biography) {
-                $scope.edit.profile.body.und[0].value = data.bio || "";
+                $scope.edit.profile.body.und[0].value = (data.bio || "") + $scope.edit.profile.body.und[0].value;
             }
 
             if($scope.orcidImportFields.works) {
-                $scope.edit.profile.field_profile_publications.und = [];
+//                $scope.edit.profile.field_profile_publications.und = [];
                 angular.forEach(data.publications, function(publication) {
                     $scope.edit.profile.field_profile_publications.und.push({'value': publication});
                 });
             }
 
-            $scope.biographyState = "isLoading";
-            $scope.publicationsState = "isLoading";
-
-            $scope.saveProfile($scope.edit.profile).success(function(data) {
-                $scope.isLoadingImportFromOrcid = false;
-                $scope.isShowingImportFromOrcid = false;
-                $scope.biographyState = "isDisplaying";
-                $scope.publicationsState = "isDisplaying";
-                $scope.profile = data;
-            });
-
+            if($scope.orcidImportFields.biography) {
+                $scope.biographyState = "isEditing";
+            }
+            if($scope.orcidImportFields.works) {
+                $scope.publicationsState = "isEditing";
+            }
         });
     }
 
-    $scope.showImportFromLinkedIn = function() {
-        $scope.isShowingImportFromLinkedIn = true;
-    }
-    $scope.hideImportFromLinkedIn = function() {
-        $scope.isShowingImportFromLinkedIn = false;
-    }
     $scope.importFromLinkedIn = function() {
-        $scope.edit.profile = angular.copy($scope.profile);
-        $scope.isLoadingImportFromLinkedIn = true;
+
+        if($scope.biographyState != "isEditing") {
+            $scope.edit.profile = angular.copy($scope.profile);
+        }
+        $scope.biographyState = "isLoading";
 
         $http.get('?q=linkedin/profile').success(function(data) {
             $scope.linkedIn.justGranted = false;
 
-            $scope.edit.profile = angular.copy($scope.profile);
-            if($scope.linkedInImportFields.summary) {
-                $scope.edit.profile.body.und[0].value = data.bio || "";
+            if(angular.isDefined(data.error)) {
+                linkedIn.isAuthenticated = false;
+                $scope.biographyState = "isEditing";
+            } else {
+                $scope.edit.profile = angular.copy($scope.profile);
+                $scope.edit.profile.body.und[0].value = $scope.edit.profile.body.und[0].value + data.bio + " " + data.position + " " + data.location || "";
+                $scope.biographyState = "isEditing";
             }
-            if($scope.linkedInImportFields.position) {
-                $scope.edit.profile.field_profile_position.und[0].value = data.position || "";
-            }
-            if($scope.linkedInImportFields.location) {
-                $scope.edit.profile.field_profile_location.und[0].value = data.location || "";
-            }
-
-            $scope.biographyState = "isLoading";
-            $scope.professionalState = "isLoading";
-
-            $scope.saveProfile($scope.edit.profile).success(function(data) {
-                $scope.isLoadingImportFromLinkedIn = false;
-                $scope.isShowingImportFromLinkedIn = false;
-                $scope.biographyState = "isDisplaying";
-                $scope.professionalState = "isDisplaying";
-                $scope.profile = data;
-            });
         });
     }
 

@@ -254,15 +254,23 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
             $http.get('?q=ajax/clinical-features/search/' + query).success(function(data) {
 
                 // loop through results we got back and add add/remove buttons
-                angular.forEach(data, function(result, index) {
+                var stuff = [];
+
+                angular.forEach(data, function(result, index1) {
+                    var found = false;
                     angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
                         if(result.tid == clinicalFeature.tid) {
-                            result.added = clinicalFeature.added;
+//                            data.splice(index1, 1);
+//                            result.added = clinicalFeature.added;
+                            found = true;
                         }
                     });
+                    if(!found) {
+                        stuff.push(result);
+                    }
                 });
 
-                $scope.model.edit.clinicalFeaturesSearchResults = data;
+                $scope.model.edit.clinicalFeaturesSearchResults = stuff;
                 $scope.model.edit.clinicalFeaturesSearchResultsCounter--;
                 if($scope.model.edit.clinicalFeaturesSearchResultsCounter == 0) {
                     $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_DISPLAYING;
@@ -272,6 +280,11 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
             $scope.model.edit.clinicalFeaturesSearchResultsCounter = 0;
         }
     }
+    $scope.removeClinicalFeature = function(clinicalFeature) {
+        var index = $scope.model.edit.clinicalFeatures.indexOf(clinicalFeature);
+        $scope.model.edit.clinicalFeatures.splice(index, 1);
+    }
+
     $scope.toggleClinicalFeatureResult = function(result) {
         result.added = !result.added;
 
@@ -320,16 +333,12 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_DISPLAYING;
         $scope.model.clinicalFeaturesState = $scope.IS_DISPLAYING;
     }
-    $scope.toggleClinicalFeature = function(clinicalFeature) {
-        clinicalFeature.added = !clinicalFeature.added;
+
+    $scope.showAddClinicalFeature = function() {
+        $scope.isAddingClinicalFeature = true;
+        $scope.model.edit.addClinicalFeatureQuery = "";
+        $scope.model.edit.clinicalFeaturesSearchResults = [];
     }
-
-
-
-
-
-
-
 
     /* Clinical Features */
     $scope.showEditClinicalFeatures = function() {
@@ -370,23 +379,23 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
             });
     }
     /* Remove Clinical Feature from Bone Dysplasia */
-    $scope.removeClinicalFeature = function(featureToRemove, boneDysplasia) {
-        featureToRemove.added = false;
-
-        /* Remove it form the current list */
-        angular.forEach($scope.clinicalFeatures, function(currentClinicalFeature, index){
-            if(featureToRemove.tid == currentClinicalFeature.tid) {
-                $scope.clinicalFeatures.splice(index, 1);
-                return;
-            }
-        });
-        /* Send it to the server */
-        $http.post('?q=ajax/bone-dysplasia/clinical-feature/remove', {
-            'boneDysplasiaNid': boneDysplasia.nid,
-            'clinicalFeatureTid': featureToRemove.tid
-        }).success(function(data) {
-            });
-    }
+//    $scope.removeClinicalFeature = function(featureToRemove, boneDysplasia) {
+//        featureToRemove.added = false;
+//
+//        /* Remove it form the current list */
+//        angular.forEach($scope.clinicalFeatures, function(currentClinicalFeature, index){
+//            if(featureToRemove.tid == currentClinicalFeature.tid) {
+//                $scope.clinicalFeatures.splice(index, 1);
+//                return;
+//            }
+//        });
+//        /* Send it to the server */
+//        $http.post('?q=ajax/bone-dysplasia/clinical-feature/remove', {
+//            'boneDysplasiaNid': boneDysplasia.nid,
+//            'clinicalFeatureTid': featureToRemove.tid
+//        }).success(function(data) {
+//            });
+//    }
 
     /**
      * Checks if gene search matches gene/gene mutation name

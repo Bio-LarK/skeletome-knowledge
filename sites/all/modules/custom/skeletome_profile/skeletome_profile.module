@@ -198,6 +198,7 @@ function page_profile($user) {
     $linked_in = array(
         'authUrl'           => skeletome_linkedin_get_auth_url()
     );
+
     if(isset($_SESSION['linkedOAuth']) && isset($_SESSION['linkedOAuth']['access_token'])) {
         if($_SESSION['linkedOAuth']['expires'] > time()) {
             $linked_in['isAuthenticated'] = true;

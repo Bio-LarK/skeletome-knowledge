@@ -1048,6 +1048,8 @@ ul.list-items li {
 .modal-dark.modal {
     background-color: #fafafa;
     border-radius: 0px !important;
+    max-height: 50%;
+    overflow: auto;
 }
 
 .modal.fade.slide {
@@ -1061,7 +1063,7 @@ ul.list-items li {
 }
 .modal-dark.modal .modal-header {
     border-bottom: none;
-    background-color: #2e3033 !important;
+    background-color: #3E5164 !important;
     color: white;
     padding: 14px 21px;
 }
@@ -1069,11 +1071,7 @@ ul.list-items li {
     color: white;
     text-shadow: 0 1px 0 black;
 }
-.modal-dark.modal-docked .modal-body {
-    height: 100%;
-    max-height: none;
-    position: relative;
-}
+
 .muted.info {
     text-align: center;;
     text-shadow: 0px -1px 0px white;
@@ -1085,9 +1083,7 @@ ul.list-items li {
     -moz-box-sizing: border-box;
     height: 330px;
 }
-modal-dark .modal-footer {
-    border-radius: 0px !important;
-}
+
 .modal-switch {
     height: 100%;
 }
@@ -1221,7 +1217,15 @@ table.table-dark {
 }
 
 
+.dropdown-menu.dropdown-menu-import {
 
+}
+    .dropdown-menu.dropdown-menu-import a:hover {
+        background-color: #eee;
+    }
+    .dropdown-menu.dropdown-menu-import img {
+        height: 20px;
+    }
 /* ================================================
     Buttons
 */
@@ -1251,26 +1255,73 @@ table.table-dark {
     .btn.btn-edit {
         background-color: #f5f5f5;
         color: #4d5d6e;
-        border: 1px solid #e8e8e8;
-    }/* the cancel button */
-    .btn.btn-cancel {
-        background-color: #E8E8E8;
-        color: #4d5d6e;
-        border: 1px solid #d6d6d6;
+        border: 1px solid #d5d5d5;
     }
+        .btn.btn-edit img {
+            height: 16px;
+            position: relative;
+            top: -2px;
+        }
+    /* the cancel button */
+    .btn.btn-cancel {
+        color: #777777;
+        border: 1px solid #adadad;
+        text-shadow: none;
+    }
+    .section-segment .btn-cancel {
+        background-color: white;
+    }
+    .section-segment-editing .btn-cancel {
+        background-color: #fffbe6;
+    }
+
     /* the save button */
     .btn.btn-save {
         background-color: #0e90d2;
-        border: 1px solid #1b6bb6 !important;
+        border: 1px solid #0e90d2 !important;
         color: white;
     }
+
     .btn.btn-remove {
-        background-color: red;
-        color: white;
+        border-radius: 100px;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        border: 1px solid #adadad;
+        padding: 3px; margin-right: 14px;
+        background-color: transparent;
+        color: #777777;
     }
+        .section-segment-editing:hover .btn-remove, .btn-remove:hover {
+            background-color: rgb(238, 142, 142);
+            border-color: rgb(238, 142, 142);
+            color: white;
+        }
+
     .btn.btn-add {
-        background-color: green;
+        border-radius: 100px;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        border: 1px solid #adadad;
+        padding: 3px; margin-right: 14px;
+        background-color: transparent;
+        color: #777777;
+    }
+        .section-segment-editing:hover .btn-add, .btn-add:hover {
+            background-color: rgb(145, 219, 176);
+            border-color: rgb(145, 219, 176);
+            color: white;
+        }
+    .btn.btn-added {
+        background-color: rgb(145, 219, 176);
         color: white;
+        border-radius: 100px;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        border: 1px solid rgb(145, 219, 176);
+        padding: 3px; margin-right: 14px;
     }
     /* add new button */
     .btn.btn-addnew {
@@ -1746,6 +1797,8 @@ section, div.section {
     padding: 12px 18px;
     border-bottom: 1px solid #e7e7e7;
     display: block;
+    color: #4d5d6e;
+    background-color: white;
 }
     .section-segment h1 img {
         height: 35px;
@@ -1805,9 +1858,6 @@ a.section-segment {
         background-color: #0e90d2;
         border-bottom: 1px solid #0c689b;
     }
-    .no-touch a.section-segment:hover span {
-        color: white;
-    }
     .no-touch a.section-segment:active {
         box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
         -moz-box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -1838,6 +1888,7 @@ a.section-segment {
         background-color: white;
         border: 1px solid white;
     }
+
     .progress {
         margin-bottom: 0;
     }
@@ -1854,9 +1905,21 @@ a.section-segment {
 .section-segment.section-segment-editing {
     background-color: #fffbe6;
     border-bottom: 1px solid rgb(233, 230, 194);
+    color: #777777;
 }
+    .no-touch a.section-segment.section-segment-editing:hover {
+        background-color: #fffbe6 !important;
+        color: #777777 !important;
+        border-bottom: 1px solid rgb(233, 230, 194);
+        cursor: pointer;
+    }
+    .section-segment-editing:hover span {
+        color: #777777;
+    }
+
 .section-segment-editing input, .section-segment-editing textarea {
     border: 1px solid rgb(233, 230, 194);
+    background-color: rgb(245, 241, 220);
 }
 .section-segment-editing input:focus, .section-segment-editing textarea:focus {
     outline: none;
@@ -1880,7 +1943,6 @@ a.section-segment {
     min-height: 49px;
     padding: 0px 18px;
     padding-right: 10px;
-    line-height: 49px;
     font-size: 21px;
 }
     .section-segment-header h1, .section-segment-header h2, .section-segment-header h3, .section-segment-header h4 {
@@ -1895,6 +1957,20 @@ a.section-segment {
     }
 
     .section-segment-header-buttons {
+        float: right;
+        position: relative;
+        top: 10px;
+    }
+    .section-segment-header-buttons .btn {
+        margin-left: 4px;
+    }
+    .header-divider {
+        border-left:1px solid rgb(233, 230, 194); 
+        height: 30px; display: inline; 
+        margin-left: 5px;
+        margin-right: 9px;
+        position: relative;
+        top: 2px;
     }
 
 /* ================================================
