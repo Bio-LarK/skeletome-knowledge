@@ -1939,15 +1939,17 @@ a.section-segment {
 }
 
 .section-segment-sub {
-    padding-left: 56px;
+    /*padding-left: 56px;*/
 }
 .section-segment-editing.section-segment-sub {
     background-color: #ebe7d6;
     border-color: #ddd9c9;
+    border-left: 5px solid #bcb9aa;
 }
     .no-touch a.section-segment.section-segment-sub:hover{
         background-color: #ebe7d6 !important;
         border-color: #ddd9c9;
+        border-left: 5px solid #bcb9aa;
     }
 /* ================================================
     Section Segment: Header Subclass

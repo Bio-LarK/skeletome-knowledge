@@ -37,7 +37,7 @@
         </div>
         <div ng-switch on="model.clinicalFeaturesState">
             <div ng-switch-when="isEditing">
-                <h2><i>Editing Clinical Features ({{ model.clinicalFeatures.length }})</i></h2>
+                <h2><i>Editing Clinical Features ({{ model.edit.clinicalFeatures.length }})</i></h2>
             </div>
             <div ng-switch-when="isDisplaying">
                 <h2>Clinical Features ({{ model.clinicalFeatures.length }})</h2>

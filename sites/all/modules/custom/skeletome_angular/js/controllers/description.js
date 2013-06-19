@@ -62,7 +62,7 @@ function DescriptionCtrl($scope, $http) {
                 }
             });
 
-            $http.post('?q=ajax/statement/approve/' + $scope.model.statementPackage.nid, {
+            $http.post('?q=ajax/statement/' + $scope.model.statementPackage.nid + '/approve', {
                 userIds: userIds
             }).success(function(statement) {
                 jQuery.extend($scope.model.statementPackage.statement, statement);

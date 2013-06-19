@@ -17,15 +17,15 @@
 
                     <!-- Not Editing Description -->
                 <span ng-show="model.isEditingDescription">
+                    <a href class="btn btn-save"
+                       ng-click="saveEditedDescription(model.editedDescription)">
+                        <i class="ficon-ok icon-white"></i> Save
+                    </a>
+
                     <a ng-show="model.isEditingDescription"
                        href class="btn btn-cancel"
                        ng-click="cancelEditingDescription()">
                         <i class="ficon-remove"></i> Cancel
-                    </a>
-
-                    <a href class="btn btn-save"
-                       ng-click="saveEditedDescription(model.editedDescription)">
-                        <i class="ficon-ok icon-white"></i> Save
                     </a>
                 </span>
 
@@ -81,7 +81,7 @@
             <!-- Not Editing Description -->
             <div ng-show="!model.isEditingDescription" class="description-text">
 
-                <div class="alert alert-stub" ng-show="provider && !model.isEditingDescription">
+                <div class="alert alert-info" ng-show="provider && !model.isEditingDescription">
                     <i class="ficon-info-sign"></i> <em>This stub is sourced from {{ provider }}</em>.
                     <div style="font-size: 12px" ng-bind-html-unsafe="reference">
                     </div>

@@ -902,52 +902,6 @@ function ajax_add_details_to_bone_dysplasia($bone_dysplasia_nid) {
 
 
 
-function ajax_get_comments_for_statement($statement_node) {
-    $comments = array_values(comment_load_multiple(comment_get_thread($statement_node, '', 1000)));
-    $comments = array_reverse($comments);
-    echo drupal_json_encode($comments);
-}
-
-function ajax_add_comment_to_statement($statement) {
-    $data = file_get_contents("php://input");
-    $objData = json_decode($data, true);
-
-    // Get out the comment text
-    $comment_text = $objData['comment_text'];
-
-    $comment = new stdClass();
-
-    global $user;
-
-    $comment->nid = $statement->nid; // nid of a node you want to attach a comment to
-    $comment->cid = 0; // leave it as is
-    $comment->pid = 0; // parent comment id, 0 if none
-    $comment->uid = $user->uid; // user's id, who left the comment
-    $comment->mail = ''; // user's email
-    $comment->name = $user->name; // If user is authenticated you can omit this field, it will be auto-populated, if the user is anonymous and you want to name him somehow, input his name here
-    //$comment->thread = '01/'; // OPTIONAL. If you need comments to be threaded you can fill this value. Otherwise omit it.
-    //$comment->hostname = '127.0.01' // OPTIONAL. You can log poster's ip here
-
-    $comment->created = time(); // OPTIONAL. You can set any time you want here. Useful for backdated comments creation.
-    $comment->is_anonymous = 0; // leave it as is
-    //$comment->homepage = ''; // you can add homepage URL here
-    $comment->status = COMMENT_PUBLISHED; // We auto-publish this comment
-    $comment->language = LANGUAGE_NONE; // The same as for a node
-    $comment->subject = '';
-    $comment->comment_body[$comment->language][0]['value'] = $comment_text; // Everything here is pretty much like with a node
-    $comment->comment_body[$comment->language][0]['format'] = 'filtered_html';
-    //$comment->field_custom_field_name[LANGUAGE_NONE][0]['value'] = ‘Some value’; // OPTIONAL. If your comment has a custom field attached it can added as simple as this // preparing a comment for a save
-
-    comment_submit($comment); // saving a comment
-    comment_save($comment);
-
-    echo drupal_json_encode($comment);
-}
-function ajax_remove_comment_from_statement($comment_id) {
-    comment_delete($comment_id);
-}
-
-
 
 function ajax_add_gene_to_bone_dysplasia($bone_dysplasia_id) {
     $data = file_get_contents("php://input");

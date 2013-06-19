@@ -42,7 +42,8 @@ function StatementCtrl($scope, $http) {
         $scope.model.statementsState = "isApproving";
         $scope.model.edit.statements = [];
         angular.forEach($scope.statements, function(statement, index) {
-            if(!angular.isDefined(statement.statement.field_statement_approved_time.und)) {
+            if(!angular.isDefined(statement.field_statement_approved_time.und)) {
+                console.log("time is undefined");
                 $scope.model.edit.statements.push(statement);
                 if(angular.isUndefined(statement.comments)) {
                     statement.isLoadingComments = true;

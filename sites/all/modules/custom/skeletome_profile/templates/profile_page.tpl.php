@@ -256,6 +256,13 @@
                         </div>
                     </div>
                     <div ng-switch-when="isEditing">
+
+                        <div ng-show="!edit.profile.field_profile_publications.und.length" class="section-segment section-segment-editing media-body" >
+                            <div class="muted">
+                                No publications.
+                            </div>
+                        </div>
+
                         <div ng-repeat="publication in edit.profile.field_profile_publications.und" >
 
                             <a class="section-segment section-segment-editing media-body" ng-click="removePublication(publication)" href>
@@ -268,8 +275,10 @@
                         </div>
                     </div>
                     <div ng-switch-when="isDisplaying">
-                        <div class="section-segment muted media-body" ng-show="!profile.field_profile_publications.und.length">
-                            No publications.
+                        <div class="section-segment media-body" ng-show="!profile.field_profile_publications.und.length">
+                            <div class="muted">
+                                No publications.
+                            </div>
                         </div>
                         <div ng-repeat="publication in profile.field_profile_publications.und | limitTo:publicationDisplayLimit" class="section-segment" ng-bind-html-unsafe="publication.value">
                         </div>
@@ -312,9 +321,6 @@
                         <div>
                             <span>"</span><span ng-bind-html-unsafe="item.body | truncate:200"></span><span>"</span>
                         </div>
-                        <div >
-                        </div>
-
                     </a>
                 </div>
 
@@ -333,7 +339,7 @@
                 Enter your Orcid ID. Only public information on Orcid can be imported.
             </p>
             <div>
-                Orcid ID <input type="text" ng-model="orcidId" placeholder="0000-0000-0000-0000"/> <i class="ficon-question-sign" cm-tooltip cm-tooltip-content="Your Orcid ID can be found on your profile page."></i>
+                Orcid ID <input type="text" ng-model="orcidId" placeholder="0000-0000-0000-0000"/> <i class="ficon-question-sign" cm-tooltip cm-tooltip-content="Your Orcid ID can be found on your Orcid profile page."></i>
             </div>
         </div>
         <div class="section-segment media-body">

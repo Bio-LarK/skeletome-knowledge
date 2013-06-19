@@ -43,9 +43,9 @@
 
                     <div ng-switch-when="isDisplaying">
                         <?php if ($user->uid): ?>
-                            <a class="btn btn-edit " ng-click="addStatement()"  href>
+                            <button class="btn btn-edit " ng-click="addStatement()" >
                                 <i class="ficon-plus"></i> Add Statement
-                            </a>
+                            </button>
                         <?php endif; ?>
 
                         <?php if($isAdmin || $isCurator): ?>
@@ -96,7 +96,6 @@
                 <div ng-repeat="statement in model.edit.statements">
                     <a ng-click="removeStatement(statement)" href class="section-segment section-segment-editing media-body">
                         <span class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
-
                         <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
                         </span>
                     </a>
@@ -126,12 +125,10 @@
                         </span>
                     </div>
 
+                    <a ng-repeat="comment in statement.comments" href class="section-segment section-segment-editing section-segment-sub media-body">
+                        <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
+                    </a>
 
-                    <div ng-repeat="comment in statement.comments">
-                        <a href class="section-segment section-segment-editing section-segment-sub media-body">
-                            <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
-                        </a>
-                    </div>
 
 
                 </div>
@@ -144,12 +141,12 @@
 
             </div>
             <div ng-switch-when="isDisplaying">
-                <div class="section-segment">
-                    <button class="btn">
+                <div class="section-segment" style="background-color: #f5f5f5">
+                    <button class="btn" style="border: 1px solid #d2d2d2; border-radius: 100px; background-color: white">
                         Pending
                     </button>
 
-                    <button class="btn">
+                    <button class="btn" style="border: 1px solid #d2d2d2; border-radius: 100px;">
                         <i class="ficon-ok"></i> Approved
                     </button>
                 </div>

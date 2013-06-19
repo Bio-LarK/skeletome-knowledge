@@ -927,29 +927,8 @@ function skeletome_builder_menu() {
     );
 
 
-    /* Adding Comments to Statements */
-    $items['ajax/statement/%node/comment/add'] = array(
-        'title'             => t('Add Comment to Statement.'),
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(2),
-        'page callback'     => 'ajax_add_comment_to_statement',
-        'access callback'   => 'is_authenticated',
-    );
-    $items['ajax/statement/%/comment/%/remove'] = array(
-        'title'             => t('Remove Comment from Statement.'),
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(4),
-        'page callback'     => 'ajax_remove_comment_from_statement',
-        'access callback'   => 'is_authenticated',
-    );
 
-    $items['ajax/statement/%node/comments'] = array(
-        'title'             => t('Get Comments for Statement.'),
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(2),
-        'page callback'     => 'ajax_get_comments_for_statement',
-        'access arguments'  => array('access content')
-    );
+
     $items['ajax/statement/%/remove'] = array(
         'title'             => t('Remove Statement Bone Dysplasia'),
         'type'              => MENU_CALLBACK,

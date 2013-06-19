@@ -1,7 +1,5 @@
 <?php
 
-module_load_include('php', 'skeletome_bone_dysplasia', 'skeletome_bone_dysplasia_model');
-
 function skeletome_bone_dysplasia_menu() {
 
     $items = array();
@@ -70,15 +68,38 @@ function skeletome_bone_dysplasia_statements($bone_dysplasia_id) {
             $statement_ids[] = $statement['nid'];
         }
 
-        // load the bone dysplasia
+        // Load the Bone Dysplasia
         $bone_dysplasia = node_load($bone_dysplasia_id);
+
+
+        // Remove any comments
+        foreach($statements as $statement) {
+            // Get the comments for the statement
+            $comments = array_values(comment_load_multiple(comment_get_thread(node_load($statement['nid']), '', 1000)));
+
+            if(count($comments) != count($statement['comments'])) {
+                // a comment has been deleted
+                foreach($comments as $existing_comment) {
+                    $found = false;
+                    foreach($statement['comments'] as $new_comment) {
+                        if($new_comment['cid'] == $existing_comment->cid) {
+                            $found = true;
+                        }
+                    }
+                    if(!$found) {
+                        comment_delete($new_comment['cid']);
+                    }
+                }
+            }
+        }
+
+        // Remove any statements
         $bone_dysplasia->field_bd_statement[LANGUAGE_NONE] = [];
         foreach($statement_ids as $id) {
             $bone_dysplasia->field_bd_statement[LANGUAGE_NONE][] = array(
                 'target_id' => $id
             );
         }
-
         node_save($bone_dysplasia);
 
         $return_array = $statements;

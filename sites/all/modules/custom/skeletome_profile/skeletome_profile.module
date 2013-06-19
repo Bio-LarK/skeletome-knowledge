@@ -158,10 +158,13 @@ function page_profile($user) {
         ));
         $row = $results->fetchObject();
 
-        $comment->target_nid = $row->nid;
-        $comment->target_title = $row->title;
+        if(isset($row->nid)) {
+            $comment->target_nid = $row->nid;
+            $comment->target_title = $row->title;
 
-        $comment_activity[] = $comment;
+            $comment_activity[] = $comment;
+        }
+
     }
 
     $activity = array_merge($statement_activity, $comment_activity);
