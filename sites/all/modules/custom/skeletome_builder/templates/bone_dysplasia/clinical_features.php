@@ -35,7 +35,19 @@
                 </div>
             <?php endif ?>
         </div>
-        <h2>Clinical Features ({{ model.clinicalFeatures.length }})</h2>
+        <div ng-switch on="model.clinicalFeaturesState">
+            <div ng-switch-when="isEditing">
+                <h2><i>Editing Clinical Features ({{ model.clinicalFeatures.length }})</i></h2>
+            </div>
+            <div ng-switch-when="isDisplaying">
+                <h2>Clinical Features ({{ model.clinicalFeatures.length }})</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section-segment alert alert-success" cm-alert="model.clinicalFeaturesState">
+        <i class="ficon-ok"></i> Clinical Features saved.
     </div>
 
     <div ng-switch on="model.clinicalFeaturesState">
@@ -132,9 +144,9 @@
 
     <div class="section-segment">
         <p>
-            Enter your Orcid ID. Only public information on Orcid can be imported.
+            Search for a Clinical Feature e.g. 'Dwarfism'
         </p>
-        <search model="model.edit.addClinicalFeatureQuery" change="searchForClinicalFeature(model.edit.addClinicalFeatureQuery)" placeholder="Find a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
+        <search model="model.edit.addClinicalFeatureQuery" change="searchForClinicalFeature(model.edit.addClinicalFeatureQuery)" placeholder="Search for a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
     </div>
     <div>
         <!-- Search Results -->
@@ -146,12 +158,19 @@
             </div>
             <div ng-switch-when="isDisplaying">
                 <div ng-repeat="result in model.edit.clinicalFeaturesSearchResults">
-                    <div style="overflow: hidden" class="section-segment">
-                        <a ng-show="result.added" ng-click="toggleClinicalFeatureResult(result)" class="btn btn-added" href=""><i class="ficon-ok"></i></a>
-                        <a ng-show="!result.added" ng-click="toggleClinicalFeatureResult(result)" class="btn btn-add" href=""><i class="ficon-plus"></i></a>
+                    <a ng-show="!result.added" href class="section-segment" ng-click="addClinicalFeature(result)">
+                        <span class="btn btn-add">
+                            <i class="ficon-ok"></i>
+                        </span>
+                        <span ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.addClinicalFeatureQuery">
+                        </span>
+                    </a>
 
-                        <div style="display: inline-block" ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.addClinicalFeatureQuery">
-                        </div>
+                    <div class="section-segment" ng-show="result.added">
+                        <span class="btn btn-added">
+                            <i class="ficon-ok"></i>
+                        </span>
+                        <span ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.addClinicalFeatureQuery"></span>
                     </div>
                 </div>
             </div>

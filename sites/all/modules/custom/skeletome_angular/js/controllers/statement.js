@@ -1,22 +1,118 @@
 function StatementCtrl($scope, $http) {
 
-    $scope.defaultStatementDisplayLimit = 3;
+    $scope.init = function() {
+        $scope.defaultStatementDisplayLimit = 6;
+        $scope.setupStatements();
+    }
 
-    // Setup the default length
-    $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
-    $scope.isHidingStatements =  $scope.statements.length > $scope.defaultStatementDisplayLimit;
 
+
+    $scope.setupStatements = function() {
+        // Set the initial state
+        $scope.model.statementsState = "isDisplaying";
+
+        // Setup the default length
+        $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
+        $scope.isHidingStatements =  $scope.statements.length > $scope.defaultStatementDisplayLimit;
+
+    }
+
+    /**
+     * Enter editing mode for the statements
+     */
+    $scope.editStatements = function() {
+        $scope.model.statementsState = "isEditing";
+        $scope.model.edit.statements = angular.copy($scope.statements);
+
+        angular.forEach($scope.model.edit.statements, function(statement, index) {
+            if(angular.isUndefined(statement.comments)) {
+                statement.isLoadingComments = true;
+                $http.get('?q=ajax/statement/' + statement.nid + '/comments').success(function(data){
+                    statement.isLoadingComments = false;
+                    statement.comments = data;
+                });
+            }
+        });
+
+    }
+    /**
+     * Enter approving mode for the statements
+     */
+    $scope.approveStatements = function() {
+        $scope.model.statementsState = "isApproving";
+        $scope.model.edit.statements = [];
+        angular.forEach($scope.statements, function(statement, index) {
+            if(!angular.isDefined(statement.statement.field_statement_approved_time.und)) {
+                $scope.model.edit.statements.push(statement);
+                if(angular.isUndefined(statement.comments)) {
+                    statement.isLoadingComments = true;
+                    $http.get('?q=ajax/statement/' + statement.nid + '/comments').success(function(data){
+                        statement.isLoadingComments = false;
+                        statement.comments = data;
+                    });
+                }
+            }
+
+        });
+    }
+    /**
+     * Return to displaying mode
+     */
+    $scope.cancelStatements = function() {
+        $scope.model.statementsState = "isDisplaying";
+    }
+    /**
+     * Enter add statement mode
+     */
+    $scope.addStatement = function() {
+        $scope.model.statementsState = "isAdding";
+    }
+
+    /**
+     * Remove a statement
+     * @param statement
+     */
+    $scope.removeStatement = function(statement) {
+        var index = $scope.model.edit.statements.indexOf(statement);
+        $scope.model.edit.statements.splice(index, 1);
+    }
+    /**
+     * Remove a comment from a statement
+     * @param comment
+     * @param statement
+     */
+    $scope.removeCommentFromStatement = function(comment, statement) {
+        var index = statement.comments.indexOf(comment);
+        statement.comments.splice(index, 1);
+    }
+
+    /**
+     * Save Statement is in parent scope
+     */
+
+
+    /**
+     * Show more statements
+     */
     $scope.showStatements = function() {
         $scope.isHidingStatements = false;
         $scope.statementDisplayLimit = $scope.statements.length;
     }
 
+    /**
+     * Show less statements
+     */
     $scope.hideStatements = function() {
         $scope.isHidingStatements = true;
         $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
     }
 
+    /**
+     * Adds a statement to the description
+     * @param statement
+     */
     $scope.addStatementToDescription = function(statement) {
+        $scope.model.statementsState = "isDisplaying";
 
         $scope.model.editedDescription = $scope.description.value;
         $scope.model.isEditingDescription = true;
@@ -53,12 +149,7 @@ function StatementCtrl($scope, $http) {
         console.log($scope.model.statementPackage);
     }
 
-    /**
-     * Show the area for statement creation
-     */
-    $scope.showAddStatement = function() {
-        $scope.model.isAddingStatement = true;
-    }
+
 
     /**
      * Hide the area for statement creation

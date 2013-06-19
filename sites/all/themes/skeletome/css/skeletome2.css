@@ -1287,14 +1287,14 @@ table.table-dark {
         height: 20px;
         width: 20px;
         text-align: center;
-        border: 1px solid #adadad;
+        border: 2px solid #a1a1a1;
         padding: 3px; margin-right: 14px;
         background-color: transparent;
         color: #777777;
     }
         .section-segment-editing:hover .btn-remove, .btn-remove:hover {
             background-color: rgb(238, 142, 142);
-            border-color: rgb(238, 142, 142);
+            border-color: rgb(226, 134, 134);
             color: white;
         }
 
@@ -1303,19 +1303,25 @@ table.table-dark {
         height: 20px;
         width: 20px;
         text-align: center;
-        border: 1px solid #adadad;
+        border: 2px solid #adadad;
         padding: 3px; margin-right: 14px;
         background-color: transparent;
         color: #777777;
     }
-        .section-segment-editing:hover .btn-add, .btn-add:hover {
+        .section-segment:active .btn-add, .btn-add:active {
             background-color: rgb(145, 219, 176);
             border-color: rgb(145, 219, 176);
             color: white;
         }
+        .section-segment:hover .btn-add, .btn-add:hover {
+            /*background-color: rgb(145, 219, 176);*/
+            background-color: transparent;
+            border-color: rgb(145, 219, 176);
+            color: rgb(145, 219, 176);
+        }
     .btn.btn-added {
         background-color: rgb(145, 219, 176);
-        color: white;
+        color: white !important;
         border-radius: 100px;
         height: 20px;
         width: 20px;
@@ -1785,7 +1791,7 @@ section, div.section {
     background-color: white;
     box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
     overflow: visible;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #eee;
 }
 
 /* ================================================
@@ -1908,7 +1914,7 @@ a.section-segment {
     color: #777777;
 }
     .no-touch a.section-segment.section-segment-editing:hover {
-        background-color: #fffbe6 !important;
+        background-color: #fffbe6;
         color: #777777 !important;
         border-bottom: 1px solid rgb(233, 230, 194);
         cursor: pointer;
@@ -1932,6 +1938,17 @@ a.section-segment {
     height: 100px;;
 }
 
+.section-segment-sub {
+    padding-left: 56px;
+}
+.section-segment-editing.section-segment-sub {
+    background-color: #ebe7d6;
+    border-color: #ddd9c9;
+}
+    .no-touch a.section-segment.section-segment-sub:hover{
+        background-color: #ebe7d6 !important;
+        border-color: #ddd9c9;
+    }
 /* ================================================
     Section Segment: Header Subclass
 
@@ -2064,6 +2081,8 @@ a.section-segment {
     .alert-info a {
         color: #7892ae;
     }
+
+
 
 
 /* ================================================

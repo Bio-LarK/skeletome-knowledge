@@ -179,3 +179,33 @@ function statement_field_extra_fields() {
 
   return $extra;
 }
+
+function statement_create($text) {
+
+    global $user;
+    $node = new stdClass();
+    $node->title = "Statement";
+    $node->type = "statement";
+    node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+    $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+    $node->uid = $user->uid;
+    $node->status = 1; //(1 or 0): published or not
+    $node->promote = 0; //(1 or 0): promoted to front page
+    $node->comment = 1; //2 = comments on, 1 = comments off
+
+    $node->body[$node->language][0]['value'] = $text; // the statement
+    $node->body[$node->language][0]['format'] = 'filtered_html';
+
+    $node = node_submit($node); // Prepare node for saving
+    node_save($node);
+
+    // Setup some stuff that it doesnt want to do on node save for some unknown reason!
+    $node->body[LANGUAGE_NONE][0]['safe_value'] = check_markup($node->body[LANGUAGE_NONE][0]['value'], 'filtered_html');
+    $node->comment_count = 0;
+    $node->name = $user->name;
+
+    // Now lets attach the node to the bone dysplasia
+
+
+    return $node;
+}

@@ -1,4 +1,4 @@
-<div ng-controller="StatementCtrl">
+<div ng-controller="StatementCtrl" ng-init="init()">
     <?php if ($user->uid): ?>
 
     <?php endif; ?>
@@ -8,7 +8,7 @@
     <section class="statements">
         <a name="statements"></a>
 
-        <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.statementsState == 'isEditing' }">
+        <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.statementsState == 'isEditing' || model.statementsState == 'isAdding' || model.statementsState == 'isApproving'  }">
             <!-- BUTTONS! -->
             <div class="pull-right section-segment-header-buttons">
 
@@ -17,16 +17,19 @@
                     </div>
 
                     <div ng-switch-when="isAdding">
-                        <button ng-click="cancelStatements()" class="btn btn-cancel">
-                            Cancel
+                        <button ng-show="model.newStatement.length" ng-click="saveStatement(model.newStatement)" class="btn btn-save">
+                            <i class="ficon-ok icon-white"></i> Save
                         </button>
 
-                        <button ng-disabled="!model.newStatement.length" ng-click="saveStatement(model.newStatement)" class="btn btn-save">
-                            <i class="ficon-ok icon-white"></i> Save
+                        <button ng-click="cancelStatements()" class="btn btn-cancel">
+                            Cancel
                         </button>
                     </div>
 
                     <div ng-switch-when="isEditing">
+                        <button ng-click="saveStatements(model.edit.statements)" class="btn btn-save">
+                            <i class="ficon-ok"></i> Save
+                        </button>
                         <button ng-click="cancelStatements()" class="btn btn-cancel">
                             Cancel
                         </button>
@@ -40,7 +43,7 @@
 
                     <div ng-switch-when="isDisplaying">
                         <?php if ($user->uid): ?>
-                            <a ng-show="!model.isAddingStatement && !isEditingStatements" class="btn btn-edit " ng-click="showAddStatement()"  href>
+                            <a class="btn btn-edit " ng-click="addStatement()"  href>
                                 <i class="ficon-plus"></i> Add Statement
                             </a>
                         <?php endif; ?>
@@ -64,24 +67,92 @@
             </div>
 
             <!-- HEADING -->
-            <h2>Statements ({{ statements.length }})</h2>
+            <div ng-switch on="model.statementsState">
+                <div ng-switch-when="isAdding">
+                    <h2><i>Add a New Statement</i></h2>
+                </div>
+                <div ng-switch-when="isLoading">
+                    <h2>Statements ({{ statements.length }})</h2>
+                </div>
+                <div ng-switch-when="isEditing">
+                    <h2><i>Editing Statements</i></h2>
+                </div>
+                <div ng-switch-when="isApproving">
+                    <h2><i>Approve a Statement</i></h2>
+                </div>
+                <div ng-switch-when="isDisplaying">
+                    <h2>Statements ({{ statements.length }})</h2>
+                </div>
+            </div>
         </div>
 
         <div ng-switch on="model.statementsState">
             <div ng-switch-when="isLoading">
-                <div class="refreshing-box">
+                <div class="section-segment refreshing-box">
                     <i class="icon-refresh icon-refreshing"></i>
                 </div>
             </div>
             <div ng-switch-when="isEditing">
+                <div ng-repeat="statement in model.edit.statements">
+                    <a ng-click="removeStatement(statement)" href class="section-segment section-segment-editing media-body">
+                        <span class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
+
+                        <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                        </span>
+                    </a>
+
+                    <div ng-repeat="comment in statement.comments">
+                        <a ng-click="removeCommentFromStatement(comment, statement)" href class="section-segment section-segment-editing section-segment-sub media-body" >
+                            <span class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
+
+                            <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div ng-switch-when="isApproving">
+                <div ng-repeat="statement in statements">
+                    <a ng-show="!statement.field_statement_approved_time.und" ng-click="addStatementToDescription(statement)"  href="#" class="section-segment section-segment-editing media-body">
+                        <span class="btn btn-add" style="float: left;" href=""><i class="ficon-ok"></i></span>
+
+                        <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                        </span>
+                    </a>
+                    <div ng-show="statement.field_statement_approved_time.und" class="section-segment section-segment-editing media-body">
+                        <span class="btn btn-added" style="float: left;" href=""><i class="ficon-ok"></i></span>
+
+                        <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
+                        </span>
+                    </div>
+
+
+                    <div ng-repeat="comment in statement.comments">
+                        <a href class="section-segment section-segment-editing section-segment-sub media-body">
+                            <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
+                        </a>
+                    </div>
+
+
+                </div>
 
             </div>
             <div ng-switch-when="isAdding">
                 <div class="section-segment section-segment-editor statement-new">
                     <div ng-model="model.newStatement" ck-editor></div>
                 </div>
+
             </div>
             <div ng-switch-when="isDisplaying">
+                <div class="section-segment">
+                    <button class="btn">
+                        Pending
+                    </button>
+
+                    <button class="btn">
+                        <i class="ficon-ok"></i> Approved
+                    </button>
+                </div>
                 <div ng-repeat="statement in statements | limitTo:statementDisplayLimit">
 
                     <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
@@ -122,11 +193,6 @@
                         <span class="label label-success" ng-show="statement.field_statement_approved_time">
                             <i class="ficon-ok"></i> Added to Abstract {{ statement.field_statement_approved_time.und[0].value * 1000 | date:'MMM d, y - h:mm a' }}
                         </span>
-
-                            <a ng-show="!statement.field_statement_approved_time.und"  ng-click="addStatementToDescription(statement)" class="btn btn-save" href="#">
-                                Add to Description
-                            </a>
-
 
 
                             <a ng-show="isEditingStatements"
@@ -241,7 +307,7 @@
         </div>
 
 
-        <?php if (!$user->uid): ?>
+        <!--<?php if (!$user->uid): ?>
             <div class="section-segment alert alert-info" style="border-radius: 0; margin-bottom: 0">
                 <div>
                     Statements let you <b>contribute your knowledge</b>.
@@ -269,12 +335,11 @@
             No statements.
         </div>
 
-        <!-- Actual list of statements statements -->
         <div ng-cloak>
 
 
 
-        </div>
+        </div>-->
     </section>
 
 

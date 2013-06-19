@@ -947,12 +947,7 @@ function ajax_remove_comment_from_statement($comment_id) {
     comment_delete($comment_id);
 }
 
-function ajax_add_statement_to_bone_dysplasia($bone_dysplasia) {
-    $data = file_get_contents("php://input");
-    $objData = json_decode($data, true);
-    $statement = data_create_statement_for_node($objData['statement'], $bone_dysplasia->nid);
-    echo drupal_json_encode($statement);
-}
+
 
 function ajax_add_gene_to_bone_dysplasia($bone_dysplasia_id) {
     $data = file_get_contents("php://input");

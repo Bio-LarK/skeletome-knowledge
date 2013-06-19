@@ -308,20 +308,33 @@ function data_get_editors_for_node($node_id) {
     }
     return $users;
 }
+function load_related($node_id, $field_name) {
+    $node = node_load($node_id);
 
+    $related_ids = array();
+    $related = $node->$field_name;
+
+    $is_taxonomy = false;
+    if(isset($related[LANGUAGE_NONE])) {
+        foreach($related[LANGUAGE_NONE] as $id) {
+            if(isset($id['target_id'])) {
+                $related_ids[] = $id['target_id'];
+            } else if(isset($id['tid'])) {
+                $is_taxonomy = true;
+                $related_ids[] = $id['tid'];
+            }
+
+        }
+    }
+    return $is_taxonomy ? array_values(taxonomy_term_load_multiple($related_ids)) : array_values(node_load_multiple($related_ids));
+}
 function page_bone_dysplasia($node) {
 
-    // Get the statements
-    $time1 = time();
-    $statements = data_get_statements_for_node($node);
-    // echo "<p>" . (time() - $time1) . "</p>";
+    $statements = load_related($node->nid, 'field_bd_statement');
 
     // Get Clinical Features
-    $time1 = time();
-    $clinical_features = data_get_clinical_features_for_bone_dysplasia($node);
-    // echo "<p>" . (time() - $time1) . "</p>";
+    $clinical_features = load_related($node->nid, 'field_skeletome_tags'); //data_get_clinical_features_for_bone_dysplasia($node);
 
-    $time1 = time();
     $bone_dysplasia_count = data_get_bone_dysplasia_count();
     $max_clinical_feature_appearance = data_get_max_clinical_feature_count();
 
@@ -338,16 +351,15 @@ function page_bone_dysplasia($node) {
             $max_clinical_feature_appearance
         );
     }
-    // echo "<p>" . (time() - $time1) . "</p>";
 
 
-//    Get OMIM
+    // Get OMIM
     $time1 = time();
     $omim = data_get_omim_for_bone_dysplasia($node);
     // echo "<p>" . (time() - $time1) . "</p>";
 
 
-//    Get mode of inheritance
+    // Get mode of inheritance
     $time1 = time();
     $moi = data_get_moi($node);
     // echo "<p>" . (time() - $time1) . "</p>";

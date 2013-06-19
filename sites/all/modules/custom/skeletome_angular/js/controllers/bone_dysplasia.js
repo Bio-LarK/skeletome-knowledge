@@ -65,7 +65,6 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.setupXRays();
         $scope.setupDetails();
         $scope.setupClinicalFeatures();
-        $scope.setupStatements();
     }
 
 
@@ -248,12 +247,16 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.model.edit.clinicalFeaturesSearchResultsCounter = 0;
     }
     $scope.searchForClinicalFeature = function(query) {
-        if(query.length) {
+        if(query && query.length) {
             // there is a query
             $scope.model.edit.clinicalFeaturesSearchResultsCounter++;
             $scope.model.edit.clinicalFeaturesSearchResultsState = $scope.IS_LOADING;
             $http.get('?q=ajax/clinical-features/search/' + query).success(function(data) {
 
+                if(query != $scope.model.edit.addClinicalFeatureQuery) {
+                    $scope.model.edit.clinicalFeaturesSearchResultsCounter--;
+                    return;
+                }
                 // loop through results we got back and add add/remove buttons
                 var stuff = [];
 
@@ -286,27 +289,9 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.model.edit.clinicalFeatures.splice(index, 1);
     }
 
-    $scope.toggleClinicalFeatureResult = function(result) {
-        result.added = !result.added;
-
-        var found = false;
-        angular.forEach($scope.model.edit.clinicalFeatures, function(clinicalFeature, index) {
-            if(clinicalFeature.tid == result.tid) {
-                found = true;
-                if(!result.added) {
-                    // we need to remove the result
-                    $scope.model.edit.clinicalFeatures.splice(index, 1);
-                } else {
-                    // we need to add the result
-                    clinicalFeature.added = true;
-                }
-            }
-        });
-
-        // we didnt find it, but it needs to be added
-        if(!found && result.added) {
-            $scope.model.edit.clinicalFeatures.push(result);
-        }
+    $scope.addClinicalFeature = function(clinicalFeature) {
+        clinicalFeature.added = true;
+        $scope.model.edit.clinicalFeatures.push(clinicalFeature);
     }
 
     /**
@@ -369,16 +354,16 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
     /* Add Clinical Feature to Bone Dysplasia */
-    $scope.addClinicalFeature = function(newClinicalFeature, boneDysplasia) {
-        newClinicalFeature.added = true;
-        $scope.clinicalFeatures.push(newClinicalFeature);
-        $http.post('?q=ajax/bone-dysplasia/clinical-feature/add', {
-            'boneDysplasiaNid': boneDysplasia.nid,
-            'clinicalFeatureTid': newClinicalFeature.tid
-        }).success(function(data) {
-                newClinicalFeature.information_content = data.information_content;
-            });
-    }
+//    $scope.addClinicalFeature = function(newClinicalFeature, boneDysplasia) {
+//        newClinicalFeature.added = true;
+//        $scope.clinicalFeatures.push(newClinicalFeature);
+//        $http.post('?q=ajax/bone-dysplasia/clinical-feature/add', {
+//            'boneDysplasiaNid': boneDysplasia.nid,
+//            'clinicalFeatureTid': newClinicalFeature.tid
+//        }).success(function(data) {
+//                newClinicalFeature.information_content = data.information_content;
+//            });
+//    }
     /* Remove Clinical Feature from Bone Dysplasia */
 //    $scope.removeClinicalFeature = function(featureToRemove, boneDysplasia) {
 //        featureToRemove.added = false;
@@ -622,37 +607,38 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     }
 
 
-    $scope.setupStatements = function() {
-        $scope.model.statementsState = "isDisplaying";
-    }
-    $scope.editStatements = function() {
-        $scope.model.statementsState = "isEditing";
-    }
-    $scope.approveStatements = function() {
-        $scope.model.statementsState = "isApproving";
-    }
-    $scope.cancelStatements = function() {
-        $scope.model.statementsState = "isDisplaying";
+    /**
+     *
+     * @param statements
+     */
+    $scope.saveStatements = function(statements) {
+        $scope.model.statementsState = "isLoading";
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statements', {
+            'statements': statements
+        }).success(function(data) {
+            $scope.model.statementsState = "isDisplaying";
+            // this callback will be called asynchronously
+            // when the response is available
+            $scope.statements = data;
+        });
     }
 
     $scope.saveStatement = function(newStatement) {
         // Set it as loading the statement
-        $scope.model.isAddingStatement = false;
-        $scope.model.isloadingNewStatement = true;
+        $scope.model.statementsState = "isLoading";
 
         // Make a copy of the text and clear out the input
         var newStatementText = angular.copy(newStatement);
         $scope.model.newStatement = "";
 
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statement/add', {
-            'statement': newStatementText
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statement', {
+            'text': newStatementText
         }).success(function(data) {
-                $scope.model.isloadingNewStatement = false;
-
-                // this callback will be called asynchronously
-                // when the response is available
-                $scope.statements.unshift(data);
-            });
+            $scope.model.statementsState = "isDisplaying";
+            // this callback will be called asynchronously
+            // when the response is available
+            $scope.statements.unshift(data);
+        });
     }
 
 //    /* Autocomplete for genes */

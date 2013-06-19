@@ -9,7 +9,8 @@ myApp.directive('cmAlert', function() {
 
             scope.$watch('cmAlert', function(newValue, oldValue) {
                 console.log("old", oldValue, "new", newValue);
-                if(oldValue == true && newValue == false) {
+
+                if(oldValue == "isLoading" && newValue == "isDisplaying") {
                     elm.slideDown('fast');
                     setTimeout(function() {
                         elm.slideUp('fast', function() {
@@ -18,7 +19,18 @@ myApp.directive('cmAlert', function() {
                         });
                     }, 3000)
                 } else {
-                    elm.css('display', 'none');
+
+                    if(oldValue == true && newValue == false) {
+                        elm.slideDown('fast');
+                        setTimeout(function() {
+                            elm.slideUp('fast', function() {
+                                scope.$apply(function() {
+                                });
+                            });
+                        }, 3000)
+                    } else {
+                        elm.css('display', 'none');
+                    }
                 }
             });
         }

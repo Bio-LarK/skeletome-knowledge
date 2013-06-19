@@ -1,0 +1,135 @@
+<?php
+
+module_load_include('php', 'skeletome_bone_dysplasia', 'skeletome_bone_dysplasia_model');
+
+function skeletome_bone_dysplasia_menu() {
+
+    $items = array();
+
+    $items['ajax/bone-dysplasia/%/statement'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'skeletome_bone_dysplasia_statement_create',
+        'access callback'   => 'is_curator',
+    );
+    $items['ajax/bone-dysplasia/%/statement/%'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'skeletome_bone_dysplasia_statement',
+        'access callback'   => 'is_curator',
+    );
+    $items['ajax/bone-dysplasia/%/statements'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'skeletome_bone_dysplasia_statements',
+        'access callback'   => 'is_curator',
+    );
+
+    return $items;
+}
+
+function skeletome_bone_dysplasia_statement_create($bone_dysplasia_id) {
+    // Create a new statement
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    $text = $objData['text'];
+
+    $statement = statement_create($text);
+
+
+    $bone_dysplasia = node_load($bone_dysplasia_id);
+    $bone_dysplasia->field_bd_statement[LANGUAGE_NONE][] = array(
+        'target_id' => $statement->nid
+    );
+    node_save($bone_dysplasia);
+
+
+    echo json_encode($statement);
+}
+
+function skeletome_bone_dysplasia_statement($bone_dysplasia_id, $statement_id) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Update the statement
+    } else {
+        // Get the statement
+    }
+}
+
+function skeletome_bone_dysplasia_statements($bone_dysplasia_id) {
+
+    $return_array = array();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Save the statements
+        $data = file_get_contents("php://input");
+        $objData = json_decode($data, true);
+
+        $statements = $objData['statements'];
+        $statement_ids = array();
+        foreach($statements as $statement) {
+            $statement_ids[] = $statement['nid'];
+        }
+
+        // load the bone dysplasia
+        $bone_dysplasia = node_load($bone_dysplasia_id);
+        $bone_dysplasia->field_bd_statement[LANGUAGE_NONE] = [];
+        foreach($statement_ids as $id) {
+            $bone_dysplasia->field_bd_statement[LANGUAGE_NONE][] = array(
+                'target_id' => $id
+            );
+        }
+
+        node_save($bone_dysplasia);
+
+        $return_array = $statements;
+    } else if($_SERVER['REQUEST_METHOD'] === 'GET') {
+        // Get the statements
+        $bone_dysplasia = node_load($bone_dysplasia_id);
+        $return_array = $bone_dysplasia->field_bd_statement[LANGUAGE_NONE];
+    }
+
+    echo json_encode($return_array);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Returns if a user can access an ajax editing URL
+ *
+ * @return bool Returns true for admin or sk_curator
+ */
+function skeletome_bone_dysplasia_is_curator() {
+    global $user;
+
+    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_curator', $user->roles))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function skeletome_bone_dysplasia_is_editor() {
+    global $user;
+    if(isset($user->uid) && ((user_access('administer site configuration')) || is_array($user->roles) && (in_array('sk_editor', $user->roles) || in_array('sk_curator', $user->roles)))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function skeletome_bone_dysplasia_is_authenticated() {
+    global $user;
+    if(isset($user->uid)) {
+        return true;
+    } else {
+        return false;
+    }
+}
