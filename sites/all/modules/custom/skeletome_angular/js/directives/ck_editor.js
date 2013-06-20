@@ -14,11 +14,8 @@ myApp.directive('ckEditor', function() {
                     // Maximize the editor on start-up.
                     'instanceReady' : function( evt )
                     {
-                        console.log("instance is ready!");
                         setTimeout(function() {
-                                console.log("looking for modal inner");
                                 if(jQuery(elm).closest('.modal-body-inner').length) {
-                                    console.log("inside a modal inner");
                                     evt.editor.resize("100%", jQuery('.modal-body-inner').eq(0).height() - 50);
                                 }
 

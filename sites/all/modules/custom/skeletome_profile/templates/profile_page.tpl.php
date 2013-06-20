@@ -54,7 +54,7 @@
                                 <div ng-switch-when="isLoading">
                                 </div>
                                 <div ng-switch-when="isEditing">
-                                    <a ng-click="saveDetails(edit.profile)" href class="btn btn-success">
+                                    <a ng-click="saveDetails(edit.profile)" href class="btn btn-save">
                                         <i class="icon-ok icon-white"></i> Save
                                     </a>
                                     <a ng-click="cancelDetails()" href class="btn btn-cancel">
@@ -226,6 +226,10 @@
 
                                         <div class="header-divider"></div>
 
+                                        <a ng-click="showAddPublication()" href role="button" class="btn btn-cancel">
+                                            <i class="ficon-plus"></i> Add Text Reference
+                                        </a>
+
                                         <div class="btn-group">
                                             <a class="btn btn-cancel dropdown-toggle" data-toggle="dropdown" href="#">
                                                 <i class="ficon-download-alt"></i> Import from
@@ -266,7 +270,8 @@
                         <div ng-repeat="publication in edit.profile.field_profile_publications.und" >
 
                             <a class="section-segment section-segment-editing media-body" ng-click="removePublication(publication)" href>
-                                <span class="btn btn-remove pull-left"><i class="ficon-remove"></i></span>
+                                <span cm-tooltip cm-tooltip-content="Delete this reference" class="btn btn-remove pull-left"><i class="ficon-remove"></i></span>
+
                                 <span ng-bind-html-unsafe="publication.value">
 
                                 </span>
@@ -327,6 +332,18 @@
             </section>
         </div>
     </div>
+
+    <my-modal visible="isAddingPublication">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add Reference</h3>
+        </div>
+        <textarea ng-model="edit.newProfileText" ck-editor></textarea>
+
+        <div class="modal-footer">
+            <a ng-click="addPublication(edit.newProfileText)" class="btn btn-save" href=""><i class="ficon-plus"></i> Add</a>
+        </div>
+    </my-modal>
 
     <my-modal visible="isShowingImportFromOrcid">
         <div class="modal-header">

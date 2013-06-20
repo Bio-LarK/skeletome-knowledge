@@ -1400,6 +1400,7 @@ table.table-dark {
     background-image: none !important;
     background-color: #0e90d2 !important;
     border: none !important;
+    color: white;
     /*background-color: #2e3033;*/
     /*border-color: black;*/
     /*box-shadow: 0px 2px 0px black;*/
@@ -1434,6 +1435,7 @@ table.table-dark {
 .btn.btn-success {
     background-color: #51a351;
     /*box-shadow: 0px 2px 0px #00a512;*/
+    color: white;
 }
 .label-success {
 
@@ -1446,7 +1448,9 @@ table.table-dark {
 
 .btn-danger {
     border: 1px solid #a50800;
+    color: white;
 }
+
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {
     background-image: none;
     background-color: #1c64a1;
@@ -1980,14 +1984,14 @@ a.section-segment {
         position: relative;
         top: 10px;
     }
-    .section-segment-header-buttons .btn {
+    .section-segment-header-buttons .btn, .section-segment-header-buttons .btn-group {
         margin-left: 4px;
     }
     .header-divider {
         border-left:1px solid rgb(233, 230, 194); 
         height: 30px; display: inline; 
         margin-left: 5px;
-        margin-right: 9px;
+        margin-right: 5px;
         position: relative;
         top: 2px;
     }

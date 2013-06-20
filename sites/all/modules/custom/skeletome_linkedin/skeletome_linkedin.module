@@ -54,11 +54,13 @@ function skeletome_linkedin_get_profile() {
         'format'                => 'json'
     ));
 
+
+    $return_data = array();
     if(isset($response['result']['errorCode'])) {
+        unset($_SESSION['linkedOAuth']);
         $return_data['error'] = true;
     }
 
-    $return_data = array();
     if(isset($response['result']['summary'])) {
         $return_data['bio'] = $response['result']['summary'];
     }

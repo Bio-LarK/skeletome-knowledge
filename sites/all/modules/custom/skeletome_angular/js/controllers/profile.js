@@ -91,6 +91,7 @@ function ProfileCtrl($scope, $http) {
         $scope.orcidState = "isDisplaying";
 
         $scope.linkedIn = Drupal.settings.skeletome_profile.linkedIn;
+
         $scope.linkedInImportFields = {
             summary: true,
             position: true,
@@ -106,6 +107,12 @@ function ProfileCtrl($scope, $http) {
         // Setup the default length
         $scope.publicationDisplayLimit = $scope.DEFAULT_PUB_LIMIT;
         $scope.isHidingPublications =  $scope.profile.field_profile_publications.und.length > $scope.DEFAULT_PUB_LIMIT;
+
+        if($scope.linkedIn.justGranted) {
+            $scope.importLinkedInBiography();
+        }
+
+        console.log("publications", $scope.profile.field_profile_publications.und);
     }
 
     $scope.showAllPublications = function() {
@@ -148,9 +155,6 @@ function ProfileCtrl($scope, $http) {
         $scope.detailsState = "isDisplaying";
     }
 
-
-
-
     $scope.editBiography = function() {
         $scope.edit.profile = angular.copy($scope.profile);
         $scope.biographyState = "isEditing";
@@ -165,7 +169,8 @@ function ProfileCtrl($scope, $http) {
             $scope.linkedIn.justGranted = false;
 
             if(angular.isDefined(data.error)) {
-                linkedIn.isAuthenticated = false;
+                console.log("Error in profile data");
+                $scope.linkedIn.isAuthenticated = false;
                 $scope.biographyState = "isEditing";
             } else {
                 $scope.edit.profile = angular.copy($scope.profile);
@@ -197,6 +202,18 @@ function ProfileCtrl($scope, $http) {
         $scope.edit.profile = angular.copy($scope.profile);
         $scope.publicationsState = "isEditing";
     }
+    $scope.showAddPublication = function() {
+        $scope.isAddingPublication = true;
+    }
+    $scope.addPublication = function(publicationText) {
+        // Construct a publication
+        var publication = {
+            value: $scope.stripTags(publicationText, "<b><i>")
+        };
+        $scope.edit.profile.field_profile_publications.und.unshift(publication);
+        $scope.edit.newProfileText = "";
+        $scope.isAddingPublication = false;
+    }
     $scope.savePublications = function(profile) {
         $scope.publicationsState = "isLoading";
 
@@ -205,6 +222,15 @@ function ProfileCtrl($scope, $http) {
             $scope.profile = data;
         });
     }
+    $scope.stripTags = function (input, allowed) {
+        allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+        var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+            commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+        return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+            return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+        });
+    }
+
     $scope.removePublication = function(publication) {
         var index = $scope.edit.profile.field_profile_publications.und.indexOf(publication);
         $scope.edit.profile.field_profile_publications.und.splice(index, 1);
