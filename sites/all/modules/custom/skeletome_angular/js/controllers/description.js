@@ -59,6 +59,11 @@ function DescriptionCtrl($scope, $http) {
                 userIds: $scope.model.statementPackage.users
             }).success(function(statement) {
                 jQuery.extend($scope.model.statementPackage.statement, statement);
+                angular.forEach($scope.statements, function(existingStatement, index) {
+                    if(existingStatement.nid == statement.nid) {
+                        $scope.statements.splice(index, 1);
+                    }
+                })
                 $scope.model.statementPackage = null;
             });
 
