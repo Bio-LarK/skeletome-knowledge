@@ -52,20 +52,13 @@
 
         <div ng-show="model.isEditingDescription && model.statementPackage" class="section-segment section-segment-editing">
             <div>
-                <b>Step 1 - Add to Abstract</b>
+                <b>Add to Abstract</b>
             </div>
             <div>
                 You can copy and paste this text into the Abstract.
             </div>
             <div ng-bind-html-unsafe="model.statementPackage.text" class="alert alert-info">
                 Statement text
-            </div>
-
-            <div>
-                <b>Step 2 - Choose which users to acknowledge.</b>
-            </div>
-            <div ng-repeat="user in model.statementPackage.users">
-                <input type="checkbox" ng-model="user.approved" ng-init="user.approved = true"/> {{ user.name }}
             </div>
 
         </div>

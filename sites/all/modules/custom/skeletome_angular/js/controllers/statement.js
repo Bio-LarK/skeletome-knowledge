@@ -10,7 +10,6 @@ function StatementCtrl($scope, $http) {
     $scope.setupStatements = function() {
         // Set the initial state
         $scope.model.statementsState = "isDisplaying";
-
         // Setup the default length
         $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
         $scope.isHidingStatements =  $scope.statements.length > $scope.defaultStatementDisplayLimit;
@@ -108,11 +107,42 @@ function StatementCtrl($scope, $http) {
         $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
     }
 
+    $scope.showApproveStatement = function(statement) {
+        $scope.model.statementsState = "isLoading";
+        $http.get('?q=ajax/statement/' + statement.nid + '/comments').success(function(data){
+            $scope.model.statementsState = "isApproving";
+            statement.comments = data;
+            $scope.model.approveStatement = statement;
+            if(data.length == 0) {
+                $scope.addStatementToDescription($scope.model.approveStatement);
+            } else {
+                $scope.isShowingApproveStatement = true;
+            }
+        });
+    }
+
+    $scope.approvedCommentUsers = function() {
+        if(angular.isDefined($scope.model.approveStatement)) {
+            var usernames = [$scope.model.approveStatement.name];
+
+            angular.forEach($scope.model.approveStatement.comments, function(comment, index) {
+                if(comment.approved) {
+                    if(usernames.indexOf(comment.name) == -1) {
+                        usernames.push(comment.name);
+                    }
+                }
+            });
+            return usernames.join(" ");
+        }
+        return "";
+    }
+
     /**
      * Adds a statement to the description
      * @param statement
      */
     $scope.addStatementToDescription = function(statement) {
+        $scope.isShowingApproveStatement = false;
         $scope.model.statementsState = "isDisplaying";
 
         $scope.model.editedDescription = $scope.description.value;
@@ -125,29 +155,16 @@ function StatementCtrl($scope, $http) {
             statement: statement
         };
 
-        var uidsAdded = [];
-
-        $scope.model.statementPackage.users.push({
-            uid: statement.uid,
-            name: statement.name
-        });
-        uidsAdded.push(statement.uid);
-
+        $scope.model.statementPackage.users.push(statement.uid);
         $scope.model.statementPackage.text += statement.body.und[0].value;
-
         angular.forEach(statement.comments, function(comment, index) {
-            if(uidsAdded.indexOf(comment.uid) == -1) {
-                $scope.model.statementPackage.users.push({
-                    uid: comment.uid,
-                    name: comment.name
-                });
-                uidsAdded.push(comment.uid);
-            }
-            $scope.model.statementPackage.text += comment.comment_body.und[0].value + "<br/>";
+           if(comment.approved) {
+               if($scope.model.statementPackage.users.indexOf(comment.uid) == -1) {
+                   $scope.model.statementPackage.users.push(comment.uid);
+               }
+               $scope.model.statementPackage.text += comment.comment_body.und[0].value + "<br/>";
+           }
         });
-//        $scope.model.statementPackage.text = $scope.model.statementPackage.text.replace(/(<([^>]+)>)/ig,"");
-
-        console.log($scope.model.statementPackage);
     }
 
 
@@ -176,6 +193,8 @@ function StatementCtrl($scope, $http) {
             });
         }
     }
+
+
 
     $scope.deleteCommentFromStatement = function(comment, statement) {
         statement.comments.splice(statement.comments.indexOf(comment), 1);

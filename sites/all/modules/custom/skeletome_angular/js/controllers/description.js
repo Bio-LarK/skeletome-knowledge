@@ -55,18 +55,10 @@ function DescriptionCtrl($scope, $http) {
 
         // Save the statement stuff
         if($scope.model.statementPackage) {
-            var userIds = [];
-            angular.forEach($scope.model.statementPackage.users, function(value, index) {
-                if(value.approved) {
-                    userIds.push(value.uid);
-                }
-            });
-
             $http.post('?q=ajax/statement/' + $scope.model.statementPackage.nid + '/approve', {
-                userIds: userIds
+                userIds: $scope.model.statementPackage.users
             }).success(function(statement) {
                 jQuery.extend($scope.model.statementPackage.statement, statement);
-                console.log("my statement", $scope.model.statementPackage.statement);
                 $scope.model.statementPackage = null;
             });
 

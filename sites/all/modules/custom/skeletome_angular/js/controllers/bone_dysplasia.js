@@ -14,7 +14,12 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
     $scope.groupBoneDysplasias = Drupal.settings.skeletome_builder.group_bone_dysplasias;
 
-    $scope.statements = Drupal.settings.skeletome_builder.statements;
+    $scope.statements = [];
+    angular.forEach(Drupal.settings.skeletome_builder.statements, function(statement, index) {
+        if(!angular.isDefined(statement.field_statement_approved_time.und)) {
+            $scope.statements.push(statement);
+        }
+    });
 
 
     $scope.genes = Drupal.settings.skeletome_builder.genes;

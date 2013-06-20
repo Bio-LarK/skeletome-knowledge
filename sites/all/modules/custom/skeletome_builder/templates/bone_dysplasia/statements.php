@@ -1,14 +1,10 @@
 <div ng-controller="StatementCtrl" ng-init="init()">
-    <?php if ($user->uid): ?>
-
-    <?php endif; ?>
-
 
     <!-- The statements sections -->
     <section class="statements">
         <a name="statements"></a>
 
-        <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.statementsState == 'isEditing' || model.statementsState == 'isAdding' || model.statementsState == 'isApproving'  }">
+        <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.statementsState == 'isEditing' || model.statementsState == 'isAdding' }">
             <!-- BUTTONS! -->
             <div class="pull-right section-segment-header-buttons">
 
@@ -95,14 +91,14 @@
             <div ng-switch-when="isEditing">
                 <div ng-repeat="statement in model.edit.statements">
                     <a ng-click="removeStatement(statement)" href class="section-segment section-segment-editing media-body">
-                        <span class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
+                        <span cm-tooltip cm-tooltip-content="Delete this statement and comments" class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
                         <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
                         </span>
                     </a>
 
                     <div ng-repeat="comment in statement.comments">
                         <a ng-click="removeCommentFromStatement(comment, statement)" href class="section-segment section-segment-editing section-segment-sub media-body" >
-                            <span class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
+                            <span cm-tooltip cm-tooltip-content="Delete this comment" class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
 
                             <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
                         </a>
@@ -112,25 +108,25 @@
             </div>
             <div ng-switch-when="isApproving">
                 <div ng-repeat="statement in statements">
-                    <a ng-show="!statement.field_statement_approved_time.und" ng-click="addStatementToDescription(statement)"  href="#" class="section-segment section-segment-editing media-body">
-                        <span class="btn btn-add" style="float: left;" href=""><i class="ficon-ok"></i></span>
+
+                    <a ng-show="!statement.field_statement_approved_time.und" ng-click="showApproveStatement(statement)"  href class="section-segment media-body">
+                        <span cm-tooltip cm-tooltip-content="Approve this statement" class="btn btn-add" style="float: left;">
+                            <i class="ficon-ok"></i>
+                        </span>
 
                         <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
                         </span>
                     </a>
-                    <div ng-show="statement.field_statement_approved_time.und" class="section-segment section-segment-editing media-body">
+                    <div ng-show="statement.field_statement_approved_time.und" class="section-segment media-body">
                         <span class="btn btn-added" style="float: left;" href=""><i class="ficon-ok"></i></span>
 
                         <span ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
                         </span>
                     </div>
 
-                    <a ng-repeat="comment in statement.comments" href class="section-segment section-segment-editing section-segment-sub media-body">
+                    <!--<a ng-repeat="comment in statement.comments" href class="section-segment section-segment-sub media-body">
                         <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
-                    </a>
-
-
-
+                    </a>-->
                 </div>
 
             </div>
@@ -141,15 +137,6 @@
 
             </div>
             <div ng-switch-when="isDisplaying">
-                <div class="section-segment" style="background-color: #f5f5f5">
-                    <button class="btn" style="border: 1px solid #d2d2d2; border-radius: 100px; background-color: white">
-                        Pending
-                    </button>
-
-                    <button class="btn" style="border: 1px solid #d2d2d2; border-radius: 100px;">
-                        <i class="ficon-ok"></i> Approved
-                    </button>
-                </div>
                 <div ng-repeat="statement in statements | limitTo:statementDisplayLimit">
 
                     <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
@@ -166,12 +153,8 @@
                         </span>
                         </div>
 
-
-
                         <div class="section-segment-statement-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
                         </div>
-
-
 
                         <div class="section-segment-statement-interaction" ng-show="statement.isShowingComments || isEditingStatements">
 
@@ -336,10 +319,49 @@
 
 
 
+
+
         </div>-->
     </section>
 
 
+    <my-modal visible="isShowingApproveStatement">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Approve statement</h3>
+        </div>
+        <div class="section-segment">
+            {{ approvedCommentUsers() }}
+        </div>
+        <a href class="section-segment media-body">
+            <span cm-tooltip cm-tooltip-content="Approve this statement" class="btn btn-added" style="float: left;">
+                <i class="ficon-ok"></i>
+            </span>
 
+            <span ng-bind-html-unsafe="model.approveStatement.body.und[0].safe_value || model.approveStatement.body.und[0].value || 'No statement.'">
+            </span>
+        </a>
+
+        <div ng-repeat="comment in model.approveStatement.comments">
+            <a ng-click="comment.approved = !comment.approved" href class="section-segment section-segment-sub media-body">
+
+                 <span ng-show="!comment.approved" cm-tooltip cm-tooltip-content="Approve this statement" class="btn btn-add" style="float: left;">
+                    <i class="ficon-ok"></i>
+                </span>
+
+                <span ng-show="comment.approved" cm-tooltip cm-tooltip-content="Approve this statement" class="btn btn-added" style="float: left;">
+                    <i class="ficon-ok"></i>
+                </span>
+
+
+                <span ng-bind-html-unsafe="comment.comment_body.und[0].value || 'No Comment'"></span>
+            </a>
+        </div>
+
+
+        <div class="modal-footer">
+            <a ng-click="addStatementToDescription(model.approveStatement)" class="btn btn-save" href=""><i class="ficon-plus"></i> Add</a>
+        </div>
+    </my-modal>
 
 </div>
