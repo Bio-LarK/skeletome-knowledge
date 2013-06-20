@@ -295,6 +295,19 @@
                 </div>
             </section>
 
+            <section>
+                <div class="section-segment section-segment-header">
+                    <h3>Approved Statements</h3>
+                </div>
+                <div ng-repeat="statement in approvedStatements" class="section-segment">
+                    <div ng-bind-html-unsafe="statement.body.und[0].value">
+                    </div>
+                    <div>
+                        <i class="icon-user"></i> {{ statement.name }}
+                    </div>
+                </div>
+
+            </section>
 
             <section>
                 <div class="section-segment section-segment-header">

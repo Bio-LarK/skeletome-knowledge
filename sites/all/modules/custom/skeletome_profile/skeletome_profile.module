@@ -219,14 +219,26 @@ function page_profile($user) {
         $linked_in['justGranted'] = false;
     }
 
+    // Get the users approved statement stuff
+    $sql = "SELECT u.entity_id
+            FROM {field_data_field_statement_approved_users} u
+            WHERE u.field_statement_approved_users_value = :uid";
+    $results = db_query($sql, array(
+        'uid'   => $user->uid
+    ));
+
+    $statement_ids = array_keys($results->fetchAllAssoc("entity_id"));
+    $statements = node_load_multiple($statement_ids);
+
     drupal_add_js(array(
         'skeletome_profile'     => array(
-            'user'              => $user,
-            'roles'             => $pretty_roles,
-            "contributed"       => $contributed,
-            'activity'          => $activity,
-            'profile'           => $profile,
-            'linkedIn'          => $linked_in
+            'approvedStatements'    => $statements,
+            'user'                  => $user,
+            'roles'                 => $pretty_roles,
+            "contributed"           => $contributed,
+            'activity'              => $activity,
+            'profile'               => $profile,
+            'linkedIn'              => $linked_in
     )), 'setting');
 
     $output =  array(

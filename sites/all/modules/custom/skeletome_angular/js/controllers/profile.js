@@ -19,6 +19,7 @@ function ProfileCtrl($scope, $http) {
         $scope.activity = Drupal.settings.skeletome_profile.activity;
         $scope.profile = Drupal.settings.skeletome_profile.profile || {};
         $scope.user = Drupal.settings.skeletome_profile.user;
+        $scope.approvedStatements = Drupal.settings.skeletome_profile.approvedStatements;
 
         // fix up the activity
         angular.forEach($scope.activity, function(activity, index) {
