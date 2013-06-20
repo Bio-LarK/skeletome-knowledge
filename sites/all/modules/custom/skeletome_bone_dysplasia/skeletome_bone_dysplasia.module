@@ -95,7 +95,7 @@ function skeletome_bone_dysplasia_statements($bone_dysplasia_id) {
 
         // Remove any statements
 //        $bone_dysplasia->field_bd_statement[LANGUAGE_NONE] = [];
-        $bone_dysplasia->field_bd_statement[LANGUAGE_NONE] = [];
+        $bone_dysplasia->field_bd_statement[LANGUAGE_NONE] = array();
         foreach($statement_ids as $id) {
             $bone_dysplasia->field_bd_statement[LANGUAGE_NONE][] = array(
                 'target_id' => $id
