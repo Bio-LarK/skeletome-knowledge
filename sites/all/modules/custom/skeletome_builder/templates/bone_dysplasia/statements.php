@@ -45,13 +45,13 @@
                         <?php endif; ?>
 
                         <?php if($isAdmin || $isCurator): ?>
-                            <div class="header-divider"></div>
+                            <div ng-show="statements.length" class="header-divider"></div>
 
-                            <a ng-click="approveStatements()" href role="button" class="btn btn-edit">
+                            <a ng-show="statements.length" ng-click="approveStatements()" href role="button" class="btn btn-edit">
                                 <i class="ficon-ok"></i> Approve Statements
                             </a>
 
-                            <a href ng-click="editStatements()" class="btn btn-edit">
+                            <a ng-show="statements.length" href ng-click="editStatements()" class="btn btn-edit">
                                 <i class="ficon-pencil"></i> Edit
                             </a>
                         <?php endif; ?>
@@ -89,6 +89,7 @@
                 </div>
             </div>
             <div ng-switch-when="isEditing">
+                <div ng-show="!model.edit.statements.length" class="section-segment section-segment-editing"><span class="muted">No statements.</span></div>
                 <div ng-repeat="statement in model.edit.statements">
                     <a ng-click="removeStatement(statement)" href class="section-segment section-segment-editing media-body">
                         <span cm-tooltip cm-tooltip-content="Delete this statement and comments" class="btn btn-remove" style="float: left;" href=""><i class="ficon-remove"></i></span>
@@ -137,6 +138,12 @@
 
             </div>
             <div ng-switch-when="isDisplaying">
+                <div ng-show="!statements.length" class="section-segment">
+                    <span class="muted">
+                        No statements.
+                    </span>
+
+                </div>
                 <div ng-repeat="statement in statements | limitTo:statementDisplayLimit">
 
                     <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
