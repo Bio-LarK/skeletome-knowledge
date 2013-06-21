@@ -50,3 +50,4 @@ scripts[] = js/directives/search.js
 scripts[] = js/directives/directives.js
 scripts[] = js/directives/my_modal.js
 scripts[] = js/directives/cm_when_scrolled.js
+scripts[] = js/directives/cm_reveal.js

@@ -124,7 +124,7 @@
                     <h3>Contributed to Pages</h3>
                 </div>
 
-                <div ng-repeat="page in contributed | limitTo:contributedDisplayLimit">
+                <div ng-repeat="page in contributed | limitTo:model.contributedDisplayLimit">
                     <a href="?q=node/{{ page.nid }}" class="section-segment">
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
@@ -132,6 +132,7 @@
                         {{ page.title }}
                     </a>
                 </div>
+                <cm-reveal model="contributed" showing-count="model.contributedDisplayLimit" default-count="8"></cm-reveal>
             </section>
 
         </div>
@@ -273,7 +274,6 @@
                                 <span cm-tooltip cm-tooltip-content="Delete this reference" class="btn btn-remove pull-left"><i class="ficon-remove"></i></span>
 
                                 <span ng-bind-html-unsafe="publication.value">
-
                                 </span>
                             </a>
 
@@ -285,28 +285,27 @@
                                 No publications.
                             </div>
                         </div>
-                        <div ng-repeat="publication in profile.field_profile_publications.und | limitTo:publicationDisplayLimit" class="section-segment" ng-bind-html-unsafe="publication.value">
+                        <div ng-repeat="publication in profile.field_profile_publications.und | limitTo:model.publicationDisplayLimit" class="section-segment" ng-bind-html-unsafe="publication.value">
                         </div>
-                        <div class="section-segment" ng-show="profile.field_profile_publications.und.length > DEFAULT_PUB_LIMIT">
-                            <a ng-show="isHidingPublications" ng-click="showAllPublications()" class="btn btn-reveal" href="">Show All</a>
-                            <a ng-show="!isHidingPublications" ng-click="hidePublications()" class="btn btn-reveal" href="">Show Less</a>
-                        </div>
+
+                        <cm-reveal model="profile.field_profile_publications.und" showing-count="model.publicationDisplayLimit" default-count="3"></cm-reveal>
                     </div>
                 </div>
             </section>
 
             <section>
                 <div class="section-segment section-segment-header">
-                    <h3>Approved Statements</h3>
+                    <h3>Approved Statements ({{ approvedStatements.length }})</h3>
                 </div>
-                <div ng-repeat="statement in approvedStatements" class="section-segment">
+
+                <div ng-repeat="statement in approvedStatements | limitTo:model.approvedStatementsDisplayLimit" class="section-segment">
                     <div ng-bind-html-unsafe="statement.body.und[0].value">
                     </div>
                     <div>
                         <i class="icon-user"></i> {{ statement.name }}
                     </div>
                 </div>
-
+                <cm-reveal model="approvedStatements" showing-count="model.approvedStatementsDisplayLimit" default-count="3"></cm-reveal>
             </section>
 
             <section>
@@ -316,7 +315,7 @@
                 <div ng-show="!activity.length" class="section-segment muted">
                     No recent activity.
                 </div>
-                <div ng-repeat="item in activity | limitTo:recentActivityDisplayLimit">
+                <div ng-repeat="item in activity">
 
                     <a ng-show="!item.cid" class="section-segment" href="?q=node/{{ item.target_nid }}">
                         <i class="icon-chevron-right pull-right"></i>

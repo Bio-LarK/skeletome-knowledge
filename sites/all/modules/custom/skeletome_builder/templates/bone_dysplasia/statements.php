@@ -144,7 +144,8 @@
                     </span>
 
                 </div>
-                <div ng-repeat="statement in statements | limitTo:statementDisplayLimit">
+
+                <div ng-repeat="statement in statements | limitTo:model.statementDisplayLimit">
 
                     <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
 
@@ -244,52 +245,8 @@
                         <?php endif; ?>
 
                     </div>
-
-
-                    <!-- Statement text -->
-                    <!--<div name="statement-{{ statement.nid }}" class="statement-content">-->
-
-                    <!-- User info -->
-                    <!--<div class="statement-content-user">
-
-
-                        <div class="statement-content-user-inner">
-                            <a ng-show="isEditingStatements"
-                               ng-click="deleteStatement(statement)"
-                               class="btn btn-danger" href>
-                                <i class="ficon-remove icon-white"></i> Delete
-                            </a>
-
-
-                        </div>
-                    </div>-->
-
-                    <!-- Text -->
-
-
-
-
-
-                    <!--<div class="statement-content-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
-                    </div>-->
-
-                    <!--<div class="statement-content-user">
-                        {{ statement.name || "Anonymous" | capitalize }}
-                        <a ng-click="showComments(statement)" href>
-                            <i class="icon-comment"></i> {{ statement.comments.length || statement.comment_count }}
-                        </a>
-                    </div>-->
-
-                    <!--</div>-->
-
-                    <!-- List of comments -->
                 </div>
-
-                <div class="section-segment" ng-show="statements.length > defaultStatementDisplayLimit">
-                    <button ng-show="isHidingStatements" ng-click="showStatements()" class="btn btn-reveal" ><i class="icon-chevron-down"></i> Show All</button>
-                    <button ng-show="!isHidingStatements" ng-click="hideStatements()" class="btn btn-reveal" ><i class="icon-chevron-up"></i> Hide</button>
-                </div>
-
+                <cm-reveal model="statements" showing-count="model.statementDisplayLimit" default-count="3"></cm-reveal>
             </div>
         </div>
 

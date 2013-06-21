@@ -82,7 +82,7 @@
 
             <!-- Existing Clinical Features -->
 
-            <div ng-repeat="clinicalFeature in model.edit.clinicalFeatures | filter:model.edit.clinicalFeatureQuery | orderBy:'-information_content'">
+            <div ng-repeat="clinicalFeature in model.edit.clinicalFeatures | filter:model.edit.clinicalFeatureQuery | orderBy:'information_content'">
                 <a ng-click="removeClinicalFeature(clinicalFeature)" class="section-segment section-segment-editing">
 
                     <span class="btn btn-remove" href=""><i class="ficon-remove"></i></span>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <div ng-repeat="clinicalFeature in model.clinicalFeatures | filter:model.clinicalFeatureFilter | orderBy:'-information_content'">
+                <div ng-repeat="clinicalFeature in model.clinicalFeatures | filter:model.clinicalFeatureFilter | orderBy:'information_content' | limitTo:model.clinicalFeaturesDisplayLimit">
                     <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ model.boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
                         <i class="icon-chevron-right pull-right"></i>
                         <i class="icon-chevron-right icon-white pull-right"></i>
@@ -131,6 +131,7 @@
                         </div>
                     </a>
                 </div>
+                <cm-reveal model="model.clinicalFeatures" showing-count="model.clinicalFeaturesDisplayLimit" default-count="10"></cm-reveal>
             </div>
         </div>
     </div>

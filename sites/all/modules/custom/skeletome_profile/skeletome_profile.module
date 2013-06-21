@@ -228,7 +228,7 @@ function page_profile($user) {
     ));
 
     $statement_ids = array_keys($results->fetchAllAssoc("entity_id"));
-    $statements = node_load_multiple($statement_ids);
+    $statements = array_values(node_load_multiple($statement_ids));
 
     drupal_add_js(array(
         'skeletome_profile'     => array(

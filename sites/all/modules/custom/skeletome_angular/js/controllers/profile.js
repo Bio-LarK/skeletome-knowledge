@@ -15,6 +15,7 @@ function ProfileCtrl($scope, $http) {
 
 
     $scope.init = function() {
+        $scope.model = {};
         $scope.contributed = Drupal.settings.skeletome_profile.contributed;
         $scope.activity = Drupal.settings.skeletome_profile.activity;
         $scope.profile = Drupal.settings.skeletome_profile.profile || {};
@@ -78,8 +79,6 @@ function ProfileCtrl($scope, $http) {
 
         $scope.name = Drupal.settings.skeletome_profile.name;
         $scope.roles = Drupal.settings.skeletome_profile.roles;
-        $scope.recentActivityDisplayLimit = 10;
-        $scope.contributedDisplayLimit = 10;
 
         // Edit holder
         $scope.edit = {};
@@ -103,28 +102,12 @@ function ProfileCtrl($scope, $http) {
             works: true
         }
 
-        $scope.DEFAULT_PUB_LIMIT = 3;
-
-        // Setup the default length
-        $scope.publicationDisplayLimit = $scope.DEFAULT_PUB_LIMIT;
-        $scope.isHidingPublications =  $scope.profile.field_profile_publications.und.length > $scope.DEFAULT_PUB_LIMIT;
 
         if($scope.linkedIn.justGranted) {
             $scope.importLinkedInBiography();
         }
 
         console.log("publications", $scope.profile.field_profile_publications.und);
-    }
-
-    $scope.showAllPublications = function() {
-        $scope.isHidingPublications = false;
-        console.log("hell oworld", $scope.profile.field_profile_publications.und.length);
-        $scope.publicationDisplayLimit = $scope.profile.field_profile_publications.und.length;
-    }
-
-    $scope.hidePublications = function() {
-        $scope.isHidingPublications = true;
-        $scope.publicationDisplayLimit = $scope.DEFAULT_PUB_LIMIT;
     }
 
     $scope.editDetails = function() {
@@ -273,6 +256,9 @@ function ProfileCtrl($scope, $http) {
             if($scope.orcidImportFields.works) {
 //                $scope.edit.profile.field_profile_publications.und = [];
                 angular.forEach(data.publications, function(publication) {
+                    if(!angular.isDefined($scope.edit.profile.field_profile_publications.und)) {
+                        $scope.edit.profile.field_profile_publications.und = [];
+                    }
                     $scope.edit.profile.field_profile_publications.und.push({'value': publication});
                 });
             }
