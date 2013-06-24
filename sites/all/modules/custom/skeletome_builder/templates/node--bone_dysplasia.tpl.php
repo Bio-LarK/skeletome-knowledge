@@ -132,6 +132,8 @@ $isAdmin = user_access('administer site configuration');
 <div class="row-fluid">
 <div class="span8">
 
+
+
     <?php include('bone_dysplasia/description.php'); ?>
 
     <?php include('bone_dysplasia/statements.php'); ?>
@@ -202,9 +204,9 @@ $isAdmin = user_access('administer site configuration');
             <h3>Details</h3>
         </div>
 
-        <div class="section-segment alert alert-success" cm-alert="model.detailsState == 'isLoading'">
+        <cm-alert state="model.detailsState" from="isLoading" to="isDisplaying">
             <i class="ficon-ok"></i> Details Updated.
-        </div>
+        </cm-alert>
 
         <div ng-switch on="model.detailsState">
             <div ng-switch-when="isLoading">
@@ -263,28 +265,95 @@ $isAdmin = user_access('administer site configuration');
         </div>
     </section>
 
+    <!--<box>
+        <box-state>
+            <div>
+                this is a test
+            </div>
+        </box-state>
+        <box-state>
+            this is my content!
+        </box-state>
+        <box-state>
+            this is my content!
+        </box-state>
+        <box-state>
+            this is my content!
+        </box-state>
+    </box>-->
+    <!--<cm-genes title="Genes">
+        <div class="editing">
+            <div ng-repeat="gene in genes">
+                <a class="section-segment section-segment-editing">
+                    <span class="btn btn-remove"><i class="ficon-remove"></i></span>
+                    {{ gene.title }}
+                </a>
+            </div>
+        </div>
+        <div class="displaying">
+            <div ng-repeat="gene in genes">
+                <a class="section-segment">
+                    <i class="ficon-chevron-right pull-right"></i>
+                    {{ gene.title }}
+                </a>
+            </div>
+        </div>
+    </cm-genes>-->
+
     <section>
-        <div class="section-segment section-segment-header">
-            <?php if ($isAdmin || $isCurator): ?>
-                <div class="pull-right section-segment-header-buttons">
-                    <a href ng-click="showEditGenes()" data-toggle="modal" role="button" class="btn btn-edit"><i
-                            class="ficon-pencil"></i> Edit</a>
+        <div class="section-segment section-segment-header" ng-class="{'section-segment-editing': model.genesState == 'isEditing' }">
+            <div class="pull-right section-segment-header-buttons">
+                <div ng-switch on="model.genesState">
+                    <div ng-switch-when="isLoading">
+                    </div>
+                    <div ng-switch-when="isEditing">
+                        <button ng-click="saveGenes(model.edit.genes)" class="btn btn-save"><i class="ficon-ok"></i> Save</button>
+                        <button ng-click="cancelGenes()" class="btn btn-cancel">Cancel</button>
+
+                        <div class="header-divider"></div>
+
+                        <button ng-click="showAddGene()" class="btn btn-cancel"><i class="ficon-plus-sign"></i> Add</button>
+                    </div>
+                    <div ng-switch-when="isDisplaying">
+                        <?php if ($isAdmin || $isCurator): ?>
+                        <button ng-click="editGenes()" class="btn btn-edit">
+                            <i class="ficon-pencil"></i> Edit
+                        </button>
+                        <?php endif; ?>
+                    </div>
                 </div>
-            <?php endif; ?>
+            </div>
 
             <h3>Genes</h3>
         </div>
 
+        <div ng-switch on="model.genesState">
+            <div ng-switch-when="isLoading">
+                <div class="section-segment">
+                    <div class="refreshing-box">
+                        <i class="icon-refresh icon-refreshing"></i>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="isEditing">
+                <remove-list list-model="model.edit.genes"></remove-list>
+            </div>
+            <div ng-switch-when="isDisplaying">
+                <div class="section-segment muted" ng-show="!genes.length">
+                    '{{ model.boneDysplasia.title }}' is associated with {{ genes.length }} genes.
+                </div>
 
-        <a ng-href="?q=node/{{model.boneDysplasia.nid}}/gene/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
-            {{ gene.title }}
-            <i class="icon-chevron-right pull-right"></i>
-            <i class="icon-chevron-right icon-white pull-right"></i>
-        </a>
-
-        <div class="section-segment muted" ng-show="!genes.length">
-            '{{ model.boneDysplasia.title }}' is associated with {{ genes.length }} genes.
+                <a ng-href="?q=node/{{model.boneDysplasia.nid}}/gene/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
+                    {{ gene.title }}
+                    <i class="icon-chevron-right pull-right"></i>
+                    <i class="icon-chevron-right icon-white pull-right"></i>
+                </a>
+            </div>
         </div>
+
+
+
+
 
     </section>
 
@@ -385,41 +454,6 @@ $isAdmin = user_access('administer site configuration');
 <div cm-modal="showEditingPanel" ng-switch on="editingPanel" class="modal modal-dark fade hide" tabindex="-1"
      role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-<div class="modal-switch" ng-switch-when="edit-details">
-    <!-- Modal Header -->
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Edit Details</h3>
-    </div>
-    <!-- /Modal Header -->
-
-    <!-- Modal Body -->
-    <div class="modal-body">
-        <div class="modal-body-inner">
-            <p>Edit the details for '{{model.boneDysplasia.title}}'.</p>
-
-            <div class="section-top">
-                <p>OMIM Number</p>
-                <input type="input" ng-model="editedOMIM" class="full-width"/>
-            </div>
-            <div class="section-top">
-                <p>Mode of Inheritance</p>
-                <select class="full-width" ng-model="edit.editedMoi" ng-options="blah.name for blah in mois"
-                        ng-init="7"></select>
-            </div>
-        </div>
-
-    </div>
-    <!-- /Modal Body -->
-
-    <!-- Modal Footer -->
-    <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-success" ng-click="saveDetails(editedOMIM, edit.editedMoi)"><i
-                class="icon-ok icon-white"></i> Save</a>
-    </div>
-    <!-- /Modal Footer -->
-</div>
-
 
 <div class="modal-switch" ng-switch-when="edit-genes">
     <!-- Modal Header -->
@@ -519,63 +553,6 @@ $isAdmin = user_access('administer site configuration');
     <!-- /Modal Footer -->
 </div>
 
-<div class="modal-switch" ng-switch-when="edit-features">
-    <!-- Modal Header -->
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Edit Clinical Features</h3>
-    </div>
-    <!-- /Modal Header -->
-
-    <!-- Modal Body -->
-    <div class="modal-body">
-        <div class="modal-body-inner">
-
-            <p>Edit Clinical Features to attached to '{{model.boneDysplasia.title}}'.</p>
-
-            <form>
-                <search model="$parent.editClinicalFeatureSearch"
-                        change="searchForClinicalFeatures(editClinicalFeatureSearch)"
-                        placeholder="Search for a Clinical Feature"></search>
-            </form>
-
-
-            <table class="table table-center">
-                <tr>
-                    <th>Clinical Feature</th>
-                    <th>Action</th>
-                </tr>
-                <tr ng-repeat="clinicalFeature in editingClinicalFeatures | filter:editClinicalFeatureSearch">
-                    <td>{{ clinicalFeature.name | truncate:40 }}</td>
-
-                    <td>
-                        <a role="button" ng-show="clinicalFeature.added" class="btn btn-danger pull-right"
-                           ng-click="removeClinicalFeature(clinicalFeature, model.boneDysplasia)"><i
-                                class="ficon-remove icon-white"></i> Remove</a>
-                        <a role="button" ng-show="!clinicalFeature.added" class="btn btn-success pull-right"
-                           ng-click="addClinicalFeature(clinicalFeature, model.boneDysplasia)"><i
-                                class="icon-plus icon-white"></i> Add</a>
-                    </td>
-                </tr>
-            </table>
-
-            <!-- Helpful Prompt (show when no text is entered, and no existing genes -->
-            <p ng-show="$parent.editClinicalFeatureSearch.length" class="muted info">Want to find another Clinical Feature? <br/>Try using the search bar above e.g.
-                '<a href
-                    ng-click="$parent.editClinicalFeatureSearch = 'Frontal Bossing'; searchForClinicalFeatures(editClinicalFeatureSearch)">Frontal
-                    Bossing</a>'</p>
-            <!-- /Helpful Prompt -->
-
-        </div>
-    </div>
-    <!-- /Modal Body -->
-
-    <!-- Modal Footer -->
-    <div class="modal-footer modal-footer-bottom">
-        <a href class="btn btn-primary" ng-click="closeEditingPanel()"><i class="icon-ok icon-white"></i> Done</a>
-    </div>
-    <!-- /Modal Footer -->
-</div>
 </div>
 
 
@@ -597,8 +574,18 @@ $isAdmin = user_access('administer site configuration');
 </div>
 
 
+
+    <my-modal visible="model.isShowingAddGene">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add Gene</h3>
+        </div>
+        <div class="section-segment">
+            <lookup url="?q=ajax/search/gene/" placeholder="Search for a Gene" query="model.geneLookupQuery" results="model.geneLookupResults" is-loading="model.geneLookingIsLoading"></lookup>
+        </div>
+        <add-list add-to-model="model.edit.genes" list-model=" model.geneLookupResults"></add-list>
+    </my-modal>
+
 </div>
-
-
 
 <?php endif; ?>

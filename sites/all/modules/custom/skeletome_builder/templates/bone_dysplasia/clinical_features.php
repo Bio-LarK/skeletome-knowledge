@@ -46,9 +46,9 @@
 
     </div>
 
-    <div class="section-segment alert alert-success" cm-alert="model.clinicalFeaturesState">
-        <i class="ficon-ok"></i> Clinical Features saved.
-    </div>
+    <cm-alert state="model.clinicalFeaturesState" from="isLoading" to="isDisplaying">
+        <i class="ficon-ok"></i> Details Updated.
+    </cm-alert>
 
     <div ng-switch on="model.clinicalFeaturesState">
         <div ng-switch-when="isLoading">
@@ -144,42 +144,8 @@
     </div>
 
     <div class="section-segment">
-        <p>
-            Search for a Clinical Feature e.g. 'Dwarfism'
-        </p>
-        <search model="model.edit.addClinicalFeatureQuery" change="searchForClinicalFeature(model.edit.addClinicalFeatureQuery)" placeholder="Search for a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
+        <lookup url="?q=ajax/clinical-features/search/" placeholder="Search for a Clinical Feature" query="model.edit.addClinicalFeatureQuery" results="model.edit.clinicalFeaturesSearchResults" is-loading="model.edit.clinicalFeatureLoading"></lookup>
     </div>
-    <div>
-        <!-- Search Results -->
-        <div ng-show="model.edit.addClinicalFeatureQuery.length" ng-switch on="model.edit.clinicalFeaturesSearchResultsState">
-            <div ng-switch-when="isLoading">
-                <div class="section-segment refreshing-box" ng-show="model.edit.clinicalFeaturesSearchResultsState">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </div>
-            </div>
-            <div ng-switch-when="isDisplaying">
-                <div ng-repeat="result in model.edit.clinicalFeaturesSearchResults">
-                    <a ng-show="!result.added" href class="section-segment" ng-click="addClinicalFeature(result)">
-                        <span class="btn btn-add">
-                            <i class="ficon-ok"></i>
-                        </span>
-                        <span ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.addClinicalFeatureQuery">
-                        </span>
-                    </a>
+    <add-list list-model="model.edit.clinicalFeaturesSearchResults" add-to-model="model.edit.clinicalFeatures"></add-list>
 
-                    <div class="section-segment" ng-show="result.added">
-                        <span class="btn btn-added">
-                            <i class="ficon-ok"></i>
-                        </span>
-                        <span ng-bind-html-unsafe="result.name | truncate:40 | highlight:model.edit.addClinicalFeatureQuery"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!--<div class="section-segment media-body">
-        <a class="btn btn-save" href="" ng-enabled="orcidId.length >= 16" ng-click="importFromOrcid(orcidId)">Import</a>
-        <a class="btn btn-cancel" href="" ng-click="hideImportFromOrcid()">Cancel</a>
-    </div>-->
 </my-modal>

@@ -23,7 +23,69 @@ function skeletome_bone_dysplasia_menu() {
         'access callback'   => 'is_curator',
     );
 
+
+    /**
+     * Updating Genes for a Bone Dysplasia
+     */
+    $items['ajax/bone-dysplasia/%/genes'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'skeletome_bone_dysplasia_genes',
+        'access callback'   => 'is_curator',
+    );
+    /**
+     * Adds a Gene
+     */
+    $items['ajax/bone-dysplasia/%/gene'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'skeletome_bone_dysplasia_gene',
+        'access callback'   => 'is_curator',
+    );
+
+    /**
+     *
+     */
+    $items['ajax/bone-dysplasia/%/genes/%'] = array(
+        'type'              => MENU_CALLBACK,
+        'page arguments'    => array(2),
+        'page callback'     => 'skeletome_bone_dysplasia_genes',
+        'access callback'   => 'is_curator',
+    );
+
     return $items;
+}
+
+/**
+ * Save Genes
+ * @param $bone_dysplasia_id
+ */
+function skeletome_bone_dysplasia_genes($bone_dysplasia_id) {
+
+    // lets do 1 to 1 to 1
+    // just to keep things working easier
+    // every gene has a gene mutation
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+
+    // Get the genes
+    $genes = $objData['genes'];
+
+    $bone_dysplasia = node_load($bone_dysplasia_id);
+    $bone_dysplasia->field_bd_gm[LANGUAGE_NONE] = array();
+
+    // For each gene, get their associated gene mutation
+    $gene_mutations = array();
+    foreach($genes as $gene) {
+        $gene_mutation = data_get_unspecified_mutation_for_gene($gene['nid']);
+        $bone_dysplasia->field_bd_gm[LANGUAGE_NONE][] = array(
+            'target_id' => $gene_mutation->nid
+        );
+    }
+
+    node_save($bone_dysplasia);
+
+    echo drupal_json_encode($genes);
 }
 
 function skeletome_bone_dysplasia_statement_create($bone_dysplasia_id) {

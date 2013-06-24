@@ -1057,13 +1057,13 @@ function skeletome_builder_menu() {
 
 
 
-    $items['ajax/bone-dysplasia/%node/genes'] = array(
-        'title' 		    => t('Bone Dysplasia Search'),
-        'page callback' 	=> 'ajax_bone_dysplasia_genes',
-        'page arguments'    => array(2),
-        'access callback'   => 'is_curator',
-        'type'  => MENU_CALLBACK
-    );
+//    $items['ajax/bone-dysplasia/%node/genes'] = array(
+//        'title' 		    => t('Bone Dysplasia Search'),
+//        'page callback' 	=> 'ajax_bone_dysplasia_genes',
+//        'page arguments'    => array(2),
+//        'access callback'   => 'is_curator',
+//        'type'  => MENU_CALLBACK
+//    );
 
 
     $items['ajax/bone-dysplasia/description'] = array(

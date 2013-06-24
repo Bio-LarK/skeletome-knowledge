@@ -96,10 +96,7 @@ function page_profile($user) {
             RIGHT JOIN {node} o
             ON o.nid = n.nid
             WHERE n.uid = :uid
-            AND o.type != 'profile'
-            AND o.type != 'gene_mutation'
-            AND n.title != 'Statement'
-            AND o.type != 'page_tracker'
+            AND (o.type == 'bone_dysplasia' OR o.type == 'gene')
             ORDER BY timestamp DESC
             LIMIT 20";
     $results = db_query($sql, array(

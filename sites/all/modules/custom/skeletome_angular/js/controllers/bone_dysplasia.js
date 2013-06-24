@@ -70,6 +70,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.setupXRays();
         $scope.setupDetails();
         $scope.setupClinicalFeatures();
+        $scope.setupGenes();
     }
 
 
@@ -177,6 +178,31 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //        $scope.closeEditingPanel();
 //
 //    }
+
+    $scope.setupGenes = function() {
+        $scope.model.genesState = $scope.IS_DISPLAYING;
+        $scope.model.geneLookingIsLoading = false;
+    }
+    $scope.editGenes = function() {
+        $scope.model.edit.genes = angular.copy($scope.genes);
+        $scope.model.genesState = $scope.IS_EDITING;
+    }
+    $scope.cancelGenes = function() {
+        $scope.model.genesState = $scope.IS_DISPLAYING;
+    }
+    $scope.showAddGene = function() {
+        $scope.model.isShowingAddGene = true;
+    }
+    $scope.saveGenes = function(genes) {
+        $scope.model.genesState = $scope.IS_LOADING;
+        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/genes', {
+            genes: genes
+        }).success(function(data) {
+            $scope.genes = data;
+            $scope.model.genesState = $scope.IS_DISPLAYING;
+
+        });
+    }
 
     /**
      * Edit Xrays
@@ -425,61 +451,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
      * @param editGeneSearch    The Search term string to match
      */
     $scope.searchForGenes = function(editGeneSearch) {
-        $scope.editGeneLoading++;
-        $scope.showAddNewGeneForm = false;
 
-        // Whenever there are no values, we show the current ones
-        // Otherwise, its just the search
-        // Might have a slight delay, but we will see.
-
-        if(!$scope.editGeneSearch) {
-            $scope.editGeneLoading = 0;
-            console.log("input cleared");
-            $scope.editingGenes = angular.copy($scope.genes);
-            return;
-        };
-
-        $http.get('?q=ajax/search/gene/' + editGeneSearch).success(function(data) {
-            $scope.editGeneLoading--;
-            console.log("Request came back " + editGeneSearch);
-
-            if(editGeneSearch != $scope.editGeneSearch) {
-                return;
-            }
-
-            // We got back the correct search
-            // Lets see if we found any results
-            if(data.length == 0) {
-                // No results
-                // Show add gene form
-                $scope.showAddNewGeneForm = true;
-            }
-
-            angular.forEach(data, function(searchGene, searchGenekey) {
-                // Check if we already have it, if so, we mark it as added
-                angular.forEach($scope.genes, function(addedGene, addedGeneKey) {
-                    if(searchGene.nid == addedGene.nid) {
-                        // We alredy have that gene, now check the individual gene mutations
-                        searchGene.added = true;
-
-//                        angular.forEach(searchGene.field_gene_gene_mutation, function(searchGeneMutation, searchGeneMutationKey) {
-//                            angular.forEach(addedGene.field_gene_gene_mutation, function(addedGeneMutation, addedGeneMutationKey) {
-//                                if(searchGeneMutation.nid == addedGeneMutation.nid) {
-//                                    searchGeneMutation.added = true;
-//                                }
-//                            });
-//                        });
-                    }
-                });
-            });
-
-//            if(data.length == 1) {
-//                // When there is only 1 gene, open it up automatically
-//                data[0].showGeneMutations = true;
-//            }
-            $scope.editingGenes = data;
-
-        });
     }
 
     $scope.addNewGeneToBoneDysplasia = function(geneName, boneDysplasia) {

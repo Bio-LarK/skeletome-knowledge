@@ -82,6 +82,10 @@
             </div>
         </div>
 
+        <cm-alert state="model.statementsState" from="isLoading" to="isDisplaying">
+            <i class="ficon-ok"></i> Statements Updated
+        </cm-alert>
+
         <div ng-switch on="model.statementsState">
             <div ng-switch-when="isLoading">
                 <div class="section-segment refreshing-box">

@@ -46,9 +46,9 @@
             <?php endif; ?>
         </div>
 
-        <div class="section-segment alert alert-success" cm-alert="description.isLoading">
-            <i class="ficon-ok"></i> Description saved.
-        </div>
+        <cm-alert state="model.isEditingDescription" from="true" to="false">
+            <i class="ficon-ok"></i> Description Saved
+        </cm-alert>
 
         <div ng-show="model.isEditingDescription && model.statementPackage" class="section-segment section-segment-editing">
             <div>
