@@ -133,7 +133,7 @@ myApp.directive('navSearch', function() {
                             $scope.isLoading--;
                         }
                     }
-                }, 500);
+                }, 200);
             }
 
             $scope.enteredSuggestion = function(suggestion) {
