@@ -2,9 +2,10 @@ myApp.directive('removeList', function() {
     return {
         restrict: 'E',
         scope: {
-            listModel: '='
+            listModel: '=',
+            filterBy: '='
         },
-        template: '<div>\n    <div ng-repeat="item in listModel">\n        <a ng-click="removeItem(item)" href  class="section-segment section-segment-editing">\n            <span class="btn btn-remove"><i class="ficon-remove"></i></span>\n            <span>{{ item.title || item.name }}</span>\n        </a>\n    </div>\n   \n</div>',
+        template: '<div>\n    <div ng-repeat="item in listModel | filter:filterBy">\n        <remove-item ng-click="removeItem(item)">{{ item.title || item.name || item.value }}</remove-item>\n        <!--<a ng-click="removeItem(item)" href  class="section-segment section-segment-editing">\n        </a>-->\n    </div>\n    <div ng-show="!listModel.length" class="section-segment section-segment-editing" >\n        <div class="muted">\n            No items.\n        </div>\n    </div>\n</div>',
         replace: true,
         transclude: true,
         controller: function ($scope) {

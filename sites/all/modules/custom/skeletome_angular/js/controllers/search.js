@@ -52,9 +52,10 @@ function SearchCtrl($scope, $http) {
                     }
                 });
 
+                console.log("search string length", $scope.model.searchString.length);
                 // deal with the special case
                 // only a clinical feature remains, deal with it specially
-                if($scope.model.searchString.length == 0 && query[0].machine_name == "skeletome_vocabulary") {
+                if($scope.model.searchString.length == 0 && query.length && query[0].machine_name == "skeletome_vocabulary") {
                     $scope.model.searchString += " " + query[0].name;
                 }
 

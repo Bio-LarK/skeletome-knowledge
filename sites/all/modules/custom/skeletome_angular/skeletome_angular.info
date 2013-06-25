@@ -55,3 +55,7 @@ scripts[] = js/directives/cm_reveal.js
 scripts[] = js/directives/lookup.js
 scripts[] = js/directives/add_list.js
 scripts[] = js/directives/remove_list.js
+scripts[] = js/directives/remove_item.js
+scripts[] = js/directives/cancel_button.js
+scripts[] = js/directives/save_button.js
+scripts[] = js/directives/edit_button.js

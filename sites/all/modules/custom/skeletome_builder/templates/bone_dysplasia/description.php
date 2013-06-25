@@ -17,16 +17,8 @@
 
                     <!-- Not Editing Description -->
                 <span ng-show="model.isEditingDescription">
-                    <a href class="btn btn-save"
-                       ng-click="saveEditedDescription(model.editedDescription)">
-                        <i class="ficon-ok icon-white"></i> Save
-                    </a>
-
-                    <a ng-show="model.isEditingDescription"
-                       href class="btn btn-cancel"
-                       ng-click="cancelEditingDescription()">
-                        <i class="ficon-remove"></i> Cancel
-                    </a>
+                    <save-button click="saveEditedDescription(model.editedDescription)"></save-button>
+                    <cancel-button click="cancelEditingDescription()"></cancel-button>
                 </span>
 
             </div>

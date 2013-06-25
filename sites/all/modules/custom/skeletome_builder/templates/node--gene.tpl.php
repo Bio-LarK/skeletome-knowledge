@@ -80,6 +80,15 @@
  */
 ?>
 
+<?php
+// Create some user access variables
+$isRegistered = isset($user->uid) && $user->uid != 0;
+$isCurator = is_array($user->roles) && in_array('sk_curator', $user->roles);
+$isEditor = is_array($user->roles) && in_array('sk_editor', $user->roles);
+$isAdmin = user_access('administer site configuration');
+?>
+
+
 <div xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" ng-controller="GeneCtrl" ng-init="init()">
     <div  ng-cloak>
 
@@ -109,9 +118,9 @@
 
             <div class="span8">
 
-                <?php include('description.php'); ?>
+                <?php include('bone_dysplasia/description.php'); ?>
 
-                <?php include('statements.php'); ?>
+                <?php include('bone_dysplasia/statements.php'); ?>
 
             </div>
 

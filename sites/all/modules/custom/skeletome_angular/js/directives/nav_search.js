@@ -80,6 +80,8 @@ myApp.directive('navSearch', function() {
                     return;
                 }
 
+                $scope.isLoading++;
+
                 // Filter past suggestions while we wait for results to come back
                 var textFilter = $filter('nameOrTitleStartsWith');
                 $scope.model.suggestions = textFilter($scope.model.suggestions, $scope.model.entry);
@@ -92,41 +94,46 @@ myApp.directive('navSearch', function() {
                 }
 
 
-                if($scope.model.entry.length >= 2) {
-                    // Got 2 characters, so search
-                    $scope.isLoading++;
-                    console.log("is loading", $scope.isLoading);
+                setTimeout(function() {
+                    // We wait a little, and check after the short delay
+                    // that what we are searching for, is what the user is typing
+                    if(entry == $scope.model.entry) {
+                        $scope.$apply(function() {
+                            $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
+                                // add in all suggestions
+                                if($scope.isLoading > 0) {
+                                    $scope.isLoading--;
+                                }
 
-                    $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
-                        // add in all suggestions
+                                if(entry.length < $scope.model.entry - 2) {
+                                    return;
+                                }
+
+                                // We filter the results by what we have entered
+                                // cause we might be getting old results back from the database
+                                // from a previous query
+                                $scope.model.suggestions = textFilter(data, $scope.model.entry);
+
+                                if($scope.model.suggestions.length) {
+                                    // selected suggestion
+                                    if($scope.selectedIndex == $scope.NOT_SELECTED) {
+                                        // If there isnt one selected, select the first one
+                                        $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+                                    } else {
+                                        $scope.updateSelectedSuggestionText($scope.selectedIndex);
+                                    }
+                                } else {
+                                    $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                                }
+
+                            });
+                        });
+                    } else {
                         if($scope.isLoading > 0) {
                             $scope.isLoading--;
-                            console.log("is loading", $scope.isLoading);
                         }
-
-                        if(entry.length < $scope.model.entry - 2) {
-                            return;
-                        }
-
-                        // We filter the results by what we have entered
-                        // cause we might be getting old results back from the database
-                        // from a previous query
-                        $scope.model.suggestions = textFilter(data, $scope.model.entry);
-
-                        if($scope.model.suggestions.length) {
-                            // selected suggestion
-                            if($scope.selectedIndex == $scope.NOT_SELECTED) {
-                                // If there isnt one selected, select the first one
-                                $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
-                            } else {
-                                $scope.updateSelectedSuggestionText($scope.selectedIndex);
-                            }
-                        } else {
-                            $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
-                        }
-
-                    });
-                }
+                    }
+                }, 500);
             }
 
             $scope.enteredSuggestion = function(suggestion) {
@@ -203,13 +210,18 @@ myApp.directive('navSearch', function() {
                     // multi-part query
                     window.location.href = $scope.searchUrl();
                 } else {
-                    var selectedObject = $scope.model.suggestions[$scope.selectedIndex];
-
-                    if(angular.isDefined(selectedObject.nid)) {
-                        window.location.href = "?q=node/" + selectedObject.nid;
+                    if($scope.selectedIndex == $scope.SEARCH_SELECTED) {
+                        window.location.href = $scope.searchUrl();
                     } else {
-                        window.location.href = "?q=taxonomy/term/" + selectedObject.tid;
+                        var selectedObject = $scope.model.suggestions[$scope.selectedIndex];
+
+                        if(angular.isDefined(selectedObject.nid)) {
+                            window.location.href = "?q=node/" + selectedObject.nid;
+                        } else {
+                            window.location.href = "?q=taxonomy/term/" + selectedObject.tid;
+                        }
                     }
+
                 }
             }
 

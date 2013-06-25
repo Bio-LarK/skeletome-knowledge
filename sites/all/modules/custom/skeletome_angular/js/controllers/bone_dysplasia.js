@@ -8,7 +8,6 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
     $scope.addFeatureFormVisible = false;
 
-
     /* Bone Dysplasia stuff */
     $scope.model.boneDysplasia = Drupal.settings.skeletome_builder.bone_dysplasia;
 

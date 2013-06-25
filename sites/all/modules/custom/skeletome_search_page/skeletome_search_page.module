@@ -247,6 +247,8 @@ function data_get_facets_for_search() {
     $facet_ids = array_keys($facets);
     $facets_values = array_values($facets);
 
+    $facet_data = array();
+
     $i = 0;
     foreach($facet_ids as $facet_id) {
         $sql = "SELECT t.name

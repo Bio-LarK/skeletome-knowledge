@@ -132,8 +132,6 @@ $isAdmin = user_access('administer site configuration');
 <div class="row-fluid">
 <div class="span8">
 
-
-
     <?php include('bone_dysplasia/description.php'); ?>
 
     <?php include('bone_dysplasia/statements.php'); ?>
@@ -185,11 +183,10 @@ $isAdmin = user_access('administer site configuration');
                         <div ng-switch-when="isLoading">
                         </div>
                         <div ng-switch-when="isEditing">
+                            <save-button click="saveDetails()"></save-button>
+
                             <a href ng-click="cancelDetails()" class="btn btn-cancel">
                                 <i class="ficon-remove"></i> Cancel
-                            </a>
-                            <a href ng-click="saveDetails()" class="btn btn-save">
-                                <i class="icon-ok icon-white"></i> Save
                             </a>
                         </div>
                         <div ng-switch-when="isDisplaying">
@@ -307,7 +304,9 @@ $isAdmin = user_access('administer site configuration');
                     <div ng-switch-when="isLoading">
                     </div>
                     <div ng-switch-when="isEditing">
-                        <button ng-click="saveGenes(model.edit.genes)" class="btn btn-save"><i class="ficon-ok"></i> Save</button>
+
+                        <save-button click="saveGenes(model.edit.genes)"></save-button>
+
                         <button ng-click="cancelGenes()" class="btn btn-cancel">Cancel</button>
 
                         <div class="header-divider"></div>
@@ -327,6 +326,11 @@ $isAdmin = user_access('administer site configuration');
             <h3>Genes</h3>
         </div>
 
+        <cm-alert state="model.genesState" from="isLoading" to="isDisplaying">
+            <i class="ficon-ok"></i> Genes Updated.
+        </cm-alert>
+
+
         <div ng-switch on="model.genesState">
             <div ng-switch-when="isLoading">
                 <div class="section-segment">
@@ -343,7 +347,7 @@ $isAdmin = user_access('administer site configuration');
                     '{{ model.boneDysplasia.title }}' is associated with {{ genes.length }} genes.
                 </div>
 
-                <a ng-href="?q=node/{{model.boneDysplasia.nid}}/gene/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
+                <a ng-href="?q=node/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
                     {{ gene.title }}
                     <i class="icon-chevron-right pull-right"></i>
                     <i class="icon-chevron-right icon-white pull-right"></i>
@@ -584,6 +588,10 @@ $isAdmin = user_access('administer site configuration');
             <lookup url="?q=ajax/search/gene/" placeholder="Search for a Gene" query="model.geneLookupQuery" results="model.geneLookupResults" is-loading="model.geneLookingIsLoading"></lookup>
         </div>
         <add-list add-to-model="model.edit.genes" list-model=" model.geneLookupResults"></add-list>
+
+        <div class="modal-footer">
+            <a ng-click="model.isShowingAddGene = false" class="btn btn-save" href=""> Done</a>
+        </div>
     </my-modal>
 
 </div>

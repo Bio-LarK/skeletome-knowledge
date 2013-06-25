@@ -61,37 +61,12 @@
         <div ng-switch-when="isEditing">
 
             <!-- Search form -->
-            <!--  -->
             <div class="section-segment section-segment-editing">
-                <form style="margin-bottom: 0">
-                    <search model="model.edit.clinicalFeatureQuery" placeholder="Find a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
-                </form>
-            </div>
-
-            <!-- Header -->
-            <div class="section-segment section-segment-editing">
-                <div>
-                    <div style="width: 60%; display: inline-block">
-                        <b>Feature</b>
-                    </div>
-                    <div style="width: 35%; display: inline-block">
-                        <!--<b>Information Content</b> <i class="icon-question-sign" cm-tooltip="top" cm-tooltip-content="Information content."></i>-->
-                    </div>
-                </div>
+                <search model="model.edit.clinicalFeatureQuery" placeholder="Find a Clinical Feature"  placeholder="Search for a Clinical Feature"></search>
             </div>
 
             <!-- Existing Clinical Features -->
-
-            <div ng-repeat="clinicalFeature in model.edit.clinicalFeatures | filter:model.edit.clinicalFeatureQuery | orderBy:'information_content'">
-                <a ng-click="removeClinicalFeature(clinicalFeature)" class="section-segment section-segment-editing">
-
-                    <span class="btn btn-remove" href=""><i class="ficon-remove"></i></span>
-
-                    <span >
-                        {{clinicalFeature.name | truncate:100 | capitalize}}
-                    </span>
-                </a>
-            </div>
+            <remove-list list-model="model.edit.clinicalFeatures" filter-by="model.edit.clinicalFeatureQuery"></remove-list>
 
         </div>
 

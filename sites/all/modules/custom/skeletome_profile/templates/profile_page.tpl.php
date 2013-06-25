@@ -262,22 +262,8 @@
                     </div>
                     <div ng-switch-when="isEditing">
 
-                        <div ng-show="!edit.profile.field_profile_publications.und.length" class="section-segment section-segment-editing media-body" >
-                            <div class="muted">
-                                No publications.
-                            </div>
-                        </div>
+                        <remove-list list-model="edit.profile.field_profile_publications.und"></remove-list>
 
-                        <div ng-repeat="publication in edit.profile.field_profile_publications.und" >
-
-                            <a class="section-segment section-segment-editing media-body" ng-click="removePublication(publication)" href>
-                                <span cm-tooltip cm-tooltip-content="Delete this reference" class="btn btn-remove pull-left"><i class="ficon-remove"></i></span>
-
-                                <span ng-bind-html-unsafe="publication.value">
-                                </span>
-                            </a>
-
-                        </div>
                     </div>
                     <div ng-switch-when="isDisplaying">
                         <div class="section-segment media-body" ng-show="!profile.field_profile_publications.und.length">
@@ -301,9 +287,7 @@
                 <div ng-repeat="statement in approvedStatements | limitTo:model.approvedStatementsDisplayLimit" class="section-segment">
                     <div ng-bind-html-unsafe="statement.body.und[0].value">
                     </div>
-                    <div>
-                        <i class="icon-user"></i> {{ statement.name }}
-                    </div>
+
                 </div>
                 <cm-reveal model="approvedStatements" showing-count="model.approvedStatementsDisplayLimit" default-count="3"></cm-reveal>
             </section>

@@ -1054,7 +1054,7 @@ ul.list-items li {
 .modal-dark.modal {
     background-color: #fafafa;
     border-radius: 0px !important;
-    max-height: 50%;
+    max-height: 80%;
     overflow: auto;
 }
 
@@ -2098,9 +2098,9 @@ a.section-segment {
         color: #7892ae;
     }
     .section-segment.alert.alert-saved {
-        background-color: #bceaba;
-        color: #557955;
-        border: 1px solid #9bdd9c;
+        background-color: #e9f8f1;
+        color: #75b28e;
+        border-bottom: 1px solid #ccead0;
         text-shadow: none;
     }
 
