@@ -59,3 +59,4 @@ scripts[] = js/directives/remove_item.js
 scripts[] = js/directives/cancel_button.js
 scripts[] = js/directives/save_button.js
 scripts[] = js/directives/edit_button.js
+scripts[] = js/directives/refresh_box.js

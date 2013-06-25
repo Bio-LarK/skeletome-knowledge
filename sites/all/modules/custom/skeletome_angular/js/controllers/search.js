@@ -106,7 +106,7 @@ function SearchCtrl($scope, $http) {
         // clean the facets
         $scope.model.facets = [];
 
-        angular.forEach(data, function(value, index) {
+        angular.forEach(data.clinical_features, function(value, index) {
             var found = false;
             angular.forEach($scope.model.navSearchModel.query, function(term, index2) {
                 if(term.tid == value.tid) {

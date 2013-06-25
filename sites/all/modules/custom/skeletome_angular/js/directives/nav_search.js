@@ -90,13 +90,12 @@ myApp.directive('navSearch', function() {
                 if($scope.model.suggestions.length) {
                     $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
                 } else {
-                    $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                    $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
                 }
 
-
+                // We wait a little, and check after the short delay
+                // that what we are searching for, is what the user is typing
                 setTimeout(function() {
-                    // We wait a little, and check after the short delay
-                    // that what we are searching for, is what the user is typing
                     if(entry == $scope.model.entry) {
                         $scope.$apply(function() {
                             $http.get('?q=ajax/autocomplete/all/' + $scope.model.entry).success(function(data) {
@@ -116,16 +115,15 @@ myApp.directive('navSearch', function() {
 
                                 if($scope.model.suggestions.length) {
                                     // selected suggestion
-                                    if($scope.selectedIndex == $scope.NOT_SELECTED) {
+                                    if($scope.selectedIndex == $scope.NOT_SELECTED || $scope.selectedIndex == $scope.SEARCH_SELECTED) {
                                         // If there isnt one selected, select the first one
                                         $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
                                     } else {
                                         $scope.updateSelectedSuggestionText($scope.selectedIndex);
                                     }
                                 } else {
-                                    $scope.updateSelectedSuggestionText($scope.NOT_SELECTED);
+                                    $scope.updateSelectedSuggestionText($scope.SEARCH_SELECTED);
                                 }
-
                             });
                         });
                     } else {
@@ -214,11 +212,14 @@ myApp.directive('navSearch', function() {
                         window.location.href = $scope.searchUrl();
                     } else {
                         var selectedObject = $scope.model.suggestions[$scope.selectedIndex];
-
                         if(angular.isDefined(selectedObject.nid)) {
                             window.location.href = "?q=node/" + selectedObject.nid;
+                            $scope.model.entry = selectedObject.title;
+                            $scope.inputBlurred();
                         } else {
                             window.location.href = "?q=taxonomy/term/" + selectedObject.tid;
+                            $scope.model.entry = selectedObject.name;
+                            $scope.inputBlurred();
                         }
                     }
 

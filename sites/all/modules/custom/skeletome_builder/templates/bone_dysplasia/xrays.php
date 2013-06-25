@@ -8,40 +8,26 @@
                     <div ng-switch-when="isLoading">
                     </div>
                     <div ng-switch-when="isEditing">
-                        <a href ng-click="cancelXRays()" class="btn btn-cancel">
-                            <i class="ficon-remove"></i> Cancel
-                        </a>
-
-                        <a href ng-click="saveXRays()" class="btn btn-save">
-                            <i class="ficon-ok"></i> Save
-                        </a>
-
+                        <save-button click="saveXRays()"></save-button>
+                        <cancel-button click="cancelXRays()"></cancel-button>
                     </div>
                     <div ng-switch-when="isDisplaying">
-                        <a href ng-click="editXRays()" class="btn btn-edit">
-                            <i class="ficon-pencil"></i> Edit
-                        </a>
+                        <edit-button click="editXRays()"></edit-button>
                     </div>
                 </div>
-
-
             </div>
         <?php endif; ?>
 
         <h3>X-Rays</h3>
     </div>
 
-    <div class="section-segment alert alert-success" cm-alert="model.xrayState == 'isLoading'">
-        <i class="ficon-ok"></i> X-Rays Saved.
-    </div>
+    <cm-alert state="model.xrayState" from="isLoading" to="isDisplaying">
+        <i class="ficon-ok"></i> Description Saved
+    </cm-alert>
 
     <div ng-switch on="model.xrayState">
         <div ng-switch-when="isLoading">
-            <div class="section-segment">
-                <div class="refreshing-box">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </div>
-            </div>
+            <refresh-box></refresh-box>
         </div>
         <div ng-switch-when="isEditing">
             <div class="section-segment section-segment-editing">

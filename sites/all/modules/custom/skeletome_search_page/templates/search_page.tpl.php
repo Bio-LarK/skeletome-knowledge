@@ -4,39 +4,6 @@
     }
 </style>
 <div ng-controller="SearchCtrl" ng-init="init()">
-    <!--<div class="row">
-        <div class="span12">
-            <section>
-                <div class="section-segment section-segment-header">
-                    Searching
-                </div>
-
-                <div ng-repeat="boneDysplasia in model.boneDysplasias">
-                    <div class="section-segment">
-                        {{ boneDysplasia.title }}
-                    </div>
-                </div>
-
-                <div ng-repeat="gene in model.genes">
-                    <div class="section-segment">
-                        {{ gene.title }}
-                    </div>
-                </div>
-
-                <div ng-repeat="clinicalFeature in model.clinicalFeatures">
-                    <div class="section-segment">
-                        {{ clinicalFeature.name }}
-                    </div>
-                </div>
-
-                <div ng-repeat="group in model.groups">
-                    <div class="section-segment">
-                        {{ group.title }}
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>-->
 
     <div class="row">
         <div class="span12">
@@ -89,6 +56,7 @@
             </section>
         </div>
         <div class="span4">
+
             <section>
                 <div class="section-segment section-segment-header">
                     <h3>Filter Clinical Features</h3>
@@ -109,7 +77,7 @@
                     <a class="section-segment" href="" ng-click="addClinicalFeature(facet)">
                         <span class="label pull-right">{{ facet.count }}</span>
 
-                        <i class="icon-plus"></i> {{ facet.name }}
+                        <span class="btn btn-add"><i class="ficon-plus"></i></span> {{ facet.name }}
                     </a>
                 </div>
                 <div ng-show="model.results.length > 0" class="section-segment">

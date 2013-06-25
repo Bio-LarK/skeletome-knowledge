@@ -1,5 +1,4 @@
 <div class="navsearch">
-
     <div class="navsearch-querywrapper">
 
         <div class="navsearch-terms">
