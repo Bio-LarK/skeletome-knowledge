@@ -180,7 +180,9 @@ function page_skeletome_search_page() {
             $search_string = $clinical_features[0]->name;
         }
     }
-    $results = apachesolr_search_search_execute($search_string, array(
+    $blarf2 = explode(" ", $search_string);
+    $blarf = "*" . implode("* *", $blarf2) . "*";
+    $results = apachesolr_search_search_execute($blarf, array(
         'fq'    => $conditions
     ));
 

@@ -26,7 +26,7 @@ function SearchCtrl($scope, $http) {
         $scope.model.moreResults = true;
 
         $scope.$watch('model.navSearchModel.query', function(query) {
-            if(query) {
+            if(query && query.length) {
                 // the query has been changed, lets see if we can change the conditions
                 $scope.model.conditions = [];
                 $scope.model.searchString = "";
