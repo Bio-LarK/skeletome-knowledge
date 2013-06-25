@@ -169,7 +169,6 @@ function page_skeletome_search_page() {
         $search_string .=  " " . $searchable_term->title;
     }
 
-
     $conditions = array();
     foreach($clinical_features as $clinical_feature) {
         $conditions[] = "im_field_skeletome_tags:" . $clinical_feature->tid;
@@ -180,9 +179,13 @@ function page_skeletome_search_page() {
             $search_string = $clinical_features[0]->name;
         }
     }
-    $blarf2 = explode(" ", $search_string);
-    $blarf = "*" . implode("* *", $blarf2) . "*";
-    $results = apachesolr_search_search_execute($blarf, array(
+
+    if(strpos($search_string, "AND") === FALSE) {
+        // Lets fix up the search term
+        $search_string .= "*";
+    }
+
+    $results = apachesolr_search_search_execute($search_string, array(
         'fq'    => $conditions
     ));
 
