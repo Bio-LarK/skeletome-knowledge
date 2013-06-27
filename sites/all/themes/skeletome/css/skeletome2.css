@@ -393,13 +393,14 @@ ul.navsearch-suggestions {
         font-size: 21px;
         line-height: 28px;
         margin-bottom: 14px;
+        font-weight: 600;
     }
     .triptych-subheading {
         color: rgb(20, 35, 49);
         font-size: 21px;
         line-height: 28px;
         font-family: "Source Sans Pro";
-        font-weight: 300;
+        font-weight: 400;
         margin-bottom: 14px;
     }
     .triptych-body {
