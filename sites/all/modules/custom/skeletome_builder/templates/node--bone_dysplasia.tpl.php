@@ -151,8 +151,8 @@ $isAdmin = user_access('administer site configuration');
 
         <div ng-repeat="subType in model.boneDysplasia.field_bd_superbd">
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
 
                 {{ subType.title }}
             </a>
@@ -167,8 +167,8 @@ $isAdmin = user_access('administer site configuration');
         <div ng-cloak ng-repeat="tag in tags">
 
             <a class="section-segment" href="?q=taxonomy/term/{{ tag.tid }}">
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
 
                 <b>{{ tag.sk_gt_field_group_source_release.name }}</b> &#187; {{ tag.sk_gt_field_group_name.name }}
             </a>
@@ -290,7 +290,7 @@ $isAdmin = user_access('administer site configuration');
         <div class="displaying">
             <div ng-repeat="gene in genes">
                 <a class="section-segment">
-                    <i class="ficon-chevron-right pull-right"></i>
+                    <i class="fficon-angle-right pull-right"></i>
                     {{ gene.title }}
                 </a>
             </div>
@@ -349,8 +349,8 @@ $isAdmin = user_access('administer site configuration');
 
                 <a ng-href="?q=node/{{gene.nid}}" class="section-segment" ng-repeat="gene in genes">
                     {{ gene.title }}
-                    <i class="icon-chevron-right pull-right"></i>
-                    <i class="icon-chevron-right icon-white pull-right"></i>
+                    <i class="ficon-angle-right pull-right"></i>
+
                 </a>
             </div>
         </div>
@@ -369,8 +369,8 @@ $isAdmin = user_access('administer site configuration');
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
                 {{ subType.title }}
 
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
             </a>
         </div>
 
@@ -384,8 +384,8 @@ $isAdmin = user_access('administer site configuration');
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
                 {{ subType.title }}
 
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
             </a>
         </div>
     </section>
@@ -398,8 +398,8 @@ $isAdmin = user_access('administer site configuration');
         </div>
         <div ng-repeat="subType in model.boneDysplasia.field_bd_seealso">
             <a class="section-segment" href="?q=node/{{ subType.nid }}">
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
 
                 {{ subType.title }}
             </a>
@@ -413,8 +413,8 @@ $isAdmin = user_access('administer site configuration');
         </div>
         <div ng-repeat="groupBoneDysplasia in groupBoneDysplasias">
             <a class="section-segment" href="?q=node/{{ groupBoneDysplasia.nid }}">
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
 
                 {{ groupBoneDysplasia.title }}
             </a>
@@ -426,8 +426,8 @@ $isAdmin = user_access('administer site configuration');
         </div>
         <div ng-repeat="object in similar">
             <a class="section-segment" href="{{object.url}}">
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+
 
                 {{ object.label }}
             </a>
@@ -445,8 +445,8 @@ $isAdmin = user_access('administer site configuration');
 
         <div ng-repeat="editor in editors">
             <a href="?q=profile-page/{{ editor.uid }}" class="section-segment" >
-                <i class="icon-chevron-right pull-right"></i>
-                <i class="icon-chevron-right icon-white pull-right"></i>
+                <i class="ficon-angle-right pull-right"></i>
+                
 
                 <i class="icon-user"></i> {{ editor.name | capitalize }}
             </a>
