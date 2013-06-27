@@ -8,7 +8,7 @@ myApp.directive('search', function() {
         },
         restrict: 'E',
         replace: true,
-        template: '<div class="search-input"><i class="ficon-filter"></i><input ng-model="model" class="full-width search-input" type="text" placeholder="{{ placeholder }}"><a class="close" href="" ng-show="model.length" ng-click="model = \'\'; change()">&times;</a></div>',
+        template: '<div class="search-input">\n    <i class="ficon-filter"></i>\n    <input ng-model="model" class="full-width search-input" type="text" placeholder="{{ placeholder }}">\n    <a class="close search-input-close" href="" ng-show="model.length" ng-click="model = \'\'; change()">&times;</a>\n</div>',
         link: function postLink(scope, iElement, iAttrs) {
 
             scope.$watch('model', function(newValue, oldValue) {

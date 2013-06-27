@@ -15,6 +15,8 @@ function GeneCtrl($scope, $http) {
         /**
          * Set up masters
          */
+        $scope.model.edit = {};
+
         $scope.master.gene = Drupal.settings.skeletome_builder.gene;
         // Fix up somep roblem with drupal
         $scope.master.gene.field_gene_gene_mutation = jQuery.map($scope.master.gene.field_gene_gene_mutation, function (value, key) { return value; });
@@ -165,23 +167,34 @@ function GeneCtrl($scope, $http) {
             });
     }
 
+    $scope.saveStatements = function(statements) {
+        $scope.model.statementsState = "isLoading";
+        $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/statements', {
+            'statements': statements
+        }).success(function(data) {
+            $scope.model.statementsState = "isDisplaying";
+            // this callback will be called asynchronously
+            // when the response is available
+            $scope.statements = data;
+        });
+    }
+
     /**
      * Show the Add Statement panel
      */
     $scope.saveStatement = function(statementText) {
-        $scope.model.isAddingStatement = false;
-        $scope.model.isloadingNewStatement = true;
+        // Set it as loading the statement
+        $scope.model.statementsState = "isLoading";
 
         var newStatementText = angular.copy(statementText);
         $scope.model.newStatement = "";
 
         $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/statement', {
-            'statement': newStatementText
+            'text': newStatementText
         }).success(function(data) {
-                $scope.model.isloadingNewStatement = false;
-                $scope.statements.unshift(data);
-            });
-        $scope.closeEditingPanel();
+            $scope.model.statementsState = "isDisplaying";
+            $scope.statements.unshift(data);
+        });
     }
 
 

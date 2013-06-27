@@ -277,8 +277,7 @@ function page_gene($gene, $bone_dysplasia=null) {
     }
     */
 
-
-    $statements = data_get_statements_for_node($gene);
+    $statements = load_related($gene->nid, 'field_gene_statement');
 
     drupal_add_js(array(
         'skeletome_builder' => array(

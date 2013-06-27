@@ -36,26 +36,20 @@
                 </div>
             </div>
 
-            <div class="section-segment section-segment-editing">
-                <ul class="xray-list unstyled media-body">
+            <div class="section-segment section-segment-editing media-body">
+                <!--<ul class="xray-list unstyled media-body">-->
 
-                    <li class="xray-list-image-edit" ng-repeat="xray in model.edit.xrays">
-                        <div ng-click="toggleXRay(xray)" style="cursor: pointer">
-                            <!-- XRay images -->
-                            <div class="xray-list-image-edit-image">
-                                <img ng-src="{{ xray.thumb_url }}" alt=""/>
-                            </div>
+<!--                    <li class="xray-list-image-edit" ng-repeat="xray in model.edit.xrays">-->
 
-                            <!-- Add Button -->
-                            <a class="btn btn-edit"
-                               ng-class="{ 'btn-success': !xray.added, 'btn-danger': xray.added }"
-                               href>
-                                <i class="icon-white" ng-class="{ 'icon-plus': !xray.added, 'ficon-remove': xray.added }"></i>
-                                {{ xray.added && 'Remove' || 'Re-Add' }}
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                <div ng-repeat="xray in model.edit.xrays" class="xray-list-image-edit">
+                    <a ng-click="removeXRay(xray)" href class="xray-list-image-edit-image">
+                        <span class="btn btn-remove"><i class="ficon-remove"></i></span>
+                        <img ng-src="{{ xray.thumb_url }}" alt=""/>
+                    </a>
+                </div>
+
+<!--                    </li>-->
+<!--                </ul>-->
             </div>
 
 

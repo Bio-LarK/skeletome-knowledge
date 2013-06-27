@@ -926,28 +926,6 @@ function skeletome_builder_menu() {
         'type'  => MENU_CALLBACK,
     );
 
-
-
-
-    $items['ajax/statement/%/remove'] = array(
-        'title'             => t('Remove Statement Bone Dysplasia'),
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(2),
-        'page callback'     => 'ajax_remove_statement',
-        'access callback'   => 'is_curator',
-    );
-    $items['ajax/gene/%/statement/%/remove'] = array(
-        'title'             => t('Remove Statement from Gene'),
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(4),
-        'page callback'     => 'ajax_remove_statement',
-        'access callback'   => 'is_curator',
-    );
-
-
-
-
-
     /* Genes */
     $items['ajax/gene/%/description'] = array(
         'type'              => MENU_CALLBACK,
@@ -974,12 +952,6 @@ function skeletome_builder_menu() {
         'page arguments'    => array(2),
         'page callback'     => 'ajax_gene_mutation_description',
         'access callback'   => 'is_curator',
-    );
-    $items['ajax/gene/%/statement'] = array(
-        'type'              => MENU_CALLBACK,
-        'page arguments'    => array(2),
-        'page callback'     => 'ajax_gene_statement',
-        'access callback'   => 'is_editor',
     );
 
 

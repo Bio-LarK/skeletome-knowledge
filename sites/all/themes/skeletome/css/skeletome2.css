@@ -735,7 +735,7 @@ input[type=text] {
 */
 .search-input {
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     padding-bottom: 1px;
     padding-top: 1px;
     overflow: auto;
@@ -752,13 +752,13 @@ input[type=text] {
         box-shadow: none;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
+        border: 1px solid #818e9c;
     }
-    .search-input-close, .search-input-loading {
+    .search-input-close {
         position: absolute;
-        z-index: 999;
-        top: 50%;
-        margin-top: -12px;
-        right: 12px;
+        z-index: 9;
+        top: 8px;
+        right: 13px;
     }
     .search-input-loading {
         position: absolute;
@@ -772,10 +772,9 @@ input[type=text] {
 
 .search-input .ficon-filter, .search-input .ficon-search {
     position: absolute;
-    z-index: 999;
-    top: 50%;
-    margin-top: -7px;
-    left: 12px;
+    z-index: 9;
+    top: 12px;
+    left: 13px;
 }
 
 /* ================================================
@@ -1202,11 +1201,6 @@ table.table-dark {
 .table-dark.table .progress {
     margin-bottom: 0;
 }
-.table-dark.table .progress .bar {
-    background-image: none;
-    -webkit-box-shadow: none;
-    border-color: #1576b4;
-}
 
 /* ================================================
     Animating added
@@ -1567,10 +1561,6 @@ h1, h2, h3, h4, h5 {
     line-height: 100px;
 }
 .xray-list-image img {
-    /*height: auto;*/
-    /*width: 100px;*/
-    /*margin: 0 auto;*/
-
 
 }
 .xray-edit-badge {
@@ -1590,6 +1580,7 @@ h1, h2, h3, h4, h5 {
     width: 100px;
     float: left;
     margin-right: 10px;
+    position: relative;
 }
     .xray-list-image-edit-image {
         width: 100px;
@@ -1598,12 +1589,20 @@ h1, h2, h3, h4, h5 {
         text-align: center;
         background-color: black;
         line-height: 100px;
+        display: block;
+
+    }
+    .xray-list-image-edit-image .btn.btn-remove {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        float: none;
     }
         .xray-list-image-edit-image img {
             width: 100%;
         }
 
-    .xray-list-image-edit .btn {
+    xray-list-image-edit .btn {
         width: 100px;
         padding: 4px 0;
         display: block;
@@ -1915,6 +1914,7 @@ a.section-segment {
         .progress .bar {
             background-image: none;
             -webkit-box-shadow: none;
+            background-color: rgb(113, 134, 153);
             /*border-color: #1576b4;*/
             margin: 0;
         }
@@ -2099,7 +2099,7 @@ a.section-segment {
     }
     .section-segment.alert.alert-saved {
         background-color: #e9f8f1;
-        color: #3d7955;
+        color: #75b28e;
         border-bottom: 1px solid #ccead0;
         text-shadow: none;
     }

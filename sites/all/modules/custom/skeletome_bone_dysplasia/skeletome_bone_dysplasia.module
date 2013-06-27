@@ -8,7 +8,7 @@ function skeletome_bone_dysplasia_menu() {
         'type'              => MENU_CALLBACK,
         'page arguments'    => array(2),
         'page callback'     => 'skeletome_bone_dysplasia_statement_create',
-        'access callback'   => 'is_curator',
+        'access callback'   => array('access content'),
     );
     $items['ajax/bone-dysplasia/%/statement/%'] = array(
         'type'              => MENU_CALLBACK,

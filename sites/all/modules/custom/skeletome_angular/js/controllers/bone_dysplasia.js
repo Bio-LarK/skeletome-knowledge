@@ -232,15 +232,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.saveXRays = function(profile) {
         $scope.model.xrayState = $scope.IS_LOADING;
 
-        // Remove all xrays in the edit, that are set to 'false' for added
-        var xrays = [];
-        angular.forEach($scope.model.edit.xrays, function(xray, index) {
-            if(xray.added) {
-                xrays.push(xray);
-            }
-        });
-
-        $scope.model.xrays = xrays;
+        $scope.model.xrays = $scope.model.edit.xrays;
         $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xrays', {
             'xrays': $scope.model.xrays
         }).success(function(data) {
@@ -248,8 +240,9 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         });
     }
 
-    $scope.toggleXRay = function(xray) {
-        xray.added = !xray.added;
+    $scope.removeXRay = function(xray) {
+        var index = $scope.model.edit.xrays.indexOf(xray);
+        $scope.model.edit.xrays.splice(index, 1);
     }
 
     /**

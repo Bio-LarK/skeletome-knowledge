@@ -1173,17 +1173,7 @@ function ajax_gene_description($gene_id) {
         echo "not post";
     }
 }
-function ajax_gene_statement($gene_id) {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $data = file_get_contents("php://input");
-        $objData = json_decode($data, true);
 
-        $statement = data_create_statement_for_node($objData['statement'], $gene_id);
-        echo drupal_json_encode($statement);
-    } else {
-        echo "ERROR";
-    }
-}
 
 function ajax_create_gene_mutation_for_gene($gene_id) {
     $data = file_get_contents("php://input");
