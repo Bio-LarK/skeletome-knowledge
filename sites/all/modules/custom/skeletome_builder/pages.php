@@ -490,16 +490,13 @@ function page_bone_dysplasia($node) {
             // References
             $reference_string = str_replace("[", "", $reference_string);
             $reference_string = str_replace("]", "", $reference_string);
-//            $reference_string = substr($reference_string, 1, strlen($reference_string) - 2);
-
-            // Time to get out the 'available at' string
-
 
             if(strpos($description, 'GeneReviews') !== false) {
                 $provider = "GeneReviews";
                 // get out the position
             } else {
                 $provider = "OMIM";
+                $reference_string = "";
             }
 
         }

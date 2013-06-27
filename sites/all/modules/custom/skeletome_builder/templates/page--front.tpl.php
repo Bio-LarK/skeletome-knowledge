@@ -162,13 +162,13 @@
         </div>
     </header>
 
-    <div class="banner">
+    <div class="banner" style="position: relative; overflow: hidden">
+        <img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />
+
         <div class="container">
-            <div class="row">
-                <div class="span5">
-                    <img src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/video.png" alt=""/>
-                </div>
-                <div class="span7">
+            <div class="row" >
+
+                <div class="span7 offset3">
                     <div class="banner-big">
                         Everything you wanted to know about Bone Dysplasias.
                     </div>
@@ -177,7 +177,7 @@
                     </div>
                     <div class="banner-calltoaction">
                         <a class="btn btn-calltoaction" href="">
-                            Take the Tour
+                            Take the Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
                         </a>
                     </div>
                 </div>

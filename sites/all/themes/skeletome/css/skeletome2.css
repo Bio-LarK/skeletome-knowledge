@@ -37,6 +37,7 @@ a {
     background-color: #3E5164;
 
     background-image: none;
+    border-bottom: 1px solid transparent;
     /*background-image: url(../img/dark-pattern.png);*/
     /*background-color: #002040;*/
 }
@@ -258,10 +259,6 @@ ul.navsearch-suggestions {
     .navsearch-suggestion-search .navsearch-suggestion-link {
         padding-top: 5px;
     }
-    .navsearch-suggestion-search .ficon-search {
-        position: relative;
-        top: 10px;
-    }
 
 @media (max-width: 767px) {
     .navbar {
@@ -336,28 +333,44 @@ ul.navsearch-suggestions {
 */
 .banner {
     background-color: #E8E8E8;
-    padding: 42px 0 49px 0;
+    padding: 63px 0 84px 0;
     font-family: "Source Sans Pro";
     font-weight: 200;
+    text-align: center;
 }
     .banner-big {
         margin-bottom: 7px;
-
         color: #636F7B;
-        font-size: 35px;
-        line-height: 49px;
+        color: white;
+        font-size: 42px;
+        line-height: 63px;
+        position: relative;
 
     }
     .banner-small {
         margin-bottom: 28px;
-
+        padding: 0 28px;
         font-size: 21px;
-        line-height: 28px;
+        line-height: 35px;
         color: #A0A6AC;
+        position: relative;
     }
     .banner-calltoaction {
 
     }
+        .btn.btn-calltoaction {
+            padding: 18px 35px;
+            padding-left: 42px;
+            border: none !important;
+            border-radius: 100px;
+            color: white;
+            font-size: 21px;
+            font-weight: 300;
+            background-color: #da4f49;
+        }
+        .btn.btn-calltoaction:hover {
+            background-color: #bd362f;
+        }
 
 .triptych {
     background-color: white;
@@ -1337,17 +1350,7 @@ table.table-dark {
     .btn.btn-addnew {
 
     }
-    .btn.btn-calltoaction {
-        padding: 14px 42px;
-        border: none !important;
-        border-radius: 100px;
-        color: white;
-        font-size: 21px;
-        background-color: #da4f49;
-    }
-        .btn.btn-calltoaction:hover {
-            background-color: #bd362f;
-        }
+
     /* reveal button */
     .btn.btn-reveal {
         background-color: white;
@@ -1874,7 +1877,7 @@ a.section-segment {
     .no-touch a.section-segment:hover {
         text-decoration: none !important;
         color: white;
-        background-color: #6381A0;
+        background-color: #7D90A3;
         border-bottom: 1px solid #506a83;
     }
     .no-touch a.section-segment:active {
@@ -1900,7 +1903,7 @@ a.section-segment {
         Progress Bar Element
     */
     .no-touch a.section-segment:hover .progress {
-        background-color: rgb(0, 79, 119);
+        background-color: #58708A;
         background-image: none;
     }
     .no-touch a.section-segment:hover .progress .bar {
