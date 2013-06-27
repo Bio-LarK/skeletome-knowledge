@@ -124,7 +124,7 @@ a {
             float: left;
         }
             a.navsearch-term, span.navsearch-term {
-                background-color: #0e90d2;
+                background-color: #7D90A3;
                 border-radius: 100px;
                 color: white;
                 padding: 4px 12px;
@@ -210,27 +210,41 @@ a {
     }
 
 ul.navsearch-suggestions {
-    background-color: white;
     text-align: left;
-    border-radius: 5px;
     position: absolute;
     width: 100%;
-    top: 50px;
+    top: 10px;
     z-index: 999;
-    border: 1px solid #bbb;
 }
     .navsearch-suggestion {
-        border-bottom: 1px solid #f0f0f0;
+        border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
         margin-bottom: 0px;
+        background-color: white;
     }
-        .navsearch-suggestion-link {
+        .navsearch-suggestion-round-top {
+            border-radius: 5px 5px 0 0;
+        }
+        .navsearch-suggestion-round-bottom {
+            border-radius: 0 0 5px 5px;
+        }
+        .navsearch-suggestion-selected {
+            background-color: #0e90d2 !important;
+            background-color: #7D90A3 !important;
+            border-left: 1px solid #6c7c8c;
+            border-right: 1px solid #6c7c8c;
+            border-bottom: 1px solid #6c7c8c;
+        }
+
+        .navsearch-suggestion .navsearch-suggestion-link {
             padding: 10px;
             color: #333;
             display: block;
         }
-        .navsearch-suggestion-link:hover {
-            text-decoration: none;
-        }
+            .navsearch-suggestion-link:hover {
+                text-decoration: none;
+            }
             .navsearch-suggestion-guide {
                 color: #9d9d9d;
                 text-align: right;
@@ -243,15 +257,13 @@ ul.navsearch-suggestions {
             }
 
 /** Selected row */
-.navsearch-suggestion-selected {
-    background-color: #0e90d2 !important;
-}
+
     .navsearch-suggestion-selected .navsearch-suggestion-link {
         color: white;
     }
     .navsearch-suggestion-selected .navsearch-term {
         background-color: white;
-        color: #0e90d2;
+        color: #7D90A3;
     }
     .navsearch-suggestion-selected .navsearch-suggestion-guide {
         color: rgba(255, 255, 255, 0.5);
@@ -383,7 +395,7 @@ ul.navsearch-suggestions {
         margin-bottom: 14px;
     }
     .triptych-subheading {
-        color: #AFB9C2;
+        color: rgb(20, 35, 49);
         font-size: 21px;
         line-height: 28px;
         font-family: "Source Sans Pro";

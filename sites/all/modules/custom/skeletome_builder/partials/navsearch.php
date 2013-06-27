@@ -29,9 +29,9 @@
     </div>
 
     <ul ng-show="(model.entry.length || model.query.length) && model.isShowingSuggestions" class="navsearch-suggestions unstyled">
-        <li class="navsearch-suggestion"
+        <li class="navsearch-suggestion navsearch-suggestion-round-top"
             ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
-            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED, 'navsearch-suggestion-search': model.query.length > 0 }">
+            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED,  'navsearch-suggestion-search': model.query.length > 0 }">
 
             <a class="navsearch-suggestion-link" href="{{ searchUrl() }}">
                 <span class="navsearch-suggestion-guide">
@@ -55,7 +55,7 @@
 
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion(suggestion)" ng-mouseleave="leavedSuggestion(suggestion)"
-            ng-class="{'navsearch-suggestion-selected': selectedIndex == $index}"
+            ng-class="{'navsearch-suggestion-selected': selectedIndex == $index, 'navsearch-suggestion-round-bottom': $last}"
             ng-repeat="suggestion in model.suggestions">
 
             <a class="navsearch-suggestion-link" ng-show="suggestion.nid && !model.query.length" href="?q=node/{{ suggestion.nid }}">
