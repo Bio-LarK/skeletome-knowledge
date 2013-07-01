@@ -14,7 +14,7 @@ body {
     background-color: #E8E8E8;
     background-repeat: repeat;
     position: relative;
-    color: #4d5d6e;
+    color: #344A5F;
     font-family: "Source Sans Pro", san-serif;
     font-weight: 400;
 }
@@ -144,7 +144,6 @@ a {
         overflow: hidden;
         min-width: 200px;
     }
-
         input.navsearch-input {
             width: 100% !important;
             height: 40px !important;
@@ -183,19 +182,19 @@ a {
             input.navsearch-selectedSuggestion {
                 cursor: not-allowed;
                 background-color: transparent;
-                color: rgb(111, 132, 168) !important;
+                color: rgb(149, 156, 166) !important;
             }
 
         .navsearch-helper {
             position: absolute;
             right: 35px;
             top: 10px;
-            color: rgb(111, 132, 168);
+            color: #7e99b5;
             font-size: 12px;
         }
         .navsearch-helper-button {
-            color: rgb(172, 188, 217);
-            background-color: rgb(21, 24, 34);
+            color: rgb(188, 205, 237);
+            background-color: rgb(59, 63, 74);
             padding: 3px;
             border-radius: 3px;
         }
@@ -213,8 +212,8 @@ ul.navsearch-suggestions {
     text-align: left;
     position: absolute;
     width: 100%;
-    top: 10px;
     z-index: 999;
+    margin-top: 10px;
 }
     .navsearch-suggestion {
         border-left: 1px solid #e5e5e5;
@@ -224,14 +223,16 @@ ul.navsearch-suggestions {
         background-color: white;
     }
         .navsearch-suggestion-round-top {
-            border-radius: 5px 5px 0 0;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
         .navsearch-suggestion-round-bottom {
-            border-radius: 0 0 5px 5px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
         }
         .navsearch-suggestion-selected {
             background-color: #0e90d2 !important;
-            background-color: #7D90A3 !important;
+            background-color: #62768c !important;
             border-left: 1px solid #6c7c8c;
             border-right: 1px solid #6c7c8c;
             border-bottom: 1px solid #6c7c8c;
@@ -239,7 +240,7 @@ ul.navsearch-suggestions {
 
         .navsearch-suggestion .navsearch-suggestion-link {
             padding: 10px;
-            color: #333;
+            color: #4d5d6e;
             display: block;
         }
             .navsearch-suggestion-link:hover {
@@ -348,22 +349,29 @@ ul.navsearch-suggestions {
     padding: 63px 0 84px 0;
     font-family: "Source Sans Pro";
     font-weight: 200;
-    text-align: center;
+    text-align: left;
 }
-    .banner-big {
+    .banner-logo {
+        float: left;
+        display: block;
+        height: 150px;
+    }
+    .banner-text {
+        overflow: auto;
+        padding-left: 35px;
+    }
+    .banner-text-big {
         margin-bottom: 7px;
         color: #636F7B;
-        color: white;
-        font-size: 42px;
+        font-size: 56px;
         line-height: 63px;
         position: relative;
 
     }
-    .banner-small {
+    .banner-text-small {
         margin-bottom: 28px;
-        padding: 0 28px;
-        font-size: 21px;
-        line-height: 35px;
+        font-size: 28px;
+        line-height: 42px;
         color: #A0A6AC;
         position: relative;
     }
@@ -371,8 +379,8 @@ ul.navsearch-suggestions {
 
     }
         .btn.btn-calltoaction {
-            padding: 18px 35px;
-            padding-left: 42px;
+            padding: 12px 18px;
+            padding-left: 30px;
             border: none !important;
             border-radius: 100px;
             color: white;
@@ -396,7 +404,6 @@ ul.navsearch-suggestions {
         font-weight: 600;
     }
     .triptych-subheading {
-        color: rgb(20, 35, 49);
         font-size: 21px;
         line-height: 28px;
         font-family: "Source Sans Pro";
@@ -404,7 +411,6 @@ ul.navsearch-suggestions {
         margin-bottom: 14px;
     }
     .triptych-body {
-        color: #636F7B;
         line-height: 21px;
     }
 
@@ -1922,14 +1928,14 @@ a.section-segment {
     /* ================================================
         Progress Bar Element
     */
-    .no-touch a.section-segment:hover .progress {
+    /*.no-touch a.section-segment:hover .progress {
         background-color: #58708A;
         background-image: none;
     }
     .no-touch a.section-segment:hover .progress .bar {
         background-color: white;
         border: 1px solid white;
-    }
+    }*/
 
     .progress {
         margin-bottom: 0;
@@ -2004,6 +2010,7 @@ a.section-segment {
 }
     .section-segment-header h1, .section-segment-header h2, .section-segment-header h3, .section-segment-header h4 {
         line-height: 49px;
+        font-weight: 300;
     }
     .section-segment h1, .section-segment h2, .section-segment h3, .section-segment h4 {
         margin: 0 !important;

@@ -141,7 +141,7 @@ myApp.filter('highlight', function() {
             var firstString = input.substring(0, matchIndex);
             var highlightedString = input.substring(matchIndex, matchIndex + match.length + 1);
             var lastString = input.substring(matchIndex + match.length + 1);
-            return firstString + '<span class="search-highlighted"><b>' + highlightedString + '</b></span>' + lastString;
+            return firstString + '<span class="search-highlighted"><i>' + highlightedString + '</i></span>' + lastString;
         } else {
             return input;
         }

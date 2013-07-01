@@ -31,7 +31,7 @@
     <ul ng-show="(model.entry.length || model.query.length) && model.isShowingSuggestions" class="navsearch-suggestions unstyled">
         <li class="navsearch-suggestion navsearch-suggestion-round-top"
             ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
-            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED,  'navsearch-suggestion-search': model.query.length > 0 }">
+            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED,  'navsearch-suggestion-search': model.query.length > 0, 'navsearch-suggestion-round-bottom': model.suggestions.length==0 }">
 
             <a class="navsearch-suggestion-link" href="{{ searchUrl() }}">
                 <span class="navsearch-suggestion-guide">
@@ -43,7 +43,7 @@
                 <span class="navsearch-suggestion-content">
                     <span ng-repeat="term in model.query" class="navsearch-term">{{ term.title || term.name }}</span>
 
-                    <b>{{ model.entry }}</b>...
+                    <i>{{ model.entry }}</i>...
                 </span>
 
                 <span ng-show="isLoading" class="pull-right">

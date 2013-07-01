@@ -1,18 +1,13 @@
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
-
-        <div class="section-segment section-segment-headers section-segment-header-editors" ng-class="{ 'section-segment-editing': model.isEditingDescription }">
+        <div class="section-segment section-segment-header">
             <?php
             if ($isAdmin || $isCurator || $isEditor): ?>
-            <div class="section-segment-header-buttons pull-right">
+                <div class="section-segment-header-buttons pull-right">
 
                     <!-- is Editing Description -->
-                <span ng-show="!model.isEditingDescription">
-                    <a ng-show="!showEditDescription"
-                       href class="btn btn-edit"
-                       ng-click="editDescription()">
-                        <i class="ficon-pencil"></i> Edit
-                    </a>
+                <span ng-show="!model.isEditingDescription && !showEditDescription">
+                    <edit-button click="editDescription()"></edit-button>
                 </span>
 
                     <!-- Not Editing Description -->
@@ -21,8 +16,15 @@
                     <cancel-button click="cancelEditingDescription()"></cancel-button>
                 </span>
 
-            </div>
+                </div>
             <?php endif; ?>
+
+
+            <h3>Abstract</h3>
+
+        </div>
+        <div class="section-segment section-segment-headers section-segment-header-editors" ng-class="{ 'section-segment-editing': model.isEditingDescription }">
+
 
             <div ng-show="!model.isEditingDescription">
                 <b><i class="ficon-user"></i> Contributors</b>

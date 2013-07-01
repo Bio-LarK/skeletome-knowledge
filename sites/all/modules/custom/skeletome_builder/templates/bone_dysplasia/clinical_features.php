@@ -92,8 +92,7 @@
 
                 <div ng-repeat="clinicalFeature in model.clinicalFeatures | filter:model.clinicalFeatureFilter | orderBy:'information_content' | limitTo:model.clinicalFeaturesDisplayLimit">
                     <a  style="overflow: hidden" class="section-segment" href="?q=node/{{ model.boneDysplasia.nid }}/clinical-feature/{{clinicalFeature.tid}}">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
+                        <i class="ficon-angle-right pull-right"></i>
 
                         <div style="width: 60%; float: left">
                             {{clinicalFeature.name | truncate:40 | capitalize}}

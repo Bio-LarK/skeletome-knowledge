@@ -50,7 +50,9 @@ myApp.directive('navSearch', function() {
                     var newSuggestion = $scope.model.suggestions[$scope.selectedIndex];
                     var newSuggestionText = newSuggestion.title || newSuggestion.name;
 
-                    $scope.model.suggestionText = $scope.model.entry + newSuggestionText.substring($scope.model.entry.length);;
+                    if($scope.model.isShowingSuggestions) {
+                        $scope.model.suggestionText = $scope.model.entry + newSuggestionText.substring($scope.model.entry.length);;
+                    }
                 } else {
                     $scope.model.suggestionText = "";
                 }
@@ -242,8 +244,9 @@ myApp.directive('navSearch', function() {
             }
             $scope.inputFocused = function() {
                 console.log("input focused!");
-                $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
                 $scope.model.isShowingSuggestions = true;
+                $scope.updateSelectedSuggestionText($scope.FIRST_SUGGESTION);
+
             }
         },
 

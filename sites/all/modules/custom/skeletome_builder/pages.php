@@ -7,8 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
-
 function page_clinical_feature($clinical_feature, $bone_dysplasia=null) {
     // Get the Bone Dysplasias
     $bds = data_get_bone_dysplasias_for_clinical_feature($clinical_feature);

@@ -8,26 +8,41 @@ function skeletome_about_menu() {
 
     $items['about'] = array(
         'page callback' 	=> 'page_sk_about',
-        'page arguments'    => array(1),
         'access arguments'  => array('access content'),
         'type'  => MENU_CALLBACK,
     );
 
     $items['contact'] = array(
         'page callback' 	=> 'page_sk_contact',
-        'page arguments'    => array(1),
         'access arguments'  => array('access content'),
         'type'  => MENU_CALLBACK,
     );
 
     $items['team'] = array(
         'page callback' 	=> 'page_sk_team',
-        'page arguments'    => array(1),
         'access arguments'  => array('access content'),
         'type'  => MENU_CALLBACK,
     );
 
+    $items['tour'] = array(
+        'page callback' 	=> 'page_tour',
+        'access arguments'  => array('access content'),
+        'type'  => MENU_CALLBACK,
+    );
+
+
     return $items;
+}
+
+
+function page_tour() {
+    $output =  array(
+        'skeletome_about_tour_page' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_about_tour_page'
+        )
+    );
+    return $output;
 }
 
 function page_sk_about() {
@@ -62,6 +77,15 @@ function page_sk_team() {
  * Implements hook_theme().
  */
 function skeletome_about_theme($existing, $type, $theme, $path) {
+
+    $themes['skeletome_about_tour_page'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_builder') . '/templates',
+        'template'  => 'tour'
+    );
 
     $themes['skeletome_about_about_page'] = array(
         'variables' => array(

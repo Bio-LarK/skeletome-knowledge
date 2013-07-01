@@ -162,24 +162,34 @@
         </div>
     </header>
 
+    <div>
+
+    </div>
+
+
     <div class="banner" style="position: relative; overflow: hidden">
-        <img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />
+        <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
 
         <div class="container">
             <div class="row" >
+                <div class="span9 offset1">
 
-                <div class="span7 offset3">
-                    <div class="banner-big">
-                        Everything you wanted to know about Bone Dysplasias.
+                    <img class="banner-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/banner_logo.png" />
+
+                    <div class="banner-text">
+                        <div class="banner-text-big">
+                            The Skeletome Knowledge Base
+                        </div>
+                        <div class="banner-text-small">
+                            A community-driven knowledge curation platform for skeletal dysplasias.
+                        </div>
+                        <div class="banner-calltoaction">
+                            <a class="btn btn-calltoaction" href="tour">
+                                Take the Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="banner-small">
-                        A community-driven knowledge curation platform for skeletal dysplasias.
-                    </div>
-                    <div class="banner-calltoaction">
-                        <a class="btn btn-calltoaction" href="">
-                            Take the Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
-                        </a>
-                    </div>
+
                 </div>
 
             </div>

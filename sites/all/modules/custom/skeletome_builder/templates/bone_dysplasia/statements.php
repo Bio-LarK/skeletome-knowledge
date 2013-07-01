@@ -155,13 +155,16 @@
 
                         <div class="section-segment-statement-icons">
                         <span ng-show="!statement.isShowingComments">
-                            <i class="icon-chevron-right icon-chevron-turn-down"></i>
-                            <i class="icon-chevron-right icon-white icon-chevron-turn-down"></i>
+                                            <i class="ficon-angle-right pull-right"></i>
+
+                            <!--<i class="icon-chevron-right icon-chevron-turn-down"></i>
+                            <i class="icon-chevron-right icon-white icon-chevron-turn-down"></i>-->
                         </span>
 
                         <span ng-show="statement.isShowingComments">
-                            <i class="icon-chevron-up"></i>
-                            <i class="icon-chevron-up icon-white "></i>
+                            <i class="ficon-angle-up pull-right"></i>
+                            <!--<i class="icon-chevron-up"></i>
+                            <i class="icon-chevron-up icon-white "></i>-->
                         </span>
                         </div>
 
