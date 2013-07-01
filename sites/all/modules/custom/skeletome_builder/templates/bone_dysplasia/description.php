@@ -84,7 +84,7 @@
 
                 <!--  | truncate:descriptionLength -->
                 <div ng-show="description.safe_value.length && !description.isLoading">
-                    <div ng-bind-html-unsafe="description.safe_value | truncate:descriptionLength">
+                    <div ng-bind-html-unsafe="description.safe_value | truncate:model.descriptionLength">
                         <?php echo render($content); ?>
                     </div>
 
@@ -97,13 +97,10 @@
                            class="btn btn-more" ng-click="descriptionLength=1000"><i
                                 class="icon-chevron-up icon-black"></i> Hide</a>
                     </div>-->
-                    <div ng-show="description.value.length > defaultDescriptionLength">
-                        <button ng-show="isHidingDescription" ng-click="showDescription()" class="btn btn-reveal" >Show All</button>
-                        <button ng-show="!isHidingDescription" ng-click="hideDescription()" class="btn btn-reveal" >Hide</button>
-                    </div>
-
                 </div>
             </div>
         </div>
+        <cm-reveal model="description.safe_value" showing-count="model.descriptionLength" default-count="500"></cm-reveal>
+
     </section>
 </div>

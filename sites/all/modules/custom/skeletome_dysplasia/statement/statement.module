@@ -255,32 +255,34 @@ function statement_field_extra_fields() {
   return $extra;
 }
 
-function statement_create($text) {
+function statement_create($text, $node_target_id) {
 
     global $user;
-    $node = new stdClass();
-    $node->title = "Statement";
-    $node->type = "statement";
-    node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
-    $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
-    $node->uid = $user->uid;
-    $node->status = 1; //(1 or 0): published or not
-    $node->promote = 0; //(1 or 0): promoted to front page
-    $node->comment = 1; //2 = comments on, 1 = comments off
+    $statement = new stdClass();
+    $statement->title = "Statement";
+    $statement->type = "statement";
+    node_object_prepare($statement); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+    $statement->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+    $statement->uid = $user->uid;
+    $statement->status = 1; //(1 or 0): published or not
+    $statement->promote = 0; //(1 or 0): promoted to front page
+    $statement->comment = 1; //2 = comments on, 1 = comments off
+    $statement->field_statement_node[LANGUAGE_NONE][] = array(
+        'target_id' => $node_target_id
+    );
 
-    $node->body[$node->language][0]['value'] = $text; // the statement
-    $node->body[$node->language][0]['format'] = 'filtered_html';
+    $statement->body[LANGUAGE_NONE][0]['value'] = $text; // the statement
+    $statement->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
 
-    $node = node_submit($node); // Prepare node for saving
-    node_save($node);
+    $statement = node_submit($statement); // Prepare node for saving
+    node_save($statement);
 
     // Setup some stuff that it doesnt want to do on node save for some unknown reason!
-    $node->body[LANGUAGE_NONE][0]['safe_value'] = check_markup($node->body[LANGUAGE_NONE][0]['value'], 'filtered_html');
-    $node->comment_count = 0;
-    $node->name = $user->name;
+    $statement->body[LANGUAGE_NONE][0]['safe_value'] = check_markup($statement->body[LANGUAGE_NONE][0]['value'], 'filtered_html');
+    $statement->comment_count = 0;
+    $statement->name = $user->name;
 
     // Now lets attach the node to the bone dysplasia
 
-
-    return $node;
+    return $statement;
 }

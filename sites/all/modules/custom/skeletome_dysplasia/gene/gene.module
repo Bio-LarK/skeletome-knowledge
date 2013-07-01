@@ -52,7 +52,7 @@ function gene_statement_create($gene_id) {
 
     $text = $objData['text'];
 
-    $statement = statement_create($text);
+    $statement = statement_create($text, $gene_id);
 
     $gene = node_load($gene_id);
 

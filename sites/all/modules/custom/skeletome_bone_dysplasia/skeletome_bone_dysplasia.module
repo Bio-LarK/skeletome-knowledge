@@ -94,7 +94,7 @@ function skeletome_bone_dysplasia_statement_create($bone_dysplasia_id) {
 
     $text = $objData['text'];
 
-    $statement = statement_create($text);
+    $statement = statement_create($text, $bone_dysplasia_id);
 
 
     $bone_dysplasia = node_load($bone_dysplasia_id);

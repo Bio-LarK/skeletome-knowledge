@@ -346,7 +346,7 @@ ul.navsearch-suggestions {
 */
 .banner {
     background-color: #E8E8E8;
-    padding: 63px 0 84px 0;
+    padding: 49px 0 63px 0;
     font-family: "Source Sans Pro";
     font-weight: 200;
     text-align: left;
@@ -354,24 +354,24 @@ ul.navsearch-suggestions {
     .banner-logo {
         float: left;
         display: block;
-        height: 150px;
+        height: 100px;
     }
     .banner-text {
         overflow: auto;
-        padding-left: 35px;
+        padding-left: 21px;
     }
     .banner-text-big {
         margin-bottom: 7px;
         color: #636F7B;
-        font-size: 56px;
-        line-height: 63px;
+        font-size: 49px;
+        line-height: 56px;
         position: relative;
 
     }
     .banner-text-small {
         margin-bottom: 28px;
-        font-size: 28px;
-        line-height: 42px;
+        font-size: 21px;
+        line-height: 35px;
         color: #A0A6AC;
         position: relative;
     }
@@ -1282,6 +1282,7 @@ table.table-dark {
     position: relative;
     text-shadow: none;
     color: #4d5d6e;
+    border-radius: 2px;
 }
 .btn i {
     text-shadow: none;
@@ -1373,9 +1374,11 @@ table.table-dark {
     /* reveal button */
     .btn.btn-reveal {
         background-color: white;
-        width: 100%;
-        display: block;
-        border: 1px solid #eee;
+        /*width: 100%;
+        display: block;*/
+        background-color: #FAFAFA;
+        border: 1px solid #e9e9e9;
+        color: rgb(151, 155, 159);
         box-sizing: border-box;
     }
 
@@ -1852,6 +1855,9 @@ section, div.section {
     .section-segment p {
         line-height: 28px;
     }
+    .section-segment p:last-child {
+        margin-bottom: 0px;
+    }
     /** Additional Behaviours */
 
     .segment-border {
@@ -2118,15 +2124,23 @@ a.section-segment {
         margin-bottom: 0px;
     }
     .alert-info {
-        background-color: #ebf2f7 !important;
-        border-bottom: 1px solid #dcebf5 !important;
-        border-top: 1px solid #dcebf5 !important;
+        background-color: rgb(221, 235, 248) !important;
+        border: 1px solid rgb(199, 212, 224);
         text-shadow: none;
-        color: #7892ae;
+        color: rgb(85, 115, 148);
+        padding: 14px 21px;
     }
-    .alert-info a {
-        color: #7892ae;
-    }
+        .alert-info em {
+            font-weight: bold;
+        }
+        .alert-info p:last-child {
+            margin-bottom: 0px;
+        }
+        .alert-info a {
+            color: rgb(85, 115, 148);
+            text-decoration: underline;
+        }
+
     .section-segment.alert.alert-saved {
         background-color: #e9f8f1;
         color: #75b28e;

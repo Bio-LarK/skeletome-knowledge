@@ -184,15 +184,10 @@ $isAdmin = user_access('administer site configuration');
                         </div>
                         <div ng-switch-when="isEditing">
                             <save-button click="saveDetails()"></save-button>
-
-                            <a href ng-click="cancelDetails()" class="btn btn-cancel">
-                                <i class="ficon-remove"></i> Cancel
-                            </a>
+                            <cancel-button click="cancelDetails()"></cancel-button>
                         </div>
                         <div ng-switch-when="isDisplaying">
-                            <a href ng-click="editDetails()" class="btn btn-edit">
-                                <i class="ficon-pencil"></i> Edit
-                            </a>
+                            <edit-button click="editDetails()"></edit-button>
                         </div>
                     </div>
                 </div>
@@ -306,8 +301,7 @@ $isAdmin = user_access('administer site configuration');
                     <div ng-switch-when="isEditing">
 
                         <save-button click="saveGenes(model.edit.genes)"></save-button>
-
-                        <button ng-click="cancelGenes()" class="btn btn-cancel">Cancel</button>
+                        <cancel-button click="cancelGenes()"></cancel-button>
 
                         <div class="header-divider"></div>
 
@@ -315,9 +309,7 @@ $isAdmin = user_access('administer site configuration');
                     </div>
                     <div ng-switch-when="isDisplaying">
                         <?php if ($isAdmin || $isCurator): ?>
-                        <button ng-click="editGenes()" class="btn btn-edit">
-                            <i class="ficon-pencil"></i> Edit
-                        </button>
+                        <edit-button click="editGenes()"></edit-button>
                         <?php endif; ?>
                     </div>
                 </div>

@@ -13,28 +13,20 @@
                     </div>
 
                     <div ng-switch-when="isAdding">
-                        <button ng-show="model.newStatement.length" ng-click="saveStatement(model.newStatement)" class="btn btn-save">
-                            <i class="ficon-ok icon-white"></i> Save
-                        </button>
+                        <span ng-show="model.newStatement.length">
+                            <save-button  click="saveStatement(model.newStatement)"></save-button>
+                        </span>
 
-                        <button ng-click="cancelStatements()" class="btn btn-cancel">
-                            Cancel
-                        </button>
+                        <cancel-button click="cancelStatements()"></cancel-button>
                     </div>
 
                     <div ng-switch-when="isEditing">
-                        <button ng-click="saveStatements(model.edit.statements)" class="btn btn-save">
-                            <i class="ficon-ok"></i> Save
-                        </button>
-                        <button ng-click="cancelStatements()" class="btn btn-cancel">
-                            Cancel
-                        </button>
+                        <save-button click="saveStatements(model.edit.statements)"></save-button>
+                        <cancel-button click="cancelStatements()"></cancel-button>
                     </div>
 
                     <div ng-switch-when="isApproving">
-                        <button ng-click="cancelStatements()" class="btn btn-cancel">
-                            Cancel
-                        </button>
+                        <cancel-button click="cancelStatements()"></cancel-button>
                     </div>
 
                     <div ng-switch-when="isDisplaying">
@@ -51,9 +43,7 @@
                                 <i class="ficon-ok"></i> Approve Statements
                             </a>
 
-                            <a ng-show="statements.length" href ng-click="editStatements()" class="btn btn-edit">
-                                <i class="ficon-pencil"></i> Edit
-                            </a>
+                            <edit-button click="editStatements()"></edit-button>
                         <?php endif; ?>
 
                     </div>
@@ -151,7 +141,7 @@
 
                 <div ng-repeat="statement in statements | limitTo:model.statementDisplayLimit">
 
-                    <div class="section-segment section-segment-statement" ng-click="showComments(statement)">
+                    <div id="{{ statement.nid }}" class="section-segment section-segment-statement" ng-click="showComments(statement)">
 
                         <div class="section-segment-statement-icons">
                         <span ng-show="!statement.isShowingComments">

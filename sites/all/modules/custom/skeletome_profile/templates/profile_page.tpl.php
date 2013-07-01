@@ -54,21 +54,11 @@
                                 <div ng-switch-when="isLoading">
                                 </div>
                                 <div ng-switch-when="isEditing">
-                                    <a ng-click="saveDetails(edit.profile)" href class="btn btn-save">
-                                        <i class="icon-ok icon-white"></i> Save
-                                    </a>
-                                    <a ng-click="cancelDetails()" href class="btn btn-cancel">
-                                        Cancel
-                                    </a>
-
+                                    <save-button click="saveDetails(edit.profile)"></save-button>
+                                    <cancel-button click="cancelDetails()"></cancel-button>
                                 </div>
                                 <div ng-switch-when="isDisplaying">
-                                    <a ng-click="editDetails()" href class="btn btn-edit">
-                                        <i class="icon-pencil"></i> Edit
-                                    </a>
-
-
-
+                                    <edit-button click="editDetails()"></edit-button>
                                 </div>
                             </div>
                         </div>
@@ -147,13 +137,8 @@
                             </div>
                             <div ng-switch-when="isEditing">
 
-                                <a ng-click="saveBiography(edit.profile)" href role="button" class="btn btn-save">
-                                    <i class="ficon-ok"></i> Save
-                                </a>
-
-                                <a ng-click="cancelBiography()" href role="button" class="btn btn-cancel">
-                                    Cancel
-                                </a>
+                                <save-button click="saveBiography(edit.profile)"></save-button>
+                                <cancel-button click="cancelBiography()"></cancel-button>
 
                                 <div class="header-divider"></div>
 
@@ -171,9 +156,7 @@
 
                             </div>
                             <div ng-switch-when="isDisplaying">
-                                <a ng-click="editBiography()" href data-toggle="modal" role="button" class="btn btn-edit">
-                                    <i class="icon-pencil"></i> Edit
-                                </a>
+                                <edit-button click="editBiography()"></edit-button>
                             </div>
                         </div>
                     </div>
@@ -217,13 +200,8 @@
                                     </div>
                                     <div ng-switch-when="isEditing">
 
-                                        <a ng-click="savePublications(edit.profile)" href role="button" class="btn btn-save">
-                                            <i class="ficon-ok"></i> Save
-                                        </a>
-
-                                        <a ng-click="cancelPublications()" href role="button" class="btn btn-cancel">
-                                            Cancel
-                                        </a>
+                                        <save-button click="savePublications(edit.profile)"></save-button>
+                                        <cancel-button click="cancelPublications()"></cancel-button>
 
                                         <div class="header-divider"></div>
 
@@ -243,9 +221,7 @@
 
                                     </div>
                                     <div ng-switch-when="isDisplaying">
-                                        <a ng-click="editPublications()" href data-toggle="modal" role="button" class="btn btn-edit">
-                                            <i class="icon-pencil"></i> Edit
-                                        </a>
+                                        <edit-button click="editPublications()"></edit-button>
                                     </div>
                                 </div>
                             </div>
@@ -284,10 +260,12 @@
                     <h3>Approved Statements ({{ approvedStatements.length }})</h3>
                 </div>
 
-                <div ng-repeat="statement in approvedStatements | limitTo:model.approvedStatementsDisplayLimit" class="section-segment">
-                    <div ng-bind-html-unsafe="statement.body.und[0].value">
-                    </div>
+                <div ng-repeat="statement in approvedStatements | limitTo:model.approvedStatementsDisplayLimit" >
 
+                    <a class="section-segment" href="?q=node/{{ statement.field_statement_node.und[0].target_id }}#{{ statement.nid }}" >
+                        <i class="ficon-angle-right pull-right"></i>
+                        <span ng-bind-html-unsafe="statement.body.und[0].value"></span>
+                    </a>
                 </div>
                 <cm-reveal model="approvedStatements" showing-count="model.approvedStatementsDisplayLimit" default-count="3"></cm-reveal>
             </section>
@@ -300,10 +278,8 @@
                     No recent activity.
                 </div>
                 <div ng-repeat="item in activity">
-
-                    <a ng-show="!item.cid" class="section-segment" href="?q=node/{{ item.target_nid }}">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
+                    <a ng-show="!item.cid" class="section-segment" href="?q=node/{{ item.target_nid }}#{{ item.nid }}">
+                        <i class="ficon-angle-right pull-right"></i>
 
                         <p><i class="icon-statement"></i> <b>Statement</b> added to <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
 
@@ -314,8 +290,7 @@
                     </a>
 
                     <a ng-show="item.cid" class="section-segment" href="?q=node/{{ item.target_nid }}">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
+                        <i class="ficon-angle-right pull-right"></i>
 
                         <p><i class="ficon-comment"></i> <b>Comment</b> added to a statement on <b>{{ item.target_title }}</b> <span class="muted" style="margin-left: 7px">{{ item.created*1000 | date:'MMM d, y' }}</span></p>
 

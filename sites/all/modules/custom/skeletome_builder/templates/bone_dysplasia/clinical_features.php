@@ -11,13 +11,9 @@
                         </div>
                         <div ng-switch-when="isEditing">
 
-                            <a href ng-click="saveClinicalFeatures()" class="btn btn-save">
-                                <i class="ficon-ok"></i> Save
-                            </a>
+                            <save-button click="saveClinicalFeatures()"></save-button>
 
-                            <a href ng-click="cancelClinicalFeatures()" class="btn btn-cancel">
-                                <i class="ficon-remove"></i> Cancel
-                            </a>
+                            <cancel-button click="cancelClinicalFeatures()"></cancel-button>
 
                             <div class="header-divider"></div>
 
@@ -27,9 +23,7 @@
 
                         </div>
                         <div ng-switch-when="isDisplaying">
-                            <a href ng-click="editClinicalFeatures()" class="btn btn-edit">
-                                <i class="ficon-pencil"></i> Edit
-                            </a>
+                            <edit-button click="editClinicalFeatures()"></edit-button>
                         </div>
                     </div>
                 </div>

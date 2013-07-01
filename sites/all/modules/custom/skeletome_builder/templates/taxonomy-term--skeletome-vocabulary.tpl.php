@@ -85,8 +85,7 @@
 
                     <div ng-repeat="boneDysplasia in boneDysplasias | orderBy:'title'">
                         <a class="section-segment" href="?q=node/{{ boneDysplasia.nid }}">
-                            <i class="icon-chevron-right pull-right"></i>
-                            <i class="icon-chevron-right icon-white pull-right"></i>
+                            <i class="ficon-angle-right pull-right"></i>
 
                             {{ boneDysplasia.title }}
                         </a>

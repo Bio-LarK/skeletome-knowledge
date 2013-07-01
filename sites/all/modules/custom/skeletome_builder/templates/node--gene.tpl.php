@@ -150,8 +150,7 @@ $isAdmin = user_access('administer site configuration');
                     </div>
 
                     <a ng-href="http://www.omim.org/entry/{{master.gene.field_gene_omim.und[0].value}}" target="_blank" class="section-segment" ng-show="master.gene.field_gene_omim.und[0].value">
-                        <i class="icon-globe pull-right"></i>
-                        <i class="icon-globe icon-white pull-right"></i>
+                        <i class="ficon-globe pull-right"></i>
 
                         <b>OMIM</b>
                         {{ master.gene.field_gene_omim.und[0].value }}
@@ -162,8 +161,7 @@ $isAdmin = user_access('administer site configuration');
                         {{ master.gene.field_gene_umlscui.und[0].value }}
                     </div>
                     <a target="_blank" ng-href="http://www.uniprot.org/uniprot/{{ master.gene.field_gene_uniprot.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_uniprot.und[0].value">
-                        <i class="icon-globe pull-right"></i>
-                        <i class="icon-globe icon-white pull-right"></i>
+                        <i class="ficon-globe pull-right"></i>
 
                         <b>Uniprot ID</b>
                         {{ master.gene.field_gene_uniprot.und[0].value }}
@@ -177,9 +175,7 @@ $isAdmin = user_access('administer site configuration');
                         {{ master.gene.field_gene_entrezgene.und[0].value }}
                     </div>
                     <a target="_blank" ng-href="http://www.ncbi.nlm.nih.gov/nuccore/{{ master.gene.field_gene_refseq.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_refseq.und[0].value">
-                        <i class="icon-globe pull-right"></i>
-                        <i class="icon-globe icon-white pull-right"></i>
-
+                        <i class="ficon-globe pull-right"></i>
                         <b>RefSeq</b>
                         {{ master.gene.field_gene_refseq.und[0].value }}
                     </a>
@@ -196,8 +192,7 @@ $isAdmin = user_access('administer site configuration');
 
                     <div ng-repeat="boneDysplasia in boneDysplasias">
                         <a class="section-segment" href="?q=node/{{ boneDysplasia.nid }}">
-                            <i class="icon-chevron-right pull-right"></i>
-                            <i class="icon-chevron-right icon-white pull-right"></i>
+                            <i class="ficon-angle-right pull-right"></i>
 
                             {{ boneDysplasia.title }}
                         </a>

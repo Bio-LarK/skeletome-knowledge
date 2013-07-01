@@ -5,7 +5,7 @@ myApp.directive('saveButton', function() {
             click: '&'
         },
         template: '<a href ng-click="click()" class="btn btn-save">\n    <i class="ficon-ok"></i> Save\n</a>',
-        replace: true,
+        replace: false,
         transclude: true,
         controller: function ($scope) {
         },

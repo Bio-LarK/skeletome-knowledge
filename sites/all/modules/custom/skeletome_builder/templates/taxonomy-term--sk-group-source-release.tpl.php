@@ -78,10 +78,8 @@
 
                         <a class="section-segment" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href>
 
-                            <i ng-show="!tag.showBoneDysplasias" class="icon-chevron-down"></i>
-                            <i ng-show="!tag.showBoneDysplasias" class="icon-chevron-down icon-white"></i>
-                            <i ng-show="tag.showBoneDysplasias" class="icon-chevron-up"></i>
-                            <i ng-show="tag.showBoneDysplasias" class="icon-chevron-up icon-white"></i>
+                            <i ng-show="!tag.showBoneDysplasias" class="ficon-angle-down"></i>
+                            <i ng-show="tag.showBoneDysplasias" class="ficon-angle-up"></i>
                             {{ tag.sk_gt_field_group_name.name }}
                         </a>
 
@@ -92,9 +90,7 @@
                             <div ng-repeat="boneDysplasia in tag.boneDysplasias | filter:findGroup">
                                 <a class="section-segment section-segment-inner-tabbed" href="?q=node/{{ boneDysplasia.nid }}">
 
-                                    <i class="icon-chevron-right pull-right"></i>
-                                    <i class="icon-chevron-right pull-right icon-white"></i>
-
+                                    <i class="ficon-angle-right pull-right"></i>
 
                                     {{ boneDysplasia.title }}
                                 </a>
@@ -113,8 +109,7 @@
                     <div ng-repeat="release in releases">
 
                         <a class="section-segment" href ng-click="toggleShowRelease(release)">
-                            <i class="icon-chevron-left"></i>
-                            <i class="icon-chevron-left icon-white"></i>
+                            <i class="ficon-angle-left"></i>
                             {{ release.name }}
                         </a>
                     </div>
