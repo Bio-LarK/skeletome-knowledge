@@ -64,12 +64,12 @@ myApp.directive('navSearch', function() {
              */
             $scope.$watch('model.entry', function(entry) {
                 if(angular.isDefined(entry)) {
+                    console.log("do the autocomplete");
                     $scope.doAutocomplete(entry);
                 }
             });
 
             $scope.doAutocomplete = function(entry) {
-
                 // Empty string
                 if(entry.length == "") {
                     $scope.isLoading = 0;
@@ -166,7 +166,6 @@ myApp.directive('navSearch', function() {
             $scope.tabPressed = function() {
                 if($scope.selectedIndex >= 0) {
                     var selectedObject = $scope.model.suggestions[$scope.selectedIndex];
-
                     $scope.addToMultitermQuery(selectedObject);
                 }
             }

@@ -11,12 +11,10 @@ function SearchCtrl($scope, $http) {
 
         $scope.model.searchString = Drupal.settings.skeletome_search_page.searchString;
         $scope.model.conditions = Drupal.settings.skeletome_search_page.conditions;
-        console.log($scope.model.conditions);
 
         $scope.model.navSearchModel.entry = Drupal.settings.skeletome_search_page.queryString;
         $scope.model.navSearchModel.query = Drupal.settings.skeletome_search_page.queryTerms;
         $scope.model.navSearchModel.isShowingSuggestion = false;
-        console.log("search", $scope.model.navSearchModel);
 
         $scope.model.facets = [];
         $scope._updateFacets(Drupal.settings.skeletome_search_page.facets);
@@ -26,7 +24,7 @@ function SearchCtrl($scope, $http) {
         $scope.model.moreResults = true;
 
         $scope.$watch('model.navSearchModel.query', function(query) {
-            if(query && query.length) {
+            if(query) {
                 // the query has been changed, lets see if we can change the conditions
                 $scope.model.conditions = [];
                 $scope.model.searchString = "";
@@ -80,7 +78,8 @@ function SearchCtrl($scope, $http) {
     }
 
     $scope._doSearch = function(append) {
-        var url = "?q=ajax/full-search&searchstring=" + $scope.model.searchString + "&conditions=" + encodeURIComponent(JSON.stringify($scope.model.conditions)) + "&page=0";
+
+        var url = "?q=ajax/full-search&searchstring=" + ($scope.model.searchString || Drupal.settings.skeletome_search_page.searchString) + "&conditions=" + encodeURIComponent(JSON.stringify($scope.model.conditions)) + "&page=" + $scope.model.pageCount;
 
         $scope.model.isLoading = true;
 
@@ -88,10 +87,16 @@ function SearchCtrl($scope, $http) {
             $scope.model.moreResults = true;
             $scope.model.isLoading = false;
 
-            if(append) {
-                $scope.model.results = $scope.model.results.concat(data.results);
+
+            if(!angular.isDefined(data.results.apachesolr_search_browse)) {
+                if(append) {
+                    $scope.model.results = $scope.model.results.concat(data.results);
+                } else {
+                    $scope.model.results = data.results;
+                }
             } else {
-                $scope.model.results = data.results;
+                console.log("results are empty");
+                $scope.model.results = [];
             }
 
             $scope._updateFacets(data.facets);

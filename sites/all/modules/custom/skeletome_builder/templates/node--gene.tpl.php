@@ -126,59 +126,120 @@ $isAdmin = user_access('administer site configuration');
 
             <div class="span4">
                 <section>
-                    <div class="section-segment section-segment-header">
+                    <div class="section-segment section-segment-header" ng-class="{'section-segment-editing': model.detailsState == 'isEditing'}">
                         <div class="section-segment-header-buttons pull-right">
 
-                            <?php if((user_access('administer site configuration')) || is_array($user->roles) && in_array('sk_curator', $user->roles)): ?>
-                                <a href ng-click="showEditDetails()" data-toggle="modal" role="button" class="btn"><i class="icon-pencil"></i> Edit</a>
-                            <?php endif; ?>
+                            <div ng-switch on="model.detailsState">
+                                <div ng-switch-when="isLoading">
+                                </div>
+                                <div ng-switch-when="isEditing">
+                                    <save-button click="saveDetails()"></save-button>
+                                    <cancel-button click="cancelDetails()"></cancel-button>
+                                </div>
+                                <div ng-switch-when="isDisplaying">
+                                    <?php if ($isAdmin || $isCurator || $isEditor): ?>
+                                        <edit-button click="editDetails()"></edit-button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                         <h3>Details</h3>
                     </div>
 
-                    <div ng-show="master.gene.field_gene_go.und[0].value" class="section-segment">
-                        <b>Gene Ontology ID</b> {{ master.gene.field_gene_go.und[0].value }}
+                    <div ng-switch on="model.detailsState">
+                        <div ng-switch-when="isLoading">
+                            <refresh-box></refresh-box>
+                        </div>
+
+                        <div ng-switch-when="isEditing">
+                            <div class="section-segment section-segment-editing">
+                                <b>Locus</b>
+                                <input type="text" ng-model="edit.locus" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>MeSH Term</b>
+                                <input type="text" ng-model="edit.mesh" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>OMIM</b>
+                                <input type="text" ng-model="edit.omim" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>UMLS CUI</b>
+                                <input type="text" ng-model="edit.umls" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>Uniprot ID</b>
+                                <input type="text" ng-model="edit.uniprot" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>Accession Number</b>
+                                <input type="text" ng-model="edit.accession" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>Entrez Gene ID</b>
+                                <input type="text" ng-model="edit.entrez" class="full-width"/>
+                            </div>
+
+                            <div class="section-segment section-segment-editing">
+                                <b>RefSeq</b>
+                                <input type="text" ng-model="edit.refseq" class="full-width"/>
+                            </div>
+                        </div>
+                        <div ng-switch-when="isDisplaying">
+                            <div ng-show="master.gene.field_gene_go.und[0].value" class="section-segment">
+                                <b>Gene Ontology ID</b> {{ master.gene.field_gene_go.und[0].value }}
+                            </div>
+
+                            <div ng-show="master.gene.field_gene_locus.und[0].value" class="section-segment" >
+                                <b>Locus</b> {{ master.gene.field_gene_locus.und[0].value }}
+                            </div>
+
+                            <div class="section-segment" ng-show="master.gene.field_gene_mesh.und[0].value ">
+                                <b>MeSH Term</b>
+                                {{ master.gene.field_gene_mesh.und[0].value }}
+                            </div>
+
+                            <a ng-href="http://www.omim.org/entry/{{master.gene.field_gene_omim.und[0].value}}" target="_blank" class="section-segment" ng-show="master.gene.field_gene_omim.und[0].value">
+                                <i class="ficon-globe pull-right"></i>
+
+                                <b>OMIM</b>
+                                {{ master.gene.field_gene_omim.und[0].value }}
+                            </a>
+
+                            <div class="section-segment" ng-show="master.gene.field_gene_umlscui.und[0].value">
+                                <b>UMLS CUI</b>
+                                {{ master.gene.field_gene_umlscui.und[0].value }}
+                            </div>
+                            <a target="_blank" ng-href="http://www.uniprot.org/uniprot/{{ master.gene.field_gene_uniprot.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_uniprot.und[0].value">
+                                <i class="ficon-globe pull-right"></i>
+
+                                <b>Uniprot ID</b>
+                                {{ master.gene.field_gene_uniprot.und[0].value }}
+                            </a>
+                            <div class="section-segment" ng-show="master.gene.field_gene_accession.und[0].value">
+                                <b>Accesion Number</b>
+                                {{ master.gene.field_gene_accession.und[0].value }}
+                            </div>
+                            <div class="section-segment" ng-show="master.gene.field_gene_entrezgene.und[0].value">
+                                <b>Entrez Gene ID</b>
+                                {{ master.gene.field_gene_entrezgene.und[0].value }}
+                            </div>
+                            <a target="_blank" ng-href="http://www.ncbi.nlm.nih.gov/nuccore/{{ master.gene.field_gene_refseq.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_refseq.und[0].value">
+                                <i class="ficon-globe pull-right"></i>
+                                <b>RefSeq</b>
+                                {{ master.gene.field_gene_refseq.und[0].value }}
+                            </a>
+                        </div>
                     </div>
 
-                    <div ng-show="master.gene.field_gene_locus.und[0].value" class="section-segment" >
-                        <b>Locus</b> {{ master.gene.field_gene_locus.und[0].value }}
-                    </div>
 
-                    <div class="section-segment" ng-show="master.gene.field_gene_mesh.und[0].value ">
-                        <b>MeSH Term</b>
-                        {{ master.gene.field_gene_mesh.und[0].value }}
-                    </div>
-
-                    <a ng-href="http://www.omim.org/entry/{{master.gene.field_gene_omim.und[0].value}}" target="_blank" class="section-segment" ng-show="master.gene.field_gene_omim.und[0].value">
-                        <i class="ficon-globe pull-right"></i>
-
-                        <b>OMIM</b>
-                        {{ master.gene.field_gene_omim.und[0].value }}
-                    </a>
-
-                    <div class="section-segment" ng-show="master.gene.field_gene_umlscui.und[0].value">
-                        <b>UMLS CUI</b>
-                        {{ master.gene.field_gene_umlscui.und[0].value }}
-                    </div>
-                    <a target="_blank" ng-href="http://www.uniprot.org/uniprot/{{ master.gene.field_gene_uniprot.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_uniprot.und[0].value">
-                        <i class="ficon-globe pull-right"></i>
-
-                        <b>Uniprot ID</b>
-                        {{ master.gene.field_gene_uniprot.und[0].value }}
-                    </a>
-                    <div class="section-segment" ng-show="master.gene.field_gene_accession.und[0].value">
-                        <b>Accesion Number</b>
-                        {{ master.gene.field_gene_accession.und[0].value }}
-                    </div>
-                    <div class="section-segment" ng-show="master.gene.field_gene_entrezgene.und[0].value">
-                        <b>Entrez Gene ID</b>
-                        {{ master.gene.field_gene_entrezgene.und[0].value }}
-                    </div>
-                    <a target="_blank" ng-href="http://www.ncbi.nlm.nih.gov/nuccore/{{ master.gene.field_gene_refseq.und[0].value }}" class="section-segment" ng-show="master.gene.field_gene_refseq.und[0].value">
-                        <i class="ficon-globe pull-right"></i>
-                        <b>RefSeq</b>
-                        {{ master.gene.field_gene_refseq.und[0].value }}
-                    </a>
                 </section>
 
                 <section>

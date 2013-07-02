@@ -48,9 +48,15 @@ function ajax_skeletome_search_page_results() {
 
     $conditions = json_decode($_GET['conditions']);
 
+    if(strpos($search_string, "AND") === FALSE && strpos($search_string, "OR") === FALSE) {
+        // Lets fix up the search term
+        $search_string .= "*";
+    }
+
     $results = apachesolr_search_search_execute($search_string, array(
         'fq'    => $conditions
     ));
+
 
     foreach($results as &$result) {
         // Add in the clinical features, for bone dysplasia results
@@ -169,6 +175,7 @@ function page_skeletome_search_page() {
         $search_string .=  " " . $searchable_term->title;
     }
 
+
     $conditions = array();
     foreach($clinical_features as $clinical_feature) {
         $conditions[] = "im_field_skeletome_tags:" . $clinical_feature->tid;
@@ -185,13 +192,14 @@ function page_skeletome_search_page() {
         }
     }
 
-    if(strpos($search_string, "AND") === FALSE) {
+    $search_string_updated = $search_string;
+    if(strpos($search_string, "AND") === FALSE && strpos($search_string, "OR") === FALSE) {
         // Lets fix up the search term
-        $search_string .= "*";
+        $search_string_updated .= "*";
     }
 
 
-    $results = apachesolr_search_search_execute($search_string, array(
+    $results = apachesolr_search_search_execute($search_string_updated, array(
         'fq'    => $conditions
     ));
 
@@ -225,6 +233,7 @@ function page_skeletome_search_page() {
 
 
 
+    echo $search_string;
     $facet_data = data_get_facets_for_search();
 
     drupal_add_js(array(

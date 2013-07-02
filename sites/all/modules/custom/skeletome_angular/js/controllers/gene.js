@@ -31,6 +31,8 @@ function GeneCtrl($scope, $http) {
 
         // Setup the editors
         $scope.editors = Drupal.settings.skeletome_builder.editors;
+
+        $scope.model.detailsState = "isDisplaying";
     }
 
 
@@ -110,10 +112,12 @@ function GeneCtrl($scope, $http) {
 
 
 
+
     /**
      *
      */
-    $scope.showEditDetails = function() {
+    $scope.editDetails = function() {
+        $scope.model.detailsState = "isEditing";
         $scope.edit.locus = angular.copy($scope.master.gene.field_gene_locus.und[0].value);
         $scope.edit.mesh = angular.copy($scope.master.gene.field_gene_mesh.und[0].value);
         $scope.edit.omim = angular.copy($scope.master.gene.field_gene_omim.und[0].value);
@@ -122,18 +126,12 @@ function GeneCtrl($scope, $http) {
         $scope.edit.accession = angular.copy($scope.master.gene.field_gene_accession.und[0].value);
         $scope.edit.entrez = angular.copy($scope.master.gene.field_gene_entrezgene.und[0].value);
         $scope.edit.refseq = angular.copy($scope.master.gene.field_gene_refseq.und[0].value);
-
-        $scope.openEditingPanel('edit-details');
+    }
+    $scope.cancelDetails = function() {
+        $scope.model.detailsState = "isDisplaying";
     }
     $scope.saveDetails = function() {
-        $scope.master.gene.field_gene_locus.und[0].value = $scope.edit.locus;
-        $scope.master.gene.field_gene_mesh.und[0].value = $scope.edit.mesh;
-        $scope.master.gene.field_gene_omim.und[0].value = $scope.edit.omim;
-        $scope.master.gene.field_gene_umlscui.und[0].value = $scope.edit.umls;
-        $scope.master.gene.field_gene_uniprot.und[0].value = $scope.edit.uniprot;
-        $scope.master.gene.field_gene_accession.und[0].value = $scope.edit.accession;
-        $scope.master.gene.field_gene_entrezgene.und[0].value = $scope.edit.entrez;
-        $scope.master.gene.field_gene_refseq.und[0].value = $scope.edit.refseq;
+        $scope.model.detailsState = "isLoading";
 
         $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/details', {
             'locus': $scope.edit.locus,
@@ -145,10 +143,18 @@ function GeneCtrl($scope, $http) {
             'entrez': $scope.edit.entrez,
             'refseq': $scope.edit.refseq
         }).success(function(data) {
+            $scope.model.detailsState = "isDisplaying";
+            $scope.master.gene.field_gene_locus.und[0].value = $scope.edit.locus;
+            $scope.master.gene.field_gene_mesh.und[0].value = $scope.edit.mesh;
+            $scope.master.gene.field_gene_omim.und[0].value = $scope.edit.omim;
+            $scope.master.gene.field_gene_umlscui.und[0].value = $scope.edit.umls;
+            $scope.master.gene.field_gene_uniprot.und[0].value = $scope.edit.uniprot;
+            $scope.master.gene.field_gene_accession.und[0].value = $scope.edit.accession;
+            $scope.master.gene.field_gene_entrezgene.und[0].value = $scope.edit.entrez;
+            $scope.master.gene.field_gene_refseq.und[0].value = $scope.edit.refseq;
+        });
 
-            });
 
-        $scope.closeEditingPanel();
     }
 
     $scope.showAddNewGeneMutation = function() {
