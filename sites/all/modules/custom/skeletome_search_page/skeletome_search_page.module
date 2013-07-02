@@ -231,9 +231,6 @@ function page_skeletome_search_page() {
     // Get a list of all the terms we queried
     $query_terms = array_merge($bone_dysplasias, $genes, $clinical_features, $groups);
 
-
-
-    echo $search_string;
     $facet_data = data_get_facets_for_search();
 
     drupal_add_js(array(
@@ -286,7 +283,7 @@ function data_get_facets_for_search() {
             'nid'   => $gene_mutations_id
         ));
 
-        $facet_data['clinical_features'][] = array(
+        $facet_data['gene_mutations'][] = array(
             'tid'       => $gene_mutations_id,
             'count'     => $clinical_features_values[$i],
             'name'      => $facet_results->fetchField()
