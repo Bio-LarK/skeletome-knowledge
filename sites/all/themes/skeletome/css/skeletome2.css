@@ -99,11 +99,7 @@ a {
 
 }
     .navsearch-icon {
-        position: absolute;
-        z-index: 999;
-        top: 14px;
-        left: 13px;
-        opacity: 0.8;
+        float: left; color: white; position: relative;top: 10px; padding: 0 3px
     }
     .navsearch-clear {
         position: absolute;
@@ -2294,7 +2290,7 @@ section.section-large-description p {
     border-radius: 100px;
     background-color: rgb(60, 86, 107);
     color: white;
-    margin-left: 5px;
+    margin-left: 2px;
 }
     a.contributor:hover {
         text-decoration: none;

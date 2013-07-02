@@ -27,7 +27,7 @@
 
 
             <div ng-show="!model.isEditingDescription">
-                <b><i class="ficon-user"></i> Contributors</b>
+                <i cm-tooltip cm-tooltip-content="Contributors" class="ficon-user"></i>
                 <span ng-repeat="editor in editors">
                     <a class="contributor" href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span class="contributor" ng-show="$last && provider.length">{{ provider }}</span>
                 </span>

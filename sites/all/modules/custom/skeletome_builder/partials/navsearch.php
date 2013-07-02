@@ -1,5 +1,9 @@
 <div class="navsearch">
+
     <div class="navsearch-querywrapper">
+        <div class="navsearch-icon media-body" >
+            <i class="ficon-search" ></i>
+        </div>
 
         <div class="navsearch-terms">
             <a href="#" ng-click="removeQueryObject(object)" ng-repeat="object in model.query" class="navsearch-term">&#215 {{ object.title || object.name }}</a>
