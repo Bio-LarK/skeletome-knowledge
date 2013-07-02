@@ -2125,9 +2125,9 @@ a.section-segment {
     }
     .alert-info {
         background-color: rgb(221, 235, 248) !important;
-        border: 1px solid rgb(199, 212, 224);
+        border: none;
         text-shadow: none;
-        color: rgb(85, 115, 148);
+        color: rgb(150, 180, 204);
         padding: 14px 21px;
     }
         .alert-info em {
@@ -2137,7 +2137,7 @@ a.section-segment {
             margin-bottom: 0px;
         }
         .alert-info a {
-            color: rgb(85, 115, 148);
+            color: rgb(137, 164, 186);
             text-decoration: underline;
         }
 
@@ -2287,4 +2287,20 @@ section.section-large-description p {
     }
     .feedback-tab:active {
         padding-top: 8px;
+    }
+
+.contributor {
+    padding: 4px 10px;
+    border-radius: 100px;
+    background-color: rgb(60, 86, 107);
+    color: white;
+    margin-left: 5px;
+}
+    a.contributor:hover {
+        text-decoration: none;
+        color: white;
+        background-color: rgb(73, 105, 131);
+    }
+    a.contributor:active {
+        background-color: rgb(60, 86, 107);
     }

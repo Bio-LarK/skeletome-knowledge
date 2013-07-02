@@ -116,8 +116,7 @@
 
                 <div ng-repeat="page in contributed | limitTo:model.contributedDisplayLimit">
                     <a href="?q=node/{{ page.nid }}" class="section-segment">
-                        <i class="icon-chevron-right pull-right"></i>
-                        <i class="icon-chevron-right icon-white pull-right"></i>
+                        <i class="ficon-angle-right pull-right"></i>
 
                         {{ page.title }}
                     </a>
@@ -264,6 +263,7 @@
 
                     <a class="section-segment" href="?q=node/{{ statement.field_statement_node.und[0].target_id }}#{{ statement.nid }}" >
                         <i class="ficon-angle-right pull-right"></i>
+                        <i class="ficon-ok pull-left" style="position: relative; top: 6px; margin-right: 10px"></i>
                         <span ng-bind-html-unsafe="statement.body.und[0].value"></span>
                     </a>
                 </div>
@@ -312,7 +312,7 @@
         <textarea ng-model="edit.newProfileText" ck-editor></textarea>
 
         <div class="modal-footer">
-            <a ng-click="addPublication(edit.newProfileText)" class="btn btn-save" href=""><i class="ficon-plus"></i> Add</a>
+            <a ng-click="addPublication(edit.newProfileText)" ng-disabled="!edit.newProfileText.length" class="btn btn-save" href=""><i class="ficon-plus"></i> Add</a>
         </div>
     </my-modal>
 

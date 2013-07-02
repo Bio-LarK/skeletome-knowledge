@@ -1,6 +1,6 @@
 <div ng-controller="DescriptionCtrl">
     <section style="margin-bottom: 14px">
-        <div class="section-segment section-segment-header">
+        <div class="section-segment section-segment-header" ng-class="{'section-segment-editing': model.isEditingDescription }">
             <?php
             if ($isAdmin || $isCurator || $isEditor): ?>
                 <div class="section-segment-header-buttons pull-right">
@@ -29,7 +29,7 @@
             <div ng-show="!model.isEditingDescription">
                 <b><i class="ficon-user"></i> Contributors</b>
                 <span ng-repeat="editor in editors">
-                    <a href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span ng-show=" ! $last ">,</span><span ng-show="$last && provider.length">, {{ provider }}</span>
+                    <a class="contributor" href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span class="contributor" ng-show="$last && provider.length">{{ provider }}</span>
                 </span>
             </div>
 

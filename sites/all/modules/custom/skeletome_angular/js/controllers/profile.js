@@ -190,9 +190,12 @@ function ProfileCtrl($scope, $http) {
         $scope.isAddingPublication = true;
     }
     $scope.addPublication = function(publicationText) {
+        if(!publicationText.length) {
+            return;
+        }
         // Construct a publication
         var publication = {
-            value: $scope.stripTags(publicationText, "<b><i>")
+            value: $scope.stripTags(publicationText, "<b><i><p><br>")
         };
         $scope.edit.profile.field_profile_publications.und.unshift(publication);
         $scope.edit.newProfileText = "";

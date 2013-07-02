@@ -22,7 +22,7 @@
     </div>
 
     <cm-alert state="model.xrayState" from="isLoading" to="isDisplaying">
-        <i class="ficon-ok"></i> Description Saved
+        <i class="ficon-ok"></i> X-Rays Updated.
     </cm-alert>
 
     <div ng-switch on="model.xrayState">
