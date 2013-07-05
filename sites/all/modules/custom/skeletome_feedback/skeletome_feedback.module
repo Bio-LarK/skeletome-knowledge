@@ -1,0 +1,177 @@
+<?php
+
+/**
+ * @file
+ * Test moduel for the entity API.
+ */
+
+function skeletome_feedback_menu() {
+    $items['ajax/feedback'] = array(
+        'page callback' 	=> 'skeletome_feedback_feedback',
+        'access arguments'  => array('access content'),
+        'page arguments'    => array(2),
+        'type'  => MENU_CALLBACK
+    );
+
+    return $items;
+}
+
+function skeletome_feedback_feedback() {
+
+    $data = file_get_contents("php://input");
+    $objData = json_decode($data, true);
+    $new_ent = entity_create('feedback', $objData);
+    $new_ent->save();
+    echo json_encode($new_ent);
+}
+
+function postit_permission(){
+    return array(
+        'administer postits' =>  array(
+            'title' => t('Administer postits'),
+            'restrict access' => TRUE,
+        ),
+        'view postsits' => array(
+            'title' => t('View PostIts'),
+        )
+    );
+}
+
+
+
+/**
+ * Implements hook_entity_info().
+ */
+function skeletome_feedback_entity_info() {
+    $return = array(
+        'feedback' => array(
+
+            // Define basic information
+            'label' => t('Feedback'),
+            'plural label' => t('Feedbacks'),
+            'description' => t('An entity type used by the entity API tests.'),
+            'fieldable' => TRUE,
+
+            // Provide information about the database table
+            'base table' => 'feedback',
+            'entity keys' => array(
+                'id' => 'id',
+            ),
+
+            // Use the classes from the Entity Api Module
+            'entity class'  => 'Entity',
+            'controller class' => 'EntityAPIController',
+//            'controller class' => 'FeedbackController',
+
+            /*'entity class' => 'EntityClass',*/
+
+            // Have Entity API set up an administrative UI.
+            'admin ui' => array(
+                'path' => 'admin/feedback',
+            ),
+            'module' => 'skeletome_feedback',
+            'access callback' => 'skeletome_feedback_feedback_access',
+
+            // For content type entities only
+            'uri callback' => 'feedback_uri',
+        ),
+    );
+
+    return $return;
+}
+
+// Access callback for Entity API.
+function skeletome_feedback_feedback_access($op, $entity, $account = NULL) {
+    return true;
+    // $op is 'view', 'update', 'create', etc.
+    // $entity could be NULL (to check access for all entity items)
+    // or it could be a single entity item object.
+    // $account is either NULL or a user object.
+
+    // In this simple example, just check permissions for
+    // viewing or administering the entity type generically.
+//    if ($op == 'view') {
+//        return user_access('view myentity', $account);
+//    }
+//    return user_access('administer myentity', $account);
+}
+
+
+function feedback_uri($feedback){
+    return array(
+        'path' => 'feedback/' . $feedback->id,
+    );
+}
+
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function skeletome_feedback_entity_property_info_alter(&$info) {
+    $properties = &$info['feedback']['properties'];
+    $properties['created'] = array(
+        'label' => t("Date created"),
+        'type' => 'date',
+        'description' => t("The date the node was posted."),
+        'setter callback' => 'entity_property_verbatim_set',
+        'setter permission' => 'administer nodes',
+        'schema field' => 'created',
+    );
+    $properties['changed'] = array(
+        'label' => t("Date changed"),
+        'type' => 'date',
+        'schema field' => 'changed',
+        'description' => t("The date the node was most recently updated."),
+    );
+    $properties['uid'] = array(
+        'label' => t("Author"),
+        'type' => 'user',
+        'description' => t("The author of the task."),
+//        'setter callback' => 'entity_property_verbatim_set',
+//        'setter permission' => 'administer example_task entities',
+        'required' => FALSE,
+        'schema field' => 'uid',
+    );
+}
+
+
+
+/**
+ * Gets an array of all test entity types, keyed by the name.
+ *
+ * @param $name
+ *   If set, the type with the given name is returned.
+ */
+//function entity_test_get_types($name = NULL) {
+//    $types = entity_load_multiple_by_name('entity_test_type', isset($name) ? array($name) : FALSE);
+//    return isset($name) ? reset($types) : $types;
+//}
+
+/**
+ * Load multiple test entities based on certain conditions.
+ *
+ * @param $pids
+ *   An array of entity IDs.
+ * @param $conditions
+ *   An array of conditions to match against the {entity} table.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   An array of test entity objects, indexed by pid.
+ */
+function feedback_load_multiple($pids = array(), $conditions = array(), $reset = FALSE) {
+    return entity_load('feedback', $pids, $conditions, $reset);
+}
+
+/**
+ * Delete multiple test entities.
+ *
+ * @param $pids
+ *   An array of test entity IDs.
+ */
+function feedback_delete_multiple(array $pids) {
+    entity_get_controller('entity_test')->delete($pids);
+}
+
+
+class FeedbackController extends DrupalDefaultEntityController{}

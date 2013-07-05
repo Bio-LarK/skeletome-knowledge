@@ -1,0 +1,4 @@
+name = Skeletome Feedback
+description = Endpoints for posting a feedback
+package = A - Skeletome
+core = 7.x

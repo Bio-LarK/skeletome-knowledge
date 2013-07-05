@@ -330,7 +330,7 @@ function ProfileCtrl($scope, $http) {
 
 
 
-//    $http.post('?q=rest/profile/9256/update', {
+//    $http.post($scope.baseUrl + '/?q=rest/profile/9256/update', {
 //        hello: 'go'
 //    }).success(function(data) {
 //        console.log(data);

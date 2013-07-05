@@ -2,3 +2,5 @@ name = Skeletome Bone Dysplasia
 description = Migrating Bone Dysplasia Functionality
 package = A - Skeletome
 core = 7.x
+
+dependencies[] = entity

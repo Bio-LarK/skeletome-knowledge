@@ -116,6 +116,6 @@
     </div>
     <add-list list-model="model.edit.clinicalFeaturesSearchResults" add-to-model="model.edit.clinicalFeatures"></add-list>
     <div class="modal-footer">
-        <a ng-click="model.isAddingClinicalFeature = false" class="btn btn-save" href=""> Done</a>
+        <a ng-click="isAddingClinicalFeature = false" class="btn btn-save" href=""> Done</a>
     </div>
 </my-modal>

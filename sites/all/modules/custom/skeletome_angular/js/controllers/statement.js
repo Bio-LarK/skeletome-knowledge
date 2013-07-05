@@ -238,7 +238,7 @@ function StatementCtrl($scope, $http) {
         var commentText = angular.copy(comment);
         statement.newComment = "";
 
-        $http.post('?q=ajax/statement/' + statement.nid + '/comment/add', {
+        $http.post($scope.baseUrl + '/?q=ajax/statement/' + statement.nid + '/comment/add', {
             comment_text: commentText
         }).success(function(data) {
                 statement.isLoadingComments = false;

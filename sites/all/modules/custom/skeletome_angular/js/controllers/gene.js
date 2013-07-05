@@ -73,7 +73,7 @@ function GeneCtrl($scope, $http) {
         masterGeneMutation.body.und[0].value = geneMutationDescription;
         $scope.closeEditingPanel();
 
-        $http.post('?q=ajax/gene-mutation/' + masterGeneMutation.nid + '/description', {
+        $http.post($scope.baseUrl + '/?q=ajax/gene-mutation/' + masterGeneMutation.nid + '/description', {
             'description'   : geneMutationDescription
         }).success(function(data) {
             });
@@ -101,7 +101,7 @@ function GeneCtrl($scope, $http) {
 //        $scope.master.description = "Loading..."; //$scope.edit.description;
 //
 //        // Save the description
-//        $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/description', {
+//        $http.post($scope.baseUrl + '/?q=ajax/gene/' + $scope.master.gene.nid + '/description', {
 //            'description'   : newDescription
 //        }).success(function(data) {
 //                $scope.master.gene.body.und[0].safe_value = data.safe_value;
@@ -133,7 +133,7 @@ function GeneCtrl($scope, $http) {
     $scope.saveDetails = function() {
         $scope.model.detailsState = "isLoading";
 
-        $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/details', {
+        $http.post($scope.baseUrl + '/?q=ajax/gene/' + $scope.master.gene.nid + '/details', {
             'locus': $scope.edit.locus,
             'mesh': $scope.edit.mesh,
             'omim': $scope.edit.omim,
@@ -163,7 +163,7 @@ function GeneCtrl($scope, $http) {
 
     $scope.addGeneMutationToGene = function(title, gene) {
         $scope.closeEditingPanel();
-        $http.post('?q=ajax/gene/' + gene.nid + '/gene-mutation', {
+        $http.post($scope.baseUrl + '/?q=ajax/gene/' + gene.nid + '/gene-mutation', {
             "title": title
         }).success(function(data) {
 
@@ -175,7 +175,7 @@ function GeneCtrl($scope, $http) {
 
     $scope.saveStatements = function(statements) {
         $scope.model.statementsState = "isLoading";
-        $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/statements', {
+        $http.post($scope.baseUrl + '/?q=ajax/gene/' + $scope.master.gene.nid + '/statements', {
             'statements': statements
         }).success(function(data) {
             $scope.model.statementsState = "isDisplaying";
@@ -195,7 +195,7 @@ function GeneCtrl($scope, $http) {
         var newStatementText = angular.copy(statementText);
         $scope.model.newStatement = "";
 
-        $http.post('?q=ajax/gene/' + $scope.master.gene.nid + '/statement', {
+        $http.post($scope.baseUrl + '/?q=ajax/gene/' + $scope.master.gene.nid + '/statement', {
             'text': newStatementText
         }).success(function(data) {
             $scope.model.statementsState = "isDisplaying";

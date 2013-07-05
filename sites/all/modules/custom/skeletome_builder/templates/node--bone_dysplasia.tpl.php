@@ -231,7 +231,7 @@ $isAdmin = user_access('administer site configuration');
                     <a ng-show="omim" class="section-segment" ng-href="http://www.omim.org/entry/{{omim}}" target="_blank">
                         <i class="ficon-globe pull-right"></i>
 
-                        <span><b>OMIM</b></span>
+                        <span><em>OMIM</em></span>
                         <span ng-show="omim">{{omim}}</span>
                     </a>
 
@@ -243,7 +243,7 @@ $isAdmin = user_access('administer site configuration');
 
                 <div>
                     <div ng-show="moi" class="section-segment" target="_blank">
-                        <span><b>Mode of Inheritance</b></span>
+                        <span><em>Mode of Inheritance</em></span>
                         <span>{{ moi.name }}</span>
                     </div>
 

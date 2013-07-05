@@ -151,7 +151,7 @@
                                 <?php else: ?>
                                     <a class="btn btn-dark-navbar" href="user/register">Register</a>
 
-                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="loginForm" href id="login_button"><i class="ficon-signin"></i> Log In</a>
+                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="{{ loginForm }}" href id="login_button"><i class="ficon-signin"></i> Log In</a>
 
                                 <?php endif; ?>
                             </div>

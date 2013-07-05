@@ -27,10 +27,11 @@
 
 
             <div ng-show="!model.isEditingDescription">
-                <i cm-tooltip cm-tooltip-content="Contributors" class="ficon-user"></i>
+                <i style="color: rgb(118, 150, 177);" cm-tooltip cm-tooltip-content="Contributors" class="ficon-group"></i>
                 <span ng-repeat="editor in editors">
-                    <a class="contributor" href="?q=profile-page/{{ editor.uid }}">{{ editor.name | capitalize }}</a><span class="contributor" ng-show="$last && provider.length">{{ provider }}</span>
+                    <a class="contributor" href="?q=profile-page/{{ editor.uid }}"><i class="ficon-user"></i> {{ editor.name | capitalize }}</a>
                 </span>
+                <a ng-show="provider.length" cm-popover="top" cm-popover-content="<b>This abstract was originally sourced from <em>{{ provider }}</em>.</b><br/> {{ reference }}"  href class="contributor"><i class="ficon-globe"></i> {{ provider }}</a>
             </div>
 
             <?php if(isset($user->name)):?>
@@ -68,11 +69,11 @@
             <!-- Not Editing Description -->
             <div ng-show="!model.isEditingDescription" class="description-text">
 
-                <div class="alert alert-info" ng-show="provider && !model.isEditingDescription">
+                <!--<div class="alert alert-info" ng-show="provider && !model.isEditingDescription">
                     <i class="ficon-info-sign"></i> <em>This stub is sourced from {{ provider }}</em>.
                     <div style="font-size: 12px" ng-bind-html-unsafe="reference">
                     </div>
-                </div>
+                </div>-->
 
                 <!-- is Loading -->
                 <div ng-show="description.isLoading" class="refreshing-box">
@@ -100,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <cm-reveal model="description.safe_value" showing-count="model.descriptionLength" default-count="500"></cm-reveal>
+        <cm-reveal model="description.safe_value" showing-count="model.descriptionLength" default-count="1000"></cm-reveal>
 
     </section>
 </div>

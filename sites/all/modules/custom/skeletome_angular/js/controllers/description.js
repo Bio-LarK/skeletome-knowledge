@@ -55,7 +55,7 @@ function DescriptionCtrl($scope, $http) {
 
         // Save the statement stuff
         if($scope.model.statementPackage) {
-            $http.post('?q=ajax/statement/' + $scope.model.statementPackage.nid + '/approve', {
+            $http.post($scope.baseUrl + '/?q=ajax/statement/' + $scope.model.statementPackage.nid + '/approve', {
                 userIds: $scope.model.statementPackage.users
             }).success(function(statement) {
                 jQuery.extend($scope.model.statementPackage.statement, statement);

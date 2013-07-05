@@ -277,6 +277,8 @@ function statement_create($text, $node_target_id) {
     $statement = node_submit($statement); // Prepare node for saving
     node_save($statement);
 
+    $statement = node_load($statement->nid);
+
     // Setup some stuff that it doesnt want to do on node save for some unknown reason!
     $statement->body[LANGUAGE_NONE][0]['safe_value'] = check_markup($statement->body[LANGUAGE_NONE][0]['value'], 'filtered_html');
     $statement->comment_count = 0;

@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function skeletome_feedback_uninstall() {
+    // Bypass entity_load() as we cannot use it here.
+//    $types = db_select('entity_test_type', 'et')
+//        ->fields('et')
+//        ->execute()
+//        ->fetchAllAssoc('name');
+//
+//    foreach ($types as $name => $type) {
+//        field_attach_delete_bundle('entity_test', $name);
+//    }
+}
+
+/**
+ * Implements hook_schema().
+ */
+function skeletome_feedback_schema() {
+    $schema['feedback'] = array(
+        'description' => 'TODO: please describe this table!',
+        'fields' => array(
+            'id' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'serial',
+                'not null' => TRUE,
+            ),
+            'created' => array(
+                'description' => 'The Unix timestamp when the feedback was created.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'default' => 0
+            ),
+            'changed' => array(
+                'description' => 'The Unix timestamp when the feedback was most recently saved.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'default' => 0
+            ),
+            'feedback' => array(
+                'description' => 'The feedback left by the user',
+                'type' => 'text',
+                'not null' => TRUE,
+            ),
+            'uid' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'int',
+                'not null' => FALSE,
+            ),
+            'email' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'varchar',
+                'length' => '255',
+                'not null' => FALSE,
+            ),
+            'name' => array(
+                'description' => 'TODO: please describe this field!',
+                'type' => 'varchar',
+                'length' => '255',
+                'not null' => FALSE,
+            ),
+        ),
+        'foreign keys' => array(
+            'uid' => array('users' => 'uid'),
+        ),
+        'primary key' => array('id'),
+    );
+
+    return $schema;
+}

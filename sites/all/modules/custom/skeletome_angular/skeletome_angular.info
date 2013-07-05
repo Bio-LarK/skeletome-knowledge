@@ -51,6 +51,7 @@ scripts[] = js/directives/directives.js
 scripts[] = js/directives/my_modal.js
 scripts[] = js/directives/cm_when_scrolled.js
 scripts[] = js/directives/cm_reveal.js
+scripts[] = js/directives/feedback.js
 
 scripts[] = js/directives/lookup.js
 scripts[] = js/directives/add_list.js

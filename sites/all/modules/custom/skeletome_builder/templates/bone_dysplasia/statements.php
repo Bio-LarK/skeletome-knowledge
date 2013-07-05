@@ -139,7 +139,7 @@
 
                 </div>
 
-                <div ng-repeat="statement in statements | limitTo:model.statementDisplayLimit">
+                <div ng-repeat="statement in statements | orderBy:'-created' | limitTo:model.statementDisplayLimit">
 
                     <div id="{{ statement.nid }}" class="section-segment section-segment-statement" ng-click="showComments(statement)">
 

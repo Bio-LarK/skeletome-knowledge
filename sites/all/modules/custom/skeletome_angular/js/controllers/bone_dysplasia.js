@@ -81,7 +81,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     }
 
     $scope.createNewBoneDysplasia = function(title) {
-        $http.post('?q=ajax/bone-dysplasia/new', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/new', {
             'title': title
         }).success(function(data) {
                 // do redirect here
@@ -129,7 +129,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
         $scope.model.detailsState = $scope.IS_LOADING;
 
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
             'moiTid': $scope.model.edit.moi.tid,
             'omim': $scope.model.edit.omim
         }).success(function(data) {
@@ -164,7 +164,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //
 //        // if there is no moi, or its changed, save it
 //
-//        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
+//        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/details', {
 //            'moiTid': editedMoi.tid,
 //            'omim': editedOMIM
 //        }).success(function(data) {
@@ -194,7 +194,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     }
     $scope.saveGenes = function(genes) {
         $scope.model.genesState = $scope.IS_LOADING;
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/genes', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/genes', {
             genes: genes
         }).success(function(data) {
             $scope.genes = data;
@@ -233,7 +233,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         $scope.model.xrayState = $scope.IS_LOADING;
 
         $scope.model.xrays = $scope.model.edit.xrays;
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xrays', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/xrays', {
             'xrays': $scope.model.xrays
         }).success(function(data) {
             $scope.model.xrayState = $scope.IS_DISPLAYING;
@@ -332,7 +332,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         });
 
         $scope.model.clinicalFeatures = clinicalFeatures;
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/clinical-features', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/clinical-features', {
             'clinical_features': $scope.model.clinicalFeatures
         }).success(function(data) {
             $scope.model.clinicalFeaturesState = $scope.IS_DISPLAYING;
@@ -380,7 +380,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //    $scope.addClinicalFeature = function(newClinicalFeature, boneDysplasia) {
 //        newClinicalFeature.added = true;
 //        $scope.clinicalFeatures.push(newClinicalFeature);
-//        $http.post('?q=ajax/bone-dysplasia/clinical-feature/add', {
+//        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/clinical-feature/add', {
 //            'boneDysplasiaNid': boneDysplasia.nid,
 //            'clinicalFeatureTid': newClinicalFeature.tid
 //        }).success(function(data) {
@@ -399,7 +399,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //            }
 //        });
 //        /* Send it to the server */
-//        $http.post('?q=ajax/bone-dysplasia/clinical-feature/remove', {
+//        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/clinical-feature/remove', {
 //            'boneDysplasiaNid': boneDysplasia.nid,
 //            'clinicalFeatureTid': featureToRemove.tid
 //        }).success(function(data) {
@@ -449,7 +449,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.addNewGeneToBoneDysplasia = function(geneName, boneDysplasia) {
         $scope.showAddNewGeneForm = false;
         $scope.editGeneLoading = 1;
-        $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/add', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/add', {
             'geneName': geneName
         }).success(function(gene) {
                 $scope.editGeneLoading = 0;
@@ -464,7 +464,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.addGeneToBoneDysplasia = function(gene, boneDysplasia) {
         gene.added = true;
         $scope.genes.push(gene);
-        $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/add', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/add', {
             'geneNid': gene.nid
         }).success(function() {
 
@@ -478,7 +478,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
             }
         });
 
-        $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/' + gene.nid + '/remove').success(function() {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene/' + gene.nid + '/remove').success(function() {
 
         });
     }
@@ -486,7 +486,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 
 
     $scope.addNewGeneMutationToBoneDysplasia = function(geneMutationTitle, gene, boneDysplasia) {
-        $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene-mutation/add', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene-mutation/add', {
             'geneMutationTitle': geneMutationTitle,
             'geneNid': gene.nid
         }).success(function(geneMutation) {
@@ -513,7 +513,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         // Add it to the existing data
         $scope.addGeneMutationHelper(geneMutation, gene);
 
-        $http.post('?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene-mutation/add', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + boneDysplasia.nid + '/gene-mutation/add', {
             'geneMutationNid': geneMutation.nid
         }).success(function(data) {
             });
@@ -582,7 +582,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
      */
     $scope.saveStatements = function(statements) {
         $scope.model.statementsState = "isLoading";
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statements', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statements', {
             'statements': statements
         }).success(function(data) {
             $scope.model.statementsState = "isDisplaying";
@@ -600,7 +600,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
         var newStatementText = angular.copy(newStatement);
         $scope.model.newStatement = "";
 
-        $http.post('?q=ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statement', {
+        $http.post($scope.baseUrl + '/ajax/bone-dysplasia/' + $scope.model.boneDysplasia.nid + '/statement', {
             'text': newStatementText
         }).success(function(data) {
             $scope.model.statementsState = "isDisplaying";
@@ -631,7 +631,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
 //        angular.forEach(groupsToAdd, function(group, index){
 //            $scope.tags.push(group);
 //        });
-//        $http.post('?q=ajax/bone-dysplasia/groups/edit', {
+//        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/groups/edit', {
 //            'boneDysplasiaNid': boneDysplasia.nid,
 //            'groups': $scope.tags
 //        }).success(function(data) {
@@ -645,7 +645,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.saveEditedOMIM = function(editedOMIM, boneDysplasia) {
         $scope.omim = editedOMIM;
 
-        $http.post('?q=ajax/bone-dysplasia/omim/', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/omim/', {
             'boneDysplasiaNid': boneDysplasia.nid,
             'omim': editedOMIM
         }).success(function(data) {
@@ -657,7 +657,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.saveEditedMoi = function(editedMoi, boneDysplasia) {
         $scope.moi = editedMoi;
 
-        $http.post('?q=ajax/bone-dysplasia/moi', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/moi', {
             'boneDysplasiaNid': boneDysplasia.nid,
             'moiTid': editedMoi.tid
         }).success(function(data) {
@@ -671,7 +671,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     $scope.saveEditedGroups = function(editedTags, boneDysplasia) {
         $scope.tags = editedTags;
 
-        $http.post('?q=ajax/bone-dysplasia/groups/edit', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/groups/edit', {
             'boneDysplasiaNid': boneDysplasia.nid,
             'groups': editedTags
         }).success(function(data) {
@@ -680,7 +680,7 @@ function BoneDysplasiaCtrl($scope, $http, drupalContent, autocomplete) {
     }
 
     $scope.createNewGroupAndAdd = function(newGroupSource, newGroupSourceRelease, newGroupName, newGroupDescription, boneDysplasia) {
-        $http.post('?q=ajax/bone-dysplasia/groups/new', {
+        $http.post($scope.baseUrl + '/?q=ajax/bone-dysplasia/groups/new', {
             'boneDysplasiaNid': boneDysplasia.nid,
             'groupSourceTid': newGroupSource.tid,
             'groupSourceReleaseTid':    newGroupSourceRelease.tid,
