@@ -57,7 +57,7 @@
                     <h1 >
                         <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/group.svg"/>
                         <!--<span ng-bind-html-unsafe="release.sk_gsr_field_group_source.und[0].taxonomy_term.name + ' Nosology'"><?php print $name; ?></span>-->
-                        <span ng-bind-html-unsafe="release.sk_gsr_field_group_source.und[0].taxonomy_term.name + ' Nosology'">Bone Dysplasia Ontology</span>
+                        <span>Bone Dysplasia Ontology</span>
                     </h1>
                 </div>
             </div>
