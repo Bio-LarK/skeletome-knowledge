@@ -24,8 +24,7 @@
 
                 <a class="section-segment section-segment-header" href="?q=node/{{ result.node.entity_id }}">
                     <div class="section-segment-header-buttons pull-right">
-                        <i class="icon-chevron-right"></i>
-                        <i class="icon-chevron-right icon-white"></i>
+                        <i class="ficon-angle-right"></i>
                     </div>
 
                     <h3 ng-bind-html-unsafe="result.title"></h3>
