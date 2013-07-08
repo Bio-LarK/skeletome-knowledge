@@ -80,8 +80,7 @@
                     <i class="icon-refresh icon-refreshing"></i>
                 </div>
 
-                <p class="muted" ng-show="!description.safe_value.length">There is currently no
-                    description of '{{ master.gene.title || boneDysplasia.title }}'.</p>
+                <p class="muted" ng-show="!description.safe_value.length">No description.</p>
 
                 <!--  | truncate:descriptionLength -->
                 <div ng-show="description.safe_value.length && !description.isLoading">

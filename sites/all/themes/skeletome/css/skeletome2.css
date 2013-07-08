@@ -2015,7 +2015,7 @@ a.section-segment {
         font-weight: 300;
     }
     .section-segment h1, .section-segment h2, .section-segment h3, .section-segment h4 {
-        margin: 0 !important;
+        margin: 0;
     }
     .section-segment h2, h3 {
         font-size: 21px;
