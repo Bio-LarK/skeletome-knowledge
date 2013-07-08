@@ -74,7 +74,7 @@
         <div class="section-segment">
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 id="bone-dysplasia" class="tour-heading">Bone Dysplasias</h2>
+                    <h2 id="bone-dysplasia" class="tour-heading">Research Bone Dysplasias</h2>
                 </div>
             </div>
             <!--<div class="row-fluid">
@@ -86,7 +86,7 @@
         <div class="section-segment">
             <div class="row-fluid">
                 <div class="span6">
-                    <h3>Abstract</h3>
+                    <h3>Abstracts</h3>
                     <p>
                         All entries contain an abstract. Abstracts are collaboratively written by members of the skeletal dysplasia
                         community. To ensure the highest quality, only expert users will be given editing rights for the abstracts.
@@ -271,7 +271,7 @@
 
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 id="contributing" class="tour-heading">Contributing to Skeletome</h2>
+                    <h2 id="contributing" class="tour-heading">Contribute to Skeletome</h2>
                 </div>
             </div>
         </div>
