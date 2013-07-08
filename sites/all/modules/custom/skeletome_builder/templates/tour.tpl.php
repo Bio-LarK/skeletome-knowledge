@@ -63,10 +63,10 @@
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
-                <li class="tour-position tour-position-active"><a href=""><span class="tour-position-number">1</span> Disorders</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">2</span> Profiles</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">3</span> Navigating</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">4</span> Contributing</a></li>
+                <li class="tour-position tour-position-active"><a href="#bone-dysplasia"><span class="tour-position-number">1</span> Disorders</a></li>
+                <li class="tour-position"><a href="#profile"><span class="tour-position-number">2</span> Profiles</a></li>
+                <li class="tour-position"><a href="#navigating"><span class="tour-position-number">3</span> Navigating</a></li>
+                <li class="tour-position"><a href="#contributing"><span class="tour-position-number">4</span> Contributing</a></li>
             </ul>
         </div>
     </div>
@@ -74,7 +74,7 @@
         <div class="section-segment">
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 class="tour-heading">Bone Dysplasias</h2>
+                    <h2 id="bone-dysplasia" class="tour-heading">Bone Dysplasias</h2>
                 </div>
             </div>
             <!--<div class="row-fluid">
@@ -157,10 +157,10 @@
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
-                <li class="tour-position"><a href=""><span class="tour-position-number">1</span> Disorders</a></li>
-                <li class="tour-position tour-position-active"><a href=""><span class="tour-position-number">2</span> Profiles</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">3</span> Navigating</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">4</span> Contributing</a></li>
+                <li class="tour-position"><a href="#bone-dysplasia"><span class="tour-position-number">1</span> Disorders</a></li>
+                <li class="tour-position tour-position-active"><a href="#profile"><span class="tour-position-number">2</span> Profiles</a></li>
+                <li class="tour-position"><a href="#navigating"><span class="tour-position-number">3</span> Navigating</a></li>
+                <li class="tour-position"><a href="#contributing"><span class="tour-position-number">4</span> Contributing</a></li>
             </ul>
         </div>
     </div>
@@ -170,7 +170,7 @@
 
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 class="tour-heading">Show your Expertise</h2>
+                    <h2 id="profile" class="tour-heading">Show your Expertise</h2>
                 </div>
             </div>
         </div>
@@ -201,10 +201,10 @@
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
-                <li class="tour-position"><a href=""><span class="tour-position-number">1</span> Disorders</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">2</span> Profiles</a></li>
-                <li class="tour-position tour-position-active"><a href=""><span class="tour-position-number">3</span> Navigating</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">4</span> Contributing</a></li>
+                <li class="tour-position"><a href="#bone-dysplasia"><span class="tour-position-number">1</span> Disorders</a></li>
+                <li class="tour-position"><a href="#profile"><span class="tour-position-number">2</span> Profiles</a></li>
+                <li class="tour-position tour-position-active"><a href="#navigating"><span class="tour-position-number">3</span> Navigating</a></li>
+                <li class="tour-position"><a href="#contributing"><span class="tour-position-number">4</span> Contributing</a></li>
             </ul>
         </div>
     </div>
@@ -213,7 +213,7 @@
         <div class="section-segment">
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 class="tour-heading">Many ways to get around</h2>
+                    <h2 id="navigating" class="tour-heading">Many ways to get around</h2>
                 </div>
             </div>
         </div>
@@ -258,10 +258,10 @@
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
-                <li class="tour-position"><a href=""><span class="tour-position-number">1</span> Disorders</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">2</span> Profiles</a></li>
-                <li class="tour-position"><a href=""><span class="tour-position-number">3</span> Navigating</a></li>
-                <li class="tour-position tour-position-active"><a href=""><span class="tour-position-number">4</span> Contributing</a></li>
+                <li class="tour-position"><a href="#bone-dysplasia"><span class="tour-position-number">1</span> Disorders</a></li>
+                <li class="tour-position"><a href="#profile"><span class="tour-position-number">2</span> Profiles</a></li>
+                <li class="tour-position"><a href="#navigating"><span class="tour-position-number">3</span> Navigating</a></li>
+                <li class="tour-position tour-position-active"><a href="#contributing"><span class="tour-position-number">4</span> Contributing</a></li>
             </ul>
         </div>
     </div>
@@ -271,7 +271,7 @@
 
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 class="tour-heading">Contributing to Skeletome</h2>
+                    <h2 id="contributing" class="tour-heading">Contributing to Skeletome</h2>
                 </div>
             </div>
         </div>

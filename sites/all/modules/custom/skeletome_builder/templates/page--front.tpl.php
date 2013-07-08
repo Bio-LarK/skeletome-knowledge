@@ -217,10 +217,7 @@
                     </div>
                     <div class="triptych-body">
                         <p>
-                            The Skeletome knowledge base provides information on all bone dypslasias recognised by the Interational Skeletal Dysplasia Society.
-                        </p>
-                        <p>
-                            Find expert-written summaries, disease genes, lists of clinical features, radiographs and much more.
+                            The Skeletome knowledge base provides information on all bone dysplasias recognised by the International Skeletal Dysplasia Society.
                         </p>
                     </div>
                 </div>
@@ -233,10 +230,8 @@
                     </div>
                     <div class="triptych-body">
                         <p>
-                            All entires are continuously reviews and updated by the global community of clinicians and researchers working on done dysplasias.
-                        </p>
-                        <p>
-                            Stringent quality control mechanisms ensure the data is of the highest quality.
+                            All entries are continuously reviewed and updated by the global community of clinicians
+                            and researchers working on bone dysplasias.
                         </p>
                     </div>
                 </div>
@@ -250,9 +245,6 @@
                     <div class="triptych-body">
                         <p>
                             The Skeletome knowledge base makes extensive use of ontologies to standardise the entered information and make it accessible to computational analysis.
-                        </p>
-                        <p>
-                            Sophisticated tools that make use of these ontologies are currently under development.
                         </p>
                     </div>
                 </div>
