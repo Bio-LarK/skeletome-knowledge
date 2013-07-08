@@ -20,7 +20,7 @@
         margin-bottom: 7px;
     }
     .tour img {
-        border-radius: 5px;;
+        border: 1px solid #ccc;
     }
 
     .tour .section-segment {
@@ -303,14 +303,19 @@
 
 <?php global $user; ?>
 <?php if($user->uid == 0) : ?>
-<div>
+<div style="padding: 42px; text-align: center">
+    <h2>Ready to start Contributing?</h2>
+    <a class="btn btn-calltoaction" href="user/register">
+        Register Today &nbsp;&nbsp; <i class="ficon-angle-right"></i>
+    </a>
+</div>
+<?php else: ?>
     <div style="padding: 42px; text-align: center">
-        <h2>Ready to start Contributing?</h2>
-        <a class="btn btn-calltoaction" href="user/register">
-            Register Today &nbsp;&nbsp; <i class="ficon-angle-right"></i>
+        <h2>Ready to get started?</h2>
+        <a class="btn btn-calltoaction" href="?q=taxonomy/term/{{ browseTid }}">
+            Browsing BDO &nbsp;&nbsp; <i class="ficon-angle-right"></i>
         </a>
     </div>
-</div>
 
 <?php endif; ?>
 
