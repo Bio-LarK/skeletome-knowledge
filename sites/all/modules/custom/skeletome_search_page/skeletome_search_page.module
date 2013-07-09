@@ -260,53 +260,58 @@ function data_get_facets_for_search() {
     // Get the filters
     $response = apachesolr_static_response_cache("apachesolr@solr");
 
-    $clinical_features = (array)$response->facet_counts->facet_fields->im_field_skeletome_tags;
-    $clinical_features_ids = array_keys($clinical_features);
-    $clinical_features_values = array_values($clinical_features);
-
-    $gene_mutations = (array)$response->facet_counts->facet_fields->sm_field_bd_gm;
-    $gene_mutations_ids = array_keys($gene_mutations);
-    $gene_mutations_values = array_values($gene_mutations);
-
     $facet_data = array();
 
     $i = 0;
-    foreach($gene_mutations_ids as $gene_mutations_id) {
-        $gene_mutations_id = substr($gene_mutations_id, 5);
 
-        $sql = "SELECT n.title
+    if(isset($response->facet_counts->facet_fields->sm_field_bd_gm)) {
+        $gene_mutations = (array)$response->facet_counts->facet_fields->sm_field_bd_gm;
+        $gene_mutations_ids = array_keys($gene_mutations);
+        $gene_mutations_values = array_values($gene_mutations);
+
+        foreach($gene_mutations_ids as $gene_mutations_id) {
+            $gene_mutations_id = substr($gene_mutations_id, 5);
+
+            $sql = "SELECT n.title
                 FROM {node} n
                 RIGHT JOIN {field_data_field_gene_mutation_gene} g
                 ON n.nid = g.field_gene_mutation_gene_target_id
                 WHERE g.entity_id = :nid";
-        $facet_results = db_query($sql, array(
-            'nid'   => $gene_mutations_id
-        ));
+            $facet_results = db_query($sql, array(
+                'nid'   => $gene_mutations_id
+            ));
 
-        $facet_data['gene_mutations'][] = array(
-            'tid'       => $gene_mutations_id,
-            'count'     => $clinical_features_values[$i],
-            'name'      => $facet_results->fetchField()
-        );
-        $i++;
+            $facet_data['gene_mutations'][] = array(
+                'tid'       => $gene_mutations_id,
+                'count'     => $gene_mutations_values[$i],
+                'name'      => $facet_results->fetchField()
+            );
+            $i++;
+        }
     }
 
-    $i = 0;
-    foreach($clinical_features_ids as $clinical_features_id) {
+    if(isset($response->facet_counts->facet_fields->im_field_skeletome_tags)) {
+        $clinical_features = (array)$response->facet_counts->facet_fields->im_field_skeletome_tags;
+        $clinical_features_ids = array_keys($clinical_features);
+        $clinical_features_values = array_values($clinical_features);
 
-        $sql = "SELECT t.name
+        $i = 0;
+        foreach($clinical_features_ids as $clinical_features_id) {
+
+            $sql = "SELECT t.name
                 FROM {taxonomy_term_data} t
                 WHERE t.tid = :tid";
-        $facet_results = db_query($sql, array(
-            'tid'   => $clinical_features_id
-        ));
+            $facet_results = db_query($sql, array(
+                'tid'   => $clinical_features_id
+            ));
 
-        $facet_data['clinical_features'][] = array(
-            'tid'       => $clinical_features_id,
-            'count'     => $clinical_features_values[$i],
-            'name'      => $facet_results->fetchField()
-        );
-        $i++;
+            $facet_data['clinical_features'][] = array(
+                'tid'       => $clinical_features_id,
+                'count'     => $clinical_features_values[$i],
+                'name'      => $facet_results->fetchField()
+            );
+            $i++;
+        }
     }
 
     return $facet_data;
