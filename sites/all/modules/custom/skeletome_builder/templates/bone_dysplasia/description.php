@@ -23,11 +23,11 @@
             <h3>Abstract</h3>
 
         </div>
-        <div class="section-segment section-segment-headers section-segment-header-editors" ng-class="{ 'section-segment-editing': model.isEditingDescription }">
+        <div class="section-segment section-segment-headers section-segment-header-editors"  ng-class="{ 'section-segment-editing': model.isEditingDescription }">
 
 
             <div ng-show="!model.isEditingDescription">
-                <i style="color: rgb(118, 150, 177);" cm-tooltip cm-tooltip-content="Contributors" class="ficon-group"></i>
+                <i cm-tooltip cm-tooltip-content="Contributors" class="ficon-group"></i> Contributors
                 <span ng-repeat="editor in editors">
                     <a class="contributor" href="?q=profile-page/{{ editor.uid }}"><i class="ficon-user"></i> {{ editor.name | capitalize }}</a>
                 </span>
