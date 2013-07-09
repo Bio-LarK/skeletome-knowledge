@@ -10,7 +10,6 @@ myApp.directive('cmPopover', function() {
 
             iAttrs.$observe('cmPopoverContent', function(value) {
                 if(value) {
-                    console.log("value is!", value);
                     iElement.popover({
                         html: true,
                         trigger: 'manual',
