@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="banner-calltoaction">
                                         <a class="btn btn-calltoaction" href="tour">
-                                            Take the Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
+                                            Take The Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -209,17 +209,18 @@
                             <i class="icon-knowledge"></i> Comprehensive
                         </div>
                         <div class="triptych-subheading">
-                            Everything you wanted to know about Bone Dysplasias.
+                            Everything You Ever Wanted to Know About Bone Dysplasias
                         </div>
                         <div class="triptych-body">
                             <p>
-                                The Skeletome knowledge base provides information on all bone dysplasias recognised by the International Skeletal Dysplasia Society.
+                                The Skeletome knowledge base provides information on all bone dysplasias recognised by
+                                the International Skeletal Dysplasia Society.
                             </p>
                         </div>
                     </div>
                     <div class="span4">
                         <div class="triptych-heading">
-                            <i class="icon-community2"></i> Community Driven
+                            <i class="icon-community2"></i> Community driven
                         </div>
                         <div class="triptych-subheading">
                             Continuously Updated by the Global Bone Dysplasia Community
@@ -236,11 +237,12 @@
                             <i class="icon-rdf"></i> Onotology Based
                         </div>
                         <div class="triptych-subheading">
-                            Readable by Humans and Computers, get the Best of Both Worlds.
+                            Readable by Humans and Computers - the Best of Both Worlds.
                         </div>
                         <div class="triptych-body">
                             <p>
-                                The Skeletome knowledge base makes extensive use of ontologies to standardise the entered information and make it accessible to computational analysis.
+                                The Skeletome knowledge base makes extensive use of ontologies to standardise the
+                                entered information and make it accessible to computational analysis.
                             </p>
                         </div>
                     </div>
