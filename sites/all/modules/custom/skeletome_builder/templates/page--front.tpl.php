@@ -162,91 +162,85 @@
         </div>
     </header>
 
-    <div>
-
-    </div>
-
     <div class="container">
-        <section>
-            <div class="section-segment" style="padding: 28px">
-                <div class="banner" style="position: relative; overflow: hidden">
-                    <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
+        <div class="banner" style="position: relative; overflow: hidden">
+            <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
 
-                    <div class="container">
-                        <div class="row" >
-                            <div class="span12">
 
-                                <img class="banner-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/banner_logo.png" />
+            <img class="banner-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/banner_logo.png" />
 
-                                <div class="banner-text">
-                                    <div class="banner-text-big">
-                                        The Skeletome Knowledge Base
-                                    </div>
-                                    <div class="banner-text-small">
-                                        A community-driven knowledge curation platform for skeletal dysplasias.
-                                    </div>
-                                    <div class="banner-calltoaction">
-                                        <a class="btn btn-calltoaction" href="tour">
-                                            Take The Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
+            <div class="banner-text">
+                <div class="banner-text-big">
+                    The Skeletome Knowledge Base
+                </div>
+                <div class="banner-text-small">
+                    A community-driven knowledge curation platform for skeletal dysplasias.
+                </div>
+                <div class="banner-calltoaction">
+                    <a class="btn btn-calltoaction" href="tour">
+                        Take The Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
+                    </a>
                 </div>
             </div>
 
-        </section>
+
+        </div>
+
+    </div>
+
+
+
 
         <section>
             <div class="section-segment" style="padding: 28px">
-                <div class="row-fluid">
-                    <div class="span4">
-                        <div class="triptych-heading">
-                            <i class="icon-knowledge"></i> Comprehensive
+                <div class="container">
+
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <div class="triptych-heading">
+                                <i class="icon-knowledge"></i> Comprehensive
+                            </div>
+                            <div class="triptych-subheading">
+                                Everything You Ever Wanted to Know About Bone Dysplasias
+                            </div>
+                            <div class="triptych-body">
+                                <p>
+                                    The Skeletome knowledge base provides information on all bone dysplasias recognised by
+                                    the International Skeletal Dysplasia Society.
+                                </p>
+                            </div>
                         </div>
-                        <div class="triptych-subheading">
-                            Everything You Ever Wanted to Know About Bone Dysplasias
+                        <div class="span4">
+                            <div class="triptych-heading">
+                                <i class="icon-community2"></i> Community driven
+                            </div>
+                            <div class="triptych-subheading">
+                                Continuously Updated by the Global Bone Dysplasia Community
+                            </div>
+                            <div class="triptych-body">
+                                <p>
+                                    All entries are continuously reviewed and updated by the global community of clinicians
+                                    and researchers working on bone dysplasias.
+                                </p>
+                            </div>
                         </div>
-                        <div class="triptych-body">
-                            <p>
-                                The Skeletome knowledge base provides information on all bone dysplasias recognised by
-                                the International Skeletal Dysplasia Society.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        <div class="triptych-heading">
-                            <i class="icon-community2"></i> Community driven
-                        </div>
-                        <div class="triptych-subheading">
-                            Continuously Updated by the Global Bone Dysplasia Community
-                        </div>
-                        <div class="triptych-body">
-                            <p>
-                                All entries are continuously reviewed and updated by the global community of clinicians
-                                and researchers working on bone dysplasias.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        <div class="triptych-heading">
-                            <i class="icon-rdf"></i> Onotology Based
-                        </div>
-                        <div class="triptych-subheading">
-                            Readable by Humans and Computers - the Best of Both Worlds.
-                        </div>
-                        <div class="triptych-body">
-                            <p>
-                                The Skeletome knowledge base makes extensive use of ontologies to standardise the
-                                entered information and make it accessible to computational analysis.
-                            </p>
+                        <div class="span4">
+                            <div class="triptych-heading">
+                                <i class="icon-rdf"></i> Onotology Based
+                            </div>
+                            <div class="triptych-subheading">
+                                Readable by Humans and Computers - the Best of Both Worlds.
+                            </div>
+                            <div class="triptych-body">
+                                <p>
+                                    The Skeletome knowledge base makes extensive use of ontologies to standardise the
+                                    entered information and make it accessible to computational analysis.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </section>
