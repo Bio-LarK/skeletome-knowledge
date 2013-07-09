@@ -83,7 +83,7 @@
 <header id="header">
     <div class="navbar navbar-inverse navbar-dark navbar-static-top">
         <div class="navbar-inner">
-            <div class="container">
+            <div class="container-fluid">
 
                 <div class="navbar-inner-table">
 
@@ -146,7 +146,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <!-- class="container" -->
         <a id="main-content"></a>
         <div>
