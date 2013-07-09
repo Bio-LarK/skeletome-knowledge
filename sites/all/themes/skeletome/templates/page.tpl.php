@@ -89,7 +89,7 @@
 
                     <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
                         <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home">
-                            <img style="height: 50px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/skeletome_logo_RGB2.png" alt="<?php print t('Home'); ?>"/>
+                            <img class="logo" style="height: 50px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/skeletome_logo_RGB2.png" alt="<?php print t('Home'); ?>"/>
                         </a>
                     </div>
 

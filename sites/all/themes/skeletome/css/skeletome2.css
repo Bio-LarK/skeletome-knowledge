@@ -23,6 +23,10 @@ a {
     color: #4d5d6e;
 }
 
+.logo {
+    max-width: none;
+}
+
 /* ================================================
     Navbar
 */
@@ -31,7 +35,7 @@ a {
 }
 .navbar-dark .navbar-inner {
     border-radius: 0px;
-    min-height: 70px;
+    /*min-height: 70px;*/
     /*background-color: #2e3033 !important;*/
     border: none;
     background-color: #3E5164;
@@ -42,7 +46,7 @@ a {
     /*background-color: #002040;*/
 }
     .navbar-dark .container {
-        min-height: 70px;
+        /*min-height: 70px;*/
     }
 
         .navbar-inner-table {
