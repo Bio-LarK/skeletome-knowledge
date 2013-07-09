@@ -2085,9 +2085,9 @@ a.section-segment {
         /*margin: 1px 0;*/
         padding: 13px 14px;
         line-height: 21px;
+        padding-bottom: 6px;
     }
         .section-segment-header-editors .section-segment-header-buttons {
-            padding-bottom: 6px;
             position: relative;
             top: -4px;
         }

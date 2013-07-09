@@ -30,6 +30,9 @@
     <div class="row">
         <div class="span12">
             <div class="page-heading">
+                <div class="breadcrumbs">
+                    <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
+                </div>
                 <h1>
                     <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user.svg"/>
                     {{ user.name | capitalize }}
@@ -39,8 +42,6 @@
     </div>
 
     <!-- Import from Orcid -->
-
-
     <div class="row">
         <div class="span3">
             <section>

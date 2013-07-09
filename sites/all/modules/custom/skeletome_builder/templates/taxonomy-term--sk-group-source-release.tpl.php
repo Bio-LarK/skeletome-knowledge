@@ -51,9 +51,9 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="page-heading" >
-                    <!--<div class="breadcrumbs">
+                    <div class="breadcrumbs">
                         <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
-                    </div>-->
+                    </div>
                     <h1 >
                         <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/group.svg"/>
                         <!--<span ng-bind-html-unsafe="release.sk_gsr_field_group_source.und[0].taxonomy_term.name + ' Nosology'"><?php print $name; ?></span>-->

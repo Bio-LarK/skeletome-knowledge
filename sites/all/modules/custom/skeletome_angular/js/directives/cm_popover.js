@@ -20,6 +20,8 @@ myApp.directive('cmPopover', function() {
                         "content": value
                     }).click(function(e) {
                         iElement.popover('show');
+                        jQuery('.popover.bottom').css('left', '-100px');
+                        jQuery('.popover.bottom .arrow').css('left', '85%');
                         isVisible = true;
                         clickedAway = false;
                         jQuery('.popover').bind('click',function() {
