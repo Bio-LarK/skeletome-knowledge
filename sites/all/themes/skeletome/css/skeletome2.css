@@ -345,8 +345,8 @@ ul.navsearch-suggestions {
     Front Page Banner
 */
 .banner {
-    background-color: #E8E8E8;
-    padding: 49px 0 63px 0;
+    /*background-color: #E8E8E8;*/
+    /*padding: 49px 0 63px 0;*/
     font-family: "Source Sans Pro";
     font-weight: 200;
     text-align: left;
