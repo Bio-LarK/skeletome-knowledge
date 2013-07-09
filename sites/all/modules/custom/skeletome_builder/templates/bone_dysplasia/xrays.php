@@ -63,7 +63,7 @@
             <!-- has x-rays -->
             <div ng-show="model.xrays.length" fancy-box="xrays" class="section-segment media-body">
                 <div ng-repeat="image in model.xrays" class="xray-list-image">
-                    <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}">
+                    <a class="xray-list-image-link" rel="xrays" href="{{ image.full_url }}" title="Added by {{ image.username || user.name }}">
                         <img ng-src="{{ image.thumb_url }}" alt=""/>
                     </a>
                 </div>

@@ -108,6 +108,12 @@
 
         <script src="<?php echo base_path() . drupal_get_path('theme', 'skeletome'); ?>/js/modernizr.custom.js"></script>
 
+        <!--[if lte IE 8]>
+        <script>
+            document.createElement('nav-search');
+        </script>
+        <![endif]-->
+
     </head>
     <body class="<?php print $classes; ?>" <?php print $attributes; ?> cm-when-scrolled="loadMore()">
 

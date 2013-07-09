@@ -432,13 +432,13 @@ function page_bone_dysplasia($node) {
         foreach($node->field_bd_xray_images[LANGUAGE_NONE] as &$image_test) {
             $image_test['full_url'] = file_create_url($image_test['uri']);
             $image_test['thumb_url'] = image_style_url('thumbnail', $image_test['uri']);
+            $user = user_load($image_test['uid']);
+            $image_test['username'] = $user->name;
         }
         $node->field_bd_xray_images[LANGUAGE_NONE] = array_reverse($node->field_bd_xray_images[LANGUAGE_NONE]);
     } else {
         $node->field_bd_xray_images[LANGUAGE_NONE] = array();
     }
-
-
 
     // Setup the sub-types
     if(isset($node->field_bd_subbd[LANGUAGE_NONE])) {
