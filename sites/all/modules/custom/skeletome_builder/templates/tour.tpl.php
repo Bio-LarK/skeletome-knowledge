@@ -59,7 +59,7 @@
         }
 
 </style>
-<div class="tour">
+<div id="bone-dysplasia" class="tour">
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
@@ -71,10 +71,10 @@
         </div>
     </div>
     <section>
-        <div class="section-segment">
+        <div  class="section-segment">
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 id="bone-dysplasia" class="tour-heading">Research Bone Dysplasias</h2>
+                    <h2  class="tour-heading">Research Bone Dysplasias</h2>
                 </div>
             </div>
             <!--<div class="row-fluid">
@@ -153,7 +153,7 @@
     </section>
 </div>
 
-<div class="tour">
+<div  id="profile" class="tour">
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
@@ -170,7 +170,7 @@
 
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 id="profile" class="tour-heading">Show your Expertise</h2>
+                    <h2 class="tour-heading">Show your Expertise</h2>
                 </div>
             </div>
         </div>
@@ -197,7 +197,7 @@
 </div>
 
 
-<div class="tour">
+<div id="navigating" class="tour">
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
@@ -213,7 +213,7 @@
         <div class="section-segment">
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 id="navigating" class="tour-heading">Many ways to get around</h2>
+                    <h2  class="tour-heading">Many ways to get around</h2>
                 </div>
             </div>
         </div>
@@ -254,7 +254,7 @@
     </section>
 </div>
 
-<div class="tour">
+<div id="contributing" class="tour">
     <div class="row-fluid">
         <div class="span12">
             <ul class="tour-positions">
@@ -271,7 +271,7 @@
 
             <div class="row-fluid">
                 <div class="span12">
-                    <h2 id="contributing" class="tour-heading">Contribute to Skeletome</h2>
+                    <h2  class="tour-heading">Contribute to Skeletome</h2>
                 </div>
             </div>
         </div>
@@ -291,7 +291,7 @@
                     </p>
                 </div>
                 <div class="span4">
-                    <h3>Becoming a Curator</h3>
+                    <h3>Become a Curator</h3>
                     <p>Curators are responsible for maintaining the integrity of a page. They can add new clinical features or genes to a bone dypslasia.
                     <p>If you would like to become an editor, please <a href="mailto:knowledge@skeletome.org">knowledge@skeletome.org</a>
                     </p>
