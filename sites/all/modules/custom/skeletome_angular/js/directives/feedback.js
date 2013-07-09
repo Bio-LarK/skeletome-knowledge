@@ -29,7 +29,20 @@ myApp.directive('feedback', function($http) {
                 });
             }
         },
-        link: function(scope, elem, attrs) {
+        link: function($scope, elem, attrs) {
+            $scope.$watch('isShowingFeedbackForm', function(newValue, oldValue) {
+                console.log("setting 2", newValue);
+                if(newValue == true) {
+                    jQuery('.feedback-form', elem).css({
+                        'width': '0px',
+                        overflow: 'hidden'
+                    }).animate({ width: '250px' }, 200);
+                } else {
+                    jQuery('.feedback-form', elem).css({
+                        'width': '250px'
+                    }).animate({ width: '0px' }, 200);
+                }
+            });
         }
     };
 });
