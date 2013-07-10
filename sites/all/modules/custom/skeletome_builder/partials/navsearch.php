@@ -11,11 +11,11 @@
 
         <div class="navsearch-inputs">
 
-            <input disabled
+            <!--<input disabled
                    class="navsearch-input navsearch-selectedSuggestion"
                    ng-model="model.suggestionText"
                    type="text"
-            />
+            />-->
             <input class="navsearch-input navsearch-query"
                    ng-change="search(model.entry)"
                    ng-model="model.entry"

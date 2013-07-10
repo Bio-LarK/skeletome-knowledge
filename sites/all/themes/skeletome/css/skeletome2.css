@@ -144,6 +144,7 @@ a {
         position: relative;
         overflow: hidden;
         min-width: 200px;
+        min-height: 40px;
     }
         input.navsearch-input {
             width: 100% !important;
