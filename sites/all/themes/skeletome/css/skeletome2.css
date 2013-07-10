@@ -172,12 +172,13 @@ a {
 
             input.navsearch-query {
                 color: white;
-                background-color: white !important;
+                background-color: transparent;
                 position: absolute;
                 top: 0;
                 left: 0;
                 z-index: 99;
                 border: 1px solid yellow !important;
+                background-color: #2F4053\9; /* hack to target ie 8 and below */
             }
             input.navsearch-query:focus {
                 box-shadow: none;
