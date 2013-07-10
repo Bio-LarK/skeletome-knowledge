@@ -116,7 +116,9 @@ myApp.directive('navSearch', function() {
                                 // We filter the results by what we have entered
                                 // cause we might be getting old results back from the database
                                 // from a previous query
-                                $scope.model.suggestions = textFilter(data, $scope.model.entry);
+
+//                                IE STUFF
+//                                $scope.model.suggestions = textFilter(data, $scope.model.entry);
 
                                 if($scope.model.suggestions.length) {
                                     // selected suggestion
