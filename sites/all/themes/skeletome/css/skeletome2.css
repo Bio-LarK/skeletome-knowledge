@@ -41,6 +41,7 @@ a {
     background-color: #3E5164;
 
     background-image: none;
+    filter: none !important;
     border-bottom: 1px solid transparent;
     /*background-image: url(../img/dark-pattern.png);*/
     /*background-color: #002040;*/
