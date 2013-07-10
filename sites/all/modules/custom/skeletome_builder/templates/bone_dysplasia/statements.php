@@ -231,12 +231,8 @@
                                           class="full-width">
                                 </textarea>
                                 <div class="pull-right">
-                                    <button ng-disabled="!statement.newComment.length" ng-click="addComment(statement, statement.newComment)" class="btn btn-success">
-                                        <i class="ficon-ok icon-white"></i> Post
-                                    </button>
-                                    <button class="btn" ng-click="cancelComment(statement)">
-                                        <i class="ficon-remove"></i> Cancel
-                                    </button>
+                                    <save-button click="addComment(statement, statement.newComment)"></save-button>
+                                    <cancel-button click="cancelComment(statement)"></cancel-button>
                                 </div>
                             </div>
                         <?php endif; ?>
