@@ -119,6 +119,7 @@ myApp.directive('navSearch', function() {
 
 //                                IE STUFF
 //                                $scope.model.suggestions = textFilter(data, $scope.model.entry);
+                                $scope.model.suggestions = data;
 
                                 if($scope.model.suggestions.length) {
                                     // selected suggestion
