@@ -111,13 +111,17 @@ $isAdmin = user_access('administer site configuration');
                 </span>
             </div>
             <h1 ng-show="!synString.length">
-                <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>
+                <!--<img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>-->
+
+                <span class="type-logo"><i class="icon-bone"></i></span>
                 <?php print $title; ?>
             </h1>
             <h1 ng-cloak ng-show="synString.length" cm-tooltip="top"
                 cm-tooltip-content="Also known as {{ synString }}">
 
-                <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>
+                <span class="type-logo"><i class="icon-bone"></i></span>
+
+                <!--<img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>-->
                 <?php print $title; ?>
             </h1>
         </div>
@@ -202,11 +206,7 @@ $isAdmin = user_access('administer site configuration');
 
         <div ng-switch on="model.detailsState">
             <div ng-switch-when="isLoading">
-                <div class="section-segment">
-                    <div class="refreshing-box">
-                        <i class="icon-refresh icon-refreshing"></i>
-                    </div>
-                </div>
+                <refresh-box></refresh-box>
             </div>
             <div ng-switch-when="isEditing">
                 <div class="section-segment section-segment-editing">
@@ -325,11 +325,7 @@ $isAdmin = user_access('administer site configuration');
 
         <div ng-switch on="model.genesState">
             <div ng-switch-when="isLoading">
-                <div class="section-segment">
-                    <div class="refreshing-box">
-                        <i class="icon-refresh icon-refreshing"></i>
-                    </div>
-                </div>
+                <refresh-box></refresh-box>
             </div>
             <div ng-switch-when="isEditing">
                 <remove-list list-model="model.edit.genes"></remove-list>

@@ -149,14 +149,13 @@ a {
         input.navsearch-input {
             width: 100% !important;
             height: 40px !important;
-            /*border: none !important;*/
+            border: none !important;
             box-sizing: border-box !important;
             -moz-box-sizing: border-box !important;
             /*position: absolute;*/
             /*top: 0;*/
             /*left: 0;*/
             margin: 0 !important;
-            border: 1px solid #ddd;
             box-shadow: none !important;
             zoom: 1;
         }
@@ -172,12 +171,12 @@ a {
 
             input.navsearch-query {
                 color: white;
-                background-color: transparent;
+
                 position: absolute;
                 top: 0;
                 left: 0;
                 z-index: 99;
-                border: 1px solid yellow !important;
+                background-color: transparent;
                 background-color: #2F4053\9; /* hack to target ie 8 and below */
             }
             input.navsearch-query:focus {
@@ -189,8 +188,7 @@ a {
                 cursor: not-allowed;
                 background-color: transparent;
                 color: rgb(149, 156, 166) !important;
-                border: 1px solid green !important;
-                display: none;
+                border: none;
             }
 
         .navsearch-helper {
@@ -1810,12 +1808,24 @@ h1, h2, h3, h4, h5 {
 .type-logo {
     /*background-color: #2980B9;*/
     background-color: #4d5d6e;
-    width: 21px;
-    height: 21px;
-    padding: 7px;
+    width: 35px;
+    height: 35px;
+    display: block;
     border-radius: 5px;
     position: relative;
+    font-size: 21px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
     top: -2px;
+    float: left;
+    position: relative;
+    top: 5px;
+    margin-right: 7px;
+}
+.type-logo i {
+    position: relative;
+    top: -5px;
 }
 .type-logo path {
     fill: white;
@@ -2294,13 +2304,16 @@ section.section-large-description p {
         color: white;
         border: none;
         padding: 2px 14px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        position: relative;
+        top: 100px;
 
-        transform: rotate(90deg);
-        transform-origin: 0% 100%;
-        -ms-transform: rotate(90deg); /* IE 9 */
-        -ms-transform-origin: 0% 100%; /* IE 9 */
-        -webkit-transform: rotate(90deg); /* Safari and Chrome */
-        -webkit-transform-origin: 0% 100%; /* Safari and Chrome */
+        transform: rotate(270deg);
+        transform-origin: 0% 0%;
+        -ms-transform: rotate(270deg); /* IE 9 */
+        -ms-transform-origin: 0% 0%; /* IE 9 */
+        -webkit-transform: rotate(270deg); /* Safari and Chrome */
+        -webkit-transform-origin: 0% 0%; /* Safari and Chrome */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     }

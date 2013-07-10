@@ -55,7 +55,7 @@
                         <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
                     </div>
                     <h1 >
-                        <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/group.svg"/>
+                        <span class="type-logo"><i class="icon-group"></i></span>
                         <!--<span ng-bind-html-unsafe="release.sk_gsr_field_group_source.und[0].taxonomy_term.name + ' Nosology'"><?php print $name; ?></span>-->
                         <span>Bone Dysplasia Ontology</span>
                     </h1>
@@ -85,8 +85,8 @@
                         </a>
 
                         <div ng-show="tag.showBoneDysplasias">
-                            <div class="section-segment section-segment-inner-tabbed" ng-show="!tag.boneDysplasias">
-                                <i class="icon-refresh icon-refreshing"></i>
+                            <div ng-show="!tag.boneDysplasias"> <!--  class="section-segment section-segment-inner-tabbed" -->
+                                <refresh-box></refresh-box>
                             </div>
                             <div ng-repeat="boneDysplasia in tag.boneDysplasias | filter:findGroup">
                                 <a class="section-segment section-segment-inner-tabbed" href="?q=node/{{ boneDysplasia.nid }}">

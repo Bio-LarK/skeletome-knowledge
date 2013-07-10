@@ -17,7 +17,12 @@ myApp.directive('cmReveal', function($parse) {
             });
 
             $scope.isHiding = function() {
-                return $scope.model.length > $scope.showingCount;
+                if(!angular.isDefined($scope.model)) {
+                    return false;
+                } else {
+                    return $scope.model.length > $scope.showingCount;
+                }
+
             }
 
             $scope.showAll = function() {

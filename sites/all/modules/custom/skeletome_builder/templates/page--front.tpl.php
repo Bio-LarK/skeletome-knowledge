@@ -120,7 +120,7 @@
     <header id="header" role="banner">
         <div class="navbar navbar-inverse navbar-dark navbar-static-top">
             <div class="navbar-inner">
-                <div class="container">
+                <div class="container-fluid">
 
                     <div class="navbar-inner-table">
 

@@ -29,15 +29,8 @@
                 </div>
             <?php endif ?>
         </div>
-        <div ng-switch on="model.clinicalFeaturesState">
-            <div ng-switch-when="isEditing">
-                <h2><i>Editing Clinical Features ({{ model.edit.clinicalFeatures.length }})</i></h2>
-            </div>
-            <div ng-switch-when="isDisplaying">
-                <h2>Clinical Features ({{ model.clinicalFeatures.length }})</h2>
-            </div>
-        </div>
 
+        <h2>Clinical Features ({{ model.clinicalFeatures.length }})</h2>
     </div>
 
     <cm-alert state="model.clinicalFeaturesState" from="isLoading" to="isDisplaying">
@@ -46,11 +39,7 @@
 
     <div ng-switch on="model.clinicalFeaturesState">
         <div ng-switch-when="isLoading">
-            <div class="section-segment">
-                <div class="refreshing-box">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </div>
-            </div>
+            <refresh-box></refresh-box>
         </div>
         <div ng-switch-when="isEditing">
 

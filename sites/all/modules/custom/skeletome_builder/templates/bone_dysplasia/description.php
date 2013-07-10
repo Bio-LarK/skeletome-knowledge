@@ -58,6 +58,10 @@
 
         </div>
 
+        <div ng-show="description.isLoading">
+            <refresh-box></refresh-box>
+        </div>
+
         <div class="section-segment" ng-class="{ 'section-segment-nopadding': model.isEditingDescription }">
 
             <!-- is Editing Description -->
@@ -68,18 +72,6 @@
 
             <!-- Not Editing Description -->
             <div ng-show="!model.isEditingDescription" class="description-text">
-
-                <!--<div class="alert alert-info" ng-show="provider && !model.isEditingDescription">
-                    <i class="ficon-info-sign"></i> <em>This stub is sourced from {{ provider }}</em>.
-                    <div style="font-size: 12px" ng-bind-html-unsafe="reference">
-                    </div>
-                </div>-->
-
-                <!-- is Loading -->
-                <div ng-show="description.isLoading" class="refreshing-box">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </div>
-
                 <p class="muted" ng-show="!description.safe_value.length">No description.</p>
 
                 <!--  | truncate:descriptionLength -->
@@ -88,18 +80,10 @@
                         <?php echo render($content); ?>
                     </div>
 
-                    <!--<div class="clearfix" style="text-align: center">
-                        <a href ng-show="boneDysplasia.body.und[0].safe_value.length > descriptionLength"
-                           class="btn btn-more"
-                           ng-click="descriptionLength=boneDysplasia.body.und[0].safe_value.length"><i
-                                class="icon-chevron-down icon-black"></i> Show All</a>
-                        <a href ng-show="descriptionLength == boneDysplasia.body.und[0].safe_value.length"
-                           class="btn btn-more" ng-click="descriptionLength=1000"><i
-                                class="icon-chevron-up icon-black"></i> Hide</a>
-                    </div>-->
                 </div>
             </div>
         </div>
+
         <cm-reveal model="description.safe_value" showing-count="model.descriptionLength" default-count="1000"></cm-reveal>
 
     </section>

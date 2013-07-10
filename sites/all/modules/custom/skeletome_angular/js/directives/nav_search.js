@@ -41,8 +41,6 @@ myApp.directive('navSearch', function() {
 
 
             $scope.updateSelectedSuggestionText = function(index) {
-                console.log("updated selection to", index);
-
                 $scope.selectedIndex = index;
 
                 // Selecting something in the data or search or nothing
@@ -57,7 +55,6 @@ myApp.directive('navSearch', function() {
                 } else {
                     $scope.model.suggestionText = "";
                 }
-                console.log("suggestion text updated", $scope.model.suggestionText);
             }
 
             /**
@@ -66,7 +63,6 @@ myApp.directive('navSearch', function() {
              */
             $scope.$watch('model.entry', function(entry) {
                 if(angular.isDefined(entry)) {
-                    console.log("do the autocomplete");
                     $scope.doAutocomplete(entry);
                 }
             });
@@ -177,8 +173,6 @@ myApp.directive('navSearch', function() {
                     var selectedIndex = $scope.model.suggestions.indexOf(suggestion);
                 }
                 $scope.updateSelectedSuggestionText(selectedIndex);
-
-                console.log("end of entered suggestion");
             }
 
             $scope.leavedSuggestion = function(suggestion) {

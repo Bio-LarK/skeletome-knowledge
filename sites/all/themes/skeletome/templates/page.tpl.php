@@ -109,9 +109,9 @@
                                 <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
                                     <i class="icon-user icon-white"></i> {{ user.name | truncate:30 }}
                                 </a>
-                                <a class="btn btn-dark-navbar" href="user/logout"><i class="ficon-signout"></i> Logout</a>
+                                <a class="btn btn-dark-navbar" href="{{ baseUrl }}/user/logout"><i class="ficon-signout"></i> Logout</a>
                             <?php else: ?>
-                                <a class="btn btn-dark-navbar" href="user/register">Register</a>
+                                <a class="btn btn-dark-navbar" href="{{ baseUrl }}/user/register">Register</a>
 
                                 <a class="btn btn-dark-navbar" cm-popover cm-popover-content="{{ loginForm }}" href id="login_button"><i class="ficon-signin"></i> Log In</a>
 

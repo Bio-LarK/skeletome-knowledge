@@ -78,9 +78,7 @@
 
         <div ng-switch on="model.statementsState">
             <div ng-switch-when="isLoading">
-                <div class="section-segment refreshing-box">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </div>
+                <refresh-box></refresh-box>
             </div>
             <div ng-switch-when="isEditing">
                 <div ng-show="!model.edit.statements.length" class="section-segment section-segment-editing"><span class="muted">No statements.</span></div>

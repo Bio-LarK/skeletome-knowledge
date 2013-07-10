@@ -106,7 +106,7 @@ $isAdmin = user_access('administer site configuration');
                     </div>
 
                     <h1>
-                        <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/gene_logo.svg"/>
+                        <span class="type-logo"><i class="icon-gene"></i></span>
                         <?php print $title; ?>
                     </h1>
 

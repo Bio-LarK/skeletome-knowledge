@@ -42,11 +42,10 @@
             </section>
 
             <section ng-show="model.isLoading">
-                <div class="section-segment">
-                    <div ng-show="model.isLoading" class="refreshing-box">
-                        <i class="icon-refresh icon-refreshing"></i>
-                    </div>
+                <div ng-show="model.isLoading">
+                    <refresh-box></refresh-box>
                 </div>
+
             </section>
             <section ng-show="model.moreResults && !model.isLoading">
                 <div class="section-segment">
@@ -65,12 +64,9 @@
                     No filters.
                 </div>
 
-                <div ng-show="model.isLoading" class="section-segment">
-                    <div class="refreshing-box">
-                        <i class="icon-refresh icon-refreshing"></i>
-                    </div>
+                <div ng-show="model.isLoading">
+                    <refresh-box></refresh-box>
                 </div>
-
 
                 <div ng-show="!model.isLoading && model.results.length > 0" ng-repeat="facet in model.facets | limitTo:20">
                     <a class="section-segment" href="" ng-click="addClinicalFeature(facet)">

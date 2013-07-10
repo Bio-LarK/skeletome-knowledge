@@ -27,14 +27,14 @@
 <div ng-controller="ProfileCtrl" ng-init="init()">
 
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
             <div class="page-heading">
                 <div class="breadcrumbs">
                     <span><a href="{{ baseUrl }}">Home</a> &#187; </span>
                 </div>
                 <h1>
-                    <img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_profile'); ?>/img/user.svg"/>
+                    <span class="type-logo"><i class="ficon-user"></i></span>
                     {{ user.name | capitalize }}
                 </h1>
             </div>
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Import from Orcid -->
-    <div class="row">
+    <div class="row-fluid">
         <div class="span3">
             <section>
 
@@ -68,9 +68,7 @@
 
                     <div ng-switch on="detailsState">
                         <div ng-switch-when="isLoading">
-                            <div class="refreshing-box">
-                                <i class="icon-refresh icon-refreshing"></i>
-                            </div>
+                            <refresh-box></refresh-box>
                         </div>
                         <div ng-switch-when="isEditing">
                             <div class="dropzone" ng-model="profilePics.files"
@@ -161,15 +159,14 @@
                         </div>
                     </div>
                     <?php endif; ?>
-                    <h2>Biography</2>
+                    <h2>Biography</h2>
                 </div>
 
                 <div ng-switch on="biographyState">
 
                     <div ng-switch-when="isLoading">
-                        <div class="section-segment refreshing-box">
-                            <i class="icon-refresh icon-refreshing"></i>
-                        </div>
+                        <refresh-box></refresh-box>
+
                     </div>
                     <div ng-switch-when="isEditing">
                         <div class="section-segment section-segment-nopadding">
@@ -227,14 +224,12 @@
                             </div>
                         </div>
                     <?php endif; ?>
-                    <h2>Publications</2>
+                    <h2>Publications</h2>
                 </div>
 
                 <div ng-switch on="publicationsState">
                     <div ng-switch-when="isLoading">
-                        <div class="section-segment refreshing-box">
-                            <i class="icon-refresh icon-refreshing"></i>
-                        </div>
+                        <refresh-box></refresh-box>
                     </div>
                     <div ng-switch-when="isEditing">
 
