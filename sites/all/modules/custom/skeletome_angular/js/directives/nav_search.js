@@ -167,12 +167,12 @@ myApp.directive('navSearch', function() {
             }
 
             $scope.enteredSuggestion = function(suggestion) {
-//                if(!suggestion) {
-//                    // they have selected somethign not in the data, it must be the first one
-//                    var selectedIndex = $scope.SEARCH_SELECTED;
-//                } else {
-//                    var selectedIndex = $scope.model.suggestions.indexOf(suggestion);
-//                }
+                if(!suggestion) {
+                    // they have selected somethign not in the data, it must be the first one
+                    var selectedIndex = $scope.SEARCH_SELECTED;
+                } else {
+                    var selectedIndex = $scope.model.suggestions.indexOf(suggestion);
+                }
 //                $scope.updateSelectedSuggestionText(selectedIndex);
 
                 console.log("entered suggestion");
