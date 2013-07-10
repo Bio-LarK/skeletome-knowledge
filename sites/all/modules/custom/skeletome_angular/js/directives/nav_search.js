@@ -41,7 +41,8 @@ myApp.directive('navSearch', function() {
 
 
             $scope.updateSelectedSuggestionText = function(index) {
-
+                console.log("updated selection to", index);
+                
                 $scope.selectedIndex = index;
 
                 // Selecting something in the data or search or nothing
