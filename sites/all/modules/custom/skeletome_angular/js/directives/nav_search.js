@@ -88,9 +88,9 @@ myApp.directive('navSearch', function() {
                 // manually writing this to bypass IEs hatred of anything good and easy
                 var matchedSuggestions = [];
                 angular.forEach($scope.model.suggestions, function(value, index) {
-                    if(angular.isDefined(value.title) && value.title.toUpperCase().indexOf($scope.model.entry) === 0) {
+                    if(angular.isDefined(value.title) && value.title.toUpperCase().indexOf($scope.model.entry.toUpperCase()) === 0) {
                         matchedSuggestions.push(value);
-                    } else if(angular.isDefined(value.name) && value.name.toUpperCase().indexOf($scope.model.entry) === 0) {
+                    } else if(angular.isDefined(value.name) && value.name.toUpperCase().indexOf($scope.model.entry.toUpperCase()) === 0) {
                         matchedSuggestions.push(value);
                     }
                 });
@@ -133,9 +133,10 @@ myApp.directive('navSearch', function() {
 //                                $scope.model.suggestions = textFilter(data, $scope.model.entry);
                                 var matchedSuggestions = [];
                                 angular.forEach(data, function(value, index) {
-                                    if(angular.isDefined(value.title) && value.title.toUpperCase().indexOf($scope.model.entry) === 0) {
+                                    console.log(value);
+                                    if(angular.isDefined(value.title) && value.title.toUpperCase().indexOf($scope.model.entry.toUpperCase()) === 0) {
                                         matchedSuggestions.push(value);
-                                    } else if(angular.isDefined(value.name) && value.name.toUpperCase().indexOf($scope.model.entry) === 0) {
+                                    } else if(angular.isDefined(value.name) && value.name.toUpperCase().indexOf($scope.model.entry.toUpperCase()) === 0) {
                                         matchedSuggestions.push(value);
                                     }
                                 });
