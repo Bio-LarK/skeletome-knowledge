@@ -51,11 +51,12 @@ myApp.directive('navSearch', function() {
                     var newSuggestionText = newSuggestion.title || newSuggestion.name;
 
                     if($scope.model.isShowingSuggestions) {
-                        $scope.model.suggestionText = $scope.model.entry + newSuggestionText.substring($scope.model.entry.length);;
+                        $scope.model.suggestionText = $scope.model.entry + newSuggestionText.substring($scope.model.entry.length);
                     }
                 } else {
                     $scope.model.suggestionText = "";
                 }
+                console.log("suggestion text updated");
             }
 
             /**
@@ -173,7 +174,7 @@ myApp.directive('navSearch', function() {
                 } else {
                     var selectedIndex = $scope.model.suggestions.indexOf(suggestion);
                 }
-//                $scope.updateSelectedSuggestionText(selectedIndex);
+                $scope.updateSelectedSuggestionText(selectedIndex);
 
                 console.log("entered suggestion");
             }
