@@ -84,9 +84,12 @@ myApp.directive('navSearch', function() {
 
                 $scope.isLoading++;
 
+                // IE TEST
                 // Filter past suggestions while we wait for results to come back
-                var textFilter = $filter('nameOrTitleStartsWith');
-                $scope.model.suggestions = textFilter($scope.model.suggestions, $scope.model.entry);
+//                var textFilter = $filter('nameOrTitleStartsWith');
+//                $scope.model.suggestions = textFilter($scope.model.suggestions, $scope.model.entry);
+
+                $scope.model.suggestions = [];
 
                 // Are there any existing suggestions left?
                 if($scope.model.suggestions.length) {
