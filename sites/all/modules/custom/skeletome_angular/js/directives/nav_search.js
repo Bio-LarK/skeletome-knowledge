@@ -56,7 +56,7 @@ myApp.directive('navSearch', function() {
                 } else {
                     $scope.model.suggestionText = "";
                 }
-                console.log("suggestion text updated");
+                console.log("suggestion text updated", $scope.model.suggestionText);
             }
 
             /**
