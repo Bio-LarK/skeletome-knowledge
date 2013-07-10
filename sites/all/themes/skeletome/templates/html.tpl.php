@@ -111,6 +111,32 @@
         <!--[if lte IE 8]>
         <script>
             document.createElement('nav-search');
+            document.createElement('feedback');
+            document.createElement('add-list');
+            document.createElement('cancel-button');
+            document.createElement('ck-editor');
+            document.createElement('cm-alert');
+            document.createElement('cm-edit');
+            document.createElement('cm-focus');
+            document.createElement('cm-gene');
+            document.createElement('cm-modal');
+            document.createElement('cm-popover');
+            document.createElement('cm-return');
+            document.createElement('cm-search');
+            document.createElement('cm-tooltip');
+            document.createElement('cm-when-scrolled');
+            document.createElement('directives');
+            document.createElement('drop-zone-upload');
+            document.createElement('edit-button');
+            document.createElement('fade-in');
+            document.createElement('fancy_box');
+            document.createElement('lookup');
+            document.createElement('my-modal');
+            document.createElement('refresh-box');
+            document.createElement('remove-item');
+            document.createElement('remove-list');
+            document.createElement('save-button');
+            document.createElement('search');
         </script>
         <![endif]-->
 
