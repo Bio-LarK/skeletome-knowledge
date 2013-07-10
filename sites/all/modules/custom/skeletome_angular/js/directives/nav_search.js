@@ -95,6 +95,8 @@ myApp.directive('navSearch', function() {
                     }
                 });
                 $scope.model.suggestions = matchedSuggestions;
+                console.log("suggestions");
+                console.log($scope.model.suggestions);
                 // Filter past suggestions while we wait for results to come back
 //                var textFilter = $filter('nameOrTitleStartsWith');
 //                $scope.model.suggestions = textFilter($scope.model.suggestions, $scope.model.entry);
@@ -138,6 +140,9 @@ myApp.directive('navSearch', function() {
                                     }
                                 });
                                 $scope.model.suggestions = matchedSuggestions;
+
+                                console.log("suggestions");
+                                console.log($scope.model.suggestions);
 
                                 if($scope.model.suggestions.length) {
                                     // selected suggestion
