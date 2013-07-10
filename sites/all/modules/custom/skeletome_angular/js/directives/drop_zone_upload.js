@@ -5,6 +5,8 @@ myApp.directive('dropZoneUpload', function() {
             iAttrs.$observe('dropZoneUpload', function(value) {
                 if(value && value != "") {
 
+                    console.log("Dropdown url", iAttrs.dropZoneUpload);
+
                     iElement.dropzone(
                         {
                             url: iAttrs.dropZoneUpload,
