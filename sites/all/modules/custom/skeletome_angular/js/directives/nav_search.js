@@ -42,7 +42,7 @@ myApp.directive('navSearch', function() {
 
             $scope.updateSelectedSuggestionText = function(index) {
                 console.log("updated selection to", index);
-                
+
                 $scope.selectedIndex = index;
 
                 // Selecting something in the data or search or nothing
@@ -169,6 +169,7 @@ myApp.directive('navSearch', function() {
             }
 
             $scope.enteredSuggestion = function(suggestion) {
+                console.log("starting enter suggestion");
                 if(!suggestion) {
                     // they have selected somethign not in the data, it must be the first one
                     var selectedIndex = $scope.SEARCH_SELECTED;
@@ -177,7 +178,7 @@ myApp.directive('navSearch', function() {
                 }
                 $scope.updateSelectedSuggestionText(selectedIndex);
 
-                console.log("entered suggestion");
+                console.log("end of entered suggestion");
             }
 
             $scope.leavedSuggestion = function(suggestion) {
