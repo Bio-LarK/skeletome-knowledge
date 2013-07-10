@@ -140,6 +140,14 @@
         </script>
         <![endif]-->
 
+        <!--[if lte IE 10]>
+        <style type="text/css">
+            body {
+                font-family: Arial !important;
+            }
+        </style>
+        <![endif]-->
+
     </head>
     <body class="<?php print $classes; ?>" <?php print $attributes; ?> cm-when-scrolled="loadMore()">
 
