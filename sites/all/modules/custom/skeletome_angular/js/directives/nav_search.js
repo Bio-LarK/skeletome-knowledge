@@ -85,11 +85,21 @@ myApp.directive('navSearch', function() {
                 $scope.isLoading++;
 
                 // IE TEST
+                // manually writing this to bypass IEs hatred of anything good and easy
+                var matchedSuggestions = [];
+                angular.forEach($scope.model.suggestions, function(value, index) {
+                    if(angular.isDefined(value.title) && value.title.toUpperCase().indexOf($scope.model.entry) === 0) {
+                        matchedSuggestions.push(value);
+                    } else if(angular.isDefined(value.name) && value.name.toUpperCase().indexOf($scope.model.entry) === 0) {
+                        matchedSuggestions.push(value);
+                    }
+                });
+                $scope.model.suggestions = matchedSuggestions;
                 // Filter past suggestions while we wait for results to come back
 //                var textFilter = $filter('nameOrTitleStartsWith');
 //                $scope.model.suggestions = textFilter($scope.model.suggestions, $scope.model.entry);
 
-                $scope.model.suggestions = [];
+
 
                 // Are there any existing suggestions left?
                 if($scope.model.suggestions.length) {
@@ -119,7 +129,15 @@ myApp.directive('navSearch', function() {
 
 //                                IE STUFF
 //                                $scope.model.suggestions = textFilter(data, $scope.model.entry);
-                                $scope.model.suggestions = data;
+                                var matchedSuggestions = [];
+                                angular.forEach(data, function(value, index) {
+                                    if(angular.isDefined(value.title) && value.title.toUpperCase().indexOf($scope.model.entry) === 0) {
+                                        matchedSuggestions.push(value);
+                                    } else if(angular.isDefined(value.name) && value.name.toUpperCase().indexOf($scope.model.entry) === 0) {
+                                        matchedSuggestions.push(value);
+                                    }
+                                });
+                                $scope.model.suggestions = matchedSuggestions;
 
                                 if($scope.model.suggestions.length) {
                                     // selected suggestion
