@@ -93,7 +93,11 @@
 
                                     <i class="ficon-angle-right pull-right"></i>
 
-                                    {{ boneDysplasia.title }}
+                                    <div>
+                                        <b>{{ boneDysplasia.title }}</b>
+                                    </div>
+                                    <div ng-bind-html-unsafe="boneDysplasia.body.und[0].value | truncate:200">
+                                    </div>
                                 </a>
                             </div>
                         </div>
