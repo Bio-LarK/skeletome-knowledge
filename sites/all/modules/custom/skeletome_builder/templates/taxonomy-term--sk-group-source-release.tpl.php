@@ -70,7 +70,7 @@
                         <h3>BDO</h3>
                     </div>
 
-                    <div class="section-segment">
+                    <div class="section-segment" lock-to-top>
                         <search placeholder="Find a Group" model="findGroup">
                         </search>
                     </div>
@@ -81,7 +81,8 @@
 
                             <i ng-show="!tag.showBoneDysplasias" class="ficon-angle-down"></i>
                             <i ng-show="tag.showBoneDysplasias" class="ficon-angle-up"></i>
-                            {{ tag.sk_gt_field_group_name.name }}
+
+                            <span ng-bind-html-unsafe="tag.sk_gt_field_group_name.name | highlight:findGroup"></span>
                         </a>
 
                         <div ng-show="tag.showBoneDysplasias">

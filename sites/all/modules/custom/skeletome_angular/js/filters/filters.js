@@ -125,7 +125,7 @@ myApp.filter('lowercase', function() {
 myApp.filter('capitalize', function() {
     return function(input) {
         if(input) {
-            return input.toLowerCase().replace(/^.|\s\S/g, function(a) { return a.toUpperCase(); });
+            return input.replace(/^.|\s\S/g, function(a) { return a.toUpperCase(); });
         } else {
             return input;
         }
@@ -135,15 +135,57 @@ myApp.filter('capitalize', function() {
 myApp.filter('highlight', function() {
     return function(input, match) {
         // Match index
-        if(angular.isDefined(input)) {
+        if(angular.isDefined(input) && angular.isDefined(match)) {
+            if(match == "") {
+                return input;
+            }
             var matchIndex = input.indexOf(match);
 
             var firstString = input.substring(0, matchIndex);
             var highlightedString = input.substring(matchIndex, matchIndex + match.length + 1);
             var lastString = input.substring(matchIndex + match.length + 1);
-            return firstString + '<span class="search-highlighted"><i>' + highlightedString + '</i></span>' + lastString;
+            return firstString + '<span class="highlighted">' + highlightedString + '</span>' + lastString;
         } else {
             return input;
         }
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

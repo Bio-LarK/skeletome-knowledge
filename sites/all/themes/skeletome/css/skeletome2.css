@@ -2061,8 +2061,8 @@ a.section-segment {
         margin-left: 4px;
     }
     .header-divider {
-        border-left:1px solid rgb(233, 230, 194); 
-        height: 30px; display: inline; 
+        border-left:1px solid rgb(233, 230, 194);
+        height: 30px; display: inline;
         margin-left: 5px;
         margin-right: 5px;
         position: relative;
@@ -2176,6 +2176,11 @@ a.section-segment {
     }
 
 
+
+.highlighted {
+    background-color: yellow;
+    color: #4d5d6e;
+}
 
 
 /* ================================================

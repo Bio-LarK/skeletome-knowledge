@@ -31,9 +31,10 @@ myApp.directive('feedback', function($http) {
         },
         link: function($scope, elem, attrs) {
             $scope.$watch('isShowingFeedbackForm', function(newValue) {
-                console.log("showing the form", newValue);
+
                 if(angular.isDefined(newValue)) {
                     if(newValue == true) {
+                        elem.css('width', '400px');
                         $scope.isShowingFeedbackFormDelayed = true;
                         jQuery('.feedback-form', elem).css({
                             'width': '0px',
@@ -41,6 +42,8 @@ myApp.directive('feedback', function($http) {
                         }).animate({ width: '250px', 'padding-left': '21px', 'padding-right': '21px' }, 200, function() {
                             });
                     } else {
+
+                        elem.css('width', '25px');
                         jQuery('.feedback-form', elem).css({
                             'width': '250px'
                         }).animate({ width: '0px', 'padding-left': '0px', 'padding-right': '0px' }, 200, function() {

@@ -77,8 +77,8 @@
                     <a  style="overflow: hidden" class="section-segment" href="?q=taxonomy/term/{{clinicalFeature.tid}}">
                         <i class="ficon-angle-right pull-right"></i>
 
-                        <div style="width: 60%; float: left">
-                            {{clinicalFeature.name | truncate:40 | capitalize}}
+                        <div style="width: 60%; float: left" ng-bind-html-unsafe="clinicalFeature.name | highlight:model.clinicalFeatureFilter | capitalize | truncate:40">
+
                         </div>
 
                         <div style="width: 35%; float: left">
