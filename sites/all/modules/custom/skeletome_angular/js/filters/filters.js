@@ -139,11 +139,15 @@ myApp.filter('highlight', function() {
             if(match == "") {
                 return input;
             }
-            var matchIndex = input.indexOf(match);
+            var matchIndex = input.toLowerCase().indexOf(match.toLowerCase());
+
+            if(matchIndex == -1) {
+                return input;
+            }
 
             var firstString = input.substring(0, matchIndex);
-            var highlightedString = input.substring(matchIndex, matchIndex + match.length + 1);
-            var lastString = input.substring(matchIndex + match.length + 1);
+            var highlightedString = input.substring(matchIndex, matchIndex + match.length);
+            var lastString = input.substring(matchIndex + match.length );
             return firstString + '<span class="highlighted">' + highlightedString + '</span>' + lastString;
         } else {
             return input;

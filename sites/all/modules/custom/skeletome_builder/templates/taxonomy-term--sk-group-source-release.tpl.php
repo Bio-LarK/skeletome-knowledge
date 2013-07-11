@@ -79,7 +79,7 @@
 
                         <a class="section-segment" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href>
 
-                            <i ng-show="!tag.showBoneDysplasias" class="ficon-angle-down"></i>
+                            <i ng-show="!tag.showBoneDysplasias" class="ficon-angle-right"></i>
                             <i ng-show="tag.showBoneDysplasias" class="ficon-angle-up"></i>
 
                             <span ng-bind-html-unsafe="tag.sk_gt_field_group_name.name | highlight:findGroup"></span>
