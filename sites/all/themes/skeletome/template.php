@@ -247,7 +247,7 @@ function skeletome_preprocess_page(&$variables) {
  * @param $vars
  * @return string
  */
-function skeletome_apachesolr_search_browse_blocks($vars)
+function skeletome_search_browse_blocks($vars)
 {
     $html = "";
     if ($vars['content']['#children']) {
@@ -317,7 +317,7 @@ function skeletome_facetapi_title($variables) {
     if($variables['title'] == "Skeletome Tags") {
         $variables['title'] = "Clinical Features";
     }
-    return t('Filter by @title:', array('@title' => $variables['title']));
+    return t('Filter by Cat @title:', array('@title' => $variables['title']));
 }
 
 

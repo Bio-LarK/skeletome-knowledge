@@ -332,3 +332,61 @@ function skeletome_search_page_theme($existing, $type, $theme, $path) {
 
     return $themes;
 }
+
+
+/**
+ * Implements hook_facetapi_widgets()
+ */
+function skeletome_search_page_facetapi_widgets() {
+    return array(
+        'example_select' => array(
+            'handler' => array(
+                'label' => t('Select List'),
+                'class' => 'ExampleFacetapiWidgetSelect',
+                'query types' => array('term', 'date'),
+            ),
+        ),
+    );
+}
+
+/**
+ * Generate form for facet.
+ */
+function skeletome_search_page_facetapi_select($form, &$form_state, $elements) {
+    // Build options from facet elements.
+    $options = array('' => t('- Select -'));
+    foreach ($elements as $element) {
+        if ($element['#active']) {
+            continue;
+        }
+        $options[serialize($element['#query'])] = $element['#markup'] . '(' . $element['#count'] . ')';
+    }
+
+    $form['select'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#attributes' => array('class' => array('ctools-auto-submit')),
+        'default_value' => '',
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Filter'),
+        '#attributes' => array('class' => array('ctools-use-ajax', 'ctools-auto-submit-click')),
+    );
+
+    // Lets add autosubmit js functionality from ctools.
+    $form['#attached']['js'][] = drupal_get_path('module', 'ctools') . '/js/auto-submit.js';
+    // Add javascript that hides Filter button.
+    $form['#attached']['js'][] = drupal_get_path('module', 'example') . '/js/example-hide-submit.js';
+
+    $form['#attributes']['class'][] = 'example-select-facet';
+
+    return $form;
+}
+
+/**
+ * Submit handler for facet form.
+ */
+function skeletome_search_page_facetapi_select_submit($form, &$form_state) {
+    $form_state['redirect'] = array($_GET['q'], array('query' => unserialize($form_state['values']['select'])));
+}

@@ -1330,7 +1330,7 @@ table.table-dark {
         height: 20px;
         width: 20px;
         text-align: center;
-        border: 2px solid #a1a1a1;
+        border: 1px solid #a1a1a1;
         padding: 3px; margin-right: 14px;
         background-color: transparent;
         color: #777777;
@@ -1346,7 +1346,7 @@ table.table-dark {
         height: 20px;
         width: 20px;
         text-align: center;
-        border: 2px solid #adadad;
+        border: 1px solid #adadad;
         padding: 3px; margin-right: 14px;
         background-color: transparent;
         color: #777777;
@@ -2168,9 +2168,10 @@ a.section-segment {
         }
 
     .section-segment.alert.alert-saved {
-        background-color: #e9f8f1;
-        color: #75b28e;
-        border-bottom: 1px solid #ccead0;
+        background-color: #c5efc9;
+        color: #639778;
+        border-bottom: 1px solid #bbd7bf;
+        border-top: 1px solid #bbd7bf;
         text-shadow: none;
     }
 
