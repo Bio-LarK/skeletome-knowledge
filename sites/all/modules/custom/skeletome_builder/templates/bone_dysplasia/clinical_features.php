@@ -77,7 +77,7 @@
                     <a  style="overflow: hidden" class="section-segment" href="?q=taxonomy/term/{{clinicalFeature.tid}}">
                         <i class="ficon-angle-right pull-right"></i>
 
-                        <div style="width: 60%; float: left" ng-bind-html-unsafe="clinicalFeature.name">
+                        <div style="width: 60%; float: left" ng-bind-html-unsafe="clinicalFeature.name | highlight:model.clinicalFeatureFilter ">
 
                         </div>
 
