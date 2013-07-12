@@ -31,7 +31,7 @@ a {
     Navbar
 */
 .navbar-dark {
-    min-height: 75px;
+    /*min-height: 75px;*/
 }
 .navbar-dark .navbar-inner {
     border-radius: 0px;
