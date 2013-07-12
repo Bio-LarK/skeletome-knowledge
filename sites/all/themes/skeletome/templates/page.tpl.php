@@ -81,7 +81,7 @@
 <div id="page" style="position:relative;" ng-controller="PageCtrl">
 
 <header id="header">
-    <div class="navbar navbar-inverse navbar-dark navbar-static-top">
+    <div class="navbar navbar-inverse navbar-dark navbar-static-top" lock-to-top>
         <div class="navbar-inner">
             <div class="container-fluid">
 

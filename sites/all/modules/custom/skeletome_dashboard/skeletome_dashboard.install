@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function skeletome_dashboard_uninstall() {
+    // Bypass entity_load() as we cannot use it here.
+//    $types = db_select('entity_test_type', 'et')
+//        ->fields('et')
+//        ->execute()
+//        ->fetchAllAssoc('name');
+//
+//    foreach ($types as $name => $type) {
+//        field_attach_delete_bundle('entity_test', $name);
+//    }
+}
+
+/**
+ * Implements hook_schema().
+ */
+function skeletome_dashboard_schema() {
+    $schema['notifications'] = array(
+        'description' => 'Stores users notifications',
+        'fields' => array(
+            'id' => array(
+                'description' => 'ID for the notification',
+                'type' => 'serial',
+                'not null' => TRUE,
+            ),
+            'type' => array(
+                'description' => 'The type of notification',
+                'type' => 'varchar',
+                'length' => '255',
+                'not null' => FALSE,
+            ),
+            'created' => array(
+                'description' => 'The Unix timestamp when the notification was created.',
+                'type' => 'int',
+                'not null' => TRUE,
+                'default' => 0
+            ),
+            'notification_of_id' => array(
+                'description' => 'The ID of the object were are being notified of',
+                'type' => 'int',
+                'not null' => FALSE,
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+
+    $schema['notifications_users'] = array(
+        'description' => 'Attaches users to notifications',
+        'fields' => array(
+            'id' => array(
+                'description' => '',
+                'type' => 'serial',
+                'not null' => TRUE,
+            ),
+            'notification_id' => array(
+                'description' => 'The notification',
+                'type' => 'int',
+                'not null' => FALSE,
+            ),
+            'uid' => array(
+                'description' => 'The user who is being notified',
+                'type' => 'int',
+                'not null' => FALSE,
+            ),
+            'is_read' => array(
+                'description' => 'If the user has read the notification',
+                'type' => 'int',
+                'size' => 'tiny',
+                'not null' => FALSE,
+            ),
+        ),
+        'foreign keys' => array(
+            'uid' => array('users' => 'uid'),
+            'notification_id' => array('notifications' => 'id'),
+        ),
+        'primary key' => array('id'),
+    );
+
+
+    return $schema;
+}

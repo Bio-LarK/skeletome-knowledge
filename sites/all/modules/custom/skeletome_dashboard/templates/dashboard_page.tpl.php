@@ -86,16 +86,16 @@
                 <div class="section-segment">
                     <h2>Past Searches</h2>
                 </div>
-                <div class="section-segment" ng-repeat="search in searches">
-                    <i class="icon-search"></i>
-
-                    <span ng-show="!search.terms.length">
-                        {{ search.target_search }}
-                    </span>
-                    <span ng-repeat="term in search.terms">
-                        <span class="label label-primary" >{{ term }}</span>
-                    </span>
-
+                <div ng-repeat="search in searches">
+                    <a class="section-segment" href="{{ baseUrl }}/full-search?query={{ search.target_search }}">
+                        <i class="icon-search"></i>
+                        <span ng-show="!search.terms.length">
+                            {{ search.target_search }}
+                        </span>
+                        <span ng-repeat="term in search.terms">
+                            <span class="label label-primary" >{{ term }}</span>
+                        </span>
+                    </a>
                 </div>
             </section>
 

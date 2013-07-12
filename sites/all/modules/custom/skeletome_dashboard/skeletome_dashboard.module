@@ -1,5 +1,67 @@
 <?php
 
+module_load_include('php', 'skeletome_dashboard', 'notification_controller');
+
+/**
+ * Implements hook_entity_info().
+ */
+function skeletome_dashboard_entity_info() {
+    $return = array();
+    $return['notifications'] = array(
+
+        // Define basic information
+        'label' => t('Notification'),
+        'plural label' => t('Notifications'),
+        'entity class' => 'Notification',
+        'controller class' => 'NotificationController',
+        'fieldable' => TRUE,
+
+        // Provide information about the database tab;e
+        'base table' => 'notifications',
+        'entity keys' => array(
+            'id' => 'id',
+        ),
+
+        'module' => 'skeletome_dashboard',
+
+        'uri callback' => 'notification_uri',
+
+        'access callback' => 'skeletome_dashboard_notification_access',
+    );
+
+    return $return;
+}
+
+
+// Access callback for Entity API.
+function skeletome_dashboard_notification_access($op, $entity, $account = NULL) {
+    return true;
+    // $op is 'view', 'update', 'create', etc.
+    // $entity could be NULL (to check access for all entity items)
+    // or it could be a single entity item object.
+    // $account is either NULL or a user object.
+
+    // In this simple example, just check permissions for
+    // viewing or administering the entity type generically.
+//    if ($op == 'view') {
+//        return user_access('view myentity', $account);
+//    }
+//    return user_access('administer myentity', $account);
+}
+
+
+function notification_uri($notification){
+    return array(
+        'path' => 'notification/' . $notification->id,
+    );
+}
+
+
+
+
+
+
+
 
 /**
  * Implements hook_menu().
