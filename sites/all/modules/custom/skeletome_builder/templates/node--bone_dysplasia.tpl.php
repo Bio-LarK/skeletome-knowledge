@@ -181,7 +181,7 @@ $isAdmin = user_access('administer site configuration');
 
     <section>
         <div class="section-segment section-segment-header" ng-class="{ 'section-segment-editing': model.detailsState=='isEditing' }">
-            <?php if ($isAdmin || $isEditor || $isCurator): ?>
+            <?php if ($isAdmin || $isCurator): ?>
                 <div class="pull-right section-segment-header-buttons">
                     <div ng-switch on="model.detailsState">
                         <div ng-switch-when="isLoading">

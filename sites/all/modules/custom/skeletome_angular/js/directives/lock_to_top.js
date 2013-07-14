@@ -23,14 +23,11 @@ myApp.directive('lockToTop', function() {
 
             jQuery(window).scroll(function()
             {
-                console.log("scrolling");
                 var top = 0;
                 jQuery('.locked-top-top').each(function(index, elem) {
                     top += jQuery(elem).outerHeight();
                 });
 
-
-                console.log("init", init, "body", jQuery(document).scrollTop());
                 if (!docked && init < (jQuery(document).scrollTop() + top))
                 {
                     // Lock it to the top
@@ -38,9 +35,6 @@ myApp.directive('lockToTop', function() {
                     $parent.css({
                         'padding-top': parentPaddingTop + elem.outerHeight() + "px"
                     });
-
-                    console.log("top is", top);
-
 
                     var width = elem.width();
                     elem.css({
