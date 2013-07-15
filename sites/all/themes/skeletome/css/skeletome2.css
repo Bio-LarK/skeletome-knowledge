@@ -1326,7 +1326,7 @@ table.table-dark {
     }
 
     .btn.btn-remove {
-        /*border-radius: 100px;*/
+        border-radius: 100px;
         height: 20px;
         width: 20px;
         text-align: center;
@@ -1342,7 +1342,7 @@ table.table-dark {
         }
 
     .btn.btn-add {
-        /*border-radius: 100px;*/
+        border-radius: 100px;
         height: 20px;
         width: 20px;
         text-align: center;
