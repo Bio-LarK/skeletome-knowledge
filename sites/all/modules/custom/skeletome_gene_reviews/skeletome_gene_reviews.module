@@ -1,0 +1,91 @@
+<?php
+
+module_load_include('php', 'skeletome_gene_reviews', 'simple_html_dom');
+
+
+function skeletome_gene_reviews_menu() {
+    $items['gene-reviews/import'] = array(
+        'page callback' => 'skeletome_gene_reviews_import',
+        'access arguments'  => array('access content'),
+    );
+    return $items;
+}
+
+function skeletome_gene_reviews_page() {
+
+}
+function skeletome_gene_reviews_import() {
+
+    header('Content-Type: text/html; charset=UTF-8');
+
+    ob_implicit_flush();
+
+    // get all teh bone dysplasias
+    $sql = "SELECT n.nid, n.title, o.field_bd_omim_value as `omim`
+            FROM node n
+            LEFT JOIN field_data_field_bd_omim o
+            ON o.entity_id = n.nid
+            WHERE n.type = 'bone_dysplasia'";
+    $results = db_query($sql, array(
+    ));
+
+    $bone_dysplasias = $results->fetchAll();
+
+    // Load a file
+    $html = file_get_html('http://www.ncbi.nlm.nih.gov/books/NBK1116/');
+    $items = $html->find('.half_rhythm a');
+
+    $i = 0;
+    foreach($bone_dysplasias as $bone_dysplasia) {
+        if($i == 5) {
+            die();
+        }
+        echo $i;
+        $bone_dysplasia_title = $bone_dysplasia->title;
+
+        echo "<h2>$bone_dysplasia_title</h2>";
+        foreach($items as $link) {
+            $link_title = $link->plaintext;
+            $link_href = $link->href;
+
+            $percent = 0;
+            similar_text($bone_dysplasia_title, $link_title, $percent);
+
+            if($percent > 80) {
+                echo "<b><i>$link_title $percent % </i></b>";
+            } else if($percent > 60) {
+
+                echo "<b>$link_title $percent % </b>";
+
+                $loading = 'http://www.ncbi.nlm.nih.gov' . $link_href;
+
+                // Get the gene reviews page
+                $page = new simple_html_dom();
+                $page->load_file($loading);
+
+                $tables = $page->find('div[id*=molgen.TB_lrgtbl__]');
+
+                $omims = array();
+                foreach($tables as $table) {
+                    $trs = $table->find('tr');
+                    foreach($trs as $tr) {
+                        $omims[] = $tr->find('td', 0)->plaintext;
+                    }
+                }
+
+                foreach($omims as $omim) {
+                    if($omim == $bone_dysplasia->omim) {
+                        echo "OMIM MATCH $omim<br/>";
+                    }
+                }
+
+                flush();
+            }
+        }
+    }
+
+    die();
+}
+
+
+?>

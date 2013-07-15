@@ -19,12 +19,14 @@ myApp.directive('lockToTop', function() {
             var docked = false;
             var init = elem.offset().top;
             var $parent = elem.parent();
+
             var parentPaddingTop =  parseInt($parent.css('padding-top'));
+            var cssClass = "locked-to-top";
 
             jQuery(window).scroll(function()
             {
                 var top = 0;
-                jQuery('.locked-top-top').each(function(index, elem) {
+                jQuery('.' + cssClass).each(function(index, elem) {
                     top += jQuery(elem).outerHeight();
                 });
 
@@ -44,7 +46,7 @@ myApp.directive('lockToTop', function() {
                         'z-index': '100'
                     });
 
-                    elem.addClass('locked-top-top');
+                    elem.addClass(cssClass);
 
                     docked = true;
                 }
@@ -58,7 +60,7 @@ myApp.directive('lockToTop', function() {
                         position : "static",
                         width: 'auto'
                     });
-                    elem.removeClass('locked-top-top');
+                    elem.removeClass(cssClass);
 
                     docked = false;
                 }

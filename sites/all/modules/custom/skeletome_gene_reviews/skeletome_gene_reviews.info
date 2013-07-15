@@ -1,0 +1,6 @@
+name = Gene Review Importer
+description = Imports Abstracts from Gene Reviews
+package = A - Skeletome
+core = 7.x
+
+dependencies[] = libraries

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row-fluid">
     <div class="span12">
         <div class="page-heading">
             <h1>About</h1>

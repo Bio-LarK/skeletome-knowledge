@@ -7,8 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 ?>
-<div class="container">
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
             <div class="page-heading">
                 <h1>Contact Us</h1>
@@ -23,5 +22,4 @@
             </section>
         </div>
     </div>
-</div>
 
