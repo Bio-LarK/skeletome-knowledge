@@ -20,37 +20,47 @@ myApp.directive('lockToTop', function() {
             var init = elem.offset().top;
             var $parent = elem.parent();
 
+            var elemHeight = elem.outerHeight();
             var parentPaddingTop =  parseInt($parent.css('padding-top'));
             var cssClass = "locked-to-top";
 
             jQuery(window).scroll(function()
             {
                 var top = 0;
-                jQuery('.' + cssClass).each(function(index, elem) {
+
+                var $elementsWithClass = jQuery('.' + cssClass);
+                $elementsWithClass.each(function(index, elem) {
                     top += jQuery(elem).outerHeight();
                 });
 
-                if (!docked && init < (jQuery(document).scrollTop() + top))
+                console.log("scroll", init, jQuery(document).scrollTop(), top);
+                if (!docked && (init + elemHeight + 50) < (jQuery(document).scrollTop() + top))
                 {
                     // Lock it to the top
 
                     $parent.css({
-                        'padding-top': parentPaddingTop + elem.outerHeight() + "px"
+                        'padding-top': parentPaddingTop + elemHeight + "px"
                     });
 
                     var width = elem.width();
                     elem.css({
                         position : "fixed",
-                        top: top + "px",
+                        top: "-" + elemHeight + 'px',
                         width: width,
-                        'z-index': '100'
+                        'z-index': '100' - $elementsWithClass.length
+                    });
+
+                    elem.animate({
+                        top: top + "px"
+                    }, 200, function() {
+                        // Animation complete.
                     });
 
                     elem.addClass(cssClass);
 
                     docked = true;
                 }
-                else if(docked && init >= jQuery(document).scrollTop() + top)
+                else if(docked && init >= jQuery(document).scrollTop() + (top - elemHeight))
                 {
                     $parent.css({
                         'padding-top': parentPaddingTop
@@ -64,6 +74,20 @@ myApp.directive('lockToTop', function() {
 
                     docked = false;
                 }
+            });
+
+            jQuery(window).resize(function() {
+                $parent.css({
+                    'padding-top': parentPaddingTop
+                });
+                // Put it back where it belongs
+                elem.css({
+                    position : "static",
+                    width: 'auto'
+                });
+                elem.removeClass(cssClass);
+
+                docked = false;
             });
         }
     };
