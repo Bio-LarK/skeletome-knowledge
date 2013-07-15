@@ -34,7 +34,7 @@ myApp.directive('lockToTop', function() {
                 });
 
                 console.log("scroll", init, jQuery(document).scrollTop(), top);
-                if (!docked && (init + elemHeight + 50) < (jQuery(document).scrollTop() + top))
+                if (!docked && (init + elemHeight + 100) < (jQuery(document).scrollTop() + top))
                 {
                     // Lock it to the top
 
@@ -52,7 +52,7 @@ myApp.directive('lockToTop', function() {
 
                     elem.animate({
                         top: top + "px"
-                    }, 200, function() {
+                    }, 250, function() {
                         // Animation complete.
                     });
 
