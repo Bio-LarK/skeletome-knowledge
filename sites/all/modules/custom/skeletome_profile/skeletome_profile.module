@@ -57,6 +57,18 @@ function profile_save() {
     $objData = json_decode($data, true);
 
     $profile = (object) $objData['node'];
+    node_save($profile);
+
+    $profile = node_load($profile->nid);
+    $profile = _setup_profile_picture($profile);
+
+    echo json_encode($profile);
+}
+
+function create_profile($user_id) {
+    $user = user_load($user_id);
+
+    $profile = new stdClass();
     $profile->title = $user->name . "'s Profile";
     $profile->type = "profile";
     node_object_prepare($profile); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
@@ -69,13 +81,26 @@ function profile_save() {
     $profile->revision = 1;
     $profile->log = "Created new profile.";
     $profile->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+    $profile->field_profile_user_id[LANGUAGE_NONE][0]['value'] = $user_id;
 
     node_save($profile);
 
-    $profile = node_load($profile->nid);
-    $profile = _setup_profile_picture($profile);
+    return $profile;
+}
 
-    echo json_encode($profile);
+function get_profile($user_id) {
+    $sql = "SELECT p.entity_id
+            FROM {field_data_field_profile_user_id} p
+            WHERE p.field_profile_user_id_value = :uid";
+    $results = db_query($sql, array(
+        'uid'   => $user_id
+    ));
+    $row = $results->fetchObject();
+    if(isset($row->entity_id)) {
+        return node_load($row->entity_id);
+    } else {
+        return create_profile($user_id);
+    }
 }
 
 function _setup_profile_picture($profile) {
@@ -168,17 +193,7 @@ function page_profile($user) {
     usort($activity, "created_sort");
 
     // get the profile
-    $sql = "SELECT p.entity_id
-            FROM {field_data_field_profile_user_id} p
-            WHERE p.field_profile_user_id_value = :uid";
-    $results = db_query($sql, array(
-        'uid'   => $user->uid
-    ));
-    $row = $results->fetchObject();
-    $profile = null;
-    if(isset($row->entity_id)) {
-        $profile = node_load($row->entity_id);
-    }
+    $profile = get_profile($user->uid);
     $profile = _setup_profile_picture($profile);
 
     // Get the roles
@@ -247,6 +262,33 @@ function page_profile($user) {
     return $output;
 }
 
+
+/**
+ * Implements hook_user_presave
+ *
+ * A user account is about to be created or updated.
+ */
+function skeletome_profile_user_presave(&$edit, $account, $category) {
+
+    if($edit['status'] == 1 && $account->status == 0) {
+        // The users status was approved
+        // Create a profile for the user
+        // and copy over the bio
+
+        // check if the user has a profile
+        $profile = get_profile($account->uid);
+
+        if(!isset($profile->body[LANGUAGE_NONE][0]['value'])) {
+            $bio = $edit['field_bio'][LANGUAGE_NONE][0]['value'];
+            $profile->body[LANGUAGE_NONE][0]['value'] = $bio;
+            $profile->body[LANGUAGE_NONE][0]['safe_value'] = $bio;
+            $profile->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+
+            node_save($profile);
+        }
+    }
+
+}
 
 function created_sort($a, $b)
 {

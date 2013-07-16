@@ -128,7 +128,7 @@
 
     <?php if(strlen($messages) > 0): ?>
         <div class="container">
-            <div class="row">
+            <div class="row-fluid">
                 <div class="span12">
                     <?php print $messages; ?>
                 </div>
@@ -137,7 +137,7 @@
     <?php endif; ?>
 
     <div id="content" class="container" role="main">
-        <div class="row">
+        <div class="row-fluid">
             <div class="span12">
                 <!--<?php print render($tabs); ?>
                 <?php print render($action_links); ?>-->
