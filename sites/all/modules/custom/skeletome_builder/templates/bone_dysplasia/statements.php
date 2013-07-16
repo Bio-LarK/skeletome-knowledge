@@ -139,21 +139,16 @@
 
                 <div ng-repeat="statement in statements | orderBy:'-created' | limitTo:model.statementDisplayLimit">
 
-                    <div id="{{ statement.nid }}" class="section-segment section-segment-statement" ng-click="showComments(statement)">
+                    <div id="{{ statement.nid }}" class="section-segment section-segment-statement" ng-click="showComments(statement)" short-highlight="{{ highlightStatementId == statement.nid }}">
 
                         <div class="section-segment-statement-icons">
-                        <span ng-show="!statement.isShowingComments">
-                                            <i class="ficon-angle-right pull-right"></i>
+                            <span ng-show="!statement.isShowingComments">
+                                <i class="ficon-angle-right pull-right"></i>
+                            </span>
 
-                            <!--<i class="icon-chevron-right icon-chevron-turn-down"></i>
-                            <i class="icon-chevron-right icon-white icon-chevron-turn-down"></i>-->
-                        </span>
-
-                        <span ng-show="statement.isShowingComments">
-                            <i class="ficon-angle-up pull-right"></i>
-                            <!--<i class="icon-chevron-up"></i>
-                            <i class="icon-chevron-up icon-white "></i>-->
-                        </span>
+                            <span ng-show="statement.isShowingComments">
+                                <i class="ficon-angle-up pull-right"></i>
+                            </span>
                         </div>
 
                         <div class="section-segment-statement-text" ng-bind-html-unsafe="statement.body.und[0].safe_value || statement.body.und[0].value || 'No statement.'">
