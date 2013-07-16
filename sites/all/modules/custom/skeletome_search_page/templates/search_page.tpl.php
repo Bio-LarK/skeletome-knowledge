@@ -5,7 +5,7 @@
 </style>
 <div ng-controller="SearchCtrl" ng-init="init()">
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="span12">
             <div class="page-heading">
                 <h1>Search Results</h1>
@@ -13,7 +13,7 @@
 
         </div>
     </div>
-    <div class="row">
+    <div class="row-fluid">
         <div class="span8">
             <section ng-show="!model.results.length && !model.isLoading">
                 <div class="section-segment">

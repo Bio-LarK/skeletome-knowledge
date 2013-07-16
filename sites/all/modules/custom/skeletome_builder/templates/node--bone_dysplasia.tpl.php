@@ -116,13 +116,14 @@ $isAdmin = user_access('administer site configuration');
                 <span class="type-logo"><i class="icon-bone"></i></span>
                 <?php print $title; ?>
             </h1>
-            <h1 ng-cloak ng-show="synString.length" cm-tooltip="top"
-                cm-tooltip-content="Also known as {{ synString }}">
+            <h1 ng-cloak ng-show="synString.length">
 
                 <span class="type-logo"><i class="icon-bone"></i></span>
 
                 <!--<img class="type-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/bone_dysplasia_logo.svg"/>-->
                 <?php print $title; ?>
+                <small style="font-weight: 400; font-size: 14px; color: #818aa0">{{ synString }}</small>
+
             </h1>
         </div>
 

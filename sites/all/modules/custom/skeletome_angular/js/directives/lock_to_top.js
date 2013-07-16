@@ -24,18 +24,20 @@ myApp.directive('lockToTop', function() {
             var parentPaddingTop =  parseInt($parent.css('padding-top'));
             var cssClass = "locked-to-top";
 
+            var offset = 100;
+            var elemHeight = elem.outerHeight();
+            var scrollDownPast = init + elemHeight + offset;
+            var scrollUpPast = init + elemHeight;
+
             jQuery(window).scroll(function()
             {
                 var top = 0;
-
                 var $elementsWithClass = jQuery('.' + cssClass);
                 $elementsWithClass.each(function(index, elem) {
                     top += jQuery(elem).outerHeight();
                 });
 
-                console.log("scroll", init, jQuery(document).scrollTop(), top);
-                if (!docked && (init + elemHeight + 100) < (jQuery(document).scrollTop() + top))
-                {
+                if (!docked && (scrollDownPast - top) < jQuery(document).scrollTop()) {
                     // Lock it to the top
 
                     $parent.css({
@@ -59,9 +61,7 @@ myApp.directive('lockToTop', function() {
                     elem.addClass(cssClass);
 
                     docked = true;
-                }
-                else if(docked && init >= jQuery(document).scrollTop() + (top - elemHeight))
-                {
+                } else if(docked && (scrollUpPast - top) >= jQuery(document).scrollTop()) {
                     $parent.css({
                         'padding-top': parentPaddingTop
                     });
