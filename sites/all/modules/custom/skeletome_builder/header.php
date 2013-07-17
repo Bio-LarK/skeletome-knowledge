@@ -11,7 +11,6 @@
                             <img class="logo" style="height: 50px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/skeletome_logo_RGB2.png" alt="<?php print t('Home'); ?>"/>
                         </a>
 
-                        <a class="btn btn-dark-navbar show-small" href="?q=taxonomy/term/{{ browseTid }}">Browse</a>
                         <?php global $user; ?>
                         <div class="btn-group show-small">
                             <?php if(isset($user->name)):?>
