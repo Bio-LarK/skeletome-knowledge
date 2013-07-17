@@ -78,7 +78,40 @@ a {
                 padding-right: 21px;
             }
 
+@media (max-width: 767px) {
+    .navbar {
+    }
+    .navbar .btn-group .btn {
+        width: 40%;
+    }
 
+    .navbar img {
+        width: 110px;
+        height: auto !important;
+        margin-right: 14px;
+    }
+    .navbar-inner-table-cell {
+        display: block;
+        width: auto;padding: 7px;
+    }
+    .navsearch-helper {
+        display: none;
+    }
+    .show-small {
+        display: inline-block !important;
+    }
+    .show-large {
+        display: none !important;
+    }
+    .navbar .btn-group {
+    }
+}
+.show-small {
+    display: none;
+}
+.show-large {
+    display: table-cell;
+}
 /* ================================================
     Front Page logo
 */
@@ -88,7 +121,9 @@ a {
     .navbar-dark #logo img {
         height: 45px;
     }
-
+.navbar-inner {
+    padding: 0;
+}
 
 
 
@@ -279,18 +314,7 @@ ul.navsearch-suggestions {
         padding-top: 5px;
     }
 
-@media (max-width: 767px) {
-    .navbar {
-        text-align: center;
-    }
-    .navbar .btn-group .btn {
-        width: 40%;
-    }
-    .navbar-inner-table-cell {
-        display: block;
-        width: auto;padding: 7px;
-    }
-}
+
 
 
 

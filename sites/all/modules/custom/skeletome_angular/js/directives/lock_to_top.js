@@ -8,7 +8,10 @@ myApp.directive('lockToTop', function() {
                 $scope.listModel.splice(index, 1);
             }
         },
-        link: function(scope, elem, attrs) {
+        transclude: true,
+        template: "<div ng-transclude></div>",
+        replace: true,
+        link: function($scope, elem, attrs) {
             /**
              * Created with JetBrains PhpStorm.
              * User: uqcmcna1
@@ -62,6 +65,7 @@ myApp.directive('lockToTop', function() {
 
                     docked = true;
                 } else if(docked && (scrollUpPast - top) >= jQuery(document).scrollTop()) {
+
                     $parent.css({
                         'padding-top': parentPaddingTop
                     });

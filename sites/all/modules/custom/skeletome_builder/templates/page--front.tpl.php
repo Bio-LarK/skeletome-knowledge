@@ -117,52 +117,10 @@
 <div ng-controller="PageCtrl">
     <div id="page" style="position:relative;" ng-controller="FrontPageCtrl">
 
-    <header id="header" role="banner">
-        <div class="navbar navbar-inverse navbar-dark navbar-static-top" lock-to-top>
-            <div class="navbar-inner">
-                <div class="container-fluid">
-
-                    <div class="navbar-inner-table">
+        <?php module_load_include('php', 'skeletome_builder', 'header'); ?>
 
 
-                        <div class="navbar-inner-table-cell navbar-inner-table-cell-edge">
-                            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home">
-                                <img class="logo" style="height: 50px" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/skeletome_logo_RGB2.png" alt="<?php print t('Home'); ?>"/>
-                            </a>
-                        </div>
-
-                        <div class="navbar-inner-table-cell">
-                            <nav-search model="model.navSearchModel"></nav-search>
-                        </div>
-
-                        <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-browse">
-                            <a href="?q=taxonomy/term/{{ browseTid }}">Browse</a>
-                        </div>
-
-
-                        <div class="navbar-inner-table-cell navbar-inner-table-cell-edge navbar-inner-table-cell-login">
-                            <?php global $user; ?>
-                            <div class="btn-group">
-                                <?php if(isset($user->name)):?>
-                                    <a class="btn btn-dark-navbar" href="?q=profile-page/<?php echo $user->uid; ?>">
-                                        <i class="icon-user icon-white"></i> {{ user.name | truncate:30 }}
-                                    </a>
-                                    <a class="btn btn-dark-navbar" href="user/logout"><i class="ficon-signout"></i> Logout</a>
-                                <?php else: ?>
-                                    <a class="btn btn-dark-navbar" href="user/register">Register</a>
-
-                                    <a class="btn btn-dark-navbar" cm-popover cm-popover-content="{{ loginForm }}" href id="login_button"><i class="ficon-signin"></i> Log In</a>
-
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
+        <div class="container">
         <div class="banner" style="position: relative; overflow: hidden">
             <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
 
