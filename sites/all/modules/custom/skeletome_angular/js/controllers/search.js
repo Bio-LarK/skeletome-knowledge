@@ -8,10 +8,6 @@ function SearchCtrl($scope, $http) {
         $scope.model.clinicalFeatures = Drupal.settings.skeletome_search_page.clinicalFeatures || [];
         $scope.model.groups = Drupal.settings.skeletome_search_page.groups || [];
 
-
-        $scope.model.searchString = Drupal.settings.skeletome_search_page.searchString || "";
-        $scope.model.conditions = Drupal.settings.skeletome_search_page.conditions;
-
         $scope.model.navSearchModel.entry = Drupal.settings.skeletome_search_page.queryString;
         $scope.model.navSearchModel.query = Drupal.settings.skeletome_search_page.queryTerms;
         $scope.model.navSearchModel.isShowingSuggestion = false;
@@ -24,41 +20,36 @@ function SearchCtrl($scope, $http) {
         $scope.model.moreResults = true;
 
 
+        this.searchContent = function() {
+            var search = $scope.model.navSearchModel.entry;
+            var conditions = [];
+
+            // If there is only one pill left, whatever it is, thats what we search for
+            if($scope.model.navSearchModel.query.length == 1 && $scope.model.navSearchModel.entry == "")  {
+                search += " " + $scope.model.navSearchModel.query[0].title || $scope.model.navSearchModel.query[0].name;
+            } else {
+
+            }
+            angular.forEach($scope.model.navSearchModel.query, function(queryTerm, index) {
+                if(queryTerm.machine_name == "skeletome_vocabulary") {
+                    conditions.push("im_field_skeletome_tags:" + queryTerm.tid);
+                } else {
+                    search += " " + queryTerm.title;
+                }
+            });
+
+            console.log("search content", search, conditions);
+
+            return {
+                'search': search.trim(),
+                'conditions': conditions
+            }
+        }
+
         $scope.$watch('model.navSearchModel.query', function(query) {
             if(query) {
 
                 // the query has been changed, lets see if we can change the conditions
-                $scope.model.conditions = [];
-                $scope.model.results = [];
-
-                $scope.model.clinicalFeatures = [];
-                $scope.model.boneDysplasias = [];
-                $scope.model.genes = [];
-                $scope.model.groups = [];
-
-                angular.forEach(query, function(queryTerm, index) {
-                    if(queryTerm.machine_name == "skeletome_vocabulary") {
-                        $scope.model.conditions.push("im_field_skeletome_tags:" + queryTerm.tid);
-                        $scope.model.clinicalFeatures.push(queryTerm);
-                    } else if(queryTerm.machine_name == "sk_group_tag") {
-                        $scope.model.groups.push(queryTerm);
-                    } else if (queryTerm.type == "bone_dysplasia") {
-                        $scope.model.boneDysplasias.push(queryTerm);
-                        $scope.model.searchString += " " + queryTerm.title;
-                    } else if (queryTerm.type == "gene") {
-                        $scope.model.genes.push(queryTerm);
-                        $scope.model.searchString += " " + queryTerm.title;
-                    }
-                });
-
-                console.log("search string length", $scope.model.searchString.length);
-
-                // deal with the special case
-                // only a clinical feature remains, deal with it specially
-                if(query.length && $scope.model.searchString.length == 0 && query[0].machine_name == "skeletome_vocabulary") {
-                    $scope.model.searchString += " " + query[0].name;
-                }
-
                 $scope.model.pageCount = 0;
 
                 $scope._doSearch(false);
@@ -82,14 +73,17 @@ function SearchCtrl($scope, $http) {
 
     $scope._doSearch = function(append) {
 
+        var searchContent = this.searchContent();
         console.log("calling do search");
-        if(!$scope.model.searchString.length && !$scope.model.conditions.length) {
+        if(!searchContent.search.length && !searchContent.conditions.length) {
             $scope.model.results = false;
             $scope.model.moreResults = false;
             return;
         }
+
+
 //        var url = "?q=ajax/full-search&searchstring=" + ($scope.model.searchString || Drupal.settings.skeletome_search_page.searchString) + "&conditions=" + encodeURIComponent(JSON.stringify($scope.model.conditions)) + "&page=" + $scope.model.pageCount;
-        var url = "?q=ajax/full-search&searchstring=" + ($scope.model.searchString) + "&conditions=" + encodeURIComponent(JSON.stringify($scope.model.conditions)) + "&page=" + $scope.model.pageCount;
+        var url = "?q=ajax/full-search&searchstring=" + searchContent.search + "&conditions=" + encodeURIComponent(JSON.stringify(searchContent.conditions)) + "&page=" + $scope.model.pageCount;
 
         $scope.model.isLoading = true;
 
