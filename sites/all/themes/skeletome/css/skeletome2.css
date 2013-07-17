@@ -283,25 +283,12 @@ ul.navsearch-suggestions {
     .navbar {
         text-align: center;
     }
-    #logo {
-        float: none;
-        display: block;
-        margin: 7px auto;
-        width: 141px;
-
-    }
-    .navbar .btn-group {
-        float: none;
-        margin-bottom: 14px;
-        width: 100%;
-    }
     .navbar .btn-group .btn {
         width: 40%;
     }
-    .navsearch-small .navsearch {
-        margin-left: 0px;
-        margin-right: 0px;
-        margin-bottom: 14px;
+    .navbar-inner-table-cell {
+        display: block;
+        width: auto;padding: 7px;
     }
 }
 
