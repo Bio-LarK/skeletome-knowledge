@@ -48,7 +48,7 @@ function ajax_skeletome_search_page_results() {
 
     $conditions = json_decode($_GET['conditions']);
 
-    if(strpos($search_string, "AND") === FALSE && strpos($search_string, "OR") === FALSE) {
+    if(strpos($search_string, "AND") === FALSE && strpos($search_string, "OR") === FALSE && strpos($search_string, " ") === FALSE) {
         // Lets fix up the search term
         $search_string .= "*";
     }
@@ -193,7 +193,7 @@ function page_skeletome_search_page() {
     }
 
     $search_string_updated = $search_string;
-    if(strpos($search_string, "AND") === FALSE && strpos($search_string, "OR") === FALSE) {
+    if(strpos($search_string, "AND") === FALSE && strpos($search_string, "OR") === FALSE && strpos($search_string, " ") === FALSE) {
         // Lets fix up the search term
         $search_string_updated .= "*";
     }

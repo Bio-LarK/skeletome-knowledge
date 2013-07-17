@@ -77,7 +77,7 @@
 
                     <div ng-repeat="tag in release.tags | filter:findGroup">
 
-                        <a class="section-segment" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href>
+                        <a class="section-segment" name="{{tag.tid}}" ng-click="getBoneDysplasiasForTag(tag)" href short-highlight="{{ hashId == tag.tid }}">
 
                             <i ng-show="!tag.showBoneDysplasias" class="ficon-angle-right"></i>
                             <i ng-show="tag.showBoneDysplasias" class="ficon-angle-up"></i>
@@ -93,12 +93,7 @@
                                 <a class="section-segment section-segment-inner-tabbed" href="?q=node/{{ boneDysplasia.nid }}">
 
                                     <i class="ficon-angle-right pull-right"></i>
-
-                                    <div>
-                                        <b>{{ boneDysplasia.title }}</b>
-                                    </div>
-                                    <div ng-bind-html-unsafe="boneDysplasia.body.und[0].value | truncate:200">
-                                    </div>
+                                    {{ boneDysplasia.title }}
                                 </a>
                             </div>
                         </div>

@@ -14,13 +14,6 @@ function StatementCtrl($scope, $http) {
         // Setup the default length
         $scope.statementDisplayLimit = $scope.defaultStatementDisplayLimit;
         $scope.isHidingStatements =  $scope.statements.length > $scope.defaultStatementDisplayLimit;
-
-        if(window.location.hash) {
-            var statementId = window.location.hash.replace("#", "");
-            $scope.highlightStatementId = statementId;
-        }
-
-
     }
 
     /**

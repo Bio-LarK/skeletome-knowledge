@@ -15,4 +15,10 @@ function PageCtrl($scope, $http) {
 
     $scope.baseUrl = Drupal.settings.skeletome_builder.base_url;
     $scope.browseTid = Drupal.settings.skeletome_builder.isds;
+
+    if(window.location.hash) {
+        $scope.hashId = window.location.hash.replace("#", "");
+    }
+
+
 }

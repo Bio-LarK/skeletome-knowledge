@@ -139,7 +139,7 @@
 
                 <div ng-repeat="statement in statements | orderBy:'-created' | limitTo:model.statementDisplayLimit">
 
-                    <div id="{{ statement.nid }}" class="section-segment section-segment-statement" ng-click="showComments(statement)" short-highlight="{{ highlightStatementId == statement.nid }}">
+                    <div id="{{ statement.nid }}" class="section-segment section-segment-statement" ng-click="showComments(statement)" short-highlight="{{ hashId == statement.nid }}">
 
                         <div class="section-segment-statement-icons">
                             <span ng-show="!statement.isShowingComments">
