@@ -126,6 +126,7 @@
 
 <div id="main">
 
+    <?php if(strlen($messages)): ?>
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
@@ -133,6 +134,7 @@
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <div class="container-fluid"  style="display: none">
         <div class="row-fluid">
