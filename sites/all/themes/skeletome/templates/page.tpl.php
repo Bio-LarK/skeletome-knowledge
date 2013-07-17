@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div class="container-fluid" >
+    <div class="container-fluid"  style="display: none">
         <div class="row-fluid">
             <div class="span12">
                 <?php print render($tabs); ?>
