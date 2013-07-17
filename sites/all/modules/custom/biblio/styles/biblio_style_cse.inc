@@ -85,6 +85,6 @@ function biblio_style_cse($node) {
     if ($node->biblio_place_published) $output .= ', '. check_plain($node->biblio_place_published);
   */
 
-  return filter_xss($output, biblio_get_allowed_tags());
+  return filter_xss($output, biblio_get_allowed_tags()) .  "GO GO";
 
 }

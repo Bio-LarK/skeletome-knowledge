@@ -532,6 +532,6 @@ function biblio_style_vancouver($node) {
       break;
   }
 
-  return filter_xss($output, biblio_get_allowed_tags());
+  return filter_xss($output, biblio_get_allowed_tags()) .  "GO GO";
 }
 

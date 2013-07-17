@@ -189,6 +189,17 @@
     </div>
 
 
+    <div class="container-fluid">
+        <?php if(strlen($messages) > 0): ?>
+        <div class="row-fluid" style="margin-bottom: 14px;">
+            <div class="span12">
+                <?php print $messages; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+
+
 
 
         <section>
@@ -247,19 +258,7 @@
     </div>
 
 
-    <!--<div class="triptych">
-        <div class="container">
-            <?php if(strlen($messages) > 0): ?>
-            <div class="row" style="margin-bottom: 14px;">
-                <div class="span12">
-                    <?php print $messages; ?>
-                </div>
-            </div>
-            <?php endif; ?>
 
-
-        </div>
-    </div>-->
 
 
 

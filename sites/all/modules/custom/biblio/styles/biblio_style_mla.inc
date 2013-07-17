@@ -499,7 +499,7 @@ function biblio_style_mla($node) {
       break;
   }
 
-  return filter_xss($output, biblio_get_allowed_tags());
+  return filter_xss($output, biblio_get_allowed_tags()) .  "GO GO";
 }
 
 function _period_if_needed(&$output) {

@@ -43,7 +43,7 @@ function biblio_style_ieee_author_options() {
  */
 function biblio_style_ieee($node) {
   module_load_include('inc', 'biblio', '/includes/biblio.contributors');
-  $output = '';
+
   $author_options = biblio_style_ieee_author_options();
   $primary_authors = biblio_get_contributor_category($node->biblio_contributors, 1);
   if (!empty($primary_authors)) {
@@ -99,7 +99,7 @@ function biblio_style_ieee($node) {
   /*  if ($node->biblio_date) $output .= ', '. check_plain($node->biblio_date);
 
   */
-  return filter_xss($output, biblio_get_allowed_tags());
+  return filter_xss($output, biblio_get_allowed_tags()) . " YO OY";
 
 }
 function _ieee_format_author($author) {

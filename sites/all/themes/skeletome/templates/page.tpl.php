@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * @file
  * Zen theme's implementation to display a single Drupal page.
@@ -126,21 +126,19 @@
 
 <div id="main">
 
-    <?php if(strlen($messages) > 0): ?>
-        <div class="container">
-            <div class="row-fluid">
-                <div class="span12">
-                    <?php print $messages; ?>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
-    <div id="content" class="container" role="main">
+    <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-                <!--<?php print render($tabs); ?>
-                <?php print render($action_links); ?>-->
+                <?php print $messages; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" >
+        <div class="row-fluid">
+            <div class="span12">
+                <?php print render($tabs); ?>
+                <?php print render($action_links); ?>
             </div>
             <?php print render($page['help']); ?>
         </div>
@@ -152,10 +150,9 @@
         <div>
             <?php print render($page['content']); ?>
         </div>
-
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
                 <?php print render($page['highlighted']); ?>
