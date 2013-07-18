@@ -27,7 +27,7 @@ myApp.directive('lockToTop', function() {
             var parentPaddingTop =  parseInt($parent.css('padding-top'));
             var cssClass = "locked-to-top";
 
-            var offset = 100;
+            var offset = 120;
             var elemHeight = elem.outerHeight();
             var scrollDownPast = init + elemHeight + offset;
             var scrollUpPast = init + elemHeight;
