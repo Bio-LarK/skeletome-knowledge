@@ -824,12 +824,6 @@ function skeletome_builder_menu() {
 //        'access arguments' => array('access content')
 //    );
 
-    $items['tour'] = array(
-        'page callback'     => 'page_tour',
-        'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK
-    );
-
 
     /**
      * Pubmed Lookup

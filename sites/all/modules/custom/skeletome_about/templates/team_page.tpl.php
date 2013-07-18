@@ -4,6 +4,8 @@
             <h1>Team</h1>
         </div>
     </div>
+</div>
+<div class="row-fluid">
     <div class="span6">
         <section>
             <div class="section-segment section-segment-header">

@@ -90,8 +90,7 @@
                     <p>
                         All entries contain an abstract. Abstracts are collaboratively written by members of the skeletal dysplasia
                         community. To ensure the highest quality, only expert users will be given editing rights for the abstracts.
-                        The names of the contributors are listed above the abstract. Click a contributors name to see the
-                        contributor's profile page.
+                        The names of the contributors are listed above the abstract.
                     </p>
                 </div>
                 <div class="span6">
@@ -109,8 +108,7 @@
                     <p>
                         Statements allow every user to contribute their knowledge without jeopardising the integrity of the main
                         abstract. Any logged-in user can create a Statement. Statements can be important clinical observations,
-                        pathophysiological insights, etc. Statements can be discussed by other users by clicking on the 'Discuss'
-                        button next to the Statement. Statements that are positively reviewed by the user community will be
+                        pathophysiological insights, etc. Statements that are positively reviewed by the user community will be
                         integrated into the main abstract by the editors.
                     </p>
                 </div>
@@ -123,8 +121,7 @@
                     <p>
                         X-rays are contributed by members of the skeletal dysplasia community to illustrate the radiographic
                         appearance of the respective bone dysplasia. To ensure the highest quality, only expert users with
-                        editing rights can contribute x-rays. Click on a thumbnail to see a larger version of the x-ray.
-                        Click the small arrows on the images to move back and forth through the series of images.
+                        editing rights can contribute x-rays.
                     </p>
                 </div>
                 <div class="span6">
@@ -145,7 +142,7 @@
                         To ensure the highest quality, only expert users with editing rights can add or delete a clinical feature.
                         The clinical feature vocabulary is based on the [Human Phenotype Ontology]. Clinical features are sorted
                         by Information Content. Information Content is a measure of how specific a feature is for a certain
-                        bone dysplasia. Click [here] for more information on Information Content.
+                        bone dysplasia.
                     </p>
                 </div>
             </div>
@@ -184,7 +181,7 @@
                     </p>
                     <h3>Biography & Publications</h3>
                     <p>You can enhance your profile page by providing a biography and list of your publications.
-                        You can also import this information from [LinkedIn] or [Orcid].
+                        You can also import this information from LinkedIn or Orcid.
                     </p>
                 </div>
                 <div class="span6">
@@ -222,9 +219,8 @@
                 <div class="span6">
                     <h3>Browse</h3>
                     <p>
-                        Click the "Browse" button to browse the Skeletome Encyclopedia. Disorders are grouped according to the 2010
-                        Nosology of The International Skeletal Dysplasia Society (Warman et al. 2011). Clicking on a group name reveals
-                        the disorders within this group, clicking on a disease name takes you to the full entry for this disorder.
+                        Disorders are grouped according to the 2010 Nosology of The International Skeletal Dysplasia
+                        Society (Warman et al. 2011).
                     </p>
                 </div>
                 <div class="span6">
@@ -240,8 +236,7 @@
                 <div class="span6">
                     <h3>Search & Filter</h3>
                     <p>Start typing your query in the search box. Skeletome will display matching groups, diseases, genes or clinical
-                        features below the search box. Select one of the suggestions or hit 'Enter' to start a full text search across
-                        all entries based on your query.
+                        features below the search box.
                     </p>
 
                     <p>Search results can be further refined through filtering. This is particularly useful when searching for clinical

@@ -9,31 +9,45 @@ function skeletome_about_menu() {
     $items['about'] = array(
         'page callback' 	=> 'page_sk_about',
         'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
+        'type'              => MENU_CALLBACK,
     );
 
     $items['contact'] = array(
         'page callback' 	=> 'page_sk_contact',
         'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
+        'type'              => MENU_CALLBACK,
     );
 
     $items['team'] = array(
         'page callback' 	=> 'page_sk_team',
         'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
+        'type'              => MENU_CALLBACK,
     );
 
     $items['tour'] = array(
         'page callback' 	=> 'page_tour',
         'access arguments'  => array('access content'),
-        'type'  => MENU_CALLBACK,
+        'type'              => MENU_CALLBACK,
     );
 
+    $items['faq'] = array(
+        'page callback' 	=> 'page_faq',
+        'access arguments'  => array('access content'),
+        'type'              => MENU_CALLBACK,
+    );
 
     return $items;
 }
 
+function page_faq() {
+    $output =  array(
+        'skeletome_about_faq_page' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_about_faq_page'
+        )
+    );
+    return $output;
+}
 
 function page_tour() {
     $output =  array(
@@ -77,6 +91,15 @@ function page_sk_team() {
  * Implements hook_theme().
  */
 function skeletome_about_theme($existing, $type, $theme, $path) {
+
+    $themes['skeletome_about_faq_page'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_about') . '/templates',
+        'template'  => 'faq'
+    );
 
     $themes['skeletome_about_tour_page'] = array(
         'variables' => array(

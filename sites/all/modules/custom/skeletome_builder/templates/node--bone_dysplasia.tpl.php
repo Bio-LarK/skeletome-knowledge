@@ -495,40 +495,7 @@ $isAdmin = user_access('administer site configuration');
                     </div>
                 </div>
             </div>
-
-
-            <!--<table class="table table-center">
-                <tr>
-                    <th>Gene</th>
-                </tr>
-
-
-                <tbody ng-repeat="gene in editingGenes">
-                    <tr>
-                        <td>
-                            <strong>{{ gene.title | truncate:20 }}</strong>
-                            <a ng-click="gene.showGeneMutations = true" ng-show="!gene.showGeneMutations" class="btn btn-success pull-right" href><i class="icon-chevron-down icon-white"></i> Show</a>
-                            <a ng-click="gene.showGeneMutations = false" ng-show="gene.showGeneMutations" class="btn btn-success pull-right" href><i class="icon-chevron-up icon-white"></i> Hide</a>
-                        </td>
-                    </tr>
-                    <tr ng-show="gene.showGeneMutations">
-                        <td class="table-subcell table-subcell-first">
-                            <div class="input-append input-append-add_gene">
-                                <input ng-model="gene.geneMutationTitle" placeholder="Enter New Gene Mutation" type="text" class="full-width"/>
-                                <a ng-click="addNewGeneMutationToBoneDysplasia(gene.geneMutationTitle, gene, boneDysplasia)" class="btn btn-success" ><i class="icon-plus icon-white"></i> Add</a>
-                            </div>
-
-                        </td>
-                    </tr>
-                    <tr ng-show="gene.showGeneMutations" ng-repeat="geneMutation in gene.field_gene_gene_mutation">
-                        <td class="table-subcell"> {{geneMutation.title }}
-                            <a ng-click="addGeneMutation(geneMutation, gene, boneDysplasia)" ng-show="!geneMutation.added" class="btn btn-success pull-right"><i class="icon-plus icon-white"></i> Add</a>
-                            <a ng-click="removeGeneMutation(geneMutation, gene, boneDysplasia)" ng-show="geneMutation.added" class="btn btn-danger pull-right"><i class="icon-minus icon-white"></i> Remove</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>-->
-
+ d
             <!-- Helpful Prompt (show when no text is entered, and no existing genes -->
             <p ng-show="!editGeneSearch" class="muted info">Want to find another Gene? <br/>Try using the search bar
                 above e.g. '<a href
