@@ -379,9 +379,9 @@ function _create_bd($bd_uri, $bd_group_nid, $bd_group_uri, $indexed_triples, $ge
 
     node_save($bd_node);
 
-    $xray_nid = _create_xraycollection($bd_node);
-    $bd_node->field_bd_xrays['und'][0]['target_id'] = $xray_nid;
-    node_save($bd_node);
+//    $xray_nid = _create_xraycollection($bd_node);
+//    $bd_node->field_bd_xrays['und'][0]['target_id'] = $xray_nid;
+//    node_save($bd_node);
 
     $nids_to_return = array();
     $nids_to_return[] = $bd_node->nid;
