@@ -201,11 +201,11 @@ function _create_bdgroups($uniqueBoneDysplasiaGroupURIs, $indexed_triples, $data
     $group_source_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_source');
     $group_source_term = array(
         'vid'               => $group_source_taxonomy->vid, // Vocabulary ID
-        'name'              => "ISDS",
-        'description'       => "The principal aim of the Society shall be to promote scientific progress in the field of skeletal dysplasias and dysostoses. The ISDS is registered as a non-profit organization ('charity').",
+        'name'              => "BDO",
+        'description'       => "",
         'sk_gs_field_uri' => array(
             'und' => array(
-                array('value' => "http://www.isds.ch/")
+                array('value' => "http://www.skeletome.org/")
             )
         )
     );
@@ -217,11 +217,11 @@ function _create_bdgroups($uniqueBoneDysplasiaGroupURIs, $indexed_triples, $data
     $group_source_release_taxonomy = taxonomy_vocabulary_machine_name_load('sk_group_source_release');
     $group_source_release_term = array(
         'vid'               => $group_source_release_taxonomy->vid, // Vocabulary ID
-        'name'              => "ISDS " . date("Y", $timestamp),
+        'name'              => "BDO " . date("Y", $timestamp),
         'description'       => "",
         'sk_gs_field_uri' => array(
             'und' => array(
-                array('value' => "http://www.isds.ch/")
+                array('value' => "http://www.skeletome.org/")
             )
         ),
         'sk_gsr_field_timestamp' => array(
