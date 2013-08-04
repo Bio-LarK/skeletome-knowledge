@@ -8,9 +8,6 @@ myApp.directive('lockToTop', function() {
                 $scope.listModel.splice(index, 1);
             }
         },
-        transclude: true,
-        template: "<div ng-transclude></div>",
-        replace: true,
         link: function($scope, elem, attrs) {
             /**
              * Created with JetBrains PhpStorm.
