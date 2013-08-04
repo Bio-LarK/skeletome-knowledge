@@ -120,49 +120,46 @@
         <?php module_load_include('php', 'skeletome_builder', 'header'); ?>
 
 
-        <div class="container">
-        <div class="banner" style="position: relative; overflow: hidden">
+
+        <div class="banner" style="position: relative; overflow: hidden;">
+            <div class="container">
+
             <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
 
 
-            <img class="banner-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/banner_logo.png" />
 
-            <div class="banner-text">
-                <div class="banner-text-big">
-                    The Skeletome Knowledge Base
-                </div>
-                <div class="banner-text-small">
-                    A community-driven knowledge curation platform for skeletal dysplasias.
-                </div>
-                <div class="banner-calltoaction">
-                    <a class="btn btn-calltoaction" href="tour">
-                        Take The Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
-                    </a>
+
+                <div class="banner-text">
+                    <div class="banner-text-big">
+                        <img class="banner-logo" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/banner_logo.png" /> The Skeletome Knowledge Base
+                    </div>
+                     <div class="banner-text-small">
+                        A community-driven knowledge curation platform for skeletal dysplasias.
+                    </div>
+                    <div class="banner-calltoaction">
+                        <a class="btn btn-calltoaction" href="tour">
+                            Take The Tour &nbsp;&nbsp; <i class="ficon-angle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-
-
         </div>
 
-    </div>
-
-
-    <div class="container-fluid">
-        <?php if(strlen($messages) > 0): ?>
-        <div class="row-fluid" style="margin-bottom: 14px;">
-            <div class="span12">
-                <?php print $messages; ?>
-            </div>
-        </div>
-        <?php endif; ?>
-    </div>
 
 
 
 
-        <section>
+        <section style="margin-top: 0px">
             <div class="section-segment" style="padding: 28px">
                 <div class="container">
+
+                    <?php if(strlen($messages) > 0): ?>
+                        <div class="row-fluid" style="margin-bottom: 14px;">
+                            <div class="span12">
+                                <?php print $messages; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="row-fluid">
                         <div class="span4">

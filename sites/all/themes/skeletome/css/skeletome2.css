@@ -363,19 +363,24 @@ ul.navsearch-suggestions {
 */
 .banner {
     background-color: #E8E8E8;
-    padding: 49px 0 49px 0;
+    background-color: #2B3E52;
+    padding: 49px 0 56px 0;
     font-family: "Source Sans Pro";
     font-weight: 200;
     text-align: left;
 }
     .banner-logo {
-        float: left;
+        /*float: left;
         display: block;
-        height: 100px;
+        height: 100px;*/
+        height: 50px;
+        position: relative;
+        top: -3px;
     }
     .banner-text {
         overflow: auto;
         padding-left: 21px;
+        text-align: center;
     }
     .banner-text-big {
         margin-bottom: 7px;
@@ -383,6 +388,7 @@ ul.navsearch-suggestions {
         font-size: 49px;
         line-height: 56px;
         position: relative;
+        color: #e9f4ff;
 
     }
     .banner-text-small {
@@ -391,6 +397,8 @@ ul.navsearch-suggestions {
         line-height: 35px;
         color: #A0A6AC;
         position: relative;
+        color: #687685;
+        font-weight: 300;
     }
     .banner-calltoaction {
 
