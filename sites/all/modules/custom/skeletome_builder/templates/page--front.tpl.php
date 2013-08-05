@@ -195,7 +195,7 @@
                                 <i class="icon-rdf"></i> Ontology Based
                             </div>
                             <div class="triptych-subheading">
-                                Readable by Humans and Computers - the Best of Both Worlds.
+                                Readable by Humans and Computers - the Best of Both Worlds
                             </div>
                             <div class="triptych-body">
                                 <p>
