@@ -121,7 +121,7 @@
 
 
 
-        <div class="banner" style="position: relative; overflow: hidden;">
+        <div class="banner" style="position: relative;">
             <div class="container">
 
             <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
@@ -155,7 +155,7 @@
 
                     <?php if(strlen($messages) > 0): ?>
                         <div class="row-fluid" style="margin-bottom: 14px;">
-                            <div class="span12">
+                            <div class="span12">f
                                 <?php print $messages; ?>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                         </div>
                         <div class="span4">
                             <div class="triptych-heading">
-                                <i class="icon-rdf"></i> Onotology Based
+                                <i class="icon-rdf"></i> Ontology Based
                             </div>
                             <div class="triptych-subheading">
                                 Readable by Humans and Computers - the Best of Both Worlds.
