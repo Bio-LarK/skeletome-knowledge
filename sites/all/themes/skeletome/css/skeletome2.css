@@ -370,9 +370,6 @@ ul.navsearch-suggestions {
     text-align: left;
 }
     .banner-logo {
-        /*float: left;
-        display: block;
-        height: 100px;*/
         height: 50px;
         position: relative;
         top: -3px;
