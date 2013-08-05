@@ -121,13 +121,10 @@
 
 
 
-        <div class="banner" style="position: relative;">
+        <div class="banner" >
             <div class="container">
 
             <!--<img style="position: absolute; top: -25%; left: 0; width: 100%" src="<?php echo base_path() . drupal_get_path('module', 'skeletome_builder'); ?>/images/front_banner.jpg" />-->
-
-
-
 
                 <div class="banner-text">
                     <div class="banner-text-big">
@@ -155,7 +152,7 @@
 
                     <?php if(strlen($messages) > 0): ?>
                         <div class="row-fluid" style="margin-bottom: 14px;">
-                            <div class="span12">f
+                            <div class="span12">
                                 <?php print $messages; ?>
                             </div>
                         </div>

@@ -368,7 +368,6 @@ ul.navsearch-suggestions {
     font-family: "Source Sans Pro";
     font-weight: 200;
     text-align: left;
-    overflow: hidden;
 }
     .banner-logo {
         /*float: left;
@@ -379,7 +378,6 @@ ul.navsearch-suggestions {
         top: -3px;
     }
     .banner-text {
-        overflow: auto;
         padding-left: 21px;
         text-align: center;
     }
