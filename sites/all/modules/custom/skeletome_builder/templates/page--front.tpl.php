@@ -281,7 +281,7 @@
                     <ul class="footer-links pull-right">
                         <li><a class="contact-us-link" href="<?php print $front_page; ?>">Home</a></li>
                         <li><a class="contact-us-link" href="?q=faq">FAQ</a></li>
-                        <li><a class="contact-us-link" href="?q=about">About</a></li>
+<!--                        <li><a class="contact-us-link" href="?q=about">About</a></li>-->
                         <li><a class="contact-us-link" href="?q=team">Team</a></li>
                         <li><a class="contact-us-link" href="?q=contact">Contact</a></li>
                     </ul>
