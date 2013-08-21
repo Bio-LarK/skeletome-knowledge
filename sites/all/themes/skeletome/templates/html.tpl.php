@@ -91,6 +91,10 @@
         <?php endif; ?>
         <meta http-equiv="cleartype" content="on">
 
+        <script type="text/javascript">
+            if ( ! window.console ) console = { log: function(){} };
+        </script>
+        
         <?php print $styles; ?>
         <?php print $scripts; ?>
         <?php if ($add_respond_js): ?>
