@@ -1,5 +1,8 @@
 var myApp = angular.module('Skeletome', ['ngResource']);
 
+if ( ! window.console ) console = { log: function(){} };
+
+
 if (!Array.prototype.indexOf)
 {
     Array.prototype.indexOf = function(elt /*, from*/)
