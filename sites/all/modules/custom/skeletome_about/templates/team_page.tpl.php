@@ -12,15 +12,18 @@
                 <h2>Project Investigators</h2>
             </div>
 
+
+
+
+
             <div class="section-segment section-segment-header">
-                <h3>Dr. Andreas Zankl</h3>
+                <h3>Prof Andreas Zankl</h3>
             </div>
             <div class="section-segment">
-                <a href="http://qbdc.org/home-page/">The Queensland Bone Dysplasia Centre</a><br/>
-                UQ Center for Clinical Research (UQCCR)<br/>
-                The University of Queensland, Building 71/918, Level 3,<br/>
-                Royal Brisbane and Women's Hospital Herston, QLD 4029<br/>
-                <b>Email: </b> a.zankl (at) uq.edu.au
+                Academic Department of Medical Genetics<br/>
+                The Childrens Hospital at Westmead<br/>
+                The University of Sydney<br/>
+                <b>Email: </b> andreas.zankl (at) sydney.edu.au
             </div>
 
             <div class="section-segment section-segment-header">
