@@ -471,34 +471,34 @@ function page_bone_dysplasia($node) {
     $provider = null;
     $reference_string = null;
 
-    if(isset($node->body[LANGUAGE_NONE][0]['safe_value'])) {
-        $description = $node->body[LANGUAGE_NONE][0]['safe_value'];
-        // Get the reference string
-        $first_bracket_pos = strpos($description, '<p>[');
-        $last_bracket_pos = strrpos($description, ']</p>') + 1;
-        $length = 0;
-
-        if($first_bracket_pos !== false && $last_bracket_pos !== false) {
-            $length = $last_bracket_pos - $first_bracket_pos;
-
-            $reference_string = substr($description, $first_bracket_pos, $length);
-
-            // Clear the description
-            $node->body[LANGUAGE_NONE][0]['safe_value'] = str_replace($reference_string, "", $description);
-            // References
-            $reference_string = str_replace("[", "", $reference_string);
-            $reference_string = str_replace("]", "", $reference_string);
-
-            if(strpos($description, 'GeneReviews') !== false) {
-                $provider = "GeneReviews";
-                // get out the position
-            } else {
-                $provider = "OMIM";
-                $reference_string = "";
-            }
-
-        }
-    }
+//    if(isset($node->body[LANGUAGE_NONE][0]['safe_value'])) {
+//        $description = $node->body[LANGUAGE_NONE][0]['safe_value'];
+//        // Get the reference string
+//        $first_bracket_pos = strpos($description, '<p>[');
+//        $last_bracket_pos = strrpos($description, ']</p>') + 1;
+//        $length = 0;
+//
+//        if($first_bracket_pos !== false && $last_bracket_pos !== false) {
+//            $length = $last_bracket_pos - $first_bracket_pos;
+//
+//            $reference_string = substr($description, $first_bracket_pos, $length);
+//
+//            // Clear the description
+//            $node->body[LANGUAGE_NONE][0]['safe_value'] = str_replace($reference_string, "", $description);
+//            // References
+//            $reference_string = str_replace("[", "", $reference_string);
+//            $reference_string = str_replace("]", "", $reference_string);
+//
+//            if(strpos($description, 'GeneReviews') !== false) {
+//                $provider = "GeneReviews";
+//                // get out the position
+//            } else {
+//                $provider = "OMIM";
+//                $reference_string = "";
+//            }
+//
+//        }
+//    }
 
     // echo "<p>" . (time() - $time1) . "</p>";
 

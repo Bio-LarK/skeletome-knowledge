@@ -85,7 +85,7 @@
 <div id="main">
 
     <?php if(strlen($messages)): ?>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row-fluid">
             <div class="span12">
                 <?php print $messages; ?>
@@ -94,7 +94,7 @@
     </div>
     <?php endif; ?>
 
-    <div class="container-fluid"  style="display: none">
+    <div class="container"  style="display: none">
         <div class="row-fluid">
             <div class="span12">
                 <?php print render($tabs); ?>
@@ -104,7 +104,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <!-- class="container" -->
         <a id="main-content"></a>
         <div>
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row-fluid">
             <div class="span12">
                 <?php print render($page['highlighted']); ?>
@@ -126,7 +126,7 @@
 
 <!-- #Footer -->
 <div class="page-footer">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row-fluid">
             <div class="span12 ">
                 <!-- Site Logo -->
