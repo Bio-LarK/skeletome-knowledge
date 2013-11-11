@@ -1,4 +1,4 @@
-<div ng-controller="SparqlCtrl">
+<!--<div ng-controller="SparqlCtrl">
     <div class="row-fluid" >
         <div class="span12">
             <div>
@@ -47,4 +47,4 @@
         <button class="btn btn-info" ng-click="showMore()" ng-show="resultLimit < results.results.bindings.length">Show More</button>
         <a href="#" class="btn btn-info" ng-show="resultLimit > 100">Back to Top</a>
     </div>
-</div>
+</div>-->
