@@ -1,0 +1,4 @@
+name = Skeletome Sparql Page
+description = Sparql endpoint point
+package = A - Skeletome
+core = 7.x

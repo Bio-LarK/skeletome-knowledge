@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function skeletome_sparql_menu() {
+
+    $items['sparql'] = array(
+        'page callback' 	=> 'page_sparql',
+        'access arguments'  => array('access content'),
+        'type'              => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+function page_sparql() {
+    $output =  array(
+        'skeletome_about_faq_page' => array(
+            '#data'     => NULL,
+            '#theme'    => 'skeletome_sparql_sparql_page'
+        )
+    );
+    return $output;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function skeletome_about_theme($existing, $type, $theme, $path) {
+
+    $themes['skeletome_sparql_sparql_page'] = array(
+        'variables' => array(
+            'data'  => NULL
+        ),
+        'type'      =>'theme',
+        'path'      => drupal_get_path('module', 'skeletome_sparql') . '/templates',
+        'template'  => 'faq'
+    );
+
+    return $themes;
+}
+

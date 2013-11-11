@@ -577,10 +577,6 @@ function ajax_pubmed_query_search($query) {
         }
     }
 
-
-
-
-
     // TODO: write it for pubmedbookarticle
 //
 //    foreach($pubmed_search->IdList->Id as $publicationId) {
