@@ -1,5 +1,5 @@
 function SparqlCtrl($scope, $http, $q) {
-    $scope.queries = dataQueries;
+    /*$scope.queries = dataQueries;
 
     // Default
     $scope.resultLimit = 30;
@@ -132,7 +132,7 @@ function SparqlCtrl($scope, $http, $q) {
         $scope.querySelected(k);
         break
     }
-
+*/
 
 //    $scope.concepts = dataConcepts;
 //    $scope.result = dataResult;
