@@ -17,7 +17,7 @@ function skeletome_sparql_menu() {
 
 function page_sparql() {
     $output =  array(
-        'skeletome_about_faq_page' => array(
+        'skeletome_sparql_sparql_page' => array(
             '#data'     => NULL,
             '#theme'    => 'skeletome_sparql_sparql_page'
         )
@@ -29,7 +29,7 @@ function page_sparql() {
 /**
  * Implements hook_theme().
  */
-function skeletome_about_theme($existing, $type, $theme, $path) {
+function skeletome_sparql_theme($existing, $type, $theme, $path) {
 
     $themes['skeletome_sparql_sparql_page'] = array(
         'variables' => array(
