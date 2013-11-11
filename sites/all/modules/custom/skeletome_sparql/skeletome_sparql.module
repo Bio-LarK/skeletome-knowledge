@@ -37,7 +37,7 @@ function skeletome_sparql_theme($existing, $type, $theme, $path) {
         ),
         'type'      =>'theme',
         'path'      => drupal_get_path('module', 'skeletome_sparql') . '/templates',
-        'template'  => 'faq'
+        'template'  => 'sparql'
     );
 
     return $themes;
