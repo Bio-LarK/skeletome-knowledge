@@ -23,6 +23,7 @@ scripts[] = js/controllers/source_release.js
 scripts[] = js/controllers/statement.js
 scripts[] = js/controllers/profile.js
 scripts[] = js/controllers/dashboard.js
+scripts[] = js/controllers/sparql.js
 
 ; AngularJS Services
 scripts[] = js/services/services.js
@@ -54,7 +55,7 @@ scripts[] = js/directives/cm_reveal.js
 scripts[] = js/directives/feedback.js
 scripts[] = js/directives/lock_to_top.js
 scripts[] = js/directives/short_highlight.js
-scripts[] = js/directives/sparql.js
+
 
 scripts[] = js/directives/lookup.js
 scripts[] = js/directives/add_list.js
