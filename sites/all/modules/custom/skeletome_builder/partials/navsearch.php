@@ -18,6 +18,7 @@
             />
             <input class="navsearch-input navsearch-query"
                    ng-change="search(model.entry)"
+                   ng-change="search(model.entry)"
                    ng-model="model.entry"
                    type="text"
                    placeholder="Search for Bone Dysplasias, Clinical Features, Groups or Genes"
@@ -33,29 +34,6 @@
     </div>
 
     <ul ng-show="(model.entry.length || model.query.length) && model.isShowingSuggestions" class="navsearch-suggestions unstyled">
-        <li class="navsearch-suggestion navsearch-suggestion-round-top"
-            ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
-            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED,  'navsearch-suggestion-search': model.query.length > 0, 'navsearch-suggestion-round-bottom': model.suggestions.length==0 }">
-
-            <a class="navsearch-suggestion-link" href="{{ searchUrl() }}">
-                <span class="navsearch-suggestion-guide">
-                    Search for
-                </span>
-
-                <i class="ficon-search" style="position: relative; right: 4px"></i>
-
-                <span class="navsearch-suggestion-content">
-                    <span ng-repeat="term in model.query" class="navsearch-term">{{ term.title || term.name }}</span>
-
-                    <i>{{ model.entry }}</i>...
-                </span>
-
-                <span ng-show="isLoading" class="pull-right">
-                    <i class="icon-refresh icon-refreshing"></i>
-                </span>
-
-            </a>
-        </li>
 
         <li class="navsearch-suggestion"
             ng-mouseenter="enteredSuggestion(suggestion)" ng-mouseleave="leavedSuggestion(suggestion)"
@@ -119,8 +97,31 @@
                 </span>
             </a>
 
-
-
         </li>
+
+        <li class="navsearch-suggestion navsearch-suggestion-round-top"
+            ng-mouseenter="enteredSuggestion()" ng-mouseleave="leavedSuggestion()"
+            ng-class="{'navsearch-suggestion-selected': selectedIndex == SEARCH_SELECTED,  'navsearch-suggestion-search': model.query.length > 0, 'navsearch-suggestion-round-bottom': model.suggestions.length==0 }">
+
+            <a class="navsearch-suggestion-link" href="{{ searchUrl() }}">
+                <span class="navsearch-suggestion-guide">
+                    Search for
+                </span>
+
+                <i class="ficon-search" style="position: relative; right: 4px"></i>
+
+                <span class="navsearch-suggestion-content">
+                    <span ng-repeat="term in model.query" class="navsearch-term">{{ term.title || term.name }}</span>
+
+                    <i>{{ model.entry }}</i>...
+                </span>
+
+                <span ng-show="isLoading" class="pull-right">
+                    <i class="icon-refresh icon-refreshing"></i>
+                </span>
+
+            </a>
+        </li>
+
     </ul>
 </div>
