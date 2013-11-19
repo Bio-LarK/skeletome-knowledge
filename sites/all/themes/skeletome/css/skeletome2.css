@@ -264,12 +264,12 @@ ul.navsearch-suggestions {
         background-color: white;
     }
         .navsearch-suggestion-round-top {
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            /*border-top-left-radius: 5px;*/
+            /*border-top-right-radius: 5px;*/
         }
         .navsearch-suggestion-round-bottom {
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
+            /*border-bottom-left-radius: 5px;*/
+            /*border-bottom-right-radius: 5px;*/
         }
         .navsearch-suggestion-selected {
             background-color: #0e90d2 !important;
