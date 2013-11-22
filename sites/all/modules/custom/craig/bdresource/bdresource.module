@@ -1,0 +1,52 @@
+<?php
+// bdresource.module
+
+
+/**
+ * Implementation of hook_services_resources().
+ */
+function bdresource_services_resources() {
+    $resource = array();
+
+    $resource['bd'] = array(
+        'retrieve' => array(
+            'help' => 'Retrieves a bd',
+            'file' => array('file' => 'inc', 'module' => 'bdresource'),
+            'callback' => '_bdresource_retrieve',
+            'access callback' => '_bdresource_access',
+            'access arguments' => array('view'),
+            'access arguments append' => TRUE,
+            'args' => array(
+                array(
+                    'name' => 'uri',
+                    'type' => 'string',
+                    'description' => 'The BDO URI of the bone dysplasia to get',
+                    'source' => array('path' => '0'),
+                    'optional' => FALSE
+                ),
+            ),
+        ),
+        'index' => array(
+            'help' => 'List all nodes',
+            'file' => array('type' => 'inc', 'module' => 'bdresource', 'name' => 'bdresource'),
+            'callback' => '_bdresource_index',
+            'access callback' => '_bdresource_access',
+            'access arguments' => array('index'),
+            'access arguments append' => TRUE,
+            'args' => array(
+                array(
+                    'name' => 'uri',
+                    'optional' => TRUE,
+                    'type' => 'string',
+                    'description' => 'The fields to get.',
+                    'default value' => '*',
+                    'source' => array('param' => 'uri'),
+                ),
+            ),
+        )
+    );
+
+    return $resource;
+}
+
+

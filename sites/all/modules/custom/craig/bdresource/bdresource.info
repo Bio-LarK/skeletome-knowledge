@@ -1,0 +1,8 @@
+name = Bone Dyspalsia Resource
+description = REST API bone dysplasia resource
+package = A - Resources
+
+core = 7.x
+
+dependencies[] = entity
+dependencies[] = rest_server
