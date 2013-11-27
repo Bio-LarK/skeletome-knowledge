@@ -97,6 +97,28 @@ function _bdresource_index($uri) {
     ));
     $bone_dysplasia->clinical_features = $results->fetchAll();
 
+    // Get the information content
+    $sql = "SELECT *
+            FROM node
+            WHERE node.type = 'bone_dysplasia'";
+    $result = db_query($sql);
+    $bone_dysplasia_count = $result->rowCount();
+    $max_log = -log(1/$bone_dysplasia_count);
+
+    foreach($bone_dysplasia->clinical_features as &$clinical_feature) {
+        // Work out how many disorders it appears in
+        $sql = "SELECT DISTINCT entity_id
+                FROM field_data_field_skeletome_tags
+                WHERE field_skeletome_tags_tid = :tid";
+        $result = db_query($sql, array(
+            'tid'   => $clinical_feature->tid
+        ));
+        $bone_dysplasias_with_clinical_feature_count = $result->rowCount();
+
+        $min_log = -log($bone_dysplasias_with_clinical_feature_count/$bone_dysplasia_count);
+        $clinical_feature->disorder_count = $bone_dysplasias_with_clinical_feature_count;
+        $clinical_feature->information_content = 100 -  $bone_dysplasias_with_clinical_feature_count / $bone_dysplasia_count * 100;
+    }
 
     return $bone_dysplasia;
 }
