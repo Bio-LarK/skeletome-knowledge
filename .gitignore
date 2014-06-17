@@ -1,8 +1,6 @@
 
 .idea/workspace.xml
 
-.idea/workspace.xml
-
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
 
@@ -10,60 +8,5 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-sites/default/files/file_uploads/1/backbone-pelvis-socket-of-hip-joint-thigh-bone-x-ray-osteoporosis-thumb1501702.jpg
-
-
-sites/default/files/file_uploads/1/tumblr_m9x1irVyQF1qzd516o1_400.gif
-
-sites/default/files/file_uploads/1/tumblr_mdcwyrxQ0T1rghc68o1_500_0.gif
-
-sites/default/files/file_uploads/1/tumblr_m9x1irVyQF1qzd516o1_400_0.gif
-
-sites/default/files/file_uploads/1/tumblr_mdeer6lEMB1rghc68o1_500.gif
-
-sites/default/files/styles/thumbnail/public/file_uploads/1/backbone-pelvis-socket-of-hip-joint-thigh-bone-x-ray-osteoporosis-thumb1501702.jpg
-
-sites/default/files/styles/thumbnail/public/file_uploads/1/tumblr_m9x1irVyQF1qzd516o1_400.gif
-
-sites/default/files/styles/thumbnail/public/file_uploads/1/tumblr_m9x1irVyQF1qzd516o1_400_0.gif
-
-sites/default/files/styles/thumbnail/public/file_uploads/1/tumblr_mdcwyrxQ0T1rghc68o1_500_0.gif
-
-sites/default/files/styles/thumbnail/public/file_uploads/1/tumblr_mdeer6lEMB1rghc68o1_500.gif
-
-sites/all/modules/apachesolr/.DS_Store
-
-sites/all/modules/.DS_Store
-
-sites/all/modules/apachesolr/solr-conf/.DS_Store
-
-sites/all/modules/apachesolr/solr-conf/.DS_Store
-
-sites/default/files/file_uploads/
-
-sites/default/files/file_uploads/.DS_Store
-.DS_Store
-
-.DS_Store
-
-*/.DS_Store
-
-sites/all/.DS_Store
-
-sites/all/modules/.DS_Store
-
-sites/all/modules/custom/.DS_Store
-
-sites/all/modules/custom/skeletome_builder/.DS_Store
-
-sites/.DS_Store
-
-sites/default/files/.DS_Store
-
-sites/default/files/styles/.DS_Store
-
-sites/default/files/styles/.DS_Store
-
-.DS_Store
 
 .DS_Store
