@@ -1232,7 +1232,10 @@ function ajax_bone_dysplasia_description() {
 
 }
 
-function ajax_search_genes($search) {
+function ajax_search_genes($search)
+{
+    global $user;
+
     $return_genes = array();
     if ($search) {
         // Clean it up a little
@@ -1249,13 +1252,54 @@ function ajax_search_genes($search) {
         ));
 
         $gene_ids = array();
-        foreach($genes as $gene) {
+        foreach ($genes as $gene) {
             $gene_ids[] = $gene->nid;
+        }
+
+        if (!count($gene_ids)) {
+            // Check out entrez
+            $entrez_search_url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=$search%5Bsym%5D+AND+human%5Borgn%5D&retmode=json";
+            $search_results = json_decode(file_get_contents($entrez_search_url));
+            if (isset($search_results->esearchresult->idlist)) {
+                $id_list = implode($search_results->esearchresult->idlist, ",");
+                $entrez_summary_url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=$id_list&retmode=json";
+                $summaries = json_decode(file_get_contents($entrez_summary_url));
+
+                $genes = array();
+
+                if (isset($summaries->result)) {
+                    foreach ($summaries->result as $id => $summary) {
+                        if ($id !== 'uids') {
+                            // Save the gene
+                            $node = new stdClass();
+                            $node->title = $summary->name;
+                            $node->type = "gene";
+                            node_object_prepare($node);
+                            $node->language = LANGUAGE_NONE;
+                            $node->uid = $user->uid;
+                            $node->status = 1;
+                            $node->promote = 0;
+                            $node->comment = 1;
+
+                            $node = node_submit($node); // Prepare node for saving
+                            
+                            $node->field_gene_entrezgene[LANGUAGE_NONE][0]['value'] = $summary->uid;
+                            $node->body[LANGUAGE_NONE][0]['value'] = $summary->summary;
+                            $node->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+                            $node->body[LANGUAGE_NONE][0]['safe_value'] = check_markup($summary->summary, 'filtered_html');
+                            node_save($node);
+
+                            $gene_ids[] = $node->nid;
+                        }
+                    }
+                }
+                
+            }
         }
 
         $genes_full = unset_node_trash(node_load_multiple($gene_ids), false);
 
-        foreach($genes_full as &$gene) {
+        foreach ($genes_full as &$gene) {
             $gene->field_gene_gene_mutation = unset_node_trash(data_get_gene_mutations_for_gene($gene), false);
 
         }
